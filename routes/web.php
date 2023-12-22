@@ -13,14 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// this file only for user route not the admin route
+// هذ الملف للمسارات المتعلقة ب المستخدم وليس الادمن
+
 Route::get('/', function () {
-    return view('admin/index');
+    return view('');
 });
 
-Route::get('/Wallet', function () {
-    return view('admin/tables_data');
-});
-
-Route::get('/forms-validation', function () {
-    return view('admin/forms-validation');
-});
