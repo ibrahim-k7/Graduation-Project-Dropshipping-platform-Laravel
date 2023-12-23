@@ -529,7 +529,10 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#wallet_table_id').DataTable();
+        $('#wallet_table_id').DataTable({
+          
+
+        });
     });
 </script>
 

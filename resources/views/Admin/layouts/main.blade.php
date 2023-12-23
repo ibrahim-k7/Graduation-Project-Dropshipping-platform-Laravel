@@ -27,11 +27,10 @@
     <link href={{ asset('Admin/vendor/quill/quill.bubble.css') }} rel="stylesheet">
     <link href={{ asset('Admin/vendor/remixicon/remixicon.css') }} rel="stylesheet">
     <link href={{ asset('Admin/vendor/simple-datatables/style.css') }} rel="stylesheet">
-    <link href={{ asset('Admin/vendor/datatables/css/jquery.dataTables.css') }} rel="stylesheet">
+
 
         <!-- DataTables CSS Files add by ibrahim -->
-    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
     @yield('css')
 
@@ -359,14 +358,15 @@
     <script src={{ asset('Admin/vendor/simple-datatables/simple-datatables.js') }}></script>
     <script src={{ asset('Admin/vendor/tinymce/tinymce.min.js') }}></script>
     <script src={{ asset('Admin/vendor/php-email-form/validate.js') }}></script>
+    <script src={{ asset('Admin/vendor/jquery/jquery-3.7.1.min.js') }}></script>
 
     <!-- DataTables Js Files add by ibrahim -->
-    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-
-    @yield('js')
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     
+    @yield('js')
+
+
     <!-- Template Main JS File -->
     <script src={{ asset('Admin/JS/main.js') }}></script>
     
