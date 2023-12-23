@@ -13,10 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// this file only for user route not the admin route
+// this file only for user routes not the admin routes
 // هذ الملف للمسارات المتعلقة ب المستخدم وليس الادمن
-
-Route::get('/', function () {
-    return view('');
-});
-

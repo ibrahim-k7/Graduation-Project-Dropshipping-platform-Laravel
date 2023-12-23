@@ -1,5 +1,9 @@
 @extends('Admin.layouts.main')
 
+@section('pageTitle')
+    اضافة 
+@endsection
+
 @section('Content')
 <main id="main" class="main">
 
