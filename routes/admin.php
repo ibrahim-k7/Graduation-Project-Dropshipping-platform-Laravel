@@ -7,8 +7,12 @@ Route::get('/Dshboard', function () {
 });
 
 
-Route::get('/Wallet', function () {
+Route::get('/simple', function () {
     return view('admin/tables_data');
+});
+
+Route::get('/wallet', function () {
+    return view('admin/wallet');
 });
 
 Route::get('/forms-validation', function () {

@@ -194,6 +194,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //هذا حق مكتبة Yajra لتوفر تنسيق لجداول البيانات
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 
