@@ -1,11 +1,20 @@
 <?php
 
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/Dshboard', function () {
     return view('admin/dashboard');
 });
 
+/*Route::get('/suppliers_management', function () {
+    return view('admin/suppliers_management');
+});*/
+
+Route::get('/suppliers_management', [SupplierController::class, 'index'])->name('admin.suppliers');
+Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
+Route::post('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.edit');
+//Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
 
 Route::get('/simple', function () {
     return view('admin/tables_data');
