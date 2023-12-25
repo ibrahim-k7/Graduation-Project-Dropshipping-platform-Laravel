@@ -27,6 +27,7 @@
     <link href={{ asset('Admin/vendor/quill/quill.bubble.css') }} rel="stylesheet">
     <link href={{ asset('Admin/vendor/remixicon/remixicon.css') }} rel="stylesheet">
     <link href={{ asset('Admin/vendor/simple-datatables/style.css') }} rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
         <!-- DataTables CSS Files add by ibrahim -->
@@ -283,7 +284,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ Route('admin.suppliers.insert') }}">
+                        <a href="{{ Route('admin.suppliers.create') }}">
                             <i class="bi bi-circle"></i><span>Insert New Suppliers </span>
                         </a>
                     </li>

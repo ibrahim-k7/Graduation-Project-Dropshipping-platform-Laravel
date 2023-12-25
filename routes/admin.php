@@ -13,8 +13,8 @@ Route::get('/Dshboard', function () {
 
 Route::get('/suppliers_management', [SupplierController::class, 'index'])->name('admin.suppliers');
 Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
-Route::post('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.edit');
-//Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
+Route::post('/suppliers_store', [SupplierController::class, 'store'])->name('admin.suppliers.store');
+Route::get('/create_supplire', [SupplierController::class, 'create'])->name('admin.suppliers.create');
 
 Route::get('/simple', function () {
     return view('admin/tables_data');
