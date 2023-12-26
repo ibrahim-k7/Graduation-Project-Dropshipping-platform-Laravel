@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddSupplierRequest;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -55,7 +56,7 @@ class SupplierController extends Controller
      */
 
 
-    public function store(Request $request)
+    public function store(AddSupplierRequest $request)
     {
 
         Supplier::create([
