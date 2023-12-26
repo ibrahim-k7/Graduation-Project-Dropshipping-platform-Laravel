@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SupplierTransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/Dshboard', function () {
@@ -15,6 +16,12 @@ Route::get('/suppliers_management', [SupplierController::class, 'index'])->name(
 Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
 Route::post('/suppliers_store', [SupplierController::class, 'store'])->name('admin.suppliers.store');
 Route::get('/create_supplire', [SupplierController::class, 'create'])->name('admin.suppliers.create');
+
+Route::get('/suppiler_transaction', [SupplierTransactionController::class, 'index'])->name('admin.suppliers.transaction');
+Route::get('/suppiler_transaction/data', [SupplierTransactionController::class, 'getDataTable'])->name('admin.suppliers.transaction.data');
+Route::get('/create_supplire_transaction', [SupplierTransactionController::class, 'create'])->name('admin.suppliers.transaction.create');
+
+
 
 Route::get('/simple', function () {
     return view('admin/tables_data');
@@ -40,7 +47,7 @@ Route::get('/register', function () {
         return view('admin/admin-profile');
     });
 
-  /* 
+/*
 Route::prefix('/admin')->group(function () {
 
    هذا مثال كيف تضيف 
@@ -48,12 +55,12 @@ Route::prefix('/admin')->group(function () {
     ب استخدام الكونترولار 
     التزمو فيها لما بكون الكونترولار اللي سويته جاهز
     
-   Route::controller(ConsultingController::class)->group(
+   Route::controller(SupplierController::class)->group(
         function () {
 
-            Route::get('/consulting', 'index')->name('index.Consulting');
+            Route::get('/suppliers_management', 'index')->name('admin.suppliers');
 
-            Route::post('/consulting/add', 'store')->name('store.Consulting');
+            Route::post('/suppliers_management', 'getDataTable')->name('admin.suppliers.data');
 
             Route::get('/consulting/edit/{id}', 'edit')->name('edit.Consulting');
 

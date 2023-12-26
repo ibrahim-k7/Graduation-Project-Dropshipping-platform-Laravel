@@ -16,5 +16,4 @@ class Supplier extends Model
         'sup_id','name','email','address','phone_number','created_at','updated_at'
     ];
 
-    public $timestamps = false;
 }

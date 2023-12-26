@@ -289,6 +289,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ Route('admin.suppliers.transaction') }}">
+                            <i class="bi bi-circle"></i><span>Suppliers Transaction</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/simple">
                             <i class="bi bi-circle"></i><span>Simple</span>
                         </a>
@@ -389,6 +394,7 @@
 
     <!-- DataTables Js Files add by ibrahim -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
 
     
     @yield('js')

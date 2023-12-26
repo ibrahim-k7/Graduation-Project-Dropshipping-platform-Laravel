@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    المحفظة
+    عمليات الموردين
 @endsection
 
 
@@ -10,7 +10,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Wallet</h1>
+            <h1>Supplier Transaction</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -31,14 +31,14 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Supplier_Managment"  class="table table-striped">
+                                <table id="Supplier_Transaction" cellspacing="0" class="display" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Address</th>
-                                            <th>Phone Number</th>
+                                            <th>Balance</th>
+                                            <th>Amount</th>
+                                            <th>Transaction Type</th>
+                                            <th>Suppiler ID</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
@@ -63,32 +63,32 @@
     <script type="text/javascript">
         $(function() {
 
-            var supplier_data = $('#Supplier_Managment').DataTable({
+            var supplier_data = $('#Supplier_Transaction').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [
                     [0, "desc"]
                 ],
-                ajax: "{{ Route('admin.suppliers.data') }}",
+                ajax: "{{ Route('admin.suppliers.transaction.data') }}",
                 columns: [{
+                        data: 'transaction_id',
+                        name: 'transaction_id'
+                    },
+                    {
+                        data: 'balance',
+                        name: 'balance'
+                    },
+                    {
+                        data: 'amount',
+                        name: 'amount'
+                    },
+                    {
+                        data: 'transaction_type',
+                        name: 'transaction_type'
+                    },
+                    {
                         data: 'sup_id',
                         name: 'sup_id'
-                    },
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'address',
-                        name: 'address'
-                    },
-                    {
-                        data: 'phone_number',
-                        name: 'phone_number'
                     },
                     {
                         data: 'created_at',

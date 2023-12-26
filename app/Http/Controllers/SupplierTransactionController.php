@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
+use App\Models\SupplierTransaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
-class SupplierController extends Controller
+class SupplierTransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,17 +16,16 @@ class SupplierController extends Controller
     public function index()
     {
         //
-
-        return  view('Admin.Suppliers.suppliers_management');
+        return view('Admin.Suppliers.suppliers_transaction');
     }
 
     public function getDataTable()
     {
-        $data = Supplier::select('*');
+        $data = SupplierTransaction::select('*');
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return $btn = '
-            <a href="' . Route('admin.suppliers.create', $row->id) . '" type="button" class="btn btn-info">Edit</a>
+          
             ';
             })
 
@@ -43,8 +41,6 @@ class SupplierController extends Controller
     public function create()
     {
         //
-
-        return view('Admin.Suppliers.insert_supplier');
     }
 
     /**
@@ -53,22 +49,10 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-
     public function store(Request $request)
     {
-
-        Supplier::create([
-            'name' => $request->name,
-            'email' =>  $request->email,
-            'address' =>  $request->address,
-            'phone_number' =>  $request->phone,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-        ]);
+        //
     }
-
-
 
     /**
      * Display the specified resource.
