@@ -308,12 +308,12 @@
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ route('admin.purchase.data') }}">
+                        <a href="{{ route('admin.purchases.data') }}">
                             <i class="bi bi-circle"></i><span>Purchases</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.purchase.create') }}">
+                        <a href="{{ route('admin.purchases.create') }}">
                             <i class="bi bi-circle"></i><span>Insert New Purchases</span>
                         </a>
                     </li>
@@ -325,7 +325,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.purchase.return') }}">
+                        <a href="{{ route('admin.purchases.return') }}">
                             <i class="bi bi-circle"></i><span>Return Purchases</span>
                         </a>
                     </li>
