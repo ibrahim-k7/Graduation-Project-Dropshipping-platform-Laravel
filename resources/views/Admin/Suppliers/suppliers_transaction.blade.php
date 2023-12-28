@@ -26,7 +26,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Datatables</h5>
+                            <h5 class="card-title"></h5>
                             <p></p>
 
                             <div class="table-responsive">
@@ -34,7 +34,7 @@
                                 <table id="Supplier_Transaction" cellspacing="0" class="display" >
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>ID </th>
                                             <th>Balance</th>
                                             <th>Amount</th>
                                             <th>Transaction Type</th>

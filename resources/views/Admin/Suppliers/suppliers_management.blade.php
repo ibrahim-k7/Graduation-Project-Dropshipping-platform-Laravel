@@ -31,14 +31,15 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Supplier_Managment"  class="table table-striped">
+                                <table id="Supplier_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
+                                            <th id="id_column">ID</th>
+                                            <th id="name_column">Name</th>
+                                            <th id="email_column">Email</th>
                                             <th>Address</th>
                                             <th>Phone Number</th>
+                                            <th>Balance</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
@@ -91,8 +92,12 @@
                         name: 'phone_number'
                     },
                     {
+                        data: 'trens',
+                        name: 'SuplierTransactions.balance'
+                    },
+                    {
                         data: 'created_at',
-                        name: 'created_at'
+                        name: 'created_at',
                     },
                     {
                         data: 'action',
@@ -100,7 +105,13 @@
                     },
                 ]
             });
+
+
         });
+
+
+
+
 
 
         /* $(document).ready(function(){

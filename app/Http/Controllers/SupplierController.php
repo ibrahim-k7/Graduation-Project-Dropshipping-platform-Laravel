@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddSupplierRequest;
 use App\Models\Supplier;
+use App\Models\SupplierTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -24,17 +25,54 @@ class SupplierController extends Controller
 
     public function getDataTable()
     {
-        $data = Supplier::select('*');
+       /* $data = Supplier::select('*');
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return $btn = '
-            <a href="' . Route('admin.suppliers.create', $row->id) . '" type="button" class="btn btn-info">Edit</a>
+            <a  type="button" id="ff" onclick="changeVar()" class="btn btn-info">عرض العمليات</a>
+            <a href="' . Route('admin.suppliers.create',$row->id) . '" type="button" class="btn btn-info">Edit</a>
             ';
             })
 
             ->rawColumns(['action'])
-            ->make(true);
+            ->make(true);*/
+
+            $model = Supplier::with('SuplierTransactions');
+            return DataTables::of($model)
+            //عرض الرصيد الخاص بالمورد 
+            ->addColumn('trens', function (Supplier $supplier) {
+                $firstTransaction = $supplier->SuplierTransactions->last();
+                return $firstTransaction ? $firstTransaction->balance : null;
+            })
+    
+            ->addColumn('action', function ($row) {
+                return $btn = '
+                <a href="' . route('admin.suppliers.transaction', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" data-supplier-id="' . $row->sup_id . '" type="button" class="btn btn-info">عرض العمليات</a>
+                <a href="" type="button" class="btn btn-info">Edit</a>
+    
+        ';
+            })
+    
+            ->rawColumns(['action'])
+            ->make(true);   
     }
+
+    public function getSupplierTransactionsData($id)
+{
+    $transactions = SupplierTransaction::where('sup_id', $id)->get();
+    return DataTables::of($transactions)->addIndexColumn()
+    ->addColumn('action', function ($row) {
+        return $btn = '
+    <a  type="button" id="ff" data-supplier-id="' . $row->id . '"  onclick="changeVar()" class="btn btn-info">عرض العمليات</a>
+    <a href="' . Route('admin.suppliers.create',$row->id) . '" type="button" class="btn btn-info">Edit</a>
+    ';
+    })
+    ->rawColumns(['action'])
+    ->make(true);
+}
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -59,6 +97,16 @@ class SupplierController extends Controller
     public function store(AddSupplierRequest $request)
     {
 
+       /* $data['name'] =  $request->name;
+        $data['email'] =  $request->email;
+        $data['address'] = $request->address;
+        $data['phone_number'] =  $request->phone;
+        $data['created_at'] = date("Y-m-d H:i:s");
+        $data['updated_at'] = date("Y-m-d H:i:s");
+
+        Supplier::create($data);*/
+
+        
         Supplier::create([
             'name' => $request->name,
             'email' =>  $request->email,
