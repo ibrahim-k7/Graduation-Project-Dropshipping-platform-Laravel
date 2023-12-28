@@ -12,10 +12,10 @@ class SupplierTransaction extends Model
     protected $table = "supplier transaction";
     //العناصر
     protected $fillable = [
-        'transaction_id','balance','amount','transaction_type','created_at','updated_at'
+        'transaction_id','sup_id','balance','amount','transaction_type','created_at','updated_at'
     ];
 
-    /*public function supplier(){
-        return $this -> hasOne('App\Models\Supplier','sup_id ');
-    }*/
+    public function supplier(){
+        return $this -> belongsTo('App\Models\Supplier','sup_id ','sup_id');
+    }
 }
