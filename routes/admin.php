@@ -20,7 +20,8 @@ Route::get('/create_supplire', [SupplierController::class, 'create'])->name('adm
 
 Route::get('/suppiler_transaction', [SupplierTransactionController::class, 'index'])->name('admin.suppliers.transaction');
 Route::get('/suppiler_transaction/data', [SupplierTransactionController::class, 'getDataTable'])->name('admin.suppliers.transaction.data');
-Route::get('/create_supplire_transaction', [SupplierTransactionController::class, 'create'])->name('admin.suppliers.transaction.create');
+Route::get('/create_supplire_transaction', [SupplierTransactionController::class, 'create'])->name('admin.supplier.transaction.create');
+Route::post('/supplier_transaction_store', [SupplierTransactionController::class, 'store'])->name('admin.supplier.transaction.store');
 
 
 Route::prefix('admin')->group(function () {

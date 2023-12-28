@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>    @yield('pageTitle')</title>
+    <title> @yield('pageTitle')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-        <!-- DataTables CSS Files add by ibrahim -->
+    <!-- DataTables CSS Files add by ibrahim -->
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
     @yield('css')
@@ -155,7 +155,7 @@
 
                         <li class="message-item">
                             <a href="#">
-                                <img src= {{ asset('Admin/IMG/messages-1.jpg') }} alt="" class="rounded-circle">
+                                <img src={{ asset('Admin/IMG/messages-1.jpg') }} alt="" class="rounded-circle">
                                 <div>
                                     <h4>Maria Hudson</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -290,7 +290,12 @@
                     </li>
                     <li>
                         <a href="{{ Route('admin.suppliers.transaction') }}">
-                            <i class="bi bi-circle"></i><span>Suppliers Transaction</span>
+                            <i class="bi bi-circle"></i><span>Suppliers Transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.supplier.transaction.create') }}">
+                            <i class="bi bi-circle"></i><span>Insert New Suppliers Transaction</span>
                         </a>
                     </li>
                     <li>
@@ -426,8 +431,8 @@
     <script src={{ asset('Admin/vendor/jquery/jquery-3.7.1.min.js') }}></script>
 
     <!-- DataTables Js Files add by ibrahim -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js">
+    </script>
 
 
     @yield('js')
