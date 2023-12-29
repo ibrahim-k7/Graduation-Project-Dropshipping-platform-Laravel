@@ -12,7 +12,7 @@ class SupplierTransaction extends Model
     protected $table = "supplier transaction";
     //العناصر
     protected $fillable = [
-        'transaction_id','sup_id','balance','amount','transaction_type','created_at','updated_at'
+        'transaction_id','sup_id','amount','transaction_type','created_at','updated_at'
     ];
 
     public function supplier(){

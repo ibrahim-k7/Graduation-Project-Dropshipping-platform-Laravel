@@ -4,7 +4,9 @@
     عمليات الموردين
 @endsection
 
-
+@section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 
 @section('Content')
     <main id="main" class="main">
@@ -31,11 +33,10 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Supplier_Transaction" cellspacing="0" class="display" >
+                                <table id="Supplier_Transaction" cellspacing="0" class="display">
                                     <thead>
                                         <tr>
                                             <th>ID </th>
-                                            <th>Balance</th>
                                             <th>Amount</th>
                                             <th>Transaction Type</th>
                                             <th>Suppiler ID</th>
@@ -75,10 +76,6 @@
                         name: 'transaction_id'
                     },
                     {
-                        data: 'balance',
-                        name: 'balance'
-                    },
-                    {
                         data: 'amount',
                         name: 'amount'
                     },
@@ -100,6 +97,57 @@
                     },
                 ]
             });
+        });
+
+        $(document).on('click', '.delete_btn', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "هل انت متأكد ؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، احذفه"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    var transaction_id = $(this).attr('data-transaction-id');
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.supplier.transaction.destroy') }}",
+                        data: {
+                            'id': transaction_id
+                        },
+                        success: function(data) {
+                            Swal.fire({
+
+                                title: "تم الحذف ",
+                                text: "لقد تم حذف الملف الخاص بك",
+                                icon: "success"
+                            });
+
+
+
+                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
+                            $('#Supplier_Transaction').DataTable().ajax.reload();
+                        },
+                        error: function(reject) {
+
+                        }
+                    });
+
+                }
+            });
+
+
+
+
+
         });
 
 

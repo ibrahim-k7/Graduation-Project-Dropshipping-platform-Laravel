@@ -4,7 +4,9 @@
     المحفظة
 @endsection
 
-
+@section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 
 @section('Content')
     <main id="main" class="main">
@@ -92,9 +94,13 @@
                         name: 'phone_number'
                     },
                     {
+                        data: 'balance',
+                        name: 'balance'
+                    },
+                    /*{
                         data: 'trens',
                         name: 'SuplierTransactions.balance'
-                    },
+                    },*/
                     {
                         data: 'created_at',
                         name: 'created_at',
@@ -105,6 +111,57 @@
                     },
                 ]
             });
+
+
+        });
+
+        $(document).on('click', '.delete_btn', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "هل انت متأكد ؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، احذفه"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    var supplier_id = $(this).attr('data-supplier-id');
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.supplier.destroy') }}",
+                        data: {
+                            'id': supplier_id
+                        },
+                        success: function(data) {
+                            Swal.fire({
+
+                                title: "تم الحذف ",
+                                text: "لقد تم حذف الملف الخاص بك",
+                                icon: "success"
+                            });
+
+
+
+                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
+                            $('#Supplier_Managment').DataTable().ajax.reload();
+                        },
+                        error: function(reject) {
+
+                        }
+                    });
+
+                }
+            });
+
+
+
 
 
         });

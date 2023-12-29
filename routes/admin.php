@@ -3,7 +3,7 @@
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
-
+use App\Http\Controllers\SupplierTransactionController;
 use Illuminate\Support\Facades\Route;
 Route::get('/Dshboard', function () {
     return view('admin/dashboard');
@@ -17,11 +17,13 @@ Route::get('/suppliers_management', [SupplierController::class, 'index'])->name(
 Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
 Route::post('/suppliers_store', [SupplierController::class, 'store'])->name('admin.suppliers.store');
 Route::get('/create_supplire', [SupplierController::class, 'create'])->name('admin.suppliers.create');
+Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('admin.supplier.destroy');
 
 Route::get('/suppiler_transaction', [SupplierTransactionController::class, 'index'])->name('admin.suppliers.transaction');
 Route::get('/suppiler_transaction/data', [SupplierTransactionController::class, 'getDataTable'])->name('admin.suppliers.transaction.data');
 Route::get('/create_supplire_transaction', [SupplierTransactionController::class, 'create'])->name('admin.supplier.transaction.create');
 Route::post('/supplier_transaction_store', [SupplierTransactionController::class, 'store'])->name('admin.supplier.transaction.store');
+Route::post('/supplier_transaction_destroy', [SupplierTransactionController::class, 'destroy'])->name('admin.supplier.transaction.destroy');
 
 
 Route::prefix('admin')->group(function () {

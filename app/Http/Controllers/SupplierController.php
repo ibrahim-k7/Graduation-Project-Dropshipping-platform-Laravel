@@ -40,14 +40,15 @@ class SupplierController extends Controller
             $model = Supplier::with('SuplierTransactions');
             return DataTables::of($model)
             //عرض الرصيد الخاص بالمورد 
-            ->addColumn('trens', function (Supplier $supplier) {
+            /*->addColumn('trens', function (Supplier $supplier) {
                 $firstTransaction = $supplier->SuplierTransactions->last();
                 return $firstTransaction ? $firstTransaction->balance : null;
-            })
+            })*/
     
             ->addColumn('action', function ($row) {
                 return $btn = '
                 <a href="' . route('admin.suppliers.transaction', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" data-supplier-id="' . $row->sup_id . '" type="button" class="btn btn-info">عرض العمليات</a>
+                <a   data-supplier-id="' . $row->sup_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="" type="button" class="btn btn-info">Edit</a>
     
         ';
@@ -57,7 +58,7 @@ class SupplierController extends Controller
             ->make(true);   
     }
 
-    public function getSupplierTransactionsData($id)
+   /* public function getSupplierTransactionsData($id)
 {
     $transactions = SupplierTransaction::where('sup_id', $id)->get();
     return DataTables::of($transactions)->addIndexColumn()
@@ -69,7 +70,7 @@ class SupplierController extends Controller
     })
     ->rawColumns(['action'])
     ->make(true);
-}
+}*/
 
 
 
@@ -112,6 +113,7 @@ class SupplierController extends Controller
             'email' =>  $request->email,
             'address' =>  $request->address,
             'phone_number' =>  $request->phone,
+            'balance'=> 0,
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
         ]);
@@ -159,8 +161,14 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+       //return $request;
+        
+        $supplier = Supplier::where('sup_id', $request->id);
+
+        $supplier->delete();
+        
     }
 }

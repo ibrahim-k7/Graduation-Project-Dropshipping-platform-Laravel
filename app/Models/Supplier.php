@@ -13,7 +13,7 @@ class Supplier extends Model
     protected $table = "suppliers";
     //العناصر
     protected $fillable = [
-        'sup_id','name','email','address','phone_number','created_at','updated_at'
+        'sup_id','name','email','address','phone_number','balance','created_at','updated_at'
     ];
 
     public function SuplierTransactions(){
