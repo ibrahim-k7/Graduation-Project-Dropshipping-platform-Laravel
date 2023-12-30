@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddSupplierRequest;
+use App\Http\Requests\AddSupplierTransactionRequest;
 use App\Models\Supplier;
 use App\Models\SupplierTransaction;
 use Illuminate\Http\Request;
