@@ -80,61 +80,137 @@
 
 @section('js')
     <script>
-        $(document).on('click', '#submit', function(e) {
-            e.preventDefault();
+        $(document).ready(function() {
+            // عند تحميل الصفحة
 
-            //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
-            $('#name_error').text('');
-            $('#email_error').text('');
-            $('#phone_error').text('');
-            $('#address_error').text('');
+            var supplier = @json($supplier ?? null);
 
-            $.ajax({
-                type: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                url: "{{ route('admin.suppliers.store') }}",
-                data: {
-                    'name': $("input[name='name']").val(),
-                    'email': $("input[name='email']").val(),
-                    'phone': $("input[name='phone']").val(),
-                    'address': $("input[name='address']").val(),
-                },
-                success: function(data) {
+            if (supplier != null) {
+                $("#name").val(supplier.name);
+                $("#email").val(supplier.email);
+                $("#phone").val(supplier.phone_number);
+                $("#address").val(supplier.address);
 
-                    $("#form")[0].reset();
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "the new supplier has been saved",
-                        showConfirmButton: false,
-                        timer: 2000
+                $(document).on('click', '#submit', function(e) {
+                    e.preventDefault();
+
+                    //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
+                    $('#name_error').text('');
+                    $('#email_error').text('');
+                    $('#phone_error').text('');
+                    $('#address_error').text('');
+
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.supplier.update') }}",
+                        data: {
+                            'id' : supplier.sup_id,
+                            'name': $("input[name='name']").val(),
+                            'email': $("input[name='email']").val(),
+                            'phone_number': $("input[name='phone']").val(),
+                            'address': $("input[name='address']").val(),
+                        },
+                        success: function(data) {
+
+                            $("#form")[0].reset();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "the update has been saved",
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            console.log('suc: ' + data);
+                        },
+                        error: function(reject) {
+                            // var error = data.responseJSON;
+                            //console.log(error);
+
+                            //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
+                            var response = $.parseJSON(reject.responseText);
+                            $.each(response.errors, function(key, val) {
+                                $("#" + key + "_error").text(val[0]);
+
+
+                            });
+
+
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "error",
+                                title: "فشلت عملية التحديث",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
                     });
-                    console.log('suc: ' + data);
-                },
-                error: function(reject) {
-                    // var error = data.responseJSON;
-                    //console.log(error);
+                });
+            } else {
+                $(document).on('click', '#submit', function(e) {
+                    e.preventDefault();
 
-                    //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
-                    var response = $.parseJSON(reject.responseText);
-                    $.each(response.errors, function(key,val){
-                        $("#" + key + "_error").text(val[0]);
+                    //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
+                    $('#name_error').text('');
+                    $('#email_error').text('');
+                    $('#phone_error').text('');
+                    $('#address_error').text('');
 
-                        
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.suppliers.store') }}",
+                        data: {
+                            'name': $("input[name='name']").val(),
+                            'email': $("input[name='email']").val(),
+                            'phone_number': $("input[name='phone']").val(),
+                            'address': $("input[name='address']").val(),
+                        },
+                        success: function(data) {
+
+                            $("#form")[0].reset();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "the new supplier has been saved",
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            console.log('suc: ' + data);
+                        },
+                        error: function(reject) {
+                            // var error = data.responseJSON;
+                            //console.log(error);
+
+                            //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
+                            var response = $.parseJSON(reject.responseText);
+                            $.each(response.errors, function(key, val) {
+                                $("#" + key + "_error").text(val[0]);
+
+
+                            });
+
+
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "error",
+                                title: "فشلت عملية الإضافة",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
                     });
+                });
+            }
 
 
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "error",
-                        title: "فشلت عملية الإضافة",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            });
+            // قم بتحميل بيانات الموردين باستخدام AJAX
+
+
         });
     </script>
 @endsection

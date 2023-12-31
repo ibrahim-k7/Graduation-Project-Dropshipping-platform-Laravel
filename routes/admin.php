@@ -18,12 +18,17 @@ Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'
 Route::post('/suppliers_store', [SupplierController::class, 'store'])->name('admin.suppliers.store');
 Route::get('/create_supplire', [SupplierController::class, 'create'])->name('admin.suppliers.create');
 Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('admin.supplier.destroy');
+Route::get('/supplier_edit', [SupplierController::class, 'edit'])->name('admin.supplier.edit');
+Route::post('/supplier_update', [SupplierController::class, 'update'])->name('admin.supplier.update');
+Route::get('admin/supplier/getSuppliers', [SupplierController::class, 'getSuppliers'])->name('admin.supplier.getSuppliers');
 
 Route::get('/suppiler_transaction', [SupplierTransactionController::class, 'index'])->name('admin.suppliers.transaction');
 Route::get('/suppiler_transaction/data', [SupplierTransactionController::class, 'getDataTable'])->name('admin.suppliers.transaction.data');
 Route::get('/create_supplire_transaction', [SupplierTransactionController::class, 'create'])->name('admin.supplier.transaction.create');
 Route::post('/supplier_transaction_store', [SupplierTransactionController::class, 'store'])->name('admin.supplier.transaction.store');
 Route::post('/supplier_transaction_destroy', [SupplierTransactionController::class, 'destroy'])->name('admin.supplier.transaction.destroy');
+Route::get('/supplier_transaction_edit', [SupplierTransactionController::class, 'edit'])->name('admin.supplier.transaction.edit');
+Route::post('/supplier_transaction_update', [SupplierTransactionController::class, 'update'])->name('admin.supplier.transaction.update');
 
 
 Route::prefix('admin')->group(function () {

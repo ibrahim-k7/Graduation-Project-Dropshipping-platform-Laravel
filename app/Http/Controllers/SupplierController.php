@@ -24,9 +24,17 @@ class SupplierController extends Controller
         return  view('Admin.Suppliers.suppliers_management');
     }
 
+    public function getSuppliers()
+    {
+
+
+        $suppliers = Supplier::select('sup_id', 'name')->orderby("sup_id", "ASC")->get();
+        return response()->json($suppliers);
+    }
+
     public function getDataTable()
     {
-       /* $data = Supplier::select('*');
+        /* $data = Supplier::select('*');
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return $btn = '
@@ -38,28 +46,28 @@ class SupplierController extends Controller
             ->rawColumns(['action'])
             ->make(true);*/
 
-            $model = Supplier::with('SuplierTransactions');
-            return DataTables::of($model)
+        $model = Supplier::with('SuplierTransactions');
+        return DataTables::of($model)
             //عرض الرصيد الخاص بالمورد 
             /*->addColumn('trens', function (Supplier $supplier) {
                 $firstTransaction = $supplier->SuplierTransactions->last();
                 return $firstTransaction ? $firstTransaction->balance : null;
             })*/
-    
+
             ->addColumn('action', function ($row) {
                 return $btn = '
-                <a href="' . route('admin.suppliers.transaction', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" data-supplier-id="' . $row->sup_id . '" type="button" class="btn btn-info">عرض العمليات</a>
+                <a href="' . route('admin.suppliers.transaction', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-info">عرض العمليات</a>
                 <a   data-supplier-id="' . $row->sup_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                <a href="" type="button" class="btn btn-info">Edit</a>
+                <a href="' . route('admin.supplier.edit', ['id' => $row->sup_id]) . '"  type="button" class="btn btn-info">Edit</a>
     
         ';
             })
-    
+
             ->rawColumns(['action'])
-            ->make(true);   
+            ->make(true);
     }
 
-   /* public function getSupplierTransactionsData($id)
+    /* public function getSupplierTransactionsData($id)
 {
     $transactions = SupplierTransaction::where('sup_id', $id)->get();
     return DataTables::of($transactions)->addIndexColumn()
@@ -83,7 +91,6 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
 
         return view('Admin.Suppliers.insert_supplier');
     }
@@ -99,7 +106,7 @@ class SupplierController extends Controller
     public function store(AddSupplierRequest $request)
     {
 
-       /* $data['name'] =  $request->name;
+        /* $data['name'] =  $request->name;
         $data['email'] =  $request->email;
         $data['address'] = $request->address;
         $data['phone_number'] =  $request->phone;
@@ -108,13 +115,13 @@ class SupplierController extends Controller
 
         Supplier::create($data);*/
 
-        
+
         Supplier::create([
             'name' => $request->name,
             'email' =>  $request->email,
             'address' =>  $request->address,
-            'phone_number' =>  $request->phone,
-            'balance'=> 0,
+            'phone_number' =>  $request->phone_number,
+            'balance' => 0,
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
         ]);
@@ -139,9 +146,16 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        //  $id = $request->query('id');
+        // session(['myVariable' => $id]);
+        $supplier = Supplier::where('sup_id', $request->query('id'))->get()->first();
+
+        return view('Admin.Suppliers.insert_supplier', compact('supplier'));
+        //return dd($supplier->sup_id);
+
+
     }
 
     /**
@@ -151,9 +165,11 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AddSupplierRequest $request)
     {
-        //
+        // $supplier = Supplier::where('sup_id', $request->id)->get()->first();
+        $dataToUpdate = $request->except('id');
+        Supplier::where(['sup_id' => $request->id])->update($dataToUpdate);
     }
 
     /**
@@ -165,11 +181,10 @@ class SupplierController extends Controller
     public function destroy(Request $request)
     {
         //
-       //return $request;
-        
+        //return $request;
+
         $supplier = Supplier::where('sup_id', $request->id);
 
         $supplier->delete();
-        
     }
 }
