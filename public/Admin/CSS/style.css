@@ -3,6 +3,18 @@
   scroll-behavior: smooth;
 }
 
+.custom-add-button {
+  background-color: #4caf50; /* لون  */
+  color: #fff; /* لون النص */
+  border: none; /* إزالة الحدود إذا كان هناك حدود */
+  padding: 10px 20px; /* تعديل التباعد الداخلي حسب الحاجة */
+  cursor: pointer;
+}
+
+.custom-add-button:hover {
+  background-color: #45a049; /* تغيير لون الزر عند التحويم */
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;

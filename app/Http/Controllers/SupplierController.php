@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
+
 class SupplierController extends Controller
 {
     /**
@@ -26,8 +27,6 @@ class SupplierController extends Controller
 
     public function getSuppliers()
     {
-
-
         $suppliers = Supplier::select('sup_id', 'name')->orderby("sup_id", "ASC")->get();
         return response()->json($suppliers);
     }
@@ -48,21 +47,21 @@ class SupplierController extends Controller
 
         $model = Supplier::with('SuplierTransactions');
         return DataTables::of($model)
-            //عرض الرصيد الخاص بالمورد 
+            //عرض الرصيد الخاص بالمورد
             /*->addColumn('trens', function (Supplier $supplier) {
                 $firstTransaction = $supplier->SuplierTransactions->last();
                 return $firstTransaction ? $firstTransaction->balance : null;
             })*/
 
             ->addColumn('action', function ($row) {
-                return $btn = '
-                <a href="' . route('admin.suppliers.transaction', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-info">عرض العمليات</a>
+                return $btn = '<div class="btn-group" role="group">
+                <a href="' . route('admin.suppliers.transaction', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-primary">العمليات</a>
+                <a href="' . route('admin.supplier.edit', ['id' => $row->sup_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a   data-supplier-id="' . $row->sup_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                <a href="' . route('admin.supplier.edit', ['id' => $row->sup_id]) . '"  type="button" class="btn btn-info">Edit</a>
+                </div>
     
         ';
             })
-
             ->rawColumns(['action'])
             ->make(true);
     }

@@ -23,10 +23,13 @@ class SupplierTransactionController extends Controller
         session(['myVariable' => $id]);
         return view('Admin.Suppliers.suppliers_transaction');
     }
+
+
+
     public function getDataTable()
     {
         if (session('myVariable') === null) {
-            $data = SupplierTransaction::select('*');
+            $data = SupplierTransaction::with('supplier');
         } else {
             $id = session('myVariable');
             $data = SupplierTransaction::where('sup_id', $id)->select('*')->get();
@@ -36,11 +39,14 @@ class SupplierTransactionController extends Controller
 
 
         return DataTables::of($data)->addIndexColumn()
+            ->addColumn('supplier', function (SupplierTransaction $supplierTransaction) {
+                return $result = $supplierTransaction->supplier->name;
+            })
             ->addColumn('action', function ($row) {
-                return $btn = '
+                return $btn = '<div class="btn-group" role="group">
+                <a href="' . route('admin.supplier.transaction.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a   id="delete_btn" data-transaction-id="' . $row->transaction_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                <a href="' . route('admin.supplier.transaction.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-info">Edit</a>
-
+                </div>
             ';
             })
 
@@ -58,7 +64,13 @@ class SupplierTransactionController extends Controller
     public function create()
     {
         //
-        return view('Admin.Suppliers.insert_transaction');
+         return view('Admin.Suppliers.insert_transaction');
+      /*  $data = SupplierTransaction::with('supplier')->where('transaction_id', 25)->get();
+                $supplier =$data[0]->supplier->value('name');
+                
+                return dd($supplier);*/
+            
+        
     }
 
     /**
@@ -130,58 +142,46 @@ class SupplierTransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     // والله في غلط ف الحسابات سوو نفسكم ما تشوفو الى ان ربك يفرجها
+    // والله في غلط ف الحسابات سوو نفسكم ما تشوفو الى ان ربك يفرجها
     public function update(AddSupplierTransactionRequest $request)
     {
-         // الحصول على الـ balance الحالية
-    $balance = Supplier::where('sup_id', $request->sup_id)->value('balance');
-    $supplierTransaction = SupplierTransaction::where(['transaction_id' => $request->id]);
+        // الحصول على الـ balance الحالية
+        $balance = Supplier::where('sup_id', $request->sup_id)->value('balance');
+        $supplierTransaction = SupplierTransaction::where(['transaction_id' => $request->id]);
 
-    // حسب نوع المعاملة، قم بحساب القيمة الجديدة للـ balance
-    if ($request->amount !==   $supplierTransaction->value('amount')) {
-        $dfAmount = abs($request->amount -  $supplierTransaction->value('amount'));
+        //$dfAmount = abs($request->amount -  $supplierTransaction->value('amount'));
 
-        // حساب الـ newBalance بناءً على نوع المعاملة
-        if ($request->transaction_type == 1) {
+        // في حال حصل تحديث لقيمة amount
+        if ($request->amount !==  $supplierTransaction->value('amount')) {
+
+            // حسب نوع المعاملة، قم بحساب القيمة الجديدة للـ balance
+
             // إذا كان نوع المعاملة هو سداد
-            $newBalance = $balance - $dfAmount;
-        } elseif ($request->transaction_type == 2) {
-            // إذا كان نوع المعاملة هو خصم
-            $newBalance = $balance + $dfAmount;
-        }
+            if ($request->transaction_type == 1) {
+                if ($request->amount > $supplierTransaction->value('amount')) {
+                    $dfAmount = $supplierTransaction->value('amount') - $request->amount;
+                    $newBalance = $balance - $dfAmount;
+                } else {
+                    $dfAmount =  $request->amount - $supplierTransaction->value('amount');
+                    $newBalance = $balance + $dfAmount;
+                }
+                // إذا كان نوع المعاملة هو خصم
+            } elseif ($request->transaction_type == 2) {
+                if ($supplierTransaction->value('amount') > $request->amount) {
+                    $dfAmount = $supplierTransaction->value('amount') - $request->amount;
+                    $newBalance = $balance + $dfAmount;
+                } else {
+                    $dfAmount =  $request->amount - $supplierTransaction->value('amount');
+                    $newBalance = $balance - $dfAmount;
+                }
 
-        // تحديث قيمة الـ balance في جدول Supplier
-        Supplier::where('sup_id', $request->sup_id)->update(['balance' => $newBalance]);
-
-        // تحديث قيمة الـ amount في جدول SupplierTransaction
-        $supplierTransaction->update(['amount' => $request->amount]);
-    }
-
-   /* if ($request->amount !==  $supplierTransaction->value('amount')) {
-        // إذا كان نوع المعاملة هو سداد
-        if ($request->transaction_type == 1) {
-            if ($request->amount > $supplierTransaction->value('amount')) {
-                $dfAmount = $supplierTransaction->value('amount') - $request->amount;
-                $newBalance = $balance - $dfAmount;
-            } else {
-                $dfAmount = $supplierTransaction->value('amount') - $request->amount;
-                $newBalance = $balance - $dfAmount;
+                //  $newBalance = $balance - $request->amount;
             }
-            // إذا كان نوع المعاملة هو خصم
-        } elseif ($request->transaction_type == 2) {
-            if ($request->amount > $supplierTransaction->value('amount')) {
-                $dfAmount = $request->amount - $supplierTransaction->value('amount');
-                $newBalance = $balance + $dfAmount;
-            } else {
-                $dfAmount = $supplierTransaction->value('amount') - $request->amount;
-                $newBalance = $balance + $dfAmount;
-            }
-
-            $newBalance = $balance - $request->amount;
+            // تحديث قيمة الـ balance في جدول Supplier
+            Supplier::where('sup_id', $request->sup_id)->update(['balance' => $newBalance]);
+            // تحديث قيمة الـ amount في جدول SupplierTransaction
+            $supplierTransaction->update(['amount' => $request->amount]);
         }
-        // تحديث قيمة الـ balance في جدول Supplier
-        Supplier::where('sup_id', $request->sup_id)->update(['balance' => $newBalance]);
-    }*/
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    المحفظة
+    الموردين
 @endsection
 
 @section('css')
@@ -12,7 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Wallet</h1>
+            <h1>الموردين</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -28,7 +28,6 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Datatables</h5>
                             <p></p>
 
                             <div class="table-responsive">
@@ -73,6 +72,40 @@
                     [0, "desc"]
                 ],
                 ajax: "{{ Route('admin.suppliers.data') }}",
+                dom: 'Bfrltip',
+                buttons: [{
+                        text: 'Add',
+                        className: 'custom-add-button',
+                        action: function(e, dt, node, config) {
+                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                    window.location.href = "{{ route('admin.suppliers.create') }}";
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                        }
+                    }, {
+                        extend: 'print',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                        }
+                    }
+                ],
                 columns: [{
                         data: 'sup_id',
                         name: 'sup_id'
@@ -104,14 +137,19 @@
                     {
                         data: 'created_at',
                         name: 'created_at',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
+
                     },
                     {
                         data: 'action',
                         name: 'action'
                     },
                 ]
-            });
 
+            });
 
         });
 

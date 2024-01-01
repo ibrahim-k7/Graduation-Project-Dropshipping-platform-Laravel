@@ -28,19 +28,19 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"></h5>
                             <p></p>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Supplier_Transaction" cellspacing="0" class="display">
+                                <table id="Supplier_Transaction" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID </th>
                                             <th>Amount</th>
                                             <th>Transaction Type</th>
                                             <th>Suppiler ID</th>
-                                            <th>Created At</th>
+                                            <th>Suppiler name</th>
+                                            <th id="test">Created At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -71,6 +71,41 @@
                     [0, "desc"]
                 ],
                 ajax: "{{ Route('admin.suppliers.transaction.data') }}",
+                dom: 'Bfrltip',
+                buttons: [{
+                        text: 'Add',
+                        className: 'custom-add-button',
+                        action: function(e, dt, node, config) {
+                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                            window.location.href =
+                                "{{ route('admin.supplier.transaction.create') }}";
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        }
+                    }, {
+                        extend: 'print',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        }
+                    }
+                ],
                 columns: [{
                         data: 'transaction_id',
                         name: 'transaction_id'
@@ -88,8 +123,18 @@
                         name: 'sup_id'
                     },
                     {
+                        data: 'supplier',
+                        name: 'supplier'
+
+                    },
+                    {
                         data: 'created_at',
-                        name: 'created_at'
+                        name: 'created_at',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
+
                     },
                     {
                         data: 'action',
@@ -143,6 +188,7 @@
 
                 }
             });
+
 
 
 

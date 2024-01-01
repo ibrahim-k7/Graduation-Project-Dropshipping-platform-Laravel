@@ -15,7 +15,8 @@ class SupplierTransaction extends Model
         'transaction_id','sup_id','amount','transaction_type','created_at','updated_at'
     ];
 
-    public function supplier(){
-        return $this -> belongsTo('App\Models\Supplier','sup_id ','sup_id');
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'sup_id', 'sup_id');
     }
 }
