@@ -275,11 +275,11 @@
             </li><!-- End Forms Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Suppliers</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#Suppliers-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-journal-text"></i><span>Suppliers</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="Suppliers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{ Route('admin.suppliers') }}">
                             <i class="bi bi-circle"></i><span>Suppliers Management</span>
@@ -303,6 +303,45 @@
                     <li>
                         <a href="/simple">
                             <i class="bi bi-circle"></i><span>Simple</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Wallet-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Wallet</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="Wallet-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.wallets') }}">
+                            <i class="bi bi-circle"></i><span>Wallet Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.wallets.operation') }}">
+                            <i class="bi bi-circle"></i><span>Wallet Operation</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Transfers-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>الحوالات</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="Transfers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.transfers') }}">
+                            <i class="bi bi-circle"></i><span>ادارة الحوالات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.wallets.operation') }}">
+                            <i class="bi bi-circle"></i><span>Wallet Operation</span>
                         </a>
                     </li>
                 </ul>

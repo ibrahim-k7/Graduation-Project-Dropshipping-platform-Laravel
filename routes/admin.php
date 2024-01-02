@@ -4,6 +4,9 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierTransactionController;
+use App\Http\Controllers\TransferController;
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\WalletOperationController;
 use Illuminate\Support\Facades\Route;
 Route::get('/Dshboard', function () {
     return view('admin/dashboard');
@@ -14,7 +17,7 @@ Route::get('/Dshboard', function () {
 });*/
 
 Route::get('/suppliers_management', [SupplierController::class, 'index'])->name('admin.suppliers');
-Route::get('/suppliers_management/a', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
+Route::get('/suppliers_management/data', [SupplierController::class, 'getDataTable'])->name('admin.suppliers.data');
 Route::post('/suppliers_store', [SupplierController::class, 'store'])->name('admin.suppliers.store');
 Route::get('/create_supplire', [SupplierController::class, 'create'])->name('admin.suppliers.create');
 Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('admin.supplier.destroy');
@@ -30,6 +33,18 @@ Route::post('/supplier_transaction_destroy', [SupplierTransactionController::cla
 Route::get('/supplier_transaction_edit', [SupplierTransactionController::class, 'edit'])->name('admin.supplier.transaction.edit');
 Route::post('/supplier_transaction_update', [SupplierTransactionController::class, 'update'])->name('admin.supplier.transaction.update');
 
+Route::get('/wallet_management', [WalletController::class, 'index'])->name('admin.wallets');
+Route::get('/wallet_management/data', [WalletController::class, 'getDataTable'])->name('admin.wallets.data');
+Route::get('/wallet/getWallets', [WalletController::class, 'getWallets'])->name('admin.wallets.getWallets');
+
+Route::get('/wallet_operation', [WalletOperationController::class, 'index'])->name('admin.wallets.operation');
+Route::get('/wallet_operation/data', [WalletOperationController::class, 'getDataTable'])->name('admin.wallets.operation.data');
+Route::get('/wallet_operation/create', [WalletOperationController::class, 'create'])->name('admin.wallets.operation.create');
+Route::post('/wallet_operation/store', [WalletOperationController::class, 'store'])->name('admin.wallets.operation.store');
+
+Route::get('/transfers', [TransferController::class, 'index'])->name('admin.transfers');
+Route::get('/transfers_management/data', [TransferController::class, 'getDataTable'])->name('admin.transfers.data');
+Route::post('/transfers/update', [TransferController::class, 'update'])->name('admin.transfers.update');
 
 Route::prefix('admin')->group(function () {
 
