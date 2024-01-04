@@ -20,4 +20,8 @@ class Supplier extends Model
         return $this -> hasMany('App\Models\SupplierTransaction','sup_id','sup_id');
     }
 
+    public function SuplierPurchases(){
+        return $this -> hasMany(Purchase::class,'sup_id','sup_id');
+    }
+
 }

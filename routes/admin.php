@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
@@ -48,10 +49,15 @@ Route::post('/transfers/update', [TransferController::class, 'update'])->name('a
 
 Route::prefix('admin')->group(function () {
 
+
+    Route::get('admin/product/getProducts', [ProductController::class, 'getProducts'])->name('admin.product.getProducts');
+
+
     // Purchase Routes
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.purchase.index');
+    Route::get('/purchase/data', [PurchaseController::class, 'getDataTable'])->name('admin.purchase.data');
     Route::get('/purchase/create', [PurchaseController::class, 'create'])->name('admin.purchase.create');
-    Route::post('/purchase', [PurchaseController::class, 'store'])->name('admin.purchase.store');
+    Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('admin.purchase.store');
     Route::get('/purchase/edit/{id}', [PurchaseController::class, 'edit'])->name('admin.purchase.edit');
     Route::put('/purchase/update/{id}', [PurchaseController::class, 'update'])->name('admin.purchase.update');
 
@@ -63,7 +69,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/purchase/process-return', [PurchaseController::class, 'processReturn'])->name('admin.purchase.processReturn');
 
     // Missing Purchase Data Route
-    Route::get('/purchase/data', [PurchaseController::class, 'getData'])->name('admin.purchase.data');
+   // Route::get('/purchase/data', [PurchaseController::class, 'getData'])->name('admin.purchase.data');
 });
 
 
