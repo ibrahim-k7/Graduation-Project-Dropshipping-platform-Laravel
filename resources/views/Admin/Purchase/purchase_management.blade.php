@@ -174,7 +174,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.supplier.destroy') }}",
+                        url: "{{ route('admin.suppliers.destroy') }}",
                         data: {
                             'id': supplier_id
                         },

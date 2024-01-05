@@ -31,7 +31,7 @@ class PurchaseController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a href="' . route('admin.supplier.transaction.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
+                <a href="' . route('admin.suppliers.transactions.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a   id="delete_btn" data-transaction-id="' . $row->transaction_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>
             ';
