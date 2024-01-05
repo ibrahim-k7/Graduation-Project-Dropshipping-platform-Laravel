@@ -66,20 +66,6 @@ class SupplierController extends Controller
             ->make(true);
     }
 
-    /* public function getSupplierTransactionsData($id)
-{
-    $transactions = SupplierTransaction::where('sup_id', $id)->get();
-    return DataTables::of($transactions)->addIndexColumn()
-    ->addColumn('action', function ($row) {
-        return $btn = '
-    <a  type="button" id="ff" data-supplier-id="' . $row->id . '"  onclick="changeVar()" class="btn btn-info">عرض العمليات</a>
-    <a href="' . Route('admin.suppliers.create',$row->id) . '" type="button" class="btn btn-info">Edit</a>
-    ';
-    })
-    ->rawColumns(['action'])
-    ->make(true);
-}*/
-
 
 
 
@@ -179,11 +165,14 @@ class SupplierController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
-        //return $request;
-
         $supplier = Supplier::where('sup_id', $request->id);
+        $balance =$supplier->value('balance');
 
+        if($balance !== 0.0){
+            abort(400, 'فشلت العملية بسبب وجود رصيد للمورد ');
+        }
+        else{
         $supplier->delete();
+        }
     }
 }

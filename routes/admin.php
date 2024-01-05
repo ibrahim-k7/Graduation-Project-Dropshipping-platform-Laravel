@@ -6,6 +6,7 @@ use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierTransactionController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\TransferInformationController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,18 @@ Route::prefix('/admin')->group(function () {
             Route::get('/wallet_management', 'index')->name('admin.wallets');
             Route::get('/wallet_management/data', 'getDataTable')->name('admin.wallets.data');
             Route::get('/wallet_management/getWallets', 'getWallets')->name('admin.wallets.getWallets');
+        }
+    );
+
+    Route::controller(TransferInformationController::class)->group(
+        function () {
+            Route::get('/transfer_info', 'index')->name('admin.transfer.info');
+            Route::get('/transfer_info/data', 'getDataTable')->name('admin.transfer.info.data');
+            Route::get('/transfer_info/create', 'create')->name('admin.transfer.info.create');
+            Route::get('/transfer_info/edit', 'edit')->name('admin.transfer.info.edit');
+            Route::post('/transfer_info/store', 'store')->name('admin.transfer.info.store');
+            Route::post('/transfer_info/update', 'update')->name('admin.transfer.info.update');
+            Route::post('/transfer_info/destroy', 'destroy')->name('admin.transfer.info.destroy');
         }
     );
 

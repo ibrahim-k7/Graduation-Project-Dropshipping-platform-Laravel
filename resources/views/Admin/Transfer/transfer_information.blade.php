@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    الموردين
+    معلومات التحويل
 @endsection
 
 @section('css')
@@ -12,7 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>الموردين</h1>
+            <h1>معلومات التحويل</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -23,25 +23,26 @@
         </div><!-- End Page Title -->
 
         <section class="section">
+
             <div class="row">
                 <div class="col-lg-12">
 
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">سيتم عرض اخر حقل تمت اضافتة للعميل عند عرضه لمعلومات التحويل</h5>
                             <p></p>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Supplier_Managment" class="table table-striped">
+                                <table id="Transfer_Information" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th id="id_column">ID</th>
-                                            <th id="name_column">Name</th>
-                                            <th id="email_column">Email</th>
-                                            <th>Address</th>
-                                            <th>Phone Number</th>
-                                            <th>Balance</th>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Transfer Network</th>
                                             <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -65,75 +66,63 @@
     <script type="text/javascript">
         $(function() {
 
-            var supplier_data = $('#Supplier_Managment').DataTable({
+            var transferInfo_data = $('#Transfer_Information').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [
                     [0, "desc"]
                 ],
-                ajax: "{{ Route('admin.suppliers.data') }}",
+                ajax: "{{ Route('admin.transfer.info.data') }}",
                 dom: 'Bfrltip',
                 buttons: [{
                         text: 'Add',
                         className: 'custom-add-button',
                         action: function(e, dt, node, config) {
                              // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                    window.location.href = "{{ route('admin.suppliers.create') }}";
+                    window.location.href = "{{ route('admin.transfer.info.create') }}";
                         }
                     },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                         }
                     }, {
                         extend: 'print',
                         autoPrint: false,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                         }
                     }
                 ],
                 columns: [{
-                        data: 'sup_id',
-                        name: 'sup_id'
+                        data: 'transfer_info_id',
+                        name: 'transfer_info_id'
                     },
                     {
                         data: 'name',
                         name: 'name'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'phone',
+                        name: 'phone'
                     },
                     {
-                        data: 'address',
-                        name: 'address'
+                        data: 'transfer_network',
+                        name: 'transfer_network'
                     },
-                    {
-                        data: 'phone_number',
-                        name: 'phone_number'
-                    },
-                    {
-                        data: 'balance',
-                        name: 'balance'
-                    },
-                    /*{
-                        data: 'trens',
-                        name: 'SuplierTransactions.balance'
-                    },*/
                     {
                         data: 'created_at',
                         name: 'created_at',
@@ -141,15 +130,23 @@
                             // تنسيق التاريخ باستخدام moment.js
                             return moment(data).format('YYYY-MM-DD HH:mm:ss');
                         }
-
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
                     {
                         data: 'action',
-                        name: 'action'
+                        name: 'action',
                     },
                 ]
 
             });
+
 
         });
 
@@ -166,35 +163,28 @@
                 confirmButtonText: "نعم، احذفه"
             }).then((result) => {
                 if (result.isConfirmed) {
-
-                    var supplier_id = $(this).attr('data-supplier-id');
+                    var transferInfo_id = $(this).attr('data-transfer_info-id');
                     $.ajax({
                         type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.suppliers.destroy') }}",
+                        url: "{{ route('admin.transfer.info.destroy') }}",
                         data: {
-                            'id': supplier_id
+                            'id': transferInfo_id,
                         },
                         success: function(data) {
                             Swal.fire({
-
                                 title: "تم الحذف ",
-                                text: "لقد تم حذف الملف الخاص بك",
+                                text: "لقد تم الحذف بنجاح ",
                                 icon: "success"
                             });
 
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                            $('#Supplier_Managment').DataTable().ajax.reload();
+                            $('#Transfer_Information').DataTable().ajax.reload();
                         },
-                        error: function(reject) {
+                        error: function(xhr, status, error) {
 
-                            Swal.fire({
-                                title: "فشلت عملية الحذف",
-                                text: "لا يمكن حذف مورد لدية رصيد",
-                                icon: "error"
-                            });
                         }
                     });
 
@@ -206,17 +196,5 @@
 
 
         });
-
-
-
-
-
-
-        /* $(document).ready(function(){
-             $('#wallet_table_id').DataTable({
-               
-
-             });
-         });*/
     </script>
 @endsection

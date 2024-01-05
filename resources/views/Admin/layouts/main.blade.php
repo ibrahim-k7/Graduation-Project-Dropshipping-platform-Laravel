@@ -340,8 +340,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ Route('admin.wallets.operation') }}">
-                            <i class="bi bi-circle"></i><span>Wallet Operation</span>
+                        <a href="{{ Route('admin.transfer.info') }}">
+                            <i class="bi bi-circle"></i><span>معلومات التحويل</span>
                         </a>
                     </li>
                 </ul>
