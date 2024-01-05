@@ -37,13 +37,13 @@ class WalletOperationController extends Controller
         }
 
         //$data = Supplier::select('*');
-        
+
         return DataTables::of($model)
 
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a href="' . route('admin.supplier.edit', ['id' => $row->sup_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
-                <a   data-supplier-id="' . $row->sup_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a href="' . route('admin.wallets.operation.edit', ['id' => $row->wallet_operation_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
+                <a   data-wallet_operation-id="' . $row->wallet_operation_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>
     
         ';
@@ -81,11 +81,11 @@ class WalletOperationController extends Controller
         if ($request->operation_type == 1) {
             // إذا كان نوع المعاملة هو ايداع
             $newBalance = $balance + $request->amount;
-            $request->merge(['operation_type' => "سداد"]);
+            $request->merge(['operation_type' => "ايداع"]);
         } elseif ($request->operation_type == 2) {
             // إذا كان نوع المعاملة هو خصم
             $newBalance = $balance - $request->amount;
-            $request->merge(['operation_type' => "خصم"]);
+            $request->merge(['operation_type' => "سحب"]);
         }
 
         // إنشاء سجل في جدول WalletOperation
@@ -118,9 +118,12 @@ class WalletOperationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
+        $walletOperation = WalletOperation::where('wallet_operation_id', $request->query('id'))->get()->first();
+
+        return view('Admin.Wallet.insert_operation', compact('walletOperation'));
     }
 
     /**
@@ -130,9 +133,42 @@ class WalletOperationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AddWalletOperationRequest $request)
     {
-        //
+        // الحصول على الـ balance الحالية
+        $balance = Wallet::where('wallet_id', $request->wallet_id)->value('balance');
+        $walletOperation = WalletOperation::where(['wallet_operation_id' => $request->id]);
+
+
+        // في حال حصل تحديث لقيمة amount
+        if ($request->amount !==  $walletOperation->value('amount')) {
+
+            // حسب نوع المعاملة، قم بحساب القيمة الجديدة للـ balance
+
+            // إذا كان نوع المعاملة هو سداد
+            if ($request->operation_type == 1) {
+                if ($request->amount > $walletOperation->value('amount')) {
+                    $dfAmount = $walletOperation->value('amount') - $request->amount;
+                    $newBalance = $balance - $dfAmount;
+                } else {
+                    $dfAmount =  $request->amount - $walletOperation->value('amount');
+                    $newBalance = $balance + $dfAmount;
+                }
+                // إذا كان نوع المعاملة هو خصم
+            } elseif ($request->operation_type == 2) {
+                if ($walletOperation->value('amount') > $request->amount) {
+                    $dfAmount = $walletOperation->value('amount') - $request->amount;
+                    $newBalance = $balance + $dfAmount;
+                } else {
+                    $dfAmount =  $request->amount - $walletOperation->value('amount');
+                    $newBalance = $balance - $dfAmount;
+                }
+            }
+            // تحديث قيمة الـ balance في جدول Wallet
+            Wallet::where('wallet_id', $request->wallet_id)->update(['balance' => $newBalance]);
+            // تحديث قيمة الـ amount في جدول walletOperation
+            $walletOperation->update(['amount' => $request->amount]);
+        }
     }
 
     /**
@@ -141,8 +177,28 @@ class WalletOperationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        // الحصول على بيانات المعاملة التي ستُحذف
+        $walletOperation = WalletOperation::where('wallet_operation_id', $request->id);
+
+        // قيمة amount و operation_type للمعاملة المراد حذفها
+        $amount =  $walletOperation->value('amount');
+
+        $operation_type = $walletOperation->value('operation_type');
+
+        $balance = Wallet::where('wallet_id', $walletOperation->value('wallet_id'))->value('balance');
+        // حساب القيمة الجديدة لـ balance بناءً على operation_type
+        if ($operation_type == "ايداع") {
+            $newBalance = $balance - $amount;
+        } elseif ($operation_type == "سحب") {
+            $newBalance = $balance + $amount;
+        }
+
+        // تحديث قيمة الـ balance في جدول Wallet
+        Wallet::where('wallet_id', $walletOperation->value('wallet_id'))->update(['balance' => $newBalance]);
+
+        // حذف بيانات المعاملة
+        $walletOperation->delete();
     }
 }

@@ -35,8 +35,8 @@
                                 <table id="Wallet_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th id="id_column">ID</th>
-                                            <th id="name_column">Balance</th>
+                                            <th>ID</th>
+                                            <th>Balance</th>
                                             <th>Store Name</th>
                                             <th>Store ID</th>
                                             <th>Created At</th>
@@ -63,7 +63,7 @@
     <script type="text/javascript">
         $(function() {
 
-            var supplier_data = $('#Wallet_Managment').DataTable({
+            var wallet_data = $('#Wallet_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [
@@ -75,25 +75,25 @@
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                         }
                     }, {
                         extend: 'print',
                         autoPrint: false,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                         }
                     }
                 ],

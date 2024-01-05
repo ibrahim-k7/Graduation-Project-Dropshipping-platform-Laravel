@@ -67,7 +67,9 @@
 
 @section('js')
     <script type="text/javascript">
-        function updateTransferStatus(transfer_id, status) {
+        //دالة تحديث حالة الحوالة
+        function updateTransferStatus(transfer_id, status, transfer_number = null, amount_transferred = null, wallet_id =
+            null) {
             $.ajax({
                 type: 'post',
                 headers: {
@@ -77,6 +79,9 @@
                 data: {
                     'id': transfer_id,
                     'transfer_status': status,
+                    'amount_transferred': amount_transferred,
+                    'transfer_number': transfer_number,
+                    'wallet_id': wallet_id,
                 },
                 success: function(data) {
                     Swal.fire({
@@ -99,6 +104,9 @@
 
             var transfer_id = $(this).attr('data-transfer-id');
             var status = $(this).attr('data-status');
+            var transfer_number = $(this).attr('data-transfer_number');
+            var amount_transferred = $(this).attr('data-amount_transferred');
+            var wallet_id = $(this).attr('data-wallet_id');
 
             Swal.fire({
                 title: "هل أنت متأكد؟",
@@ -111,14 +119,15 @@
                 confirmButtonText: "نعم، قم بتغيير الحالة"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    updateTransferStatus(transfer_id, status);
+                    updateTransferStatus(transfer_id, status, transfer_number, amount_transferred,
+                        wallet_id);
                 }
             });
         });
 
         $(function() {
 
-            var supplier_data = $('#Transfer_Managment').DataTable({
+            var transfer_data = $('#Transfer_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [
@@ -129,25 +138,25 @@
                 buttons: [{
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Column index which needs to export
                         }
                     }, {
                         extend: 'print',
                         autoPrint: false,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Column index which needs to export
                         }
                     }
                 ],
@@ -212,11 +221,69 @@
                     },
                     {
                         data: 'action',
-                        name: 'action'
+                        name: 'action',
                     },
                 ]
 
             });
+
+
+        });
+
+        $(document).on('click', '.delete_btn', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "هل انت متأكد ؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، احذفه"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var transfer_status = $(this).attr('data-transfer_status');
+                    var transfer_id = $(this).attr('data-transfer-id');
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.transfers.destroy') }}",
+                        data: {
+                            'id': transfer_id,
+                            'status': transfer_status,
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "تم الحذف ",
+                                text: "لقد تم حذف الملف الخاص بك",
+                                icon: "success"
+                            });
+
+                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
+                            $('#Transfer_Managment').DataTable().ajax.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            var errorMessage = xhr
+                            .responseText;
+                            
+                            Swal.fire({
+                                title: "فشلت عملية الحذف",
+                                text: "لا يمكن حذف حوالة تمت الموافقة عليها",
+                                icon: "error"
+                            });// هنا ستحتوي على "فشلت العملية بسبب حالة 'موافقة'"
+                            // إجراءات إضافية للتعامل مع الخطأ...
+                        }
+                    });
+
+                }
+            });
+
+
+
+
 
         });
     </script>

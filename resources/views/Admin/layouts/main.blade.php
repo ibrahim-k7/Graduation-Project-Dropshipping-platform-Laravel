@@ -291,12 +291,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ Route('admin.suppliers.transaction') }}">
+                        <a href="{{ Route('admin.suppliers.transactions') }}">
                             <i class="bi bi-circle"></i><span>Suppliers Transactions</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ Route('admin.supplier.transaction.create') }}">
+                        <a href="{{ Route('admin.suppliers.transactions.create') }}">
                             <i class="bi bi-circle"></i><span>Insert New Suppliers Transaction</span>
                         </a>
                     </li>

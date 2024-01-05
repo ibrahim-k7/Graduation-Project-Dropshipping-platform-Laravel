@@ -47,7 +47,7 @@
                                             <label class="mb-2" for="form-label">نوع العملية</label>
                                             <select class="form-select" aria-label="State" id="operation_type"
                                                 name="operation_type">
-                                                <option value="">اختر نوع العملية</option>
+                                                <option >اختر نوع العملية</option>
                                                 <option value="1">ايداع</option>
                                                 <option value="2">سحب</option>
                                             </select>
@@ -116,29 +116,29 @@
 
             if (walletOperation != null) {
 
-                if (walletOperation.transaction_type == "ايداع") {
-                    walletOperation.transaction_type = 1
-                } else {
-                    walletOperation.transaction_type = 2
-                }
+                if (walletOperation.operation_type == "ايداع") {
+                walletOperation.operation_type = 1
+            } else {
+                walletOperation.operation_type = 2
+            }
 
                 // Disable the select element
                 $('#wallet_id').prop('disabled', true);
                 // Find the option and make it selected
-                $('#sup_id option[value="' + supplierTransaction.sup_id + '"]').prop('selected', true);
+                $('#wallet_id option[value="' + walletOperation.wallet_id + '"]').prop('selected', true);
                 // Optionally, make other options disabled to prevent selection changes
-                $('#sup_id option').not(':selected').prop('disabled', true);
-                $('#transaction_type').prop('disabled', true);
-                $('#transaction_type option[value="' + supplierTransaction.transaction_type + '"]').prop('selected',
+                $('#wallet_id option').not(':selected').prop('disabled', true);
+                $('#operation_type').prop('disabled', true);
+                $('#operation_type option[value="' + walletOperation.operation_type + '"]').prop('selected',
                     true);
-                $('#transaction_type option').not(':selected').prop('disabled', true);
-                $("#amount").val(supplierTransaction.amount);
+                $('#operation_type option').not(':selected').prop('disabled', true);
+                $("#amount").val(walletOperation.amount);
+                $("#details").val(walletOperation.details);
 
                 $(document).on('click', '#submit', function(e) {
                     e.preventDefault();
-
                     //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
-                    $('#transaction_type_error').text('');
+                    $('#details_error').text('');
                     $('#amount_error').text('');
 
                     $.ajax({
@@ -146,12 +146,14 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.supplier.transaction.update') }}",
+                        url: "{{ route('admin.wallets.operation.update') }}",
                         data: {
-                            'sup_id': supplierTransaction.sup_id,
-                            'id': supplierTransaction.transaction_id,
-                            'transaction_type': $("select[name='transaction_type']").val(),
+                            'wallet_id': walletOperation.wallet_id,
+                            'id': walletOperation.wallet_operation_id,
+                            'operation_type': $("select[name='operation_type']").val(),
+                            'details': $("input[name='details']").val(),
                             'amount': $("input[name='amount']").val(),
+                            
 
                         },
                         success: function(data) {

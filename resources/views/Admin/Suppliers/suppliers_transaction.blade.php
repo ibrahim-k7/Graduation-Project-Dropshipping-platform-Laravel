@@ -70,7 +70,7 @@
                 order: [
                     [0, "desc"]
                 ],
-                ajax: "{{ Route('admin.suppliers.transaction.data') }}",
+                ajax: "{{ Route('admin.suppliers.transactions.data') }}",
                 dom: 'Bfrltip',
                 buttons: [{
                         text: 'Add',
@@ -78,7 +78,7 @@
                         action: function(e, dt, node, config) {
                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
                             window.location.href =
-                                "{{ route('admin.supplier.transaction.create') }}";
+                                "{{ route('admin.suppliers.transactions.create') }}";
                         }
                     },
                     {
@@ -163,7 +163,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.supplier.transaction.destroy') }}",
+                        url: "{{ route('admin.suppliers.transactions.destroy') }}",
                         data: {
                             'id': transaction_id
                         },

@@ -105,7 +105,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.supplier.update') }}",
+                        url: "{{ route('admin.suppliers.update') }}",
                         data: {
                             'id' : supplier.sup_id,
                             'name': $("input[name='name']").val(),

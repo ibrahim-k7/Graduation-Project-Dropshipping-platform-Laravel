@@ -92,7 +92,7 @@
             // قم بتحميل بيانات الموردين باستخدام AJAX
             $.ajax({
                 type: 'get',
-                url: "{{ route('admin.supplier.getSuppliers') }}",
+                url: "{{ route('admin.suppliers.getSuppliers') }}",
                 async: false,
                 success: function(data) {
                     // قم بإضافة البيانات إلى عنصر الـselect
@@ -144,7 +144,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.supplier.transaction.update') }}",
+                        url: "{{ route('admin.suppliers.transactions.update') }}",
                         data: {
                             'sup_id' : supplierTransaction.sup_id,
                             'id': supplierTransaction.transaction_id,
@@ -200,7 +200,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.supplier.transaction.store') }}",
+                        url: "{{ route('admin.suppliers.transactions.store') }}",
                         data: {
                             'sup_id': $("select[name='sup_id']").val(),
                             'transaction_type': $("select[name='transaction_type']").val(),
