@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SubCategorieController;
 use App\Http\Controllers\SupplierTransactionController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferInformationController;
@@ -66,8 +68,30 @@ Route::prefix('/admin')->group(function () {
         }
     );
 
+    Route::controller(CategorieController::class)->group(
+        function () {
+            Route::get('/Categories', 'index')->name('admin.categories');
+            Route::get('/Categories/data', 'getDataTable')->name('admin.categories.data');
+            Route::get('/Categories/create', 'create')->name('admin.categories.create');
+            Route::get('/Categories/edit', 'edit')->name('admin.categories.edit');
+            Route::get('/Categories/getCategories', 'getCategories')->name('admin.Categories.getCategories');
+            Route::post('/Categories/store', 'store')->name('admin.categories.store');
+            Route::post('/Categories/update', 'update')->name('admin.categories.update');
+            Route::post('/Categories/destroy', 'destroy')->name('admin.categories.destroy');
+        }
+    );
 
-
+    Route::controller(SubCategorieController::class)->group(
+        function () {
+            Route::get('/SubCategories', 'index')->name('admin.subCategories');
+            Route::get('/SubCategories/data', 'getDataTable')->name('admin.subCategories.data');
+            Route::get('/SubCategories/create', 'create')->name('admin.subCategories.create');
+            Route::get('/SubCategories/edit', 'edit')->name('admin.subCategories.edit');
+            Route::post('/SubCategories/store', 'store')->name('admin.subCategories.store');
+            Route::post('/SubCategories/update', 'update')->name('admin.subCategories.update');
+            Route::post('/SubCategories/destroy', 'destroy')->name('admin.subCategories.destroy');
+        }
+    );
 });
 
 //Route::get('/suppliers_management', [SupplierController::class, 'index'])->name('admin.suppliers');

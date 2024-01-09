@@ -129,8 +129,6 @@ class SupplierTransactionController extends Controller
     public function edit(Request $request)
     {
         $supplierTransaction = SupplierTransaction::where('transaction_id', $request->query('id'))->get()->first();
-
-        //return dd($supplierTransaction);
         return view('Admin.Suppliers.insert_transaction', compact('supplierTransaction'));
     }
 
@@ -142,7 +140,6 @@ class SupplierTransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // والله في غلط ف الحسابات سوو نفسكم ما تشوفو الى ان ربك يفرجها
     public function update(AddSupplierTransactionRequest $request)
     {
         // الحصول على الـ balance الحالية
