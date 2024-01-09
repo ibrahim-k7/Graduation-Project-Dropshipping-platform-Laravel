@@ -55,7 +55,7 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <nav class="header-nav ms-auto">
+        <nav class="header-nav me-auto">
             <ul class="d-flex align-items-center">
 
                 <li class="nav-item d-block d-lg-none">
@@ -210,7 +210,7 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
                         <img src={{ asset('Admin/IMG/profile-img.jpg') }} alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                        <span class="d-none d-md-block dropdown-toggle pe-2">K. Anderson </span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
