@@ -3,6 +3,11 @@
   scroll-behavior: smooth;
 }
 
+
+.btn-group {
+direction: ltr;
+}
+
 .custom-add-button {
   background-color: #4caf50; /* لون  */
   color: #fff; /* لون النص */
@@ -19,6 +24,7 @@ body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
   color: #444444;
+  direction: rtl;
 }
 
 a {
@@ -602,7 +608,6 @@ h6 {
 .sidebar {
   position: fixed;
   top: 60px;
-  left: 0;
   bottom: 0;
   width: 300px;
   z-index: 996;
@@ -635,13 +640,13 @@ h6 {
 
   #main,
   #footer {
-    margin-left: 300px;
+    margin-right: 300px;
   }
 }
 
 @media (max-width: 1199px) {
   .toggle-sidebar .sidebar {
-    left: 0;
+    right: 0;
   }
 }
 
@@ -649,11 +654,11 @@ h6 {
 
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
-    margin-left: 0;
+    margin-right: 0;
   }
 
   .toggle-sidebar .sidebar {
-    left: -300px;
+    right: -300px;
   }
 }
 
@@ -695,7 +700,7 @@ h6 {
 
 .sidebar-nav .nav-link i {
   font-size: 16px;
-  margin-right: 10px;
+  margin-left: 10px;
   color: #4154f1;
 }
 
@@ -739,13 +744,13 @@ h6 {
   font-weight: 600;
   color: #012970;
   transition: 0.3;
-  padding: 10px 0 10px 40px;
+  padding: 10px 40px 10px 0;
   transition: 0.3s;
 }
 
 .sidebar-nav .nav-content a i {
   font-size: 6px;
-  margin-right: 8px;
+  margin-left: 8px;
   line-height: 0;
   border-radius: 50%;
 }

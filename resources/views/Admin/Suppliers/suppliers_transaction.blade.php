@@ -12,7 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Supplier Transaction</h1>
+            <h1>عمليات الموردين</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -36,11 +36,11 @@
                                     <thead>
                                         <tr>
                                             <th>ID </th>
-                                            <th>Amount</th>
-                                            <th>Transaction Type</th>
-                                            <th>Suppiler ID</th>
-                                            <th>Suppiler name</th>
-                                            <th id="test">Created At</th>
+                                            <th>المبلغ</th>
+                                            <th>نوع العملية</th>
+                                            <th>معرف المورد</th>
+                                            <th>اسم المورد</th>
+                                            <th>تاريخ الإنشاء</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,15 +70,24 @@
                 order: [
                     [0, "desc"]
                 ],
+                //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
+                columnDefs: [{
+                    targets: '_all', //كل الحقول
+                    className: 'dt-right' //الاتجاه
+                }],
                 ajax: "{{ Route('admin.suppliers.transactions.data') }}",
-                dom: 'Bfrltip',
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
+                },
                 buttons: [{
-                        text: 'Add',
-                        className: 'custom-add-button',
-                        action: function(e, dt, node, config) {
-                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                            window.location.href =
-                                "{{ route('admin.suppliers.transactions.create') }}";
+                        extend: 'print',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                         }
                     },
                     {
@@ -98,13 +107,16 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                         }
-                    }, {
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                    },
+                    {
+                        text: 'إضافة',
+                        className: 'custom-add-button',
+                        action: function(e, dt, node, config) {
+                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                            window.location.href =
+                                "{{ route('admin.suppliers.transactions.create') }}";
                         }
-                    }
+                    },
                 ],
                 columns: [{
                         data: 'transaction_id',

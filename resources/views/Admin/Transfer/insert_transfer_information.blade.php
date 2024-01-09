@@ -26,17 +26,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="card mt-5">
-                                <div class="card-body ">
-
+                        <div class="card-body mt-5">
                                     <!-- Multi Columns Form -->
                                     <form id="form" method="post" class="row g-3">
                                         @csrf
                                         <div class="col-md-6">
                                             <label for="name" class="form-label">الاسم</label>
                                             <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="ibrahim Mohammed" required>
+                                                placeholder="ابراهيم محمد عبدالله الخياط" required>
                                             <small id="name_error" class="form-text text-danger"></small>
                                         </div>
                                         <div class="col-md-6">
@@ -52,14 +49,10 @@
                                             <small id="transfer_network_error" class="form-text text-danger"></small>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                            <button type="submit" id="submit" class="btn btn-primary">إرسال</button>
+                                            <button type="reset" class="btn btn-secondary">إعادة تعيين</button>
                                         </div>
                                     </form><!-- End Multi Columns Form -->
-
-
-                                </div>
-                            </div>
                         </div>
 
 
@@ -161,7 +154,7 @@
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "لقد تم اضافة بنجاح",
+                                title: "لقد تمت الإضافة بنجاح",
                                 showConfirmButton: false,
                                 timer: 2000
                             });

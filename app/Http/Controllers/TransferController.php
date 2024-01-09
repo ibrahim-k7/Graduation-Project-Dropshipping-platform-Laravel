@@ -44,6 +44,12 @@ class TransferController extends Controller
 
         return '
             <div class="btn-group" role="group">
+            <a data-transfer-id="' . $row->transfer_id . '"
+            data-transfer_status="' . $row->transfer_status . '" 
+                type="button" 
+                class="delete_btn btn btn-danger">
+                حذف
+            </a>
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" 
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ' . $isDisabled . '>
                     تحديث
@@ -73,12 +79,6 @@ class TransferController extends Controller
                         <span class="badge bg-danger">مرفوضة</span>
                     </a>
                 </div>
-                <a data-transfer-id="' . $row->transfer_id . '"
-                data-transfer_status="' . $row->transfer_status . '" 
-                    type="button" 
-                    class="delete_btn btn btn-danger">
-                    حذف
-                </a>
             </div>
         ';
     })

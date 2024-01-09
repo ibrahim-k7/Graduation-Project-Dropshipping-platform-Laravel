@@ -55,9 +55,9 @@ class SupplierController extends Controller
 
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a href="' . route('admin.suppliers.transactions', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-primary">العمليات</a>
-                <a href="' . route('admin.suppliers.edit', ['id' => $row->sup_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a   data-supplier-id="' . $row->sup_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a href="' . route('admin.suppliers.edit', ['id' => $row->sup_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
+                <a href="' . route('admin.suppliers.transactions', ['id' => $row->sup_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-primary">العمليات</a>
                 </div>
     
         ';

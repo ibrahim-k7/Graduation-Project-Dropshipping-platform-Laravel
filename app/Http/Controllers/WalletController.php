@@ -40,8 +40,8 @@ class WalletController extends Controller
 
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a href="' . route('admin.wallets.operation', ['id' => $row->wallet_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-primary">العمليات</a>
                 <a href="' . route('admin.transfers', ['id' => $row->wallet_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-primary">الحوالات</a>
+                <a href="' . route('admin.wallets.operation', ['id' => $row->wallet_id]) . '"  id="showOperationsBtn" type="button" class="btn btn-primary">العمليات</a>
                 </div>
     
         ';

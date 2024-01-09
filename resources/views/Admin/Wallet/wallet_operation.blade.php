@@ -36,12 +36,12 @@
                                     <thead>
                                         <tr>
                                             <th id="id_column">ID</th>
-                                            <th>Amount</th>
-                                            <th>Operation Type</th>
-                                            <th>balance_aft_transfer</th>
-                                            <th>Wallet ID</th>
-                                            <th>Details</th>
-                                            <th>Created At</th>
+                                            <th>المبلغ</th>
+                                            <th>نوع العملية</th>
+                                            <th>الرصيد بعد العملية</th>
+                                            <th>معرف المحفظة</th>
+                                            <th>التفاصيل</th>
+                                            <th>تاريخ الإنشاء</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -72,13 +72,23 @@
                     [0, "desc"]
                 ],
                 ajax: "{{ Route('admin.wallets.operation.data') }}",
-                dom: 'Bfrltip',
+                //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
+                columnDefs: [{
+                    targets: '_all', //كل الحقول
+                    className: 'dt-right' //الاتجاه
+                }],
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
+                },
                 buttons: [{
-                        text: 'Add',
-                        className: 'custom-add-button',
-                        action: function(e, dt, node, config) {
-                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                    window.location.href = "{{ route('admin.wallets.operation.create') }}";
+                        extend: 'print',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
                     },
                     {
@@ -98,13 +108,15 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
-                    }, {
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                    }, 
+                    {
+                        text: 'إضافة',
+                        className: 'custom-add-button',
+                        action: function(e, dt, node, config) {
+                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                            window.location.href = "{{ route('admin.wallets.operation.create') }}";
                         }
-                    }
+                    },
                 ],
                 columns: [{
                         data: 'wallet_operation_id',
@@ -176,7 +188,7 @@
                             Swal.fire({
 
                                 title: "تم الحذف ",
-                                text: "لقد تم حذف الملف الخاص بك",
+                                text: "لقد تم حذف بنجاح",
                                 icon: "success"
                             });
 
@@ -199,7 +211,5 @@
 
 
         });
-
-
     </script>
 @endsection

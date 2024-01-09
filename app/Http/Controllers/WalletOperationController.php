@@ -42,8 +42,8 @@ class WalletOperationController extends Controller
 
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
+                                <a   data-wallet_operation-id="' . $row->wallet_operation_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('admin.wallets.operation.edit', ['id' => $row->wallet_operation_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
-                <a   data-wallet_operation-id="' . $row->wallet_operation_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>
     
         ';

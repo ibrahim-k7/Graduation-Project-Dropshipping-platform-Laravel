@@ -35,13 +35,13 @@
                                 <table id="Supplier_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th id="id_column">ID</th>
-                                            <th id="name_column">Name</th>
-                                            <th id="email_column">Email</th>
-                                            <th>Address</th>
-                                            <th>Phone Number</th>
-                                            <th>Balance</th>
-                                            <th>Created At</th>
+                                            <th>ID</th>
+                                            <th>الاسم</th>
+                                            <th>البريد الالكتروني</th>
+                                            <th>العنوان</th>
+                                            <th>رقم الهاتف</th>
+                                            <th>الرصيد</th>
+                                            <th>تاريخ الانشاء</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -71,14 +71,23 @@
                 order: [
                     [0, "desc"]
                 ],
+                //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
+                columnDefs: [{
+                    targets: '_all',//كل الحقول
+                    className: 'dt-right'//الاتجاه
+                }],
                 ajax: "{{ Route('admin.suppliers.data') }}",
-                dom: 'Bfrltip',
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
+                },
                 buttons: [{
-                        text: 'Add',
-                        className: 'custom-add-button',
-                        action: function(e, dt, node, config) {
-                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                    window.location.href = "{{ route('admin.suppliers.create') }}";
+                        extend: 'print',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
                     },
                     {
@@ -98,13 +107,15 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
-                    }, {
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                    },
+                    {
+                        text: 'اضافة',
+                        className: 'custom-add-button',
+                        action: function(e, dt, node, config) {
+                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                            window.location.href = "{{ route('admin.suppliers.create') }}";
                         }
-                    }
+                    },
                 ],
                 columns: [{
                         data: 'sup_id',

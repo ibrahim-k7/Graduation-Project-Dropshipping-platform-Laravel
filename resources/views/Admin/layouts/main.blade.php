@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="utf-8">
@@ -42,7 +42,7 @@
 
 </head>
 
-<body>
+<body dir="rtl">
 
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -263,7 +263,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -277,32 +277,27 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Suppliers-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-journal-text"></i><span>Suppliers</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-journal-text "></i><span>الموردين</span><i class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Suppliers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{ Route('admin.suppliers') }}">
-                            <i class="bi bi-circle"></i><span>Suppliers Management</span>
+                            <i class="bi bi-circle"></i><span>إدارة الموردين</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ Route('admin.suppliers.create') }}">
-                            <i class="bi bi-circle"></i><span>Insert New Suppliers </span>
+                            <i class="bi bi-circle"></i><span>اضافة مورد جديد</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ Route('admin.suppliers.transactions') }}">
-                            <i class="bi bi-circle"></i><span>Suppliers Transactions</span>
+                            <i class="bi bi-circle"></i><span>عمليات الموردين</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ Route('admin.suppliers.transactions.create') }}">
-                            <i class="bi bi-circle"></i><span>Insert New Suppliers Transaction</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/simple">
-                            <i class="bi bi-circle"></i><span>Simple</span>
+                            <i class="bi bi-circle"></i><span>اضافة عملية جديدة لمورد</span>
                         </a>
                     </li>
                 </ul>
@@ -310,18 +305,18 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Wallet-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Wallet</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-layout-text-window-reverse"></i><span>المحافظ</span><i
+                        class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Wallet-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{ Route('admin.wallets') }}">
-                            <i class="bi bi-circle"></i><span>Wallet Management</span>
+                            <i class="bi bi-circle"></i><span>إداره المحافظ</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ Route('admin.wallets.operation') }}">
-                            <i class="bi bi-circle"></i><span>Wallet Operation</span>
+                            <i class="bi bi-circle"></i><span>عمليات المحافظ</span>
                         </a>
                     </li>
                 </ul>
@@ -331,7 +326,7 @@
                 <a class="nav-link collapsed" data-bs-target="#Transfers-nav" data-bs-toggle="collapse"
                     href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>الحوالات</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                        class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Transfers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -348,9 +343,10 @@
             </li><!-- End Tables Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Purchases-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" data-bs-target="#Purchases-nav" data-bs-toggle="collapse"
+                    href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Purchases</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                        class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Purchases-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -384,7 +380,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Data Tables</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                        class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
