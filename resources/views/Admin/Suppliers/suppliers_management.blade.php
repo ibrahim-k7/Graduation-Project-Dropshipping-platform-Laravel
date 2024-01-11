@@ -1,29 +1,18 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-<<<<<<< HEAD
-    المحفظة
-@endsection
-
-
-=======
     الموردين
 @endsection
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
 @section('Content')
     <main id="main" class="main">
 
         <div class="pagetitle">
-<<<<<<< HEAD
-            <h1>Wallet</h1>
-=======
             <h1>الموردين</h1>
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -39,38 +28,22 @@
 
                     <div class="card">
                         <div class="card-body">
-<<<<<<< HEAD
-                            <h5 class="card-title">Datatables</h5>
-=======
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                             <p></p>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-<<<<<<< HEAD
-                                <table id="Supplier_Managment"  class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Address</th>
-                                            <th>Phone Number</th>
-                                            <th>Created At</th>
-=======
                                 <table id="Supplier_Managment" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>الاسم</th>
-                                            <th>البريد الالكتروني</th>
-                                            <th>العنوان</th>
-                                            <th>رقم الهاتف</th>
-                                            <th>الرصيد</th>
-                                            <th>تاريخ الانشاء</th>
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>الاسم</th>
+                                        <th>البريد الالكتروني</th>
+                                        <th>العنوان</th>
+                                        <th>رقم الهاتف</th>
+                                        <th>الرصيد</th>
+                                        <th>تاريخ الانشاء</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -98,9 +71,6 @@
                 order: [
                     [0, "desc"]
                 ],
-<<<<<<< HEAD
-                ajax: "{{ Route('admin.suppliers.data') }}",
-=======
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
                     targets: '_all',//كل الحقول
@@ -114,12 +84,12 @@
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
                 },
                 buttons: [{
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
-                        }
-                    },
+                    extend: 'print',
+                    autoPrint: false,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                    }
+                },
                     {
                         extend: 'pdf',
                         exportOptions: {
@@ -147,11 +117,10 @@
                         }
                     },
                 ],
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 columns: [{
-                        data: 'sup_id',
-                        name: 'sup_id'
-                    },
+                    data: 'sup_id',
+                    name: 'sup_id'
+                },
                     {
                         data: 'name',
                         name: 'name'
@@ -169,10 +138,6 @@
                         name: 'phone_number'
                     },
                     {
-<<<<<<< HEAD
-                        data: 'created_at',
-                        name: 'created_at'
-=======
                         data: 'balance',
                         name: 'balance'
                     },
@@ -188,19 +153,12 @@
                             return moment(data).format('YYYY-MM-DD HH:mm:ss');
                         }
 
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                     },
                     {
                         data: 'action',
                         name: 'action'
                     },
                 ]
-<<<<<<< HEAD
-            });
-        });
-
-
-=======
 
             });
 
@@ -265,10 +223,9 @@
 
 
 
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
         /* $(document).ready(function(){
              $('#wallet_table_id').DataTable({
-               
+
 
              });
          });*/

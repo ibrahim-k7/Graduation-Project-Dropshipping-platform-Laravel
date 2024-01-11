@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "content-hash": "527ce7600e2fcbaaefde43fb6a2fe4dd",
-=======
-    "content-hash": "8d1f78fb2e30cf0afda719ca15c720d4",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
     "packages": [
         {
             "name": "brick/math",
@@ -1249,7 +1245,6 @@
         },
         {
             "name": "laravel/sanctum",
-<<<<<<< HEAD
             "version": "v3.3.3",
             "source": {
                 "type": "git",
@@ -1260,18 +1255,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sanctum/zipball/8c104366459739f3ada0e994bcd3e6fd681ce3d5",
                 "reference": "8c104366459739f3ada0e994bcd3e6fd681ce3d5",
-=======
-            "version": "v3.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/sanctum.git",
-                "reference": "e1a272893bec13cf135627f7e156030b3afe1e60"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/e1a272893bec13cf135627f7e156030b3afe1e60",
-                "reference": "e1a272893bec13cf135627f7e156030b3afe1e60",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 "shasum": ""
             },
             "require": {
@@ -1324,11 +1307,7 @@
                 "issues": "https://github.com/laravel/sanctum/issues",
                 "source": "https://github.com/laravel/sanctum"
             },
-<<<<<<< HEAD
             "time": "2023-12-19T18:44:48+00:00"
-=======
-            "time": "2023-11-03T13:42:14+00:00"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
         },
         {
             "name": "laravel/serializable-closure",
@@ -5865,7 +5844,6 @@
         },
         {
             "name": "yajra/laravel-datatables-buttons",
-<<<<<<< HEAD
             "version": "v9.1.4",
             "source": {
                 "type": "git",
@@ -5876,18 +5854,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/yajra/laravel-datatables-buttons/zipball/afc40285b09b0960180b17b96c5429b4be772143",
                 "reference": "afc40285b09b0960180b17b96c5429b4be772143",
-=======
-            "version": "v9.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/laravel-datatables-buttons.git",
-                "reference": "526a192f9860c6de49bda408dd3ace3d6abaca90"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables-buttons/zipball/526a192f9860c6de49bda408dd3ace3d6abaca90",
-                "reference": "526a192f9860c6de49bda408dd3ace3d6abaca90",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 "shasum": ""
             },
             "require": {
@@ -5899,11 +5865,7 @@
             "require-dev": {
                 "barryvdh/laravel-snappy": "^1.0",
                 "maatwebsite/excel": "^3.1.40",
-<<<<<<< HEAD
                 "nunomaduro/larastan": "2.1.*",
-=======
-                "nunomaduro/larastan": "^2.1",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 "orchestra/testbench": "^7.3",
                 "rap2hpoutre/fast-excel": "^3.2"
             },
@@ -5948,11 +5910,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables-buttons/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/yajra/laravel-datatables-buttons/tree/v9.1.4"
-=======
-                "source": "https://github.com/yajra/laravel-datatables-buttons/tree/v9.0.0"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
             },
             "funding": [
                 {
@@ -5960,22 +5918,15 @@
                     "type": "custom"
                 },
                 {
-<<<<<<< HEAD
                     "url": "https://github.com/yajra",
                     "type": "github"
                 },
                 {
-=======
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                     "url": "https://www.patreon.com/yajra",
                     "type": "patreon"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-02-20T06:11:01+00:00"
-=======
-            "time": "2022-05-07T14:50:29+00:00"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
         },
         {
             "name": "yajra/laravel-datatables-editor",
@@ -7016,7 +6967,6 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-<<<<<<< HEAD
             "version": "9.2.30",
             "source": {
                 "type": "git",
@@ -7027,29 +6977,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ca2bd87d2f9215904682a9cb9bb37dda98e76089",
                 "reference": "ca2bd87d2f9215904682a9cb9bb37dda98e76089",
-=======
-            "version": "9.2.29",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "6a3a87ac2bbe33b25042753df8195ba4aa534c76"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6a3a87ac2bbe33b25042753df8195ba4aa534c76",
-                "reference": "6a3a87ac2bbe33b25042753df8195ba4aa534c76",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-<<<<<<< HEAD
                 "nikic/php-parser": "^4.18 || ^5.0",
-=======
-                "nikic/php-parser": "^4.15",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 "php": ">=7.3",
                 "phpunit/php-file-iterator": "^3.0.3",
                 "phpunit/php-text-template": "^2.0.2",
@@ -7099,11 +7033,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.30"
-=======
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.29"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
             },
             "funding": [
                 {
@@ -7111,11 +7041,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-12-22T06:47:57+00:00"
-=======
-            "time": "2023-09-19T04:57:46+00:00"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -7704,7 +7630,6 @@
         },
         {
             "name": "sebastian/complexity",
-<<<<<<< HEAD
             "version": "2.0.3",
             "source": {
                 "type": "git",
@@ -7719,22 +7644,6 @@
             },
             "require": {
                 "nikic/php-parser": "^4.18 || ^5.0",
-=======
-            "version": "2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/complexity.git",
-                "reference": "739b35e53379900cc9ac327b2147867b8b6efd88"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/complexity/zipball/739b35e53379900cc9ac327b2147867b8b6efd88",
-                "reference": "739b35e53379900cc9ac327b2147867b8b6efd88",
-                "shasum": ""
-            },
-            "require": {
-                "nikic/php-parser": "^4.7",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 "php": ">=7.3"
             },
             "require-dev": {
@@ -7766,11 +7675,7 @@
             "homepage": "https://github.com/sebastianbergmann/complexity",
             "support": {
                 "issues": "https://github.com/sebastianbergmann/complexity/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/complexity/tree/2.0.3"
-=======
-                "source": "https://github.com/sebastianbergmann/complexity/tree/2.0.2"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
             },
             "funding": [
                 {
@@ -7778,11 +7683,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-12-22T06:19:30+00:00"
-=======
-            "time": "2020-10-26T15:52:27+00:00"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
         },
         {
             "name": "sebastian/diff",
@@ -8056,7 +7957,6 @@
         },
         {
             "name": "sebastian/lines-of-code",
-<<<<<<< HEAD
             "version": "1.0.4",
             "source": {
                 "type": "git",
@@ -8071,22 +7971,6 @@
             },
             "require": {
                 "nikic/php-parser": "^4.18 || ^5.0",
-=======
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/lines-of-code.git",
-                "reference": "c1c2e997aa3146983ed888ad08b15470a2e22ecc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/lines-of-code/zipball/c1c2e997aa3146983ed888ad08b15470a2e22ecc",
-                "reference": "c1c2e997aa3146983ed888ad08b15470a2e22ecc",
-                "shasum": ""
-            },
-            "require": {
-                "nikic/php-parser": "^4.6",
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 "php": ">=7.3"
             },
             "require-dev": {
@@ -8118,11 +8002,7 @@
             "homepage": "https://github.com/sebastianbergmann/lines-of-code",
             "support": {
                 "issues": "https://github.com/sebastianbergmann/lines-of-code/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/lines-of-code/tree/1.0.4"
-=======
-                "source": "https://github.com/sebastianbergmann/lines-of-code/tree/1.0.3"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
             },
             "funding": [
                 {
@@ -8130,11 +8010,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-12-22T06:20:34+00:00"
-=======
-            "time": "2020-11-28T06:42:11+00:00"
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
         },
         {
             "name": "sebastian/object-enumerator",

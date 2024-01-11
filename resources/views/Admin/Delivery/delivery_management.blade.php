@@ -66,7 +66,52 @@
             var delivery_data = $('#Delivery_Managment').DataTable({
                 processing: true,
                 serverSide: true,
+                //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
+                columnDefs: [{
+                    targets: '_all',//كل الحقول
+                    className: 'dt-right'//الاتجاه
+                }],
                 ajax: "{{ Route('admin.delivery.data') }}",
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
+                },
+                buttons: [{
+                    extend: 'print',
+                    autoPrint: false,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4,] // Column index which needs to export
+                    }
+                },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
+                        }
+                    },
+                    {
+                        text: 'اضافة',
+                        className: 'custom-add-button',
+                        action: function(e, dt, node, config) {
+                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                            window.location.href = "{{ route('admin.delivery.insert') }}";
+                        }
+                    },
+                ],
                 columns: [{
                         data: 'delivery_id',
                         name: 'delivery_id'

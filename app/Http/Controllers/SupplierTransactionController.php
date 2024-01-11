@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
-=======
 use App\Http\Requests\AddSupplierTransactionRequest;
 use App\Models\Supplier;
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
 use App\Models\SupplierTransaction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -18,21 +15,6 @@ class SupplierTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function index()
-    {
-        //
-        return view('Admin.Suppliers.suppliers_transaction');
-    }
-
-    public function getDataTable()
-    {
-        $data = SupplierTransaction::select('*');
-        return DataTables::of($data)->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                return $btn = '
-          
-=======
 
 
     public function index(Request $request)
@@ -65,7 +47,6 @@ class SupplierTransactionController extends Controller
                 <a   id="delete_btn" data-transaction-id="' . $row->transaction_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('admin.suppliers.transactions.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 </div>
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
             ';
             })
 
@@ -73,11 +54,8 @@ class SupplierTransactionController extends Controller
             ->make(true);
     }
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
     /**
      * Show the form for creating a new resource.
      *
@@ -86,16 +64,13 @@ class SupplierTransactionController extends Controller
     public function create()
     {
         //
-<<<<<<< HEAD
-=======
-         return view('Admin.Suppliers.insert_transaction');
-      /*  $data = SupplierTransaction::with('supplier')->where('transaction_id', 25)->get();
-                $supplier =$data[0]->supplier->value('name');
-                
-                return dd($supplier);*/
-            
-        
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
+        return view('Admin.Suppliers.insert_transaction');
+        /*  $data = SupplierTransaction::with('supplier')->where('transaction_id', 25)->get();
+                  $supplier =$data[0]->supplier->value('name');
+
+                  return dd($supplier);*/
+
+
     }
 
     /**
@@ -104,13 +79,6 @@ class SupplierTransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function store(Request $request)
-    {
-        //
-    }
-
-=======
     public function store(AddSupplierTransactionRequest $request)
     {
         // الحصول على الـ balance الحالية
@@ -141,7 +109,6 @@ class SupplierTransactionController extends Controller
     }
 
 
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
     /**
      * Display the specified resource.
      *
@@ -159,16 +126,10 @@ class SupplierTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function edit($id)
-    {
-        //
-=======
     public function edit(Request $request)
     {
         $supplierTransaction = SupplierTransaction::where('transaction_id', $request->query('id'))->get()->first();
         return view('Admin.Suppliers.insert_transaction', compact('supplierTransaction'));
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
     }
 
     /**
@@ -178,11 +139,6 @@ class SupplierTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function update(Request $request, $id)
-    {
-        //
-=======
 
     public function update(AddSupplierTransactionRequest $request)
     {
@@ -223,7 +179,6 @@ class SupplierTransactionController extends Controller
             // تحديث قيمة الـ amount في جدول SupplierTransaction
             $supplierTransaction->update(['amount' => $request->amount]);
         }
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
     }
 
     /**
@@ -232,11 +187,6 @@ class SupplierTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function destroy($id)
-    {
-        //
-=======
     public function destroy(Request $request)
     {
         // الحصول على بيانات المعاملة التي ستُحذف
@@ -260,6 +210,5 @@ class SupplierTransactionController extends Controller
 
         // حذف بيانات المعاملة
         $transaction->delete();
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
     }
 }

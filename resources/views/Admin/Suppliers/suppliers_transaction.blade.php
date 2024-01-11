@@ -4,23 +4,15 @@
     عمليات الموردين
 @endsection
 
-<<<<<<< HEAD
-
-=======
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
 @section('Content')
     <main id="main" class="main">
 
         <div class="pagetitle">
-<<<<<<< HEAD
-            <h1>Supplier Transaction</h1>
-=======
             <h1>عمليات الموردين</h1>
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -36,37 +28,21 @@
 
                     <div class="card">
                         <div class="card-body">
-<<<<<<< HEAD
-                            <h5 class="card-title">Datatables</h5>
-=======
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                             <p></p>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-<<<<<<< HEAD
-                                <table id="Supplier_Transaction" cellspacing="0" class="display" >
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Balance</th>
-                                            <th>Amount</th>
-                                            <th>Transaction Type</th>
-                                            <th>Suppiler ID</th>
-                                            <th>Created At</th>
-=======
                                 <table id="Supplier_Transaction" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>ID </th>
-                                            <th>المبلغ</th>
-                                            <th>نوع العملية</th>
-                                            <th>معرف المورد</th>
-                                            <th>اسم المورد</th>
-                                            <th>تاريخ الإنشاء</th>
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>ID </th>
+                                        <th>المبلغ</th>
+                                        <th>نوع العملية</th>
+                                        <th>معرف المورد</th>
+                                        <th>اسم المورد</th>
+                                        <th>تاريخ الإنشاء</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -94,9 +70,6 @@
                 order: [
                     [0, "desc"]
                 ],
-<<<<<<< HEAD
-                ajax: "{{ Route('admin.suppliers.transaction.data') }}",
-=======
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
                     targets: '_all', //كل الحقول
@@ -111,12 +84,12 @@
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
                 },
                 buttons: [{
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
-                        }
-                    },
+                    extend: 'print',
+                    autoPrint: false,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                    }
+                },
                     {
                         extend: 'pdf',
                         exportOptions: {
@@ -145,19 +118,11 @@
                         }
                     },
                 ],
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 columns: [{
-                        data: 'transaction_id',
-                        name: 'transaction_id'
-                    },
+                    data: 'transaction_id',
+                    name: 'transaction_id'
+                },
                     {
-<<<<<<< HEAD
-                        data: 'balance',
-                        name: 'balance'
-                    },
-                    {
-=======
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                         data: 'amount',
                         name: 'amount'
                     },
@@ -170,10 +135,6 @@
                         name: 'sup_id'
                     },
                     {
-<<<<<<< HEAD
-                        data: 'created_at',
-                        name: 'created_at'
-=======
                         data: 'supplier',
                         name: 'supplier'
                     },
@@ -185,7 +146,6 @@
                             return moment(data).format('YYYY-MM-DD HH:mm:ss');
                         }
 
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
                     },
                     {
                         data: 'action',
@@ -195,8 +155,6 @@
             });
         });
 
-<<<<<<< HEAD
-=======
         $(document).on('click', '.delete_btn', function(e) {
             e.preventDefault();
             Swal.fire({
@@ -249,11 +207,10 @@
 
         });
 
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
         /* $(document).ready(function(){
              $('#wallet_table_id').DataTable({
-               
+
 
              });
          });*/

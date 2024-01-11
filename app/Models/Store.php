@@ -12,10 +12,6 @@ class Store extends Model
     protected $table = "store";
     //العناصر
     protected $fillable = [
-<<<<<<< HEAD
-        'store_id ', 'store_name', 'email ', 'password', 'phone_number', 'created_at' , 'updated_at',
-    ];
-=======
         'store_id', 'store_name', 'email', 'password', 'phone_number', 'created_at' , 'updated_at',
     ];
 
@@ -23,5 +19,4 @@ class Store extends Model
     {
         return $this->hasOne(Wallet::class,'store_id','store_id');
     }
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
 }

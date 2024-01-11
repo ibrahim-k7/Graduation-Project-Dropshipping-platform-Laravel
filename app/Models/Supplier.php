@@ -13,11 +13,6 @@ class Supplier extends Model
     protected $table = "suppliers";
     //العناصر
     protected $fillable = [
-<<<<<<< HEAD
-        'sup_id','name','email','address','phone_number','created_at','updated_at'
-    ];
-
-=======
         'sup_id','name','email','address','phone_number','balance','created_at','updated_at'
     ];
 
@@ -29,5 +24,4 @@ class Supplier extends Model
         return $this -> hasMany(Purchase::class,'sup_id','sup_id');
     }
 
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
 }

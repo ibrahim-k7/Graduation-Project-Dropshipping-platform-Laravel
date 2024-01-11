@@ -65,7 +65,44 @@
             var order_details_data = $('#Order_Managment_Details').DataTable({
                 processing: true,
                 serverSide: true,
+                //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
+                columnDefs: [{
+                    targets: '_all',//كل الحقول
+                    className: 'dt-right'//الاتجاه
+                }],
                 ajax: "{{ Route('admin.order.details.data') }}",
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
+                },
+                buttons: [{
+                    extend: 'print',
+                    autoPrint: false,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                    }
+                },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        }
+                    },
+                ],
                 columns: [
                     {
                         data: 'order_details_id',

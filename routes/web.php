@@ -14,13 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// this file only for user routes not the admin routes
-// هذ الملف للمسارات المتعلقة ب المستخدم وليس الادمن
-=======
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,4 +22,3 @@ Route::get('/', function () {
 Route::get('/Dshboard', function () {
     return view('admin/dashboard');
 });
->>>>>>> fad06c427242629c39afca398ff220bb11b23866

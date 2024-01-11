@@ -12,14 +12,6 @@ class SupplierTransaction extends Model
     protected $table = "supplier transaction";
     //العناصر
     protected $fillable = [
-<<<<<<< HEAD
-        'transaction_id','balance','amount','transaction_type','created_at','updated_at'
-    ];
-
-    /*public function supplier(){
-        return $this -> hasOne('App\Models\Supplier','sup_id ');
-    }*/
-=======
         'transaction_id','sup_id','amount','transaction_type','created_at','updated_at'
     ];
 
@@ -27,5 +19,4 @@ class SupplierTransaction extends Model
     {
         return $this->belongsTo(Supplier::class, 'sup_id', 'sup_id');
     }
->>>>>>> fad06c427242629c39afca398ff220bb11b23866
 }

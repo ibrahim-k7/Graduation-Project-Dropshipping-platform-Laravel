@@ -19,7 +19,7 @@ class OrderDetailsController extends Controller
         if (session('myVariable') === null) {
             $data = OrderDetails::select('order details.order_details_id','products.name','products.description',
                 'order details.quantity','order details.total_cost','order details.sub_weight')
-                ->join('products','products.pro_id','=','order details.pro_id')
+                ->join('products','products.id','=','order details.pro_id')
                 ->join('orders','orders.order_id','=','order details.order_id')
                 ->where('orders.order_id', $request->query('order_id'))
                 ->get();
@@ -27,7 +27,7 @@ class OrderDetailsController extends Controller
             $id = session('myVariable');
             $data = OrderDetails::select('order details.order_details_id','products.name','products.description',
                 'order details.quantity','order details.total_cost','order details.sub_weight')
-                ->join('products','products.pro_id','=','order details.pro_id')
+                ->join('products','products.id','=','order details.pro_id')
                 ->join('orders','orders.order_id','=','order details.order_id')
                 ->where('orders.order_id',$id)
                 ->get();
