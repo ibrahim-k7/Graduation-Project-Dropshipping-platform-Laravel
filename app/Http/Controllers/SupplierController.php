@@ -59,7 +59,7 @@ class SupplierController extends Controller
                 <a href="' . route('admin.suppliers.edit', ['id' => $row->sup_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a href="' . route('admin.suppliers.transactions', ['id' => $row->sup_id]) . '"   type="button" class="btn btn-primary">العمليات</a>
                 </div>
-    
+
         ';
             })
             ->rawColumns(['action'])
@@ -172,7 +172,7 @@ class SupplierController extends Controller
             abort(400, 'فشلت العملية بسبب وجود رصيد للمورد ');
         }
         else{
-        $supplier->delete();
+            $supplier->delete();
         }
     }
 }

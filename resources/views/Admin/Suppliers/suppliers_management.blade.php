@@ -34,16 +34,16 @@
                                 <!-- Table with stripped rows -->
                                 <table id="Supplier_Managment" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>الاسم</th>
-                                            <th>البريد الالكتروني</th>
-                                            <th>العنوان</th>
-                                            <th>رقم الهاتف</th>
-                                            <th>الرصيد</th>
-                                            <th>تاريخ الانشاء</th>
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>الاسم</th>
+                                        <th>البريد الالكتروني</th>
+                                        <th>العنوان</th>
+                                        <th>رقم الهاتف</th>
+                                        <th>الرصيد</th>
+                                        <th>تاريخ الانشاء</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -84,12 +84,12 @@
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
                 },
                 buttons: [{
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
-                        }
-                    },
+                    extend: 'print',
+                    autoPrint: false,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                    }
+                },
                     {
                         extend: 'pdf',
                         exportOptions: {
@@ -118,9 +118,9 @@
                     },
                 ],
                 columns: [{
-                        data: 'sup_id',
-                        name: 'sup_id'
-                    },
+                    data: 'sup_id',
+                    name: 'sup_id'
+                },
                     {
                         data: 'name',
                         name: 'name'
@@ -225,7 +225,7 @@
 
         /* $(document).ready(function(){
              $('#wallet_table_id').DataTable({
-               
+
 
              });
          });*/

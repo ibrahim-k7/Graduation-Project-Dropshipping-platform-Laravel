@@ -64,13 +64,13 @@ class SupplierTransactionController extends Controller
     public function create()
     {
         //
-         return view('Admin.Suppliers.insert_transaction');
-      /*  $data = SupplierTransaction::with('supplier')->where('transaction_id', 25)->get();
-                $supplier =$data[0]->supplier->value('name');
-                
-                return dd($supplier);*/
-            
-        
+        return view('Admin.Suppliers.insert_transaction');
+        /*  $data = SupplierTransaction::with('supplier')->where('transaction_id', 25)->get();
+                  $supplier =$data[0]->supplier->value('name');
+
+                  return dd($supplier);*/
+
+
     }
 
     /**

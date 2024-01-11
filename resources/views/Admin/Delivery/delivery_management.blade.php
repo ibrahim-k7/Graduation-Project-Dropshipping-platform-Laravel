@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    عمليات الموردين
+    المحفظة
 @endsection
 
 @section('css')
@@ -12,7 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>عمليات الموردين</h1>
+            <h1>Delivery</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -28,21 +28,20 @@
 
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">Datatables</h5>
                             <p></p>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Supplier_Transaction" class="table table-striped">
+                                <table id="Delivery_Managment" class="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th>ID </th>
-                                        <th>المبلغ</th>
-                                        <th>نوع العملية</th>
-                                        <th>معرف المورد</th>
-                                        <th>اسم المورد</th>
-                                        <th>تاريخ الإنشاء</th>
-                                        <th>Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Shipping Fees</th>
+                                            <th>Created At</th>
+                                            <th>Action</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -64,22 +63,18 @@
     <script type="text/javascript">
         $(function() {
 
-            var supplier_data = $('#Supplier_Transaction').DataTable({
+            var delivery_data = $('#Delivery_Managment').DataTable({
                 processing: true,
                 serverSide: true,
-                order: [
-                    [0, "desc"]
-                ],
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
-                    targets: '_all', //كل الحقول
-                    className: 'dt-right' //الاتجاه
+                    targets: '_all',//كل الحقول
+                    className: 'dt-right'//الاتجاه
                 }],
-                ajax: "{{ Route('admin.suppliers.transactions.data') }}",
+                ajax: "{{ Route('admin.delivery.data') }}",
                 dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-
                 language: {
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
                 },
@@ -87,64 +82,51 @@
                     extend: 'print',
                     autoPrint: false,
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                     }
                 },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
                         }
                     },
                     {
-                        text: 'إضافة',
+                        text: 'اضافة',
                         className: 'custom-add-button',
                         action: function(e, dt, node, config) {
                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                            window.location.href =
-                                "{{ route('admin.suppliers.transactions.create') }}";
+                            window.location.href = "{{ route('admin.delivery.insert') }}";
                         }
                     },
                 ],
                 columns: [{
-                    data: 'transaction_id',
-                    name: 'transaction_id'
-                },
-                    {
-                        data: 'amount',
-                        name: 'amount'
+                        data: 'delivery_id',
+                        name: 'delivery_id'
                     },
                     {
-                        data: 'transaction_type',
-                        name: 'transaction_type'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
-                        data: 'sup_id',
-                        name: 'sup_id'
-                    },
-                    {
-                        data: 'supplier',
-                        name: 'supplier'
+                        data: 'shipping_fees',
+                        name: 'shipping_fees'
                     },
                     {
                         data: 'created_at',
                         name: 'created_at',
-                        render: function(data, type, full, meta) {
-                            // تنسيق التاريخ باستخدام moment.js
-                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
-                        }
 
                     },
                     {
@@ -169,15 +151,15 @@
             }).then((result) => {
                 if (result.isConfirmed) {
 
-                    var transaction_id = $(this).attr('data-transaction-id');
+                    var delivery_id = $(this).attr('delivery-id');
                     $.ajax({
                         type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.suppliers.transactions.destroy') }}",
+                        url: "{{ route('admin.delivery.delete') }}",
                         data: {
-                            'id': transaction_id
+                            'id': delivery_id
                         },
                         success: function(data) {
                             Swal.fire({
@@ -187,32 +169,22 @@
                                 icon: "success"
                             });
 
-
-
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                            $('#Supplier_Transaction').DataTable().ajax.reload();
+                            $('#Delivery_Managment').DataTable().ajax.reload();
                         },
                         error: function(reject) {
 
+                            Swal.fire({
+                                title: "فشلت عملية الحذف",
+                                icon: "error"
+                            });
                         }
                     });
 
                 }
             });
 
-
-
-
-
-
         });
 
-
-        /* $(document).ready(function(){
-             $('#wallet_table_id').DataTable({
-
-
-             });
-         });*/
     </script>
 @endsection
