@@ -12,10 +12,30 @@ class Wallet extends Model
     protected $table = "wallet";
     //العناصر
     protected $fillable = [
+<<<<<<< HEAD
         'wallet_id', 'balance', 'created_at', 'updated_at',
     ];
             //Relations Functhion
         public function store(){
             return $this -> belongsTo('App\Models\Store','store_id ');
         }
+=======
+        'wallet_id','store_id','balance','created_at','updated_at',
+    ];
+    
+    //Relations Functhion
+    public function store()
+    {
+        return $this->belongsTo(Store::class,'store_id','store_id');
+    }
+
+    //Relations Functhion
+    public function walletOperations(){
+        return $this -> hasMany(WalletOperation::class,'wallet_id','wallet_id');
+    }
+
+    public function walletTransfers(){
+        return $this -> hasMany(Transfer::class,'wallet_id','wallet_id');
+    }
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 }

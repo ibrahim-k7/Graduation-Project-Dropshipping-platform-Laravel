@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+<<<<<<< HEAD
+=======
+use Illuminate\Validation\Rule;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
 class AddSupplierRequest extends FormRequest
 {
@@ -23,11 +27,26 @@ class AddSupplierRequest extends FormRequest
      */
     public function rules()
     {
+<<<<<<< HEAD
         return [
             'name' => 'required|max:255',
             'email' =>  'required|max:255|unique:suppliers,email',
             'address' =>  'required|max:255',
             'phone' =>  'required|numeric',
+=======
+        $id = $this->get('id'); // Retrieve the 'id' from the request
+
+        
+        return [
+            'name' => 'required|max:255',
+            'email' => [
+                'required',
+                'max:255',
+                Rule::unique('suppliers', 'email')->ignore($id, 'sup_id')
+            ],
+            'address' => 'required|max:255',
+            'phone_number' => 'required|numeric',
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
         ];
     }
 

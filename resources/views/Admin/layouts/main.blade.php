@@ -1,11 +1,19 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
+=======
+<html lang="ar" dir="rtl">
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+<<<<<<< HEAD
     <title>    @yield('pageTitle')</title>
+=======
+    <title> @yield('pageTitle')</title>
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -30,8 +38,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
+<<<<<<< HEAD
         <!-- DataTables CSS Files add by ibrahim -->
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+=======
+    <!-- DataTables CSS Files add by ibrahim -->
+    <link
+        href="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-1.13.8/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.11.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.3.0/sb-1.6.0/sp-2.2.0/sl-1.7.0/sr-1.3.0/datatables.css"
+        rel="stylesheet">
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
     @yield('css')
 
@@ -40,7 +55,11 @@
 
 </head>
 
+<<<<<<< HEAD
 <body>
+=======
+<body dir="rtl">
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -53,7 +72,11 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
+<<<<<<< HEAD
         <nav class="header-nav ms-auto">
+=======
+        <nav class="header-nav me-auto">
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
             <ul class="d-flex align-items-center">
 
                 <li class="nav-item d-block d-lg-none">
@@ -155,7 +178,11 @@
 
                         <li class="message-item">
                             <a href="#">
+<<<<<<< HEAD
                                 <img src= {{ asset('Admin/IMG/messages-1.jpg') }} alt="" class="rounded-circle">
+=======
+                                <img src={{ asset('Admin/IMG/messages-1.jpg') }} alt="" class="rounded-circle">
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
                                 <div>
                                     <h4>Maria Hudson</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -208,7 +235,11 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
                         <img src={{ asset('Admin/IMG/profile-img.jpg') }} alt="Profile" class="rounded-circle">
+<<<<<<< HEAD
                         <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+=======
+                        <span class="d-none d-md-block dropdown-toggle pe-2">K. Anderson </span>
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -261,7 +292,11 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+<<<<<<< HEAD
                     <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+=======
+                    <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down me-auto"></i>
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -273,6 +308,7 @@
             </li><!-- End Forms Nav -->
 
             <li class="nav-item">
+<<<<<<< HEAD
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Suppliers</span><i
                         class="bi bi-chevron-down ms-auto"></i>
@@ -281,10 +317,40 @@
                     <li>
                         <a href="{{ Route('admin.suppliers') }}">
                             <i class="bi bi-circle"></i><span>Suppliers Management</span>
+=======
+                <a class="nav-link collapsed" data-bs-target="#Categories-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-journal-text "></i><span>الفئات</span><i class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="Categories-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.categories') }}">
+                            <i class="bi bi-circle"></i><span>إدارة الفئات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.subCategories') }}">
+                            <i class="bi bi-circle"></i><span>إدارة الفئات الفرعية</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Suppliers-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-journal-text "></i><span>الموردين</span><i class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="Suppliers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.suppliers') }}">
+                            <i class="bi bi-circle"></i><span>إدارة الموردين</span>
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
                         </a>
                     </li>
                     <li>
                         <a href="{{ Route('admin.suppliers.create') }}">
+<<<<<<< HEAD
                             <i class="bi bi-circle"></i><span>Insert New Suppliers </span>
                         </a>
                     </li>
@@ -339,12 +405,106 @@
                     </li>
                 </ul>
             </li><!-- End Order Nav -->
+=======
+                            <i class="bi bi-circle"></i><span>اضافة مورد جديد</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.suppliers.transactions') }}">
+                            <i class="bi bi-circle"></i><span>عمليات الموردين</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.suppliers.transactions.create') }}">
+                            <i class="bi bi-circle"></i><span>اضافة عملية جديدة لمورد</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Wallet-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>المحافظ</span><i
+                        class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="Wallet-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.wallets') }}">
+                            <i class="bi bi-circle"></i><span>إداره المحافظ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.wallets.operation') }}">
+                            <i class="bi bi-circle"></i><span>عمليات المحافظ</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Transfers-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>الحوالات</span><i
+                        class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="Transfers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.transfers') }}">
+                            <i class="bi bi-circle"></i><span>ادارة الحوالات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.transfer.info') }}">
+                            <i class="bi bi-circle"></i><span>معلومات التحويل</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Purchases-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Purchases</span><i
+                        class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="Purchases-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('admin.purchase.index') }}">
+                            <i class="bi bi-circle"></i><span>Purchases</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.purchase.create') }}">
+                            <i class="bi bi-circle"></i><span>Insert New Purchases</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.purchasedetails.data') }}">
+                            <i class="bi bi-circle"></i><span>Purchase Details</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.purchase.return') }}">
+                            <i class="bi bi-circle"></i><span>Return Purchases</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Data Tables</span><i
+<<<<<<< HEAD
                         class="bi bi-chevron-down ms-auto"></i>
+=======
+                        class="bi bi-chevron-down me-auto"></i>
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -363,7 +523,11 @@
                         </a>
                     </li>
                     <li>
+<<<<<<< HEAD
                         <a href="tables-data.html">
+=======
+                        <a href="/Purchases">
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
                             <i class="bi bi-circle"></i><span>Purchases</span>
                         </a>
                     </li>
@@ -429,6 +593,7 @@
     <script src={{ asset('Admin/vendor/simple-datatables/simple-datatables.js') }}></script>
     <script src={{ asset('Admin/vendor/tinymce/tinymce.min.js') }}></script>
     <script src={{ asset('Admin/vendor/php-email-form/validate.js') }}></script>
+<<<<<<< HEAD
     <script src={{ asset('Admin/vendor/jquery/jquery-3.7.1.min.js') }}></script>
 
     <!-- DataTables Js Files add by ibrahim -->
@@ -436,6 +601,16 @@
 
 
 
+=======
+    <!-- DataTables Js Files add by ibrahim -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script
+        src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-1.13.8/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.11.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.3.0/sb-1.6.0/sp-2.2.0/sl-1.7.0/sr-1.3.0/datatables.min.js">
+    </script>
+    <!-- تضمين مكتبة moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
     @yield('js')
 
 

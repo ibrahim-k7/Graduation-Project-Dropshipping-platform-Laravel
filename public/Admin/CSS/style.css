@@ -3,10 +3,34 @@
   scroll-behavior: smooth;
 }
 
+<<<<<<< HEAD
+=======
+
+.btn-group {
+direction: ltr;
+}
+
+.custom-add-button {
+  background-color: #4caf50; /* لون  */
+  color: #fff; /* لون النص */
+  border: none; /* إزالة الحدود إذا كان هناك حدود */
+  padding: 10px 20px; /* تعديل التباعد الداخلي حسب الحاجة */
+  cursor: pointer;
+}
+
+.custom-add-button:hover {
+  background-color: #45a049; /* تغيير لون الزر عند التحويم */
+}
+
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
   color: #444444;
+<<<<<<< HEAD
+=======
+  direction: rtl;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
 }
 
 a {
@@ -590,7 +614,10 @@ h6 {
 .sidebar {
   position: fixed;
   top: 60px;
+<<<<<<< HEAD
   left: 0;
+=======
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
   bottom: 0;
   width: 300px;
   z-index: 996;
@@ -623,13 +650,21 @@ h6 {
 
   #main,
   #footer {
+<<<<<<< HEAD
     margin-left: 300px;
+=======
+    margin-right: 300px;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
   }
 }
 
 @media (max-width: 1199px) {
   .toggle-sidebar .sidebar {
+<<<<<<< HEAD
     left: 0;
+=======
+    right: 0;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
   }
 }
 
@@ -637,11 +672,19 @@ h6 {
 
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
+<<<<<<< HEAD
     margin-left: 0;
   }
 
   .toggle-sidebar .sidebar {
     left: -300px;
+=======
+    margin-right: 0;
+  }
+
+  .toggle-sidebar .sidebar {
+    right: -300px;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
   }
 }
 
@@ -683,7 +726,11 @@ h6 {
 
 .sidebar-nav .nav-link i {
   font-size: 16px;
+<<<<<<< HEAD
   margin-right: 10px;
+=======
+  margin-left: 10px;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
   color: #4154f1;
 }
 
@@ -727,13 +774,21 @@ h6 {
   font-weight: 600;
   color: #012970;
   transition: 0.3;
+<<<<<<< HEAD
   padding: 10px 0 10px 40px;
+=======
+  padding: 10px 40px 10px 0;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
   transition: 0.3s;
 }
 
 .sidebar-nav .nav-content a i {
   font-size: 6px;
+<<<<<<< HEAD
   margin-right: 8px;
+=======
+  margin-left: 8px;
+>>>>>>> fad06c427242629c39afca398ff220bb11b23866
   line-height: 0;
   border-radius: 50%;
 }
