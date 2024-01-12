@@ -10,7 +10,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Order</h1>
+            <h1>الطلبات</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -26,7 +26,6 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Datatables</h5>
                             <p></p>
 
                             <div class="table-responsive">
@@ -35,20 +34,20 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Store Name</th>
-                                            <th>Delivery Name</th>
-                                            <th>Platform</th>
-                                            <th>Payment Status</th>
-                                            <th>Customer Name</th>
-                                            <th>Customer Phone</th>
-                                            <th>Customer Email</th>
-                                            <th>Shipping Address</th>
-                                            <th>Order Status</th>
-                                            <th>Total Per Ship</th>
-                                            <th>Total Weight</th>
-                                            <th>Total Amount</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
+                                            <th> اسم المتجر</th>
+                                            <th>التوصيل</th>
+                                            <th>المنصة</th>
+                                            <th>حالة الدفع</th>
+                                            <th>اسم العميل</th>
+                                            <th>هاتف العميل</th>
+                                            <th>البريد الالكتروني للعميل</th>
+                                            <th>عنوان الشحن</th>
+                                            <th>حالة الطلب</th>
+                                            <th>رسوم الشحن</th>
+                                            <th>اجمالي الوزن</th>
+                                            <th>اجمالي الطلب</th>
+                                            <th>تاريخ الانشاء</th>
+                                            <th>تاريخ التديث</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -168,11 +167,19 @@
                     },
                     {
                         data: 'created_at',
-                        name: 'created_at'
+                        name: 'created_at',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
                     {
                         data: 'updated_at',
-                        name: 'updated_at'
+                        name: 'updated_at',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
                     {
                         data: 'action',

@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    تفاصيل الطلبات
+    تفاصيل الطلب
 @endsection
 
 
@@ -10,7 +10,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Order Details</h1>
+            <h1>تفاصيل الطلب</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -26,7 +26,6 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Datatables</h5>
                             <p></p>
 
                             <div class="table-responsive">
@@ -35,11 +34,11 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Product Name</th>
-                                            <th>Description</th>
-                                            <th>Quantity</th>
-                                            <th>Total Cost</th>
-                                            <th>Sub Weight</th>
+                                            <th>اسم المنتج</th>
+                                            <th>الوصف</th>
+                                            <th>الكمية</th>
+                                            <th>اجمالي المنتج</th>
+                                            <th>الوزن فرعي</th>
                                         </tr>
                                     </thead>
                                     <tbody>

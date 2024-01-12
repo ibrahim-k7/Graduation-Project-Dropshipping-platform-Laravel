@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    المحفظة
+    الموصلين
 @endsection
 
 @section('css')
@@ -28,7 +28,6 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Datatables</h5>
                             <p></p>
 
                             <div class="table-responsive">
@@ -37,9 +36,9 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Shipping Fees</th>
-                                            <th>Created At</th>
+                                            <th>الاسم</th>
+                                            <th>رسوم التوصيل</th>
+                                            <th>تاريخ الانشاء</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -127,6 +126,10 @@
                     {
                         data: 'created_at',
                         name: 'created_at',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
 
                     },
                     {

@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    اضافة
+    اضافة توصيل
 @endsection
 
 @section('css')
@@ -29,26 +29,25 @@
                         <div class="card-body">
                             <div class="card mt-5">
                                 <div class="card-body ">
-                                    <h5 class="card-title">Delivery Form</h5>
 
                                     <!-- Multi Columns Form -->
                                     <form id="form" method="post" class="row g-3">
                                         @csrf
                                         <div class="col-md-12">
-                                            <label for="name" class="form-label">Delivery Name</label>
+                                            <label for="name" class="form-label">اسم التوصيل</label>
                                             <input type="text" class="form-control" id="name" name="name"
                                                 placeholder="Mohammed Wadei" required>
                                             <small id="name_error" class="form-text text-danger"></small>
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="shipping_fees" class="form-label">Shipping Fees</label>
+                                            <label for="shipping_fees" class="form-label">رسوم التوصيل</label>
                                             <input type="text" class="form-control" id="shipping_fees" name="shipping_fees"
                                                 placeholder="30" required>
                                             <small id="shipping_fees_error" class="form-text text-danger"></small>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                            <button type="submit" id="submit" class="btn btn-primary">ارسال</button>
+                                            <button type="reset" class="btn btn-secondary">اعادة تعيين</button>
                                         </div>
                                     </form><!-- End Multi Columns Form -->
 

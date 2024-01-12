@@ -24,9 +24,9 @@ class OrderController extends Controller
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action',function ($row) {
                 return $btn = '
-            <a href="' . Route('admin.order.details',['order_id' => $row->order_id]) . '" type="button" class="btn btn-info">Details</a>
-            <a href="' . Route('admin.order.details',['order_id'=> $row->order_id]) . '" type="button" class="btn btn-info">Details</a>
-            <a href="' . Route('admin.order.details',['order_id'=> $row->order_id]) . '" type="button" class="btn btn-info">Details</a>
+            <a href="' . Route('admin.order.details',['order_id' => $row->order_id]) . '" type="button" class="btn btn-primary">التفاصيل</a>
+            <a href="' . Route('admin.order.details',['order_id'=> $row->order_id]) . '" type="button" class="btn btn-secondary">تحديث حالة الدفع</a>
+            <a href="' . Route('admin.order.details',['order_id'=> $row->order_id]) . '" type="button" class="btn btn-secondary">تحديث حالة الطلب</a>
                 ';
             })
             ->rawColumns(['action'])
