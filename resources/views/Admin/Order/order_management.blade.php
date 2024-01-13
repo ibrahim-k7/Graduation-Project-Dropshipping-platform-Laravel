@@ -4,7 +4,9 @@
     الطلبات
 @endsection
 
-
+@section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 
 @section('Content')
     <main id="main" class="main">
@@ -69,6 +71,109 @@
 
 @section('js')
     <script type="text/javascript">
+        //دالة تحديث حالة الدفع
+        function updatePaymentStatus(order_id, payment_status, total_amount = null, wallet_id = null) {
+            $.ajax({
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                },
+                url: "{{ route('admin.order.update.payment.status') }}",
+                data: {
+                    'id': order_id,
+                    'payment_status': payment_status,
+                    'total_amount': total_amount,
+                    'wallet_id': wallet_id,
+                },
+                success: function(data) {
+                    Swal.fire({
+                        title: "تم التحديث",
+                        text: "لقد تم تحديث حالة الدفع بنجاح",
+                        icon: "success"
+                    });
+
+                    //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد التحديث
+                    $('#Order_Managment').DataTable().ajax.reload();
+                },
+                error: function(reject) {
+                    // يمكنك إضافة إجراءات إضافية هنا في حالة حدوث خطأ
+                }
+            });
+        }
+        $(document).on('click', '.payment-status-change-btn', function(e) {
+            e.preventDefault();
+
+            var order_id = $(this).attr('data-order-id');
+            var payment_status = $(this).attr('data-payment_status');
+            var total_amount = $(this).attr('data-total_amount');
+            var wallet_id = $(this).attr('data-wallet_id');
+
+            Swal.fire({
+                title: "هل أنت متأكد؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، قم بتغيير حالة الدفع"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updatePaymentStatus(order_id,payment_status,total_amount,wallet_id);
+                }
+            });
+        });
+
+        //تحديث حالة الطلب
+        $(document).on('click', '.order-status-change-btn', function(e) {
+            e.preventDefault();
+
+            var order_id = $(this).attr('data-order-id');
+            var order_status = $(this).attr('data-order_status');
+            var payment_status = $(this).attr('data-payment_status');
+            var total_amount = $(this).attr('data-total_amount');
+            var wallet_id = $(this).attr('data-wallet_id');
+
+            Swal.fire({
+                title: "هل أنت متأكد؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، قم بتغيير حالة الطلب"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updatePaymentStatus(order_id,payment_status,total_amount,wallet_id);
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.order.update.order.status') }}",
+                        data: {
+                            'id': order_id,
+                            'order_status': order_status,
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "تم التحديث",
+                                text: "لقد تم تحديث حالة الطلب بنجاح",
+                                icon: "success"
+                            });
+
+                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد التحديث
+                            $('#Order_Managment').DataTable().ajax.reload();
+                        },
+                        error: function(reject) {
+                            // يمكنك إضافة إجراءات إضافية هنا في حالة حدوث خطأ
+                        }
+                    });
+                }
+            });
+        });
+
         $(function() {
 
             var order_data = $('#Order_Managment').DataTable({
@@ -131,7 +236,22 @@
                     },
                     {
                         data: 'payment_status',
-                        name: 'payment_status'
+                        name: 'payment_status',
+                        render: function(data, type, full, meta) {
+                            // تحديد اللون بناءً على الحالة
+                            var badgeClass = '';
+                            if (data == 'تم الدفع') {
+                                badgeClass = 'bg-success';
+                            } else if (data == 'تم الغاء الدفع') {
+                                badgeClass = 'bg-danger';
+                            } else {
+                                badgeClass = 'bg-warning';
+                            }
+                            // بناء العلامة بناءً على الحالة
+                            var statusBadge = '<span class="badge ' + badgeClass + '">' + data +
+                                '</span>';
+                            return statusBadge;
+                        }
                     },
                     {
                         data: 'customer_name',
@@ -151,7 +271,22 @@
                     },
                     {
                         data: 'order_status',
-                        name: 'order_status'
+                        name: 'order_status',
+                        render: function(data, type, full, meta) {
+                            // تحديد اللون بناءً على الحالة
+                            var badgeClass = '';
+                            if (data == 'تم التوصيل') {
+                                badgeClass = 'bg-success';
+                            } else if (data == 'تم الغاء الطلب') {
+                                badgeClass = 'bg-danger';
+                            } else {
+                                badgeClass = 'bg-warning';
+                            }
+                            // بناء العلامة بناءً على الحالة
+                            var statusBadge = '<span class="badge ' + badgeClass + '">' + data +
+                                '</span>';
+                            return statusBadge;
+                        }
                     },
                     {
                         data: 'total_per_shp',
@@ -185,10 +320,63 @@
                         data: 'action',
                         name: 'action'
                     },
+
                 ]
             });
         });
 
+        //حذف الطلب
+        $(document).on('click', '.delete_btn', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "هل انت متأكد ؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، احذفه"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var order_status = $(this).attr('data-order_status');
+                    var order_id = $(this).attr('data-order-id');
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.order.destroy') }}",
+                        data: {
+                            'id': order_id,
+                            'order_status': order_status,
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "تم الحذف ",
+                                text: "لقد تم حذف الطلب بنجاح",
+                                icon: "success"
+                            });
+
+                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
+                            $('#Order_Managment').DataTable().ajax.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            var errorMessage = xhr
+                                .responseText;
+
+                            Swal.fire({
+                                title: "فشلت عملية الحذف",
+                                text: " لا يمكن حذف طلب تم توصيله ",
+                                icon: "error"
+                            });
+
+                        }
+                    });
+
+                }
+            });
+        });
 
     </script>
 @endsection
