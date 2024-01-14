@@ -5,6 +5,7 @@ use App\Http\Controllers\SupplierTransactionController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
+use App\Http\Controllers\Admin\ReturnDetailsOrderController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseDetailsController;
@@ -51,6 +52,20 @@ Route::prefix('/admin')->group(function () {
         function () {
             Route::get('/order_details_managment','index')->name('admin.order.details');
             Route::get('/order_details_managment/a','getDataTable')->name('admin.order.details.data');
+            Route::get('/order_details_managment/return','return')->name('admin.order.details.return');
+
+        }
+    );
+
+    //Returned Order Details
+    Route::controller(ReturnDetailsOrderController::class)->group(
+        function () {
+            Route::get('/return_order_details_managment','index')->name('admin.returned.order.details');
+            Route::get('/return_order_details_managment/a','getDataTable')->name('admin.returned.order.details.data');
+            Route::post('/return_order_details_managment/store','store')->name('admin.returned.order.details.store');
+            Route::post('/return_order_details_managment/update','update')->name('admin.returned.order.details.update');
+            Route::get('/return_order_details_managment/edit','edit')->name('admin.returned.order.details.edit');
+
         }
     );
 

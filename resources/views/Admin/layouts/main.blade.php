@@ -358,6 +358,11 @@
                         <i class="bi bi-circle"></i><span>عرض تفاصيل الطلبات</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ Route('admin.returned.order.details') }}">
+                        <i class="bi bi-circle"></i><span>عرض الطلبات المسترجعة</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Order Nav -->
 
