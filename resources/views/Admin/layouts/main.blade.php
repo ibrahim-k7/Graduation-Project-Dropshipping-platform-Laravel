@@ -353,6 +353,11 @@
                         <i class="bi bi-circle"></i><span>ادارة الطلبات</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ Route('admin.order.details') }}">
+                        <i class="bi bi-circle"></i><span>عرض تفاصيل الطلبات</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Order Nav -->
 

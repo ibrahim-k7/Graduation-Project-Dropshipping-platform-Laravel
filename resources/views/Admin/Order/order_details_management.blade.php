@@ -34,6 +34,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>معرف الطلب</th>
                                             <th>اسم المنتج</th>
                                             <th>الوصف</th>
                                             <th>الكمية</th>
@@ -106,6 +107,10 @@
                     {
                         data: 'order_details_id',
                         name: 'order_details_id'
+                    },
+                    {
+                        data: 'order_id',
+                        name: 'order_id'
                     },
                     {
                         data: 'name',
