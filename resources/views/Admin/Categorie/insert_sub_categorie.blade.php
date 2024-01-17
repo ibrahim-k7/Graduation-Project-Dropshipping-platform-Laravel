@@ -70,7 +70,7 @@
         $(document).ready(function() {
             // عند تحميل الصفحة
 
-            // قم بتحميل بيانات الموردين باستخدام AJAX
+            // قم بتحميل بيانات الفئات  باستخدام AJAX
             $.ajax({
                 type: 'get',
                 url: "{{ route('admin.Categories.getCategories') }}",

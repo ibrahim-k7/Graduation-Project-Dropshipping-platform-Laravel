@@ -17,4 +17,9 @@ class SubCategorie extends Model
     public function categorie(){
         return $this ->belongsTo(Categorie::class,'cat_id' ,'id');
     }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class,'subCat_id','id');
+    }
 }

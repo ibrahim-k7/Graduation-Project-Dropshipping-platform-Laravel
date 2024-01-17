@@ -34,25 +34,25 @@
                                 <div class="col-md-12">
                                     <label for="name" class="form-label">اسم المورد</label>
                                     <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="ابراهيم محمد الخياط" required>
+                                        placeholder="ابراهيم محمد الخياط" required>
                                     <small id="name_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">البريد الالكتروني</label>
                                     <input type="email" class="form-control" id="email" name="email"
-                                           placeholder="example@example.com" required>
+                                        placeholder="example@example.com" required>
                                     <small id="email_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="phone" class="form-label">رقم الهاتف</label>
                                     <input type="number" class="form-control" id="phone" name="phone"
-                                           placeholder="777676006" required>
+                                        placeholder="777676006" required>
                                     <small id="phone_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="col-12">
                                     <label for="address" class="form-label">عنوان المورد</label>
                                     <input type="text" class="form-control" id="address" name="address"
-                                           placeholder="صنعاء / شملان" required>
+                                        placeholder="صنعاء / شملان" required>
                                     <small id="address_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="text-center">
@@ -102,7 +102,7 @@
                         },
                         url: "{{ route('admin.suppliers.update') }}",
                         data: {
-                            'id' : supplier.sup_id,
+                            'id': supplier.sup_id,
                             'name': $("input[name='name']").val(),
                             'email': $("input[name='email']").val(),
                             'phone_number': $("input[name='phone']").val(),

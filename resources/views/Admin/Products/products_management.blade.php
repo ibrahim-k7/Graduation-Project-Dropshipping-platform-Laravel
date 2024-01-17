@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    الفئات
+    المنتجات
 @endsection
 
 @section('css')
@@ -12,7 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>الفئات</h1>
+            <h1>المنتجات</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -32,13 +32,22 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Categories_Managment" class="table table-striped">
+                                <table id="Products_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>الاسم</th>
-                                            <th>تاريخ الانشاء</th>
-                                            <th>تاريخ التحديث</th>
+                                            <th>الأسم</th>
+                                            <th>الفئة الرئيسية</th>
+                                            <th>الفئة الفرعية</th>
+                                            <th>الوصف</th>
+                                            <th>سعر الشراء</th>
+                                            <th>سعر البيع</th>
+                                            <th>سعر البيع المقترح</th>
+                                            <th>الوزن</th>
+                                            <th>الكمية</th>
+                                            <th>الباركود</th>
+                                            <th>الصوره</th>
+                                            <th>تاريخ الإنشاء</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -62,21 +71,22 @@
     <script type="text/javascript">
         $(function() {
 
-            var supplier_data = $('#Categories_Managment').DataTable({
+            var wallet_data = $('#Products_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [
                     [0, "desc"]
                 ],
+                ajax: "{{ Route('admin.products.data') }}",
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
-                    targets: '_all',//كل الحقول
-                    className: 'dt-right'//الاتجاه
+                    targets: '_all', //كل الحقول
+                    className: 'dt-right' //الاتجاه
                 }],
-                ajax: "{{ Route('admin.categories.data') }}",
                 dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+
                 language: {
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
                 },
@@ -84,25 +94,25 @@
                         extend: 'print',
                         autoPrint: false,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
                     },
                     {
@@ -110,9 +120,10 @@
                         className: 'custom-add-button',
                         action: function(e, dt, node, config) {
                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                            window.location.href = "{{ route('admin.categories.create') }}";
+                            window.location.href = "{{ route('admin.products.create') }}";
                         }
                     },
+
                 ],
                 columns: [{
                         data: 'id',
@@ -123,16 +134,48 @@
                         name: 'name'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at',
-                        render: function(data, type, full, meta) {
-                            // تنسيق التاريخ باستخدام moment.js
-                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
-                        }
+                        data: 'categorie',
+                        name: 'categorie'
                     },
                     {
-                        data: 'updated_at',
-                        name: 'updated_at',
+                        data: 'subCategorie',
+                        name: 'subCategorie'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'purchasing_price',
+                        name: 'purchasing_price'
+                    },
+                    {
+                        data: 'selling_price',
+                        name: 'selling_price'
+                    },
+                    {
+                        data: 'suggested_selling_price',
+                        name: 'suggested_selling_price'
+                    },
+                    {
+                        data: 'weight',
+                        name: 'weight'
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity'
+                    },
+                    {
+                        data: 'barcode',
+                        name: 'barcode'
+                    },
+                    {
+                        data: 'image',
+                        name: 'image'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
                         render: function(data, type, full, meta) {
                             // تنسيق التاريخ باستخدام moment.js
                             return moment(data).format('YYYY-MM-DD HH:mm:ss');
@@ -147,7 +190,6 @@
             });
 
         });
-
         $(document).on('click', '.delete_btn', function(e) {
             e.preventDefault();
             Swal.fire({
@@ -161,20 +203,20 @@
                 confirmButtonText: "نعم، احذفه"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var categorie_id = $(this).attr('data-categorie-id');
+                    var product_id = $(this).attr('data-product-id');
                     $.ajax({
                         type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.categories.destroy') }}",
+                        url: "{{ route('admin.products.destroy') }}",
                         data: {
-                            'id': categorie_id
+                            'id': product_id
                         },
                         success: function(data) {
                             Swal.fire({
                                 title: "تم الحذف ",
-                                text: "لقد تم حذف بنجاح",
+                                text: "لقد تم الحذف ينجاح",
                                 icon: "success"
                             });
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
@@ -183,7 +225,7 @@
                         error: function(reject) {
                             Swal.fire({
                                 title: "فشلت عملية الحذف",
-                                text: "لا يمكن حذف فئة رائيسية لديها فئات فرعية",
+                                text: "لا يمكن حذف منتج لدية كمية",
                                 icon: "error"
                             });
                         }
@@ -191,6 +233,5 @@
                 }
             });
         });
-
     </script>
 @endsection

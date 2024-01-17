@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
@@ -15,12 +17,36 @@ class ProductController extends Controller
     public function index()
     {
         //
+        return view('Admin.Products.products_management');
     }
 
     public function getProducts()
     {
         $products = Product::select('id', 'name')->orderby("id", "ASC")->get();
         return response()->json($products);
+    }
+
+
+    public function getDataTable()
+    {
+        $model = Product::with('categorie')->with('subCategorie');
+        return DataTables::of($model)
+            ->addColumn('categorie', function (Product $product) {
+                return $result = $product->categorie->name;
+            })
+            ->addColumn('subCategorie', function (Product $product) {
+                return $result = $product->subCategorie->name;
+            })
+            ->addColumn('action', function ($row) {
+                return $btn = '<div class="btn-group" role="group">
+                <a   data-product-id="' . $row->id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a href="' . route('admin.products.edit', ['id' => $row->id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
+                <a href="' . route('admin.subCategories', ['id' => $row->id]) . '"   type="button" class="btn btn-primary">المبيعات</a>
+                <a href="' . route('admin.subCategories', ['id' => $row->id]) . '"   type="button" class="btn btn-primary">المشتريات</a>
+                </div>  ';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -31,6 +57,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('Admin.Products.insert_product');
     }
 
     /**
@@ -39,9 +66,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddProductRequest $request)
     {
-        
+        // إنشاء سجل في جدول Product
+        Product::create([
+            'name' => $request->name,
+            'selling_price' => $request->selling_price,
+            'suggested_selling_price' => $request->suggested_selling_price,
+            'barcode' => $request->barcode,
+            'description' => $request->description,
+            'cat_id' =>  $request->cat_id,
+            'subCat_id' =>  $request->subCat_id,
+            'weight' =>  $request->weight,
+            'image' =>  $request->image,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -61,9 +101,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
+        $product = Product::where('id', $request->query('id'))->get()->first();
+        return view('Admin.Products.insert_product', compact('product'));
     }
 
     /**
@@ -73,9 +115,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AddProductRequest $request)
     {
         //
+        $dataToUpdate = $request->except('id');
+        Product::where(['id' => $request->id])->update($dataToUpdate);
     }
 
     /**
@@ -84,8 +128,17 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $product = Product::where('id', $request->id);
+        $quantity = $product->value('quantity');
+
+        if ($quantity !== null) {
+            // إذا كانت قيمة $quantity تساوي null
+            abort(400, 'فشلت العملية بسبب وجود كمية للمنتج: ');
+        } else {
+            $product->delete();
+        }
     }
 }
