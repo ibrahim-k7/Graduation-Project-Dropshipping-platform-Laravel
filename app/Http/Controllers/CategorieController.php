@@ -145,7 +145,7 @@ class CategorieController extends Controller
                   // لا يوجد supCat
             $categorie->delete();
             return response()->json(['message' => 'تم حذف الفئة بنجاح']);
-        }else { 
+        }else {
           // يوجد supCat
                 abort(400, 'فشلت العملية بسبب وجود فئات فرعية ');
         }
