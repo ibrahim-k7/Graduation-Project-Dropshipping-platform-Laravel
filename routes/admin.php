@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\ReturnDetailsOrderController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SubCategorieController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplierTransactionController;
@@ -65,6 +66,14 @@ Route::prefix('/admin')->group(function () {
             Route::post('/return_order_details_managment/update','update')->name('admin.returned.order.details.update');
             Route::get('/return_order_details_managment/edit','edit')->name('admin.returned.order.details.edit');
 
+        }
+    );
+
+    //Sales
+    Route::controller(SalesController::class)->group(
+        function () {
+            Route::get('/sales_managment','index')->name('admin.sales');
+            Route::get('/sales_managment/a','getDataTable')->name('admin.sales.data');
         }
     );
 

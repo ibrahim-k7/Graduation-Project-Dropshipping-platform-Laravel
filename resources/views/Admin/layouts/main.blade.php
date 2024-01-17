@@ -363,6 +363,11 @@
                         <i class="bi bi-circle"></i><span>عرض الطلبات المسترجعة</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ Route('admin.sales') }}">
+                        <i class="bi bi-circle"></i><span>المبيعات</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Order Nav -->
 
