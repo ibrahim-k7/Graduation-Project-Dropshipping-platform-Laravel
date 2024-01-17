@@ -30,6 +30,16 @@ class CategorieController extends Controller
         return response()->json($categories);
     }
 
+    public function getSubCategories(Request $request)
+{
+    $categoryId = $request->input('categoryId');
+
+    // احصل على الفئات الفرعية المترتبطة بالفئة الرئيسية المحددة
+    $subCategories = SubCategorie::where('cat_id', $categoryId)->get();
+
+    return response()->json($subCategories);
+}
+
 
     public function getDataTable()
     {
@@ -46,9 +56,7 @@ class CategorieController extends Controller
                 <a   data-categorie-id="' . $row->id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('admin.categories.edit', ['id' => $row->id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a href="' . route('admin.subCategories', ['id' => $row->id]) . '"   type="button" class="btn btn-primary">الفئات الفرعية</a>
-                </div>
-    
-        ';
+                </div>';
             })
             ->rawColumns(['action'])
             ->make(true);

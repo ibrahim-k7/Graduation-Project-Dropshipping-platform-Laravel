@@ -19,4 +19,13 @@ class Product extends Model
     public function purchases(){
         return $this-> belongsToMany(Purchase::class,'purchase details','pro_id','purch_id','id','id');
     }
+
+    //Relations Functhion
+    public function categorie(){
+        return $this -> belongsTo(Categorie::class,'cat_id','id');
+    }
+
+    public function subCategorie(){
+        return $this -> belongsTo(SubCategorie::class,'subCat_id','id');
+    }
 }

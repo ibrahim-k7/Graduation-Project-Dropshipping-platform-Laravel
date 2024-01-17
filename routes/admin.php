@@ -22,6 +22,21 @@ Route::get('/Dshboard', function () {
 });
 
 Route::prefix('/admin')->group(function () {
+
+    Route::controller(ProductController::class)->group(
+        function () {
+            Route::get('/products_management','index')->name('admin.products');
+            Route::get('/products_management/data','getDataTable')->name('admin.products.data');
+            Route::get('/products_management/create', 'create')->name('admin.products.create');
+            Route::get('/products_management/edit', 'edit')->name('admin.products.edit');
+            Route::post('/products_management/store', 'store')->name('admin.products.store');
+            Route::post('/products_management/update', 'update')->name('admin.products.update');
+            Route::post('/products_management/destroy','destroy')->name('admin.products.destroy');
+            
+
+        }
+    );
+
     //  Delivery
     Route::controller(DeliveryController::class)->group(
         function () {
@@ -106,6 +121,7 @@ Route::prefix('/admin')->group(function () {
             Route::get('/Categories/create', 'create')->name('admin.categories.create');
             Route::get('/Categories/edit', 'edit')->name('admin.categories.edit');
             Route::get('/Categories/getCategories', 'getCategories')->name('admin.Categories.getCategories');
+            Route::get('/Categories/getSubCategories', 'getSubCategories')->name('admin.Categories.getSubCategories');
             Route::post('/Categories/store', 'store')->name('admin.categories.store');
             Route::post('/Categories/update', 'update')->name('admin.categories.update');
             Route::post('/Categories/destroy', 'destroy')->name('admin.categories.destroy');
@@ -140,11 +156,7 @@ Route::post('/transfers/update', [TransferController::class, 'update'])->name('a
 Route::post('/transfers/destroy', [TransferController::class, 'destroy'])->name('admin.transfers.destroy');
 
 Route::prefix('admin')->group(function () {
-
-
     Route::get('admin/product/getProducts', [ProductController::class, 'getProducts'])->name('admin.product.getProducts');
-
-
     // Purchase Routes
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.purchase.index');
     Route::get('/purchase/data', [PurchaseController::class, 'getDataTable'])->name('admin.purchase.data');
