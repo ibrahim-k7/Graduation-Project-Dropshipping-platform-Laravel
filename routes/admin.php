@@ -21,9 +21,7 @@ Route::get('/Dshboard', function () {
     return view('admin/dashboard');
 });
 
-
 Route::prefix('/admin')->group(function () {
-
     //  Delivery
     Route::controller(DeliveryController::class)->group(
         function () {
@@ -37,18 +35,24 @@ Route::prefix('/admin')->group(function () {
         }
     );
 
+    //Order
+    Route::controller(OrderController::class)->group(
+        function () {
+            Route::get('/order_management','index')->name('admin.order');
+            Route::get('/order_managment/a','getDataTable')->name('admin.order.data');
+            Route::post('/order_managment/updatePayment','updatePaymentStatus')->name('admin.order.update.payment.status');
+            Route::post('/order_managment/updateOrder','updateOrderStatus')->name('admin.order.update.order.status');
+            Route::post('/order_managment/delete','destroy')->name('admin.order.destroy');
+        }
+    );
 
-});
-
-// Order
-Route::get('/order_management',[OrderController::class,'index'])->name('admin.order');
-Route::get('/order_managment/a',[OrderController::class,'getDataTable'])->name('admin.order.data');
-
-// Order Details
-Route::get('/order_details_managment',[OrderDetailsController::class, 'index'])->name('admin.order.details');
-Route::get('/order_details_managment/a',[OrderDetailsController::class, 'getDataTable'])->name('admin.order.details.data');
-
-Route::prefix('/admin')->group(function () {
+    //Order Details
+    Route::controller(OrderDetailsController::class)->group(
+        function () {
+            Route::get('/order_details_managment','index')->name('admin.order.details');
+            Route::get('/order_details_managment/a','getDataTable')->name('admin.order.details.data');
+        }
+    );
 
     Route::controller(SupplierController::class)->group(
         function () {

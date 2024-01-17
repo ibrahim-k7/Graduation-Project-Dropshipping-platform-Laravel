@@ -21,8 +21,8 @@ class DeliveryController extends Controller
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-            <a href="' . Route('admin.delivery.edit', ['id' => $row->delivery_id]) . '" type="button" class="btn btn-info">Edit</a>
-            <a   delivery-id="' . $row->delivery_id  . '" type="button" class="delete_btn btn btn-danger">Delete</a>
+            <a href="' . Route('admin.delivery.edit', ['id' => $row->delivery_id]) . '" type="button" class="btn btn-secondary">تحديث</a>
+            <a   delivery-id="' . $row->delivery_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
             </div>
             ';
             })
