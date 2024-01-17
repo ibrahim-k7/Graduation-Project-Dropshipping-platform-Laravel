@@ -91,6 +91,7 @@
                         url: "{{ route('admin.returned.order.details.update') }}",
                         data: {
                             'return_id' : returned_product.return_id,
+                            'order_details_id' : returned_product.order_details_id,
                             'quantity_returned': $("input[name='quantity_returned']").val(),
                             'amount_returned': $("input[name='amount_returned']").val(),
                         },
@@ -100,13 +101,13 @@
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "تم تحديث النتج المسترجع",
+                                title: "تم تحديث المنتج المسترجع",
                                 showConfirmButton: false,
                                 timer: 2000
                             });
                             console.log('suc: ' + data);
                         },
-                        error: function(reject) {
+                        error: function(reject, xhr, status, error) {
 
                             //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
                             var response = $.parseJSON(reject.responseText);
@@ -116,11 +117,15 @@
 
                             });
 
+                            var errorMessage = xhr
+                                .responseText;
 
                             Swal.fire({
+
                                 position: "top-end",
                                 icon: "error",
-                                title: "فشلت عملية التحديث",
+                                title: "فشلت عملية التحديث المنتج المسترجع",
+                                text: "لا يمكن استرجاع منتج كميته أو الاجمالي أقل",
                                 showConfirmButton: false,
                                 timer: 1500
                             });
@@ -143,8 +148,8 @@
                         url: "{{ route('admin.returned.order.details.store') }}",
                         data: {
                             'order_details_id' : product.order_details_id,
-                            'quantity' : product.quantity,
-                            'total_cost' : product.total_cost,
+                            // 'quantity' : product.quantity,
+                            // 'total_cost' : product.total_cost,
                             'quantity_returned': $("input[name='quantity_returned']").val(),
                             'amount_returned': $("input[name='amount_returned']").val(),
                         },
@@ -178,13 +183,6 @@
                                 text: "لا يمكن استرجاع منتج كميته أو الاجمالي أقل",
                                 icon: "error"
                             });
-                            // Swal.fire({
-                            //     position: "top-end",
-                            //     icon: "error",
-                            //     title: "فشلت عملية الإضافة",
-                            //     showConfirmButton: false,
-                            //     timer: 1500
-                            // });
                         }
                     });
                 });

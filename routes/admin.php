@@ -1,21 +1,20 @@
 <?php
 
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\SupplierTransactionController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
-use App\Http\Controllers\Admin\ReturnDetailsOrderController;
-use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseDetailsController;
+use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SubCategorieController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SupplierTransactionController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferInformationController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/Dshboard', function () {

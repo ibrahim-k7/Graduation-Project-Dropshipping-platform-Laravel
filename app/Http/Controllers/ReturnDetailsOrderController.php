@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\OrderDetailsController;
 use App\Http\Requests\AddOrderDetailsRequest;
 use App\Http\Requests\ReturnOrderRequest;
 use App\Models\OrderDetails;
@@ -31,8 +29,8 @@ class ReturnDetailsOrderController extends Controller
             ->addColumn('action',function ($row){
                 return $btn = '
                 <div class="btn-group" role="group">
-                <a href="' . Route('admin.returned.order.details.edit', ['returned_id' => $row->return_id]) . '" type="button"
-                class="btn btn-secondary">استرجاع المنتج</a>
+                <a href="' . Route('admin.returned.order.details.edit', ['return_id' => $row->return_id]) . '" type="button"
+                class="btn btn-secondary">تعديل</a>
                 </div>
                 ';
             })
@@ -48,7 +46,7 @@ class ReturnDetailsOrderController extends Controller
         $total_cost = OrderDetails::where('order_details_id',$request->order_details_id)->value('total_cost') ;
 
         // التحقق من كمية واجمالي المنتج في الطلب
-        if ($quantity > $request->quantity && $total_cost > $request->total_cost){
+        if ($quantity >= $request->quantity_returned && $total_cost >= $request->amount_returned){
             ReturnDetailsOrder::create([
                 'order_details_id' => $request->order_details_id,
                 'quantity_returned' => $request->quantity_returned,
@@ -64,12 +62,12 @@ class ReturnDetailsOrderController extends Controller
             // إنشاء كائن AddOrderDetailsRequest وتعيين القيم
             $addOrderDetailsRequest = new AddOrderDetailsRequest();
             $addOrderDetailsRequest->merge([
-                'order_details_id' => $request->order_details_id, // القيمة المطلوبة لـ wallet_id
-                'quantity' => $new_quantity, // القيمة المطلوبة لـ operation_type
-                'total_cost' => $new_total_cost, // القيمة المطلوبة لـ amount
+                'order_details_id' => $request->order_details_id,
+                'quantity' => $new_quantity,
+                'total_cost' => $new_total_cost,
             ]);
 
-            // إنشاء كائن WalletOperationController واستدعاء الدالة store
+            // إنشاء كائن OrderDetailsController واستدعاء الدالة update
             $orderDetailsController = new OrderDetailsController();
             $orderDetailsController->update($addOrderDetailsRequest);
         }else{
@@ -89,7 +87,38 @@ class ReturnDetailsOrderController extends Controller
 
     // Update the specified order in storage.
     public function update(ReturnOrderRequest $request){
-        $data= $request->except('return_id');
-        ReturnDetailsOrder::where(['return_id' => $request->return_id])->update($data);
+
+        // الحصول على كمية واجمالي المنتج في الطلب
+        $quantity = OrderDetails::where('order_details_id',$request->order_details_id)->value('quantity') ;
+        $total_cost = OrderDetails::where('order_details_id',$request->order_details_id)->value('total_cost') ;
+
+        if ($quantity >= $request->quantity_returned && $total_cost >= $request->amount_returned){
+
+            ReturnDetailsOrder::where(['return_id' => $request->return_id])
+                ->update(['quantity_returned' => $request->quantity_returned, 'amount_returned' => $request->amount_returned ]);
+
+            $new_quantity = $quantity - $request->quantity_returned;
+            $new_total_cost = $total_cost - $request->amount_returned;
+
+            // إنشاء كائن AddOrderDetailsRequest وتعيين القيم
+            $addOrderDetailsRequest = new AddOrderDetailsRequest();
+            $addOrderDetailsRequest->merge([
+                'order_details_id' => $request->order_details_id,
+                'quantity' => $new_quantity,
+                'total_cost' => $new_total_cost,
+            ]);
+
+            // إنشاء كائن OrderDetailsController واستدعاء الدالة update
+            $orderDetailsController = new OrderDetailsController();
+            $orderDetailsController->update($addOrderDetailsRequest);
+        }else{
+            abort(400, 'الكمية أو اجمالي المنتج أقل من المسترجع');
+        }
+
+
+
+
+//        $data= $request->except('return_id');
+//        ReturnDetailsOrder::where(['return_id' => $request->return_id])->update($data);
     }
 }
