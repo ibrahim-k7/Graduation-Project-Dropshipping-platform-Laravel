@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\SupplierTransactionController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
-use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseDetailsController;
+use App\Http\Controllers\ReturnDetailsOrderController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SubCategorieController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SupplierTransactionController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferInformationController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/Dshboard', function () {
@@ -66,6 +67,28 @@ Route::prefix('/admin')->group(function () {
         function () {
             Route::get('/order_details_managment','index')->name('admin.order.details');
             Route::get('/order_details_managment/a','getDataTable')->name('admin.order.details.data');
+            Route::get('/order_details_managment/return','return')->name('admin.order.details.return');
+
+        }
+    );
+
+    //Returned Order Details
+    Route::controller(ReturnDetailsOrderController::class)->group(
+        function () {
+            Route::get('/return_order_details_managment','index')->name('admin.returned.order.details');
+            Route::get('/return_order_details_managment/a','getDataTable')->name('admin.returned.order.details.data');
+            Route::post('/return_order_details_managment/store','store')->name('admin.returned.order.details.store');
+            Route::post('/return_order_details_managment/update','update')->name('admin.returned.order.details.update');
+            Route::get('/return_order_details_managment/edit','edit')->name('admin.returned.order.details.edit');
+
+        }
+    );
+
+    //Sales
+    Route::controller(SalesController::class)->group(
+        function () {
+            Route::get('/sales_managment','index')->name('admin.sales');
+            Route::get('/sales_managment/a','getDataTable')->name('admin.sales.data');
         }
     );
 

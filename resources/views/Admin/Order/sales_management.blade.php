@@ -1,16 +1,18 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    تفاصيل الطلب
+    المبيعات
 @endsection
 
-
+@section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 
 @section('Content')
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>تفاصيل الطلب</h1>
+            <h1>المبيعات</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -30,17 +32,14 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Order_Managment_Details" class="table table-striped">
+                                <table id="Sales_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>معرف الطلب</th>
-                                            <th>اسم المنتج</th>
-                                            <th>الوصف</th>
-                                            <th>الكمية</th>
-                                            <th>اجمالي المنتج</th>
-                                            <th>الوزن فرعي</th>
-                                            <th>Action</th>
+                                            <th> رقم الطلب</th>
+                                            <th>المنصة</th>
+                                            <th>اجمالي الطلب</th>
+                                            <th>تاريخ البيع</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,7 +62,7 @@
     <script type="text/javascript">
         $(function() {
 
-            var order_details_data = $('#Order_Managment_Details').DataTable({
+            var sales_data = $('#Sales_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
@@ -71,7 +70,7 @@
                     targets: '_all',//كل الحقول
                     className: 'dt-right'//الاتجاه
                 }],
-                ajax: "{{ Route('admin.order.details.data') }}",
+                ajax: "{{ Route('admin.sales.data') }}",
                 dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
@@ -82,65 +81,58 @@
                     extend: 'print',
                     autoPrint: false,
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                        columns: [0, 1, 2, 3, 4] // Column index which needs to export
                     }
                 },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4]  // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4]  // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4]  // Column index which needs to export
                         }
                     },
+
                 ],
-                columns: [
-                    {
-                        data: 'order_details_id',
-                        name: 'order_details_id'
+                columns: [{
+                        data: 'sales_id',
+                        name: 'sales_id'
                     },
                     {
                         data: 'order_id',
                         name: 'order_id'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'platform',
+                        name: 'platform'
                     },
                     {
-                        data: 'description',
-                        name: 'description'
+                        data: 'total_amount',
+                        name: 'total_amount'
                     },
                     {
-                        data: 'quantity',
-                        name: 'quantity'
+                        data: 'date',
+                        name: 'date',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
-                    {
-                        data: 'total_cost',
-                        name: 'total_cost'
-                    },
-                    {
-                        data: 'sub_weight',
-                        name: 'sub_weight'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action'
-                    },
+
+
                 ]
             });
         });
-
 
     </script>
 @endsection
