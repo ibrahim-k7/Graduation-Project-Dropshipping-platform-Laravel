@@ -15,9 +15,9 @@
                     @endif
 
                     <div id="userInfo">
-                        <p>Name: {{ Auth::guard('admin')->user()->name }}</p>
-                        <p>Email: {{ Auth::guard('admin')->user()->email }}</p>
-                        <button class="btn btn-primary" onclick="showUpdateForm('admin')">Update Information</button>
+                        <p>الاسم: {{ Auth::guard('admin')->user()->name }}</p>
+                        <p>الايميل: {{ Auth::guard('admin')->user()->email }}</p>
+                        <button class="btn btn-primary" onclick="showUpdateForm('admin')">تحديث المعلومات</button>
                     </div>
 
                     <div id="updateEmailForm" style="display: none;">
@@ -25,11 +25,11 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email Address</label>
+                                <label for="email" class="form-label">الايميل</label>
                                 <input type="email" class="form-control" id="email" name="email" value="{{ Auth::guard('admin')->user()->email }}" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Update Email</button>
+                            <button type="submit" class="btn btn-primary"> تحديث الايميل</button>
                         </form>
                     </div>
 
@@ -38,16 +38,16 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">New Password</label>
+                                <label for="password" class="form-label">كلمة سر جديده </label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="password_confirmation" class="form-label">Confirm New Password</label>
+                                <label for="password_confirmation" class="form-label">تاكيد كلمة السر الجديده  </label>
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Update Password</button>
+                            <button type="submit" class="btn btn-primary">تحديث كلمة السر </button>
                         </form>
                     </div>
                 </div>

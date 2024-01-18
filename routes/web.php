@@ -36,3 +36,11 @@ Route::post('user/profile/update-password', [ProfileController::class, 'updatePa
 auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/Dshboard', function () {
+    return view('admin/dashboard');
+});
