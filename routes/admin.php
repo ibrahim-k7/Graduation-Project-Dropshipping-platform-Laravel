@@ -13,9 +13,9 @@ use App\Http\Controllers\admin\AdminProfileController;
 
 
 
-// Route::get('/Dshboard', function () {
-//     return view('admin/dashboard');
-// });
+Route::middleware('auth:admin')->group(function(){
+    Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
+});
 
 /*Route::get('/suppliers_management', function () {
     return view('admin/suppliers_management');
@@ -37,9 +37,7 @@ Route::get('/wallet', function () {
 Route::get('/forms-validation', function () {
     return view('admin/forms-validation');
 });
-// Route::get('/profile', function () {
-//     return view('admin/profile');
-//  });
+
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
     Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
@@ -47,9 +45,7 @@ Route::middleware(['auth:admin'])->group(function () {
 });
 
 
- Route::middleware('auth:admin')->group(function(){
-    Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
-});
+
 
 Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
 Route::controller(AdminLoginController::class)->group(function(){
