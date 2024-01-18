@@ -16,19 +16,9 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\auth\AdminLoginController;
-use App\Http\Controllers\admin\auth\AdminRegisterController;
-use App\Http\Controllers\admin\AdminDshboardController;
-use App\Http\Controllers\admin\AdminProfileController;
 
-
-
-
-
-
-
-Route::middleware('auth:admin')->group(function(){
-    Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
+Route::get('/Dshboard', function () {
+    return view('admin/dashboard');
 });
 
 Route::prefix('/admin')->group(function () {
@@ -42,8 +32,6 @@ Route::prefix('/admin')->group(function () {
             Route::post('/products_management/store', 'store')->name('admin.products.store');
             Route::post('/products_management/update', 'update')->name('admin.products.update');
             Route::post('/products_management/destroy','destroy')->name('admin.products.destroy');
-
-
             
 
         }
@@ -201,37 +189,14 @@ Route::get('/forms-validation', function () {
     return view('admin/forms-validation');
 });
 
-Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
-    Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
-    Route::post('/admin/profile/update-password',  [AdminProfileController::class,'updatePassword'])->name('admin.profile.updatePassword');
+Route::get('/login', function () {
+    return view('admin/login');
 });
 
-
-
-
-Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
-Route::controller(AdminLoginController::class)->group(function(){
-    Route::get('login','login')->name('login');
-    Route::post('login','checkLogin')->name('check');
-    Route::post('logout','logout')->name('logout');
-});
-Route::controller(AdminRegisterController::class)->group(function(){
-    Route::get('register','register')->name('register');
-    Route::post('register','store')->name('store');
+Route::get('/register', function () {
+    return view('admin/register');
 });
 
-});
-
-
-
-
-
-
-
-
-
-  /*
     Route::get('/admin-profile', function () {
         return view('admin/admin-profile');
     });
@@ -247,7 +212,6 @@ Route::prefix('/admin')->group(function () {
     ب استخدام الكونترولار
     التزمو فيها لما بكون الكونترولار اللي سويته جاهز
 
-   Route::controller(ConsultingController::class)->group(
    Route::controller(SupplierController::class)->group(
         function () {
 
