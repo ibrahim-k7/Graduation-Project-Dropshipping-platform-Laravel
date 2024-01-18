@@ -332,6 +332,61 @@
                     <li>
                         <a href="{{ Route('admin.suppliers.transactions.create') }}">
                             <i class="bi bi-circle"></i><span>اضافة عملية جديدة لمورد</span>
+
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#delivery-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>التوصيل</span><i
+                        class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="delivery-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.delivery') }}">
+                            <i class="bi bi-circle"></i><span>ادارة التوصيل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.delivery.insert') }}">
+                            <i class="bi bi-circle"></i><span>اضافة توصيل </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li><!-- End delivery Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#order-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>الطلبات</span><i
+                        class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="order-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.order') }}">
+                            <i class="bi bi-circle"></i><span>ادارة الطلبات</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Order Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Wallet-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>المحافظ</span><i
+                        class="bi bi-chevron-down me-auto"></i>
+                </a>
+                <ul id="Wallet-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ Route('admin.wallets') }}">
+                            <i class="bi bi-circle"></i><span>إداره المحافظ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ Route('admin.wallets.operation') }}">
+                            <i class="bi bi-circle"></i><span>عمليات المحافظ</span>
                         </a>
                     </li>
                 </ul>
@@ -554,6 +609,7 @@
     <script src={{ asset('Admin/vendor/php-email-form/validate.js') }}></script>
     <!-- DataTables Js Files add by ibrahim -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>

@@ -44,6 +44,8 @@ Route::prefix('/admin')->group(function () {
             Route::post('/products_management/destroy','destroy')->name('admin.products.destroy');
 
 
+            
+
         }
     );
 
