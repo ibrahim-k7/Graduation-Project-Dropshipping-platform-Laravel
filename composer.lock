@@ -4,8 +4,72 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "527ce7600e2fcbaaefde43fb6a2fe4dd",
+    "content-hash": "409b69c55405ebed5134ed4f95e695f5",
     "packages": [
+        {
+            "name": "anhskohbo/no-captcha",
+            "version": "3.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anhskohbo/no-captcha.git",
+                "reference": "81302b9ddfb4ee5904b66f24bf3e11ea74fa0b92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anhskohbo/no-captcha/zipball/81302b9ddfb4ee5904b66f24bf3e11ea74fa0b92",
+                "reference": "81302b9ddfb4ee5904b66f24bf3e11ea74fa0b92",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2|^7.0",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "php": ">=5.5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8|^9.5.10"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Anhskohbo\\NoCaptcha\\NoCaptchaServiceProvider"
+                    ],
+                    "aliases": {
+                        "NoCaptcha": "Anhskohbo\\NoCaptcha\\Facades\\NoCaptcha"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Anhskohbo\\NoCaptcha\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "anhskohbo",
+                    "email": "anhskohbo@gmail.com"
+                }
+            ],
+            "description": "No CAPTCHA reCAPTCHA For Laravel.",
+            "keywords": [
+                "captcha",
+                "laravel",
+                "laravel4",
+                "laravel5",
+                "laravel6",
+                "no-captcha",
+                "recaptcha"
+            ],
+            "support": {
+                "issues": "https://github.com/anhskohbo/no-captcha/issues",
+                "source": "https://github.com/anhskohbo/no-captcha/tree/3.5.0"
+            },
+            "time": "2023-02-15T16:07:08+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",
@@ -1437,6 +1501,68 @@
                 "source": "https://github.com/laravel/tinker/tree/v2.8.2"
             },
             "time": "2023-08-15T14:27:00+00:00"
+        },
+        {
+            "name": "laravel/ui",
+            "version": "v4.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/ui.git",
+                "reference": "d166e09cdcb2e23836f694774cba77a32edb6007"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/d166e09cdcb2e23836f694774cba77a32edb6007",
+                "reference": "d166e09cdcb2e23836f694774cba77a32edb6007",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^9.21|^10.0",
+                "illuminate/filesystem": "^9.21|^10.0",
+                "illuminate/support": "^9.21|^10.0",
+                "illuminate/validation": "^9.21|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpunit/phpunit": "^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Ui\\": "src/",
+                    "Illuminate\\Foundation\\Auth\\": "auth-backend/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel UI utilities and presets.",
+            "keywords": [
+                "laravel",
+                "ui"
+            ],
+            "support": {
+                "source": "https://github.com/laravel/ui/tree/v4.3.0"
+            },
+            "time": "2023-12-19T14:46:09+00:00"
         },
         {
             "name": "laravelcollective/html",
@@ -8788,5 +8914,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

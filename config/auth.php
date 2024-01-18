@@ -12,8 +12,22 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
+    // $_SESSION;
+    // [
+    //     "user"=> [
+    //     "id"=> 1 ,
+    //     "name"=> "alarwi"
+    // ],
+    // "admin"=>
+    // [
+    //     "id"=> 1 ,
+    //     "name"=> "mohammed"
+    // ]
+    // ];
 
-    'defaults' => [
+
+
+    'defaults' =>[
         'guard' => 'web',
         'passwords' => 'users',
     ],
@@ -40,6 +54,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -64,6 +82,12 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',
@@ -90,6 +114,13 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'admins_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

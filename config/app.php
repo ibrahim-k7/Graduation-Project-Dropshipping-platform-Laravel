@@ -182,6 +182,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -194,7 +195,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        //هذا حق مكتبة Yajra لتوفر تنسيق لجداول البيانات
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,        //هذا حق مكتبة Yajra لتوفر تنسيق لجداول البيانات
         Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
@@ -212,6 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
     ])->toArray(),
 
 ];
