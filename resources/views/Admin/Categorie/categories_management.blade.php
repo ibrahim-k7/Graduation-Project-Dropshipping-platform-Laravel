@@ -63,6 +63,10 @@
         $(function() {
 
             var supplier_data = $('#Categories_Managment').DataTable({
+                "autoWidth": false,
+                //إمكانية تحريك الاعمدة
+                colReorder: true,
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 order: [

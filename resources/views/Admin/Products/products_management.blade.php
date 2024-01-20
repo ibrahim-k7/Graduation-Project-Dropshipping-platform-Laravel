@@ -74,6 +74,28 @@
             var wallet_data = $('#Products_Managment').DataTable({
                 processing: true,
                 serverSide: true,
+                "autoWidth": false,
+                //إمكانية تحريك الاعمدة
+                colReorder: true,
+                responsive: true,
+                /*responsive: {
+                    details: {
+                        type: 'column'
+                    }
+                },*/
+                /*responsive: {
+                    details: {
+                        display: DataTable.Responsive.display.modal({
+                            header: function(row) {
+                                var data = row.data();
+                                return 'Details for ' + data[0] + ' ' + data[1];
+                            }
+                        }),
+                        renderer: DataTable.Responsive.renderer.tableAll({
+                            tableClass: 'table'
+                        })
+                    }
+                },*/
                 order: [
                     [0, "desc"]
                 ],
@@ -115,6 +137,9 @@
                             columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
                     },
+                    { //اظاهر الحقول المراد عرضها
+                        extend: 'colvis',
+                    },
                     {
                         text: 'اضافة',
                         className: 'custom-add-button',
@@ -143,7 +168,8 @@
                     },
                     {
                         data: 'description',
-                        name: 'description'
+                        name: 'description',
+                        className: 'none',
                     },
                     {
                         data: 'purchasing_price',

@@ -68,6 +68,10 @@
             var supplier_data = $('#Supplier_Managment').DataTable({
                 processing: true,
                 serverSide: true,
+                "autoWidth": false,
+                //إمكانية تحريك الاعمدة
+                colReorder: true,
+                responsive: true,
                 order: [
                     [0, "desc"]
                 ],
