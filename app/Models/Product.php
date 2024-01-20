@@ -12,7 +12,7 @@ class Product extends Model
     //الجدول المربوط به
     protected $table = "products";
     //العناصر
-    protected $fillable = [0
+    protected $fillable = [
         'id','cat_id','subCat_id','name','description','purchasing_price','selling_price','suggested_selling_price','weight','quantity','barcode','image','created_at','updated_at'
     ];
 
