@@ -179,7 +179,7 @@
                         render: function(data, type, full, meta) {
                             // تنسيق التاريخ باستخدام moment.js
                             return moment(data).format('YYYY-MM-DD HH:mm:ss');
-                        }
+                        }z
                     },
                     {
                         data: 'action',

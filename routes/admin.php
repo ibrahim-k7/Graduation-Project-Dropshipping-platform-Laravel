@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SubCategorieController;
@@ -44,7 +45,19 @@ Route::prefix('/admin')->group(function () {
             Route::post('/products_management/destroy','destroy')->name('admin.products.destroy');
 
 
-            
+
+
+        }
+    );
+    // user information
+    Route::controller(UserInfoController::class)->group(
+        function () {
+            Route::get('/user-information','index')->name('admin.users');
+            Route::get('/user-information/data','getDataTable')->name('admin.users.data');
+
+
+
+
 
         }
     );

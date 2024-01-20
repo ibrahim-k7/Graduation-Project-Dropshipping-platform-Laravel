@@ -13,10 +13,10 @@ class PurchaseDetailsController extends Controller
     public function getDataTable()
     {
 //        // تنفيذ الكود الخاص بجلب بيانات تفاصيل المشتريات هنا
-      $purchaseDetails = PurchaseDetails::select(['purchDetails_id', 'purch_id', 'pro_id', 'quantity', 'total_cost'])
-//            ->orderBy('id', 'desc')
-//            ->get();
-//       return response()->json(['data' => $purchaseDetails]);
+    //   $purchaseDetails = PurchaseDetails::select(['purchDetails_id', 'purch_id', 'pro_id', 'quantity', 'total_cost'])
+    //        ->orderBy('id', 'desc')
+    //        ->get();
+    //   return response()->json(['data' => $purchaseDetails]);
     }
     public function index()
     {
