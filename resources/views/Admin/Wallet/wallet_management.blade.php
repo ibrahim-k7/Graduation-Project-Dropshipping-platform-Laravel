@@ -36,10 +36,10 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Balance</th>
-                                            <th>Store Name</th>
-                                            <th>Store ID</th>
-                                            <th>Created At</th>
+                                            <th>الرصيد</th>
+                                            <th>إسم المتجر</th>
+                                            <th>معرف المتجر</th>
+                                            <th>تاريخ الإنشاء</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -66,36 +66,52 @@
             var wallet_data = $('#Wallet_Managment').DataTable({
                 processing: true,
                 serverSide: true,
+                "autoWidth": false,
+                //إمكانية تحريك الاعمدة
+                colReorder: true,
+                responsive: true,
                 order: [
                     [0, "desc"]
                 ],
                 ajax: "{{ Route('admin.wallets.data') }}",
-                dom: 'Bfrltip',
-                buttons: [
+                //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
+                columnDefs: [{
+                    targets: '_all', //كل الحقول
+                    className: 'dt-right' //الاتجاه
+                }],
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
+                },
+                buttons: [{
+                        extend: 'print',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
+                        }
+                    },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
                         }
-                    }, {
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4,] // Column index which needs to export
-                        }
-                    }
+                    },
+
                 ],
                 columns: [{
                         data: 'wallet_id',
@@ -130,7 +146,5 @@
             });
 
         });
-
-
     </script>
 @endsection

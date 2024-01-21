@@ -26,7 +26,7 @@ class AddSupplierRequest extends FormRequest
     {
         $id = $this->get('id'); // Retrieve the 'id' from the request
 
-        
+
         return [
             'name' => 'required|max:255',
             'email' => [

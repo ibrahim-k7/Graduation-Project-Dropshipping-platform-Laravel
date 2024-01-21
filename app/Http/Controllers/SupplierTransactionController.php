@@ -44,8 +44,8 @@ class SupplierTransactionController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a href="' . route('admin.suppliers.transactions.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a   id="delete_btn" data-transaction-id="' . $row->transaction_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a href="' . route('admin.suppliers.transactions.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 </div>
             ';
             })
@@ -64,13 +64,13 @@ class SupplierTransactionController extends Controller
     public function create()
     {
         //
-         return view('Admin.Suppliers.insert_transaction');
-      /*  $data = SupplierTransaction::with('supplier')->where('transaction_id', 25)->get();
-                $supplier =$data[0]->supplier->value('name');
-                
-                return dd($supplier);*/
-            
-        
+        return view('Admin.Suppliers.insert_transaction');
+        /*  $data = SupplierTransaction::with('supplier')->where('transaction_id', 25)->get();
+                  $supplier =$data[0]->supplier->value('name');
+
+                  return dd($supplier);*/
+
+
     }
 
     /**
@@ -129,8 +129,6 @@ class SupplierTransactionController extends Controller
     public function edit(Request $request)
     {
         $supplierTransaction = SupplierTransaction::where('transaction_id', $request->query('id'))->get()->first();
-
-        //return dd($supplierTransaction);
         return view('Admin.Suppliers.insert_transaction', compact('supplierTransaction'));
     }
 
@@ -142,7 +140,6 @@ class SupplierTransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // والله في غلط ف الحسابات سوو نفسكم ما تشوفو الى ان ربك يفرجها
     public function update(AddSupplierTransactionRequest $request)
     {
         // الحصول على الـ balance الحالية

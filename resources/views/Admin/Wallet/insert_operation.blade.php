@@ -26,11 +26,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="card mt-5">
-                                <div class="card-body ">
-                                    <h5 class="card-title"></h5>
-
+                        <div class="card-body mt-5">
                                     <!-- Multi Columns Form -->
                                     <form id="form" method="post" class="row g-3">
                                         @csrf
@@ -69,14 +65,10 @@
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                            <button type="submit" id="submit" class="btn btn-primary">إرسال</button>
+                                            <button type="reset" class="btn btn-secondary">إعادة تعيين</button>
                                         </div>
                                     </form><!-- End Multi Columns Form -->
-
-
-                                </div>
-                            </div>
                         </div>
 
 
@@ -162,7 +154,7 @@
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "the update has been saved",
+                                title: "تمت عملية التحديث بنجاح",
                                 showConfirmButton: false,
                                 timer: 2000
                             });

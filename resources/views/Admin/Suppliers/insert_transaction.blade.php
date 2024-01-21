@@ -12,7 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Insert New Supplier Transaction</h1>
+            <h1>إضافة عملية جديدة لمورد</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -26,17 +26,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="card mt-5">
-                                <div class="card-body ">
-                                    <h5 class="card-title">Supplier Transaction Form</h5>
+                        <div class="card-body mt-5">
 
                                     <!-- Multi Columns Form -->
                                     <form id="form" method="post" class="row g-3">
                                         @csrf
 
                                         <div class="col-md-8">
-                                            <label class="mb-2" for="form-label">Supplier Info</label>
+                                            <label class="mb-2" for="form-label">معلومات المورد</label>
                                             <select class="form-select" aria-label="State" id="sup_id" name="sup_id">
                                                 <option value="">اختر موردًا</option>
                                             </select>
@@ -47,10 +44,10 @@
 
 
                                         <div class="col-md-6">
-                                            <label class="mb-2" for="form-label">Transaction Type</label>
+                                            <label class="mb-2" for="form-label">نوع العملية</label>
                                             <select class="form-select" aria-label="State" id="transaction_type"
                                                 name="transaction_type">
-
+                                                <option value="">اختر نوع العملية</option>
                                                 <option value="1">سداد</option>
                                                 <option value="2">سحب</option>
                                             </select>
@@ -58,21 +55,19 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="phone" class="form-label">Amount</label>
+                                            <label for="phone" class="form-label">المبلغ</label>
                                             <input type="number" class="form-control" id="amount" name="amount"
                                                 required>
                                             <small id="amount_error" class="form-text text-danger"></small>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                            <button type="submit" id="submit" class="btn btn-primary">إرسال</button>
+                                            <button type="reset" class="btn btn-secondary">إعادة تعيين</button>
                                         </div>
                                     </form><!-- End Multi Columns Form -->
 
 
-                                </div>
-                            </div>
                         </div>
 
 
@@ -158,7 +153,7 @@
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "the update has been saved",
+                                title: "تمت عملية التحديث بنجاح",
                                 showConfirmButton: false,
                                 timer: 2000
                             });

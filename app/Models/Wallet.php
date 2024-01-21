@@ -14,7 +14,7 @@ class Wallet extends Model
     protected $fillable = [
         'wallet_id','store_id','balance','created_at','updated_at',
     ];
-    
+
     //Relations Functhion
     public function store()
     {
