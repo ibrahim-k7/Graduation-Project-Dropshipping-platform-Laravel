@@ -191,7 +191,7 @@ Route::prefix('admin')->group(function () {
     Route::put('/purchase/update/{id}', [PurchaseController::class, 'update'])->name('admin.purchase.update');
 
     // Purchase Details Routes
-    Route::get('/purchase-details/data', [PurchaseDetailsController::class, 'getDataTable'])->name('admin.purchasedetails.data');
+    // Route::get('/purchase-details/data', [PurchaseDetailsController::class, 'getDataTable'])->name('admin.purchasedetails.data');
 
     // Return Purchase Routes
     Route::get('/purchase/return', [PurchaseController::class, 'return'])->name('admin.purchase.return');
