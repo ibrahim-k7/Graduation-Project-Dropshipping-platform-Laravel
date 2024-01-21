@@ -12,13 +12,20 @@ class Purchase extends Model
         'id','sup_id', 'payment_method', 'additional_costs', 'total', 'amount_paid', 'created_at', 'updated_at',
     ];
 
-    public function prouduct(){
-        return $this-> belongsToMany(Product::class,'purchase details','purch_id','pro_id','id','id');
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'purchase details', 'purch_id', 'pro_id', 'id', 'id')
+            ->withPivot('purchasing_price', 'quantity', 'total_cost');
     }
+
+
 
     public function supplier()
     {
         return $this->belongsTo(Supplier::class, 'sup_id', 'sup_id');
     }
-
+    public function purchaseDetails()
+    {
+        return $this->hasMany(PurchaseDetails::class, 'purch_id', 'id');
+    }
 }
