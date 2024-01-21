@@ -12,7 +12,7 @@ class userinfo extends Model
     protected $table = "users";
 
     protected $fillable = [
-        'id', 'name', 'phone', 'email'
+        'id', 'name', 'phone', 'email','created_at'
     ];
 }
 

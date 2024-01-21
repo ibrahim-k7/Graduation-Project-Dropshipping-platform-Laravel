@@ -39,6 +39,8 @@
                                             <th>الأسم</th>
                                             <th>الهاتف </th>
                                             <th> الايميل</th>
+                                            <th>تاريخ الإنشاء</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -121,14 +123,14 @@
                         data: 'email',
                         name: 'email'
                     },
-                    // {
-                    //     data: 'created_at',
-                    //     name: 'created_at',
-                    //     render: function(data, type, full, meta) {
-                    //         // تنسيق التاريخ باستخدام moment.js
-                    //         return moment(data).format('YYYY-MM-DD HH:mm:ss');
-                    //     }
-                    // },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data, type, full, meta) {
+                            // تنسيق التاريخ باستخدام moment.js
+                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                        }
+                    },
                 ]
             });
 

@@ -13,15 +13,15 @@ class UserInfoController extends Controller
         return view('Admin.user.user-information');
     }
 
-    public function getuser()
-    {
-        $users = userinfo::select('id', 'name', 'phone', 'email')->orderby("id", "ASC")->get();
-        return response()->json($users);
-    }
+    // public function getuser()
+    // {
+    //     $users = userinfo::select('id', 'name', 'phone', 'email')->orderby("id", "ASC")->get();
+    //     return response()->json($users);
+    // }
 
     public function getDataTable()
     {
-        $model = userinfo::select('id', 'name', 'phone', 'email')->orderby("id", "ASC");
+        $model = userinfo::select('id', 'name', 'phone', 'email','created_at')->orderby("id", "ASC");
         return DataTables::of($model)
 
             ->make(true);
