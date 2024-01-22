@@ -7,7 +7,6 @@ use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserInfoController;
-use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SubCategorieController;
@@ -18,9 +17,13 @@ use App\Http\Controllers\TransferInformationController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\auth\AdminLoginController;
+use App\Http\Controllers\admin\auth\AdminRegisterController;
+use App\Http\Controllers\admin\AdminDshboardController;
+use App\Http\Controllers\admin\AdminProfileController;
 
-Route::get('/Dshboard', function () {
-    return view('admin/dashboard');
+Route::middleware('auth:admin')->group(function(){
+    Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
 });
 
 Route::prefix('/admin')->group(function () {
@@ -228,20 +231,32 @@ Route::get('/forms-validation', function () {
     return view('admin/forms-validation');
 });
 
-Route::get('/login', function () {
-    return view('admin/login');
-});
-
-Route::get('/register', function () {
-    return view('admin/register');
-});
 
     Route::get('/admin-profile', function () {
         return view('admin/admin-profile');
     });
-Route::get('/admin-profile', function () {
-    return view('admin/admin-profile');
-});
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
+        Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
+        Route::post('/admin/profile/update-password',  [AdminProfileController::class,'updatePassword'])->name('admin.profile.updatePassword');
+    });
+
+
+
+
+    Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
+    Route::controller(AdminLoginController::class)->group(function(){
+        Route::get('login','login')->name('login');
+        Route::post('login','checkLogin')->name('check');
+        Route::post('logout','logout')->name('logout');
+    });
+    Route::controller(AdminRegisterController::class)->group(function(){
+        Route::get('register','register')->name('register');
+        Route::post('register','store')->name('store');
+    });
+
+    });
+
 
 /*
 Route::prefix('/admin')->group(function () {
