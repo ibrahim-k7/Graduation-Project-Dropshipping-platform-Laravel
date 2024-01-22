@@ -6,7 +6,7 @@ use App\Http\Requests\AddPurchaseRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
-use App\Models\PurchaseDetail;
+use App\Models\PurchaseDetails;
 use App\Models\Returndetails;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -16,8 +16,8 @@ class PurchaseController extends Controller
 
     public function index()
     {
- 
-        return  view('Admin.Purchase.purchase_management');
+
+        return view('Admin.Purchase.purchase_management');
     }
 
     public function getDataTable()
@@ -30,13 +30,11 @@ class PurchaseController extends Controller
                 return $result = $purchase->supplier->name;
             })
             ->addColumn('action', function ($row) {
-                return $btn = '<div class="btn-group" role="group">
-                <a href="' . route('admin.suppliers.transactions.edit', ['id' => $row->transaction_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
-                <a   id="delete_btn" data-transaction-id="' . $row->transaction_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                </div>
-            ';
+                return '<div class="btn-group" role="group">
+                    <a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">تفاصيل الفاتورة </a>
+                    <a id="delete_btn" data-transaction-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                </div>';
             })
-
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -51,27 +49,70 @@ class PurchaseController extends Controller
 
         Purchase::create([
             'sup_id' => $request->sup_id,
-            'payment_method' =>  $request->payment_method,
-            'additional_costs' =>  $request->additional_costs,
-            'total' =>  $request->total,
+            'payment_method' => $request->payment_method,
+            'additional_costs' => $request->additional_costs,
+            'total' => $request->total,
             'amount_paid' => $request->amount_paid,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         $purchase = Purchase::latest()->first();
-        $purchase->prouduct()->attach($request->products);
+        $purchase->products()->attach($request->products);
 
         // الحصول على المنتجات المضافة في الطلب
-
         $products = $request->products;
 
+        // تحديث السعر في جدول المنتجات
+        foreach ($products as $productData) {
+            $product = Product::find($productData['pro_id']);
 
+            if ($product) {
+                // تحديث السعر
+                $product->update([
+                    'purchasing_price' => $productData['purchasing_price'],
+                ]);
+            }
+        }
+        }
+        public function edit(Request $request)
+    {
+        $purchase = Purchase::with('supplier')->with('purchaseDetails.product')->find($request->query('id'));
+
+        // تحقق مما إذا كان هناك معلومات حول الشراء
+        return view('Admin.purchase.insert_Purchase', compact('purchase'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(AddPurchaseRequest $request, $id)
+    {
+        // البحث عن الشراء المطلوب تحديثه
+        $purchase = Purchase::findOrFail($id);
+
+        // تحديث البيانات الأساسية
+        $purchase->update([
+            'sup_id' => $request->sup_id,
+            'payment_method' => $request->payment_method,
+            'additional_costs' => $request->additional_costs,
+            'total' => $request->total,
+            'amount_paid' => $request->amount_paid,
+        ]);
+
+        // حذف الروابط القديمة للمنتجات المرتبطة
+        $purchase->products()->detach();
+
+        // إعادة إضافة الروابط مع المنتجات الجديدة
+        $purchase->products()->attach($request->products);
 
         // تحديث كمية المنتجات
-        foreach ($products as $productId ) {
-
-            $product = Product::where('id',$productId)->first();
+        foreach ($request->products as $productId) {
+            $product = Product::findOrFail($productId);
 
             // التحقق مما إذا كان المنتج موجود
             if ($product) {
@@ -79,76 +120,17 @@ class PurchaseController extends Controller
                 $product->update([
                     'quantity' => $product->quantity + $productId["quantity"],
                 ]);
-
             }
         }
 
-        //return $request;
-        /*  $validator = Validator::make($request->all(), [
-            'payment_method' => 'required',
-            'sup_ID' => 'required',
-            'extra_expenses' => 'required',
-            'total' => 'required',
-            'amount_paid' => 'required',
-            'purchase_details' => 'required|array|min:1',
-            'purchase_details.*.pro_id' => 'required',
-            'purchase_details.*.quantity' => 'required',
-            'purchase_details.*.total_cost' => 'required',
-            // أضف باقي الحقول هنا
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        // اختيار العملية بناءً على قيمة الحقل 'action'
+        if ($request->action === 'store') {
+            // اتخاذ الإجراءات اللازمة للتخزين (إضافة جديدة)
+            return redirect()->route('admin.purchase.store')->with('success', 'تم تخزين الشراء بنجاح');
+        } elseif ($request->action === 'update') {
+            // اتخاذ الإجراءات اللازمة للتحديث
+            return redirect()->route('admin.purchase.update')->with('success', 'تم تحديث الشراء بنجاح');
         }
-
-        $purchase = Purchase::create([
-            'payment_method' => $request->input('payment_method'),
-            'sup_ID' => $request->input('sup_ID'),
-            'extra_expenses' => $request->input('extra_expenses'),
-            'total' => $request->input('total'),
-            'amount_paid' => $request->input('amount_paid'),
-            // أضف باقي الحقول هنا
-        ]);
-
-        // احفظ تفاصيل المشتريات
-        $purchaseDetails = $request->input('purchase_details');
-        foreach ($purchaseDetails as $detail) {
-            PurchaseDetail::create([
-                'purch_id' => $purchase->purch_ID,
-                'pro_id' => $detail['pro_id'],
-                'quantity' => $detail['quantity'],
-                'total_cost' => $detail['total_cost'],
-                // أضف باقي الحقول هنا
-            ]);
-        }
-
-        return redirect()->route('admin.purchases.index')->with('success', 'تم إضافة المشتريات بنجاح.');*/
+    }
     }
 
-
-    /*  public function return()
-    {
-        // صفحة استعادة المشتريات
-        return view('Admin.purchase.Returndetails');
-    }*/
-
-    public function processReturn(Request $request): \Illuminate\Http\RedirectResponse
-    {
-        // معالجة طلب الاسترجاع وتحديث الكميات والمبالغ
-        $validator = Validator::make($request->all(), [
-            'purchase_details_id' => 'required',
-            'return_date' => 'required',
-            'quantity_returned' => 'required',
-            'amount_returned' => 'required',
-            // أضف باقي الحقول هنا
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        // اكمل معالجة الاسترجاع حسب حاجتك
-
-        return redirect()->route('admin.purchases.index')->with('success', 'تم استعادة المشتريات بنجاح.');
-    }
-}

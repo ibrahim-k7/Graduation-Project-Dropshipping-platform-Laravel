@@ -31,15 +31,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'grecaptcha' => [
-        'secret' => env('GRECAPTCHA_SECRET'),
-        'sitekey' => env('GRECAPTCHA_SITEKEY'),
-        'options' => [
-            'curl' => [
-                CURLOPT_CAINFO => base_path('path/to/your/certificate.pem'),
-            ],
-        ],
-    ],
-
-
 ];

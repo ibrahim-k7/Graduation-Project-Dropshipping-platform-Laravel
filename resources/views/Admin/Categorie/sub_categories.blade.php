@@ -67,6 +67,10 @@
             var subCategories_data = $('#Sub_Categories_Managment').DataTable({
                 processing: true,
                 serverSide: true,
+                "autoWidth": false,
+                //إمكانية تحريك الاعمدة
+                colReorder: true,
+                responsive: true,
                 order: [
                     [0, "desc"]
                 ],
@@ -206,16 +210,5 @@
 
         });
 
-
-
-
-
-
-        /* $(document).ready(function(){
-             $('#wallet_table_id').DataTable({
-               
-
-             });
-         });*/
     </script>
 @endsection

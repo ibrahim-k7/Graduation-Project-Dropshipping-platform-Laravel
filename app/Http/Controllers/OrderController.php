@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddWalletOperationRequest;
 use App\Models\Order;
-use App\Models\Transfer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
-    public function index(Request $request){
+    public function index(){
 
         return view('Admin.Order.order_management');
     }

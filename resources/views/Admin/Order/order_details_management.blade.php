@@ -34,11 +34,13 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>معرف الطلب</th>
                                             <th>اسم المنتج</th>
                                             <th>الوصف</th>
                                             <th>الكمية</th>
                                             <th>اجمالي المنتج</th>
                                             <th>الوزن فرعي</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,6 +110,10 @@
                         name: 'order_details_id'
                     },
                     {
+                        data: 'order_id',
+                        name: 'order_id'
+                    },
+                    {
                         data: 'name',
                         name: 'name'
                     },
@@ -127,7 +133,10 @@
                         data: 'sub_weight',
                         name: 'sub_weight'
                     },
-
+                    {
+                        data: 'action',
+                        name: 'action'
+                    },
                 ]
             });
         });
