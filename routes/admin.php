@@ -5,6 +5,7 @@ use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\ReturnDetailsOrderController;
@@ -204,7 +205,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/purchase/update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
 
     // Purchase Details Routes
-    Route::get('/purchase-details/data', [PurchaseDetailsController::class, 'getDataTable'])->name('admin.purchasedetails.data');
+   // Route::get('/purchase-details/data', [PurchaseDetailsController::class, 'getDataTable'])->name('admin.purchasedetails.data');
 
     // Return Purchase Routes
     Route::get('/purchase/return', [PurchaseController::class, 'return'])->name('admin.purchase.return');
