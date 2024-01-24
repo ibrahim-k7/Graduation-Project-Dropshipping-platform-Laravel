@@ -1,3 +1,4 @@
+@extends('admin.layouts.app')
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -487,51 +488,51 @@
                         </a>
                     </li>
                 </ul>
-                <li class="nav-heading">Pages</li>
+            <li class="nav-heading">Pages</li>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin/profile">
-                        <i class="bi bi-person"></i>
-                        <span>الحساب التعريفي</span>
-                    </a>
-                </li><!-- End Profile Page Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/profile">
+                    <i class="bi bi-person"></i>
+                    <span>الحساب التعريفي</span>
+                </a>
+            </li><!-- End Profile Page Nav -->
 
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin/dshboard/register">
-                        <i class="bi bi-card-list"></i>
-                        <span>انشاء حساب</span>
-                    </a>
-                </li><!-- End Register Page Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/dshboard/register">
+                    <i class="bi bi-card-list"></i>
+                    <span>انشاء حساب</span>
+                </a>
+            </li><!-- End Register Page Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin/dshboard/login">
-                        <i class="bi bi-box-arrow-in-right"></i>
-                        <span>تسجيل الدخول</span>
-                    </a>
-                </li><!-- End Login Page Nav -->
-               <li class="nav-item ">
-                    {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/dshboard/login">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span>تسجيل الدخول</span>
+                </a>
+            </li><!-- End Login Page Nav -->
+            <li class="nav-item ">
+                {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a> --}}
 
 
-                        <a class="nav-link collapsed" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
+                <a class="nav-link collapsed" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
-                             <i class="bi bi-box-arrow-in-right"></i>
+                    <i class="bi bi-box-arrow-in-right"></i>
 
-                           خروج
-                        </a>
+                    خروج
+                </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
 
-                </li>
+            </li>
 
 
-            </ul>
+        </ul>
 
 
     </aside><!-- End Sidebar-->
