@@ -1,4 +1,3 @@
-@extends('admin.layouts.app')
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
