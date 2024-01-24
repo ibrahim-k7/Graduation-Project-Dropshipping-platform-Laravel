@@ -332,7 +332,6 @@
                     <li>
                         <a href="{{ Route('admin.suppliers.transactions.create') }}">
                             <i class="bi bi-circle"></i><span>اضافة عملية جديدة لمورد</span>
-
                         </a>
                     </li>
                 </ul>
@@ -370,58 +369,19 @@
                             <i class="bi bi-circle"></i><span>ادارة الطلبات</span>
                         </a>
                     </li>
-                </ul>
-            </li><!-- End Order Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Wallet-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>المحافظ</span><i
-                        class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="Wallet-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ Route('admin.wallets') }}">
-                            <i class="bi bi-circle"></i><span>إداره المحافظ</span>
+                        <a href="{{ Route('admin.order.details') }}">
+                            <i class="bi bi-circle"></i><span>عرض تفاصيل الطلبات</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ Route('admin.wallets.operation') }}">
-                            <i class="bi bi-circle"></i><span>عمليات المحافظ</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#delivery-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>التوصيل</span><i
-                        class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="delivery-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ Route('admin.delivery') }}">
-                            <i class="bi bi-circle"></i><span>ادارة التوصيل</span>
+                        <a href="{{ Route('admin.returned.order.details') }}">
+                            <i class="bi bi-circle"></i><span>عرض الطلبات المسترجعة</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ Route('admin.delivery.insert') }}">
-                            <i class="bi bi-circle"></i><span>اضافة توصيل </span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li><!-- End delivery Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#order-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>الطلبات</span><i
-                        class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="order-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ Route('admin.order') }}">
-                            <i class="bi bi-circle"></i><span>ادارة الطلبات</span>
+                        <a href="{{ Route('admin.sales') }}">
+                            <i class="bi bi-circle"></i><span>المبيعات</span>
                         </a>
                     </li>
                 </ul>
@@ -485,7 +445,7 @@
                     </li>
 
                     <li>
-                        {{-- <a href="{{ route('admin.purchasedetails.data') }}"> --}}
+                        <a href=>
                             <i class="bi bi-circle"></i><span>Purchase Details</span>
                         </a>
                     </li>
@@ -528,54 +488,52 @@
                         </a>
                     </li>
                 </ul>
-            </li><!-- End Tables Nav -->
+                <li class="nav-heading">Pages</li>
 
-
-            <li class="nav-heading">Pages</li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/profile">
-                    <i class="bi bi-person"></i>
-                    <span>الحساب التعريفي</span>
-                </a>
-            </li><!-- End Profile Page Nav -->
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/dshboard/register">
-                    <i class="bi bi-card-list"></i>
-                    <span>انشاء حساب</span>
-                </a>
-            </li><!-- End Register Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/dshboard/login">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>تسجيل الدخول</span>
-                </a>
-            </li><!-- End Login Page Nav -->
-           <li class="nav-item ">
-                {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }}
-                </a> --}}
-
-
-                    <a class="nav-link collapsed" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                       document.getElementById('logout-form').submit();">
-                         <i class="bi bi-box-arrow-in-right"></i>
-
-                       خروج
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/profile">
+                        <i class="bi bi-person"></i>
+                        <span>الحساب التعريفي</span>
                     </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-
-            </li>
+                </li><!-- End Profile Page Nav -->
 
 
-        </ul>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/dshboard/register">
+                        <i class="bi bi-card-list"></i>
+                        <span>انشاء حساب</span>
+                    </a>
+                </li><!-- End Register Page Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/dshboard/login">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>تسجيل الدخول</span>
+                    </a>
+                </li><!-- End Login Page Nav -->
+               <li class="nav-item ">
+                    {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a> --}}
+
+
+                        <a class="nav-link collapsed" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+                             <i class="bi bi-box-arrow-in-right"></i>
+
+                           خروج
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+
+                </li>
+
+
+            </ul>
+
 
     </aside><!-- End Sidebar-->
 
@@ -608,10 +566,6 @@
     <script src={{ asset('Admin/vendor/tinymce/tinymce.min.js') }}></script>
     <script src={{ asset('Admin/vendor/php-email-form/validate.js') }}></script>
     <!-- DataTables Js Files add by ibrahim -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script
