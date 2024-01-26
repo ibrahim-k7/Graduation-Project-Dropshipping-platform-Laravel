@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -257,32 +257,20 @@
             <li class="nav-item">
                 <a class="nav-link " href="/Dshboard">
                     <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
+                    <span>لوحة التحكم</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed"  href="{{ Route('admin.products') }}">
+                <a class="nav-link collapsed"  href="{{ Route('user.wallets.operation') }}">
                     <i class="bi bi-card-list"></i>
                     <span>المحفظة</span>
                 </a>
             </li><!-- End Register Page Nav -->
 
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Wallet-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-journal-text "></i><span>المحفظة</span><i class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="Wallet-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ Route('admin.products') }}">
-                            <i class="bi bi-circle"></i><span>إدارة المنتجات</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
+
 
 
 

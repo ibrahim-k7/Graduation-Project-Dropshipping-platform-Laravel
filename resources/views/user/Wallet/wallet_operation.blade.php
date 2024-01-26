@@ -1,7 +1,7 @@
-@extends('User.layouts.main')
+@extends('User.Layouts.main')
 
 @section('pageTitle')
-    المحفظة
+    عمليات المحفظة
 @endsection
 
 @section('css')
@@ -12,7 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>المحفظة</h1>
+            <h1>عمليات المحفظة</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -28,19 +28,20 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <p></p>
+                            <h5 class="card-title">رصيدك هو <span id="balance"></span></h5>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Wallet_Managment" class="table table-striped">
+                                <table id="Wallet_Operatioon" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>الرصيد</th>
-                                            <th>إسم المتجر</th>
-                                            <th>معرف المتجر</th>
+                                            <th id="id_column">ID</th>
+                                            <th>المبلغ</th>
+                                            <th>نوع العملية</th>
+                                            <th>الرصيد بعد العملية</th>
+                                            <th>معرف المحفظة</th>
+                                            <th>التفاصيل</th>
                                             <th>تاريخ الإنشاء</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -61,9 +62,25 @@
 
 @section('js')
     <script type="text/javascript">
+        $.ajax({
+            type: 'get',
+            url: "{{ route('user.wallet.getBalance') }}",
+            async: false,
+            success: function(data) {
+                // استخدام قيمة $wallet الفعلية التي تم استرجاعها من الخادم
+                var balanceValue = data.balance;
+
+                // تحديث عنصر الصفحة بقيمة الرصيد الجديدة
+                $("#balance").text(balanceValue);
+            },
+            error: function(reject) {
+                console.error('Error loading :', reject);
+            }
+        });
+
         $(function() {
 
-            var wallet_data = $('#Wallet_Managment').DataTable({
+            var supplier_data = $('#Wallet_Operatioon').DataTable({
                 processing: true,
                 serverSide: true,
                 "autoWidth": false,
@@ -73,7 +90,7 @@
                 order: [
                     [0, "desc"]
                 ],
-                ajax: "{{ Route('admin.wallets.data') }}",
+                ajax: "{{ Route('admin.wallets.operation.data') }}",
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
                     targets: '_all', //كل الحقول
@@ -90,44 +107,59 @@
                         extend: 'print',
                         autoPrint: false,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, ] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
                     },
-
+                    {
+                        text: 'إيداع للمحفظة',
+                        className: 'custom-add-button',
+                        action: function(e, dt, node, config) {
+                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                    //window.location.href = "{{ route('admin.purchase.create') }}";
+                        }
+                    },
                 ],
                 columns: [{
+                        data: 'wallet_operation_id',
+                        name: 'wallet_operation_id'
+                    },
+                    {
+                        data: 'amount',
+                        name: 'amount'
+                    },
+                    {
+                        data: 'operation_type',
+                        name: 'operation_type'
+                    },
+                    {
+                        data: 'balance_aft_transfer',
+                        name: 'balance_aft_transfer'
+                    },
+                    {
                         data: 'wallet_id',
                         name: 'wallet_id'
                     },
                     {
-                        data: 'balance',
-                        name: 'balance'
-                    },
-                    {
-                        data: 'storeName',
-                        name: 'storeName'
-                    },
-                    {
-                        data: 'store_id',
-                        name: 'store_id'
+                        data: 'details',
+                        name: 'details'
                     },
                     {
                         data: 'created_at',
@@ -137,14 +169,11 @@
                             return moment(data).format('YYYY-MM-DD HH:mm:ss');
                         }
                     },
-                    {
-                        data: 'action',
-                        name: 'action'
-                    },
                 ]
 
             });
 
         });
+
     </script>
 @endsection
