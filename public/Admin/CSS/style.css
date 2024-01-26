@@ -9,15 +9,15 @@
 }
 
 .custom-add-button {
-    background-color: #4caf50; /* لون  */
-    color: #fff; /* لون النص */
-    border: none; /* إزالة الحدود إذا كان هناك حدود */
-    padding: 10px 20px; /* تعديل التباعد الداخلي حسب الحاجة */
-    cursor: pointer;
+    background-color: #4caf50 !important; /* لون  */
+    color: #fff !important; /* لون النص */
+    border: none !important; /* إزالة الحدود إذا كان هناك حدود */
+    padding: 10px 20px !important; /* تعديل التباعد الداخلي حسب الحاجة */
+    cursor: pointer !important;
 }
 
 .custom-add-button:hover {
-    background-color: #45a049; /* تغيير لون الزر عند التحويم */
+    background-color: #45a049 !important; /* تغيير لون الزر عند التحويم */
 }
 
 body {

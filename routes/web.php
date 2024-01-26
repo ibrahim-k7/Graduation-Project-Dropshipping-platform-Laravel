@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\user\ProfileController;
-
+use App\Http\Controllers\WalletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +44,16 @@ Route::get('/', function () {
 Route::get('/Dshboard', function () {
     return view('admin/dashboard');
 });
+
+
+Route::get('/userinterface', function () {
+    return view('User/dashboard');
+});
+
+Route::controller(WalletController::class)->group(
+    function () {
+        Route::get('/wallet', 'index')->name('user.wallet');
+        Route::get('/wallet_management/data', 'getDataTable')->name('admin.wallets.data');
+        Route::get('/wallet_management/getWallets', 'getWallets')->name('admin.wallets.getWallets');
+    }
+);
