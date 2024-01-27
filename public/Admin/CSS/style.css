@@ -9,15 +9,15 @@
 }
 
 .custom-add-button {
-    background-color: #4caf50; /* لون  */
-    color: #fff; /* لون النص */
-    border: none; /* إزالة الحدود إذا كان هناك حدود */
-    padding: 10px 20px; /* تعديل التباعد الداخلي حسب الحاجة */
-    cursor: pointer;
+    background-color: #4caf50 !important; /* لون  */
+    color: #fff !important; /* لون النص */
+    border: none !important; /* إزالة الحدود إذا كان هناك حدود */
+    padding: 10px 20px !important; /* تعديل التباعد الداخلي حسب الحاجة */
+    cursor: pointer !important;
 }
 
 .custom-add-button:hover {
-    background-color: #45a049; /* تغيير لون الزر عند التحويم */
+    background-color: #45a049 !important; /* تغيير لون الزر عند التحويم */
 }
 
 body {
@@ -374,6 +374,7 @@ h6 {
 
 .logo img {
     max-height: 26px;
+    margin-left: 6px;
     margin-right: 6px;
 }
 
@@ -502,9 +503,9 @@ h6 {
     padding: 3px 6px;
 }
 
-.header-nav .notifications {
+/*.header-nav .notifications {
     inset: 8px -15px auto auto !important;
-}
+}*/
 
 .header-nav .notifications .notification-item {
     display: flex;
@@ -534,9 +535,9 @@ h6 {
     background-color: #f6f9ff;
 }
 
-.header-nav .messages {
+/*.header-nav .messages {
     inset: 8px -15px auto auto !important;
-}
+}*/
 
 .header-nav .messages .message-item {
     padding: 15px 10px;

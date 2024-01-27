@@ -39,10 +39,10 @@ class TransferController extends Controller
         //$data = Supplier::select('*');
 
         return DataTables::of($model)
-    ->addColumn('action', function ($row) {
-        $isDisabled = $row->transfer_status === 'موافقة' ? 'disabled' : '';
+            ->addColumn('action', function ($row) {
+                $isDisabled = $row->transfer_status === 'موافقة' ? 'disabled' : '';
 
-        return '
+                return '
             <div class="btn-group" role="group">
             <a data-transfer-id="' . $row->transfer_id . '"
             data-transfer_status="' . $row->transfer_status . '" 
@@ -81,9 +81,9 @@ class TransferController extends Controller
                 </div>
             </div>
         ';
-    })
-    ->rawColumns(['action'])
-    ->make(true);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
 
@@ -95,7 +95,7 @@ class TransferController extends Controller
      */
     public function create()
     {
-        //
+        return view('User.Transfer.insert_transfer');
     }
 
     /**
@@ -105,8 +105,20 @@ class TransferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        // إنشاء سجل في جدول Transfer
+        Transfer::create([
+            'wallet_id' => $request->wallet_id,
+            'sender_name' =>  $request->sender_name,
+            'sender_phone' =>  $request->sender_phone,
+            'amount_transferred' =>  $request->amount_transferred,
+            'transfer_number' =>  $request->transfer_number,
+            'transfer_date' =>  $request->transfer_date,
+            'transfer_status' =>  "قيد الانتظار",
+            'transfer_image' =>  $request->transfer_image,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -115,9 +127,9 @@ class TransferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return view('User.Transfer.user_transfer');
     }
 
     /**
@@ -150,7 +162,7 @@ class TransferController extends Controller
                 'wallet_id' => $request->wallet_id, // القيمة المطلوبة لـ wallet_id
                 'operation_type' => 1, // القيمة المطلوبة لـ operation_type
                 'amount' => $request->amount_transferred, // القيمة المطلوبة لـ amount
-                'details' => ' ايداع مقابل حواله بمعرف ' . $request->id .' و رقم الحوالة '.$request->transfer_number, // القيمة المطلوبة لـ details
+                'details' => ' ايداع مقابل حواله بمعرف ' . $request->id . ' و رقم الحوالة ' . $request->transfer_number, // القيمة المطلوبة لـ details
             ]);
 
             // إنشاء كائن WalletOperationController واستدعاء الدالة store
@@ -173,7 +185,7 @@ class TransferController extends Controller
      */
     public function destroy(Request $request)
     {
-        if($request->status == "موافقة"){
+        if ($request->status == "موافقة") {
             abort(400, 'فشلت العملية بسبب حالة "موافقة"');
         }
 

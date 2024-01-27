@@ -26,6 +26,13 @@ class WalletController extends Controller
         return response()->json($wallet);
     }
 
+    public function getBalance()
+    {
+        $wallet = Wallet::select('balance')->first();;
+
+        return response()->json($wallet);
+    }
+
 
 
     public function getDataTable()
@@ -80,7 +87,6 @@ class WalletController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
