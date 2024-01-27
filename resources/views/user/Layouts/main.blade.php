@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -59,162 +58,66 @@
         <nav class="header-nav me-auto">
             <ul class="d-flex align-items-center">
 
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle " href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li><!-- End Search Icon-->
 
-                <li class="nav-item dropdown">
 
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-bell"></i>
-                        <span class="badge bg-primary badge-number">4</span>
-                    </a><!-- End Notification Icon -->
-
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                        <li class="dropdown-header">
-                            You have 4 new notifications
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-exclamation-circle text-warning"></i>
-                            <div>
-                                <h4>Lorem Ipsum</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>30 min. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-x-circle text-danger"></i>
-                            <div>
-                                <h4>Atque rerum nesciunt</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>1 hr. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-check-circle text-success"></i>
-                            <div>
-                                <h4>Sit rerum fuga</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>2 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-info-circle text-primary"></i>
-                            <div>
-                                <h4>Dicta reprehenderit</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="dropdown-footer">
-                            <a href="#">Show all notifications</a>
-                        </li>
-
-                    </ul><!-- End Notification Dropdown Items -->
-
-                </li><!-- End Notification Nav -->
-
-                <li class="nav-item dropdown">
-
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-chat-left-text"></i>
-                        <span class="badge bg-success badge-number">3</span>
-                    </a><!-- End Messages Icon -->
-
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                        <li class="dropdown-header">
-                            You have 3 new messages
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="message-item">
-                            <a href="#">
-                                <img src={{ asset('Admin/IMG/messages-1.jpg') }} alt="" class="rounded-circle">
-                                <div>
-                                    <h4>Maria Hudson</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>4 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="message-item">
-                            <a href="#">
-                                <img src={{ asset('Admin/IMG/messages-2.jpg') }} alt="" class="rounded-circle">
-                                <div>
-                                    <h4>Anna Nelson</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>6 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="message-item">
-                            <a href="#">
-                                <img src={{ asset('Admin/IMG/messages-3.jpg') }} alt="" class="rounded-circle">
-                                <div>
-                                    <h4>David Muldon</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>8 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="#">Show all messages</a>
-                        </li>
-
-                    </ul><!-- End Messages Dropdown Items -->
-
-                </li><!-- End Messages Nav -->
 
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <img src={{ asset('Admin/IMG/profile-img.jpg') }} alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle pe-2">K. Anderson </span>
+                        
+                        <span class=" dropdown-toggle pe-2" ><span id="balance_main"></span>رس</span>
                     </a><!-- End Profile Iamge Icon -->
 
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <ul class="dropdown-menu dropdown-menu-end d profile">
+                        <li class="dropdown-header">
+                            <h6>المحفظة</h6>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('user.transfers') }}">
+                                <i class="bi bi-person"></i>
+                                <span>الحوالات</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('user.transfers.create') }}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>ايداع للمحفظة</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ Route('user.wallets.operation') }}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>عمليات المحفظة</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
+                        data-bs-toggle="dropdown">
+                        
+                        <span class=" dropdown-toggle pe-2">K. Anderson </span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end  profile">
                         <li class="dropdown-header">
                             <h6>Kevin Anderson</h6>
                             <span>Web Designer</span>
@@ -252,10 +155,10 @@
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
 
-        <ul class="sidebar-nav" id="sidebar-nav">
+        <ul class="sidebar-nav " id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="/Dshboard">
+                <a class="nav-link collapsed" href="/Dshboard">
                     <i class="bi bi-grid"></i>
                     <span>لوحة التحكم</span>
                 </a>
@@ -263,8 +166,8 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed"  href="{{ Route('user.wallets.operation') }}">
-                    <i class="bi bi-card-list"></i>
+                <a class="nav-link collapsed" href="{{ Route('user.wallets.operation') }}">
+                    <i class="bi bi-grid"></i>
                     <span>المحفظة</span>
                 </a>
             </li><!-- End Register Page Nav -->
@@ -275,8 +178,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Products-nav" data-bs-toggle="collapse"
-                    href="#">
+                <a class="nav-link collapsed" data-bs-target="#Products-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-journal-text "></i><span>المنتجات</span><i class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Products-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -291,8 +193,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Transfers-nav" data-bs-toggle="collapse"
-                    href="#">
+                <a class="nav-link collapsed" data-bs-target="#Transfers-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>الحوالات</span><i
                         class="bi bi-chevron-down me-auto"></i>
                 </a>
@@ -342,7 +243,7 @@
                     </a> --}}
 
 
-                    
+
                 <a class="nav-link collapsed" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
@@ -399,6 +300,22 @@
     </script>
     <!-- تضمين مكتبة moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <script type="text/javascript">
+        $.ajax({
+            type: 'get',
+            url: "{{ route('user.wallet.getBalance') }}",
+            async: false,
+            success: function(data) {
+                // استخدام قيمة $wallet الفعلية التي تم استرجاعها من الخادم
+                var balanceValue = data.balance;
+                $("#balance_main").text(balanceValue);
+            },
+            error: function(reject) {
+                console.error('Error loading :', reject);
+            }
+        });
+    </script>
     @yield('js')
 
 

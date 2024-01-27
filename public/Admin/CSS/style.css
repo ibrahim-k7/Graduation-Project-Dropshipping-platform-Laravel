@@ -374,6 +374,7 @@ h6 {
 
 .logo img {
     max-height: 26px;
+    margin-left: 6px;
     margin-right: 6px;
 }
 
@@ -502,9 +503,9 @@ h6 {
     padding: 3px 6px;
 }
 
-.header-nav .notifications {
+/*.header-nav .notifications {
     inset: 8px -15px auto auto !important;
-}
+}*/
 
 .header-nav .notifications .notification-item {
     display: flex;
@@ -534,9 +535,9 @@ h6 {
     background-color: #f6f9ff;
 }
 
-.header-nav .messages {
+/*.header-nav .messages {
     inset: 8px -15px auto auto !important;
-}
+}*/
 
 .header-nav .messages .message-item {
     padding: 15px 10px;

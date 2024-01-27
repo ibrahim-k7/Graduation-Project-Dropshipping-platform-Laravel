@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TransferController;
+use App\Http\Controllers\TransferInformationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\user\ProfileController;
@@ -56,6 +58,19 @@ Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.w
 
 Route::get('/wallet_getBalance', [WalletController::class, 'getBalance'])->name('user.wallet.getBalance');
 
+Route::controller(TransferController::class)->group(
+    function () {
+        Route::get('/transfer', 'show')->name('user.transfers');
+        Route::get('/transfer/create', 'create')->name('user.transfers.create');
+        Route::post('/transfer/store', 'store')->name('user.transfers.store');
+    }
+);
+
+Route::controller(TransferInformationController::class)->group(
+    function () {
+        Route::get('/transfer_info/getTransferInfo', 'getTransferInfo')->name('user.transfer.info.getTransferInfo');
+    }
+);
 
 /*Route::controller(WalletController::class)->group(
     function () {

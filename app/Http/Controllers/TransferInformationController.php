@@ -21,6 +21,12 @@ class TransferInformationController extends Controller
     }
 
 
+    public function getTransferInfo()
+    {
+        $transferInfo = TransferInformation::latest()->first(['name', 'phone', 'transfer_network']);
+
+        return response()->json($transferInfo);
+    }
 
 
     public function getDataTable()

@@ -28,14 +28,14 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">رصيدك هو <span id="balance"></span></h5>
+                            <h5 class="card-text  mb-4 mt-3 text-center ">رصيدك هو   <span id="balance"></span> </h5>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
                                 <table id="Wallet_Operatioon" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th id="id_column">ID</th>
+                                            <th>ID</th>
                                             <th>المبلغ</th>
                                             <th>نوع العملية</th>
                                             <th>الرصيد بعد العملية</th>
@@ -133,7 +133,7 @@
                         className: 'custom-add-button',
                         action: function(e, dt, node, config) {
                              // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                    //window.location.href = "{{ route('admin.purchase.create') }}";
+                    window.location.href = "{{ route('user.transfers') }}";
                         }
                     },
                 ],
