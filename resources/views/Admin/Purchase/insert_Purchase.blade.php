@@ -62,15 +62,14 @@
                                             </div>
 
                                             <div class="col-md-2">
-                                                <label for="purchasing_price" class="form-label">سعر الشراء</label>
+                                                <label for="product_price" class="form-label">سعر المنتج</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">ر.س</span>
-                                                    <input type="number" class="form-control" id="purchasing_price"
-                                                           name="purchasing_price" placeholder="سعر الشراء">
+                                                    <input type="number" class="form-control" id="product_price"
+                                                           name="product_price" placeholder="سعر المنتج">
                                                 </div>
-                                                <small id="purchasing_price_error" class="form-text text-danger"></small>
+                                                <small id="product_price_error" class="form-text text-danger"></small>
                                             </div>
-
 
                                             <div class="col-md-2">
                                                 <label for="quantity" class="form-label">الكمية</label>
@@ -138,9 +137,8 @@
                             <br>
 
                             <div class="text-center">
-                                <button type="button" class="btn btn-primary" id="submit" data-action="store">حفظ</button>
-                                <button type="update" class="btn btn-secondary">update</button>
-
+                                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                             </form>
 
@@ -157,28 +155,23 @@
 @endsection
 
 @section('js')
-        <!-- إضافة تشغيل الجداول DataTables -->
-        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-        <script>
-
-
-        var purchaseDetailsCounter = 1;
+    <script>
 
         // قم بتحميل بيانات الموردين باستخدام AJAX
         $.ajax({
             type: 'get',
             url: "{{ route('admin.supplier.getSuppliers') }}",
             async: false,
-            success: function (data) {
+            success: function(data) {
                 // قم بإضافة البيانات إلى عنصر الـselect
-                $.each(data, function (key, supplier) {
+                $.each(data, function(key, supplier) {
                     $('#sup_id').append('<option value="' + supplier.sup_id + '">' +
                         '[ ID : ' + supplier.sup_id + ' ] Name : ' + supplier.name +
                         '</option>');
+
                 });
             },
-            error: function (reject) {
+            error: function(reject) {
                 console.error('Error loading suppliers:', reject);
             }
         });
@@ -188,190 +181,214 @@
             type: 'get',
             url: "{{ route('admin.product.getProducts') }}",
             async: false,
-            success: function (data) {
+            success: function(data) {
                 // قم بإضافة البيانات إلى عنصر الـselect
-                $.each(data, function (key, product) {
+                $.each(data, function(key, product) {
                     $('#pro_id').append('<option value="' + product.id + '">' +
                         '[ ID : ' + product.id + ' ] Name : ' + product.name +
                         '</option>');
+                    //  $('#product_price').val(product.purchasing_price);
                 });
             },
-            error: function (reject) {
-                console.error('Error loading products:', reject);
+            error: function(reject) {
+                console.error('Error loading suppliers:', reject);
             }
         });
 
 
-                // قم بتعبئة تفاصيل المشتريات في الجدول
-                $(document).ready(function () {
-                    var purchaseData = @json($purchase ?? null);
-
-                    if (purchaseData != null) {
-                        $('#sup_id').val(purchaseData.sup_id);
-                        $('#payment_method').val(purchaseData.payment_method);
-                        $('#additional_costs').val(purchaseData.additional_costs);
-                        $('#total').val(purchaseData.total);
-                        $('#amount_paid').val(purchaseData.amount_paid);
-
-                        // قم بتعبئة تفاصيل المشتريات في الجدول
-                        var purchaseDetails = @json($purchase->purchaseDetails ?? null);
-
-                        if (purchaseDetails != null && purchaseDetails.length > 0) {
-                            for (var i = 0; i < purchaseDetails.length; i++) {
-                                addProductRow(
-                                    purchaseDetails[i].product.id,
-                                    purchaseDetails[i].product.name,
-                                    purchaseDetails[i].purchasing_price, // إضافة هذا السطر
-                                    purchaseDetails[i].quantity,
-                                    purchaseDetails[i].total_cost,
-                                );
-
-                                // قم بتعبئة الحقول في الصف المضاف بالبيانات
-                                var currentRow = $("#purchaseDetailsBody tr").eq(i + 1);
-                                currentRow.find('td:eq(0)').text(i + 1);
-                                currentRow.find('td:eq(1)').text(purchaseDetails[i].product.id.name);
-                                currentRow.find('td:eq(5)').text(purchaseDetails[i].purchasing_price);  // إضافة هذا السطر
-                                currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
-                                currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
-                                currentRow.find('td:eq(6)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
-                            }
-                        }
-                    }
-                });
 
 
-                $(document).on('click', '#add_product', function () {
-            var productid = $("select[name='pro_id']").val();
-            var productName = $("select[name='pro_id'] option:selected").text();
-                    var purchasingPrice = $("#purchasing_price").val();
-                    console.log("purchasingPrice:", purchasingPrice);
-            var quantity = $("#quantity").val();
-            var totalCost = $("#total_cost").val();
-
-            if (!productid || !productName ||!quantity || !totalCost || !purchasingPrice) {
-                alert('Please fill in all product details before adding.');
-                return;
-            }
-
-            // استخدام الدالة المحدثة
-            addProductRow(productName, productid, quantity, totalCost, purchasingPrice);
-
-            // إعادة تعيين حقول الإدخال
-            $("#pro_id,  #quantity, #total_cost, #purchasing_price").val('');
-        });
-
-        function addProductRow(productID, productName, quantity, totalCost, purchasingPrice) {
+        // تعريف الدالة addProductRow
+        function addProductRow(productID, productPrice, quantity, totalCost) {
+            // انشاء عنصر صف جديد
             var newRow = $("<tr>");
+
+            // تعبئة الخلايا بالبيانات أو الحقول الفارغة حسب احتياجاتك
             var cells = [
                 $("<td>").text(purchaseDetailsCounter),
-                $("<td>").text(productID + ' - ' + productName),
-                $("<td>").text(purchasingPrice),  // تم إضافة هذا السطر
+                $("<td>").text(productID),
+                $("<td>").text(productPrice),
                 $("<td>").text(quantity),
                 $("<td>").text(totalCost),
                 $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button>')
             ];
 
-            // إضافة البيانات إلى صف الجدول
+            // إضافة الخلايا إلى الصف
             newRow.append(cells);
-            $("#purchaseDetailsBody").append(newRow);
-            purchaseDetailsCounter++;
 
-            // إضافة السعر إلى الحقل الخاص بالسعر في المدخلات الخفية
-            $("<input>").attr("type", "hidden").attr("name", "purchasing_price[]").val(purchasingPrice).appendTo(newRow);
+            // إضافة الصف إلى الجدول
+            $("#purchaseDetailsBody").append(newRow);
+
+            // زيادة عداد التفاصيل
+            purchaseDetailsCounter++;
         }
 
+        // باقي الشيفرة الخاصة بتحميل البيانات وتعبئة الحقول
+        $(document).ready(function () {
+            var purchaseData = @json($purchase ?? null);
 
-        // إرسال تفاصيل المشتريات
-        $(document).on('click', '#submit', function (e) {
-            e.preventDefault();
+            if (purchaseData != null) {
+                $('#sup_id').val(purchaseData.sup_id);
+                $('#payment_method').val(purchaseData.payment_method);
+                $('#additional_costs').val(purchaseData.additional_costs);
+                $('#total').val(purchaseData.total);
+                $('#amount_paid').val(purchaseData.amount_paid);
 
-            var productsData = [];
+                // قم بتعبئة تفاصيل المشتريات في الجدول
+                // قم بتعبئة تفاصيل المشتريات في الجدول
+                var purchaseDetails = @json($purchase->purchaseDetails ?? null);
 
-            $('#purchaseDetailsBody tr').each(function (index, row) {
-                var productID = $(this).find('td:eq(1)').text();
-                var quantity = $(this).find('td:eq(3)').text();
-                var totalCost = $(this).find('td:eq(4)').text();
-                var purchasingPrice = $(this).find('td:eq(5)').html();
+                if (purchaseDetails != null && purchaseDetails.length > 0) {
+                    for (var i = 0; i < purchaseDetails.length; i++) {
+                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
 
-                productsData.push({
-                    pro_id: productID,
-                    quantity: quantity,
-                    total_cost: totalCost,
-                    purchasing_price: purchasingPrice  // إضافة هذا السطر
-                });
-            });
 
-            if ($('#purchaseDetailsBody tr').length === 0) {
-                alert('Please add at least one product before submitting.');
-                return;
+                        // قم بتعبئة الحقول في الصف المضاف بالبيانات
+                        var currentRow = $("#purchaseDetailsBody tr").eq(i + 1); // انطلق من 1 لأن الصفوف تبدأ من 1
+                        currentRow.find('td:eq(0)').text(i + 1); // رقم الصف
+                        currentRow.find('td:eq(1)').text(purchaseDetails[i].product.id.name); // اسم المنتج
+                        currentRow.find('td:eq(2)').text(purchaseDetails[i].product.price);
+                        currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
+                        currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
+                        currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
+                        // قد تحتاج إلى تكرار هذا للحقول الأخرى حسب احتياجاتك
+                        console.log('Purchase Details:', purchaseDetails[i]);
+                    };
+                }
             }
 
-            var purchaseDetails = [];
 
-            $('#purchaseDetailsBody tr').each(function () {
-                var rowData = [];
-                $(this).find('td').each(function () {
-                    rowData.push($(this).text());
-                });
-                purchaseDetails.push(rowData);
-            });
+            var purchaseDetailsCounter = 1;
 
-            $('#sup_id_error').text('');
-            $('#payment_method_error').text('');
-            $('#additional_costs_error').text('');
-            $('#total_error').text('');
-            $('#amount_paid_error').text('');
+            // داخل الحدث الخاص بزر "Add Product"
+            $(document).on('click', '#add_product', function () {
+                var productid = $("select[name='pro_id']").val();
+                var productName = $("select[name='pro_id'] option:selected").text();
+                var productPrice = $("#product_price").val();
+                var quantity = $("#quantity").val();
+                var totalCost = $("#total_cost").val();
 
-            var action = $(this).data('action');
-            var url = action === 'store' ? "{{ route('admin.purchase.store') }}" : "{{ route('admin.purchase.update') }}";
-
-            $.ajax({
-                type: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                url: url,
-                data: {
-                    'products': productsData,
-                    'sup_id': $("select[name='sup_id']").val(),
-                    'payment_method': $("select[name='payment_method']").val(),
-                    'amount': $("input[name='amount']").val(),
-                    'additional_costs': $("input[name='additional_costs']").val(),
-                    'total': $("input[name='total']").val(),
-                    'amount_paid': $("input[name='amount_paid']").val(),
-                },
-                success: function (data) {
-                    $("#form")[0].reset();
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "تمت العملية بنجاح",
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                },
-                error: function (reject) {
-                    var response = $.parseJSON(reject.responseText);
-                    $.each(response.errors, function (key, val) {
-                        $("#" + key + "_error").text(val[0])
-                    });
+                if (!productid || !productName || !productPrice || !quantity || !totalCost) {
+                    alert('Please fill in all product details before adding.');
+                    return;
                 }
+
+
+                // استخدام الدالة المحدثة
+                addProductRow(productName, productid, productPrice, quantity, totalCost);
+
+                // إعادة تعيين حقول الإدخال
+                $("#pro_id, #product_price, #quantity, #total_cost").val('');
+            });
+
+            // داخل الدالة addProductRow
+            function addProductRow(productName, productid, productPrice, quantity, totalCost) {
+                // انشاء عنصر صف جديد
+                var newRow = $("<tr>");
+
+                // تعبئة الخلايا بالبيانات أو الحقول الفارغة حسب احتياجاتك
+                var cells = [
+                    $("<td>").text(purchaseDetailsCounter),
+                    $("<td>").text(productid),
+                    $("<td>").text(productPrice),
+                    $("<td>").text(quantity),
+                    $("<td>").text(totalCost),
+                    $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button>')
+                ];
+
+                // إضافة الخلايا إلى الصف
+                newRow.append(cells);
+
+                // إضافة الصف إلى الجدول
+                $("#purchaseDetailsBody").append(newRow);
+
+                // زيادة عداد التفاصيل
+                purchaseDetailsCounter++;
+            }
+
+
+            // إرسال تفاصيل المشتريات مع التفاصيل
+            $(document).on('click', '#submit', function(e) {
+                e.preventDefault();
+
+                var productsData = [];
+
+                $('#purchaseDetailsBody tr').each(function(index, row) {
+                    var productID = $(this).find('td:eq(1)').text();
+                    var purchasing_price = $(this).find('td:eq(2)').text();
+                    var quantity = $(this).find('td:eq(3)').text();
+                    var totalCost = $(this).find('td:eq(4)').text();
+
+                    productsData.push({
+                        pro_id: productID,
+                        quantity: quantity,
+                        purchasing_price: purchasing_price,
+                        total_cost: totalCost
+                    });
+                });
+
+                if ($('#purchaseDetailsBody tr').length === 0) {
+                    alert('Please add at least one product before submitting.');
+                    return;
+                }
+
+                var url = "{{ route('admin.purchase.store') }}";
+
+                // If invoiceId exists, it means it's an update operation
+                var invoiceId = $("input[name='invoice_id']").val();
+
+                if (invoiceId) {
+                    url = "{{ route('admin.purchase.update', ['id' => ':id']) }}".replace(':id', invoiceId);
+                }
+
+                $.ajax({
+                    type: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                    },
+                    url: url,
+                    data: {
+                        'products': productsData,
+                        'sup_id': $("select[name='sup_id']").val(),
+                        'payment_method': $("select[name='payment_method']").val(),
+                        'amount': $("input[name='amount']").val(),
+                        'additional_costs': $("input[name='additional_costs']").val(),
+                        'total': $("input[name='total']").val(),
+                        'amount_paid': $("input[name='amount_paid']").val(),
+                    },
+                    success: function(data) {
+                        $("#form")[0].reset();
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "تمت العملية بنجاح",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    },
+                    error: function(reject) {
+                        var response = $.parseJSON(reject.responseText);
+                        $.each(response.errors, function(key, val) {
+                            $("#" + key + "_error").text(val[0])
+                        })
+                    }
+                });
+            });
+
+// Function to remove a row from the purchase details table
+            function removeRow(btn) {
+                var row = btn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            }
+
+// Reset fields when the reset button is clicked
+            $(document).on('click', '#reset', function() {
+                $("#form")[0].reset();
+                $('#purchaseDetailsBody').empty();
+                purchaseDetailsCounter = 1;
             });
         });
 
-
-        // إزالة صف من جدول التفاصيل
-        function removeRow(btn) {
-            var row = btn.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
-
-        // إعادة تعيين الحقول عند النقر على زر الريست
-        $(document).on('click', '#reset', function () {
-            $("#form")[0].reset();
-            $('#purchaseDetailsBody').empty();
-            purchaseDetailsCounter = 1;
-        });
 
     </script>
 

@@ -202,7 +202,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/purchase/create', [PurchaseController::class, 'create'])->name('admin.purchase.create');
     Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('admin.purchase.store');
     Route::get('/Purchase_edit', [PurchaseController::class, 'edit'])->name('admin.Purchase.edit');
-    Route::post('/purchase/update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
+    Route::post('purchase_update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
 
     // Purchase Details Routes
    // Route::get('/purchase-details/data', [PurchaseDetailsController::class, 'getDataTable'])->name('admin.purchasedetails.data');
