@@ -562,7 +562,7 @@
 
     <!-- Vendor JS Files -->
     <script src={{ asset('Admin/vendor/apexcharts/apexcharts.min.js') }}></script>
-    <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script>
+    {{-- <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script> --}}
     <script src={{ asset('Admin/vendor/chart.js/chart.umd.js') }}></script>
     <script src={{ asset('Admin/vendor/echarts/echarts.min.js') }}></script>
     <script src={{ asset('Admin/vendor/quill/quill.min.js') }}></script>
