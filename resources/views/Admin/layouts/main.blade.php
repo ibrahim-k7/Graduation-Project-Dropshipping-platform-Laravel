@@ -255,7 +255,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="/Dshboard">
+                <a class="nav-link " href="{{ Route('admin.dshboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -537,7 +537,7 @@
 
     </aside><!-- End Sidebar-->
 
-    
+
 
     @yield('Content')
 

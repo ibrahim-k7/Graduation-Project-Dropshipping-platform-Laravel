@@ -9,6 +9,6 @@ class AdminDshboardController extends Controller
 {
     //
     public function index(){
-        return view('Admin.dashboard');
+        return view('Admin.Dashboard.dashboard');
     }
 }
