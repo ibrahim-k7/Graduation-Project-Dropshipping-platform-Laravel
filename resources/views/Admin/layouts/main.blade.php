@@ -537,7 +537,11 @@
 
     </aside><!-- End Sidebar-->
 
+    
+
     @yield('Content')
+
+
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
