@@ -106,16 +106,17 @@ class TransferController extends Controller
      */
     public function store(Request $request)
     {   
+        $file_name = $this->upload("Transfers_img", $request->transfer_image);
         // إنشاء سجل في جدول Transfer
         Transfer::create([
-            'wallet_id' => $request->wallet_id,
+            'wallet_id' => 3,
             'sender_name' =>  $request->sender_name,
             'sender_phone' =>  $request->sender_phone,
             'amount_transferred' =>  $request->amount_transferred,
             'transfer_number' =>  $request->transfer_number,
             'transfer_date' =>  $request->transfer_date,
             'transfer_status' =>  "قيد الانتظار",
-            'transfer_image' =>  $request->transfer_image,
+            'transfer_image' =>  $file_name,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -192,5 +193,24 @@ class TransferController extends Controller
         $transfer = Transfer::where('transfer_id', $request->id);
 
         $transfer->delete();
+    }
+
+    protected function upload($folderStoringPath, $image)
+    {
+        $extension = strtolower($image->extension());
+        $filename = time() . rand(1, 10000) . "." . $extension;
+        $image->move($folderStoringPath, $filename);
+        return $filename;
+    }
+
+    protected function deleteImage($folderStoringPath, $filename)
+    {
+        $filePath = $folderStoringPath . '/' . $filename;
+
+        // التحقق من وجود الملف قبل محاولة حذفه
+        if (file_exists($filePath)) {
+            unlink($filePath);
+            // تم حذف الملف بنجاح
+        }
     }
 }

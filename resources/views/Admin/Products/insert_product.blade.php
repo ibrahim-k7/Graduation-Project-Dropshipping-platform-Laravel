@@ -202,19 +202,20 @@
                     $('#subCat_id_error').text('');
                     $('#image_error').text('');
                     /* var formData = new FormData($("#form")[0]);
-                    */
+                     */
 
-                   /* var image_update
-                    if( $("#image").val(product.image) == null){
-                        image_update = product.image;
-                    }else{
-                        image_update = $("#image")[0].files[0];
-                    }*/
+                    /* var image_update
+                     if( $("#image").val(product.image) == null){
+                         image_update = product.image;
+                     }else{
+                         image_update = $("#image")[0].files[0];
+                     }*/
 
                     var formData = new FormData($("#form")[0]);
                     formData.append('id', product.id);
+                    formData.append('oldImgName', product.image);
                     $.ajax({
-                       type: 'post',
+                        type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
@@ -222,7 +223,7 @@
                         contentType: false,
                         //enctype:'multipart/form-data',
                         url: "{{ route('admin.products.update') }}",
-                        data:formData,
+                        data: formData,
                         success: function(data) {
 
                             $("#form")[0].reset();

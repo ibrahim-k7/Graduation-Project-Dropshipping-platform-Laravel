@@ -44,13 +44,14 @@ Route::get('user/home', [App\Http\Controllers\HomeController::class, 'index'])->
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/Dshboard', function () {
-    return view('admin/dashboard');
+    return view('User.Dashboard.dashboard');
 });
 
 
 Route::get('/userinterface', function () {
-    return view('User/dashboard');
+    return view('User.Dashboard.dashboard');
 });
 
 Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
