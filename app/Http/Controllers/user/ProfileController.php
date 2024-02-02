@@ -20,7 +20,7 @@ class ProfileController extends Controller
     public function updateEmail(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'email' => 'required|email|unique:store,email,NULL,id,store_id,' . Auth::id(),
         ]);
 
         Auth::user()->update(['email' => $request->email]);
