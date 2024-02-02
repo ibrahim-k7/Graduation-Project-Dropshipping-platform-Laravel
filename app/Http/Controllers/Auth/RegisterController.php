@@ -70,7 +70,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Store::create([
+        return store::create([
             'store_name' => $data['name'],
             'phone_number' => $data['phone'],
             'email' => $data['email'],
