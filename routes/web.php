@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferInformationController;
 use Illuminate\Support\Facades\Route;
@@ -82,6 +83,14 @@ Route::controller(OrderController::class)->group(
     function () {
         Route::get('/orders','show')->name('user.order');
         Route::get('/orders/a','getDataTable')->name('user.order.data');
+    }
+);
+
+//Order Details
+Route::controller(OrderDetailsController::class)->group(
+    function () {
+        Route::get('/order_details','show')->name('user.order.details');
+
     }
 );
 

@@ -16,6 +16,10 @@ class OrderDetailsController extends Controller
         return view('Admin.Order.order_details_management');
     }
 
+    // new function
+    public function show(){
+        return view('User.Order.order_details');
+    }
     // استدعاء البيانات
     public function getDataTable(){
         if (session('myVariable') === null) {
