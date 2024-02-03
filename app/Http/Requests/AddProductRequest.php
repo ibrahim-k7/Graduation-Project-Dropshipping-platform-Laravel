@@ -28,7 +28,7 @@ class AddProductRequest extends FormRequest
             'cat_id'=>'required',
             'subCat_id'=>'required',
             'weight'=>'required',
-            'image'=>'required',
+           // 'image'=>'required|max:1024|mimes:png,jpg,jpeg',
         ];
     }
 
@@ -39,7 +39,7 @@ class AddProductRequest extends FormRequest
             'cat_id.required'=>'الفئة الرئيسية مطلوبة',
             'subCat_id.required'=>'الفئة الفرعية مطلوبة',
             'weight.required'=>'وزن المنتج مطلوب',
-            'image.required'=>'صورة المنتج مطلوبة',
+           //    'image.required'=>'صورة المنتج مطلوبة',
         ];
     }
 }

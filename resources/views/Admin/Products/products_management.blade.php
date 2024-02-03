@@ -71,7 +71,7 @@
     <script type="text/javascript">
         $(function() {
 
-            var wallet_data = $('#Products_Managment').DataTable({
+            var products_data = $('#Products_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 "autoWidth": false,
@@ -197,7 +197,12 @@
                     },
                     {
                         data: 'image',
-                        name: 'image'
+                        name: 'image',
+                        render: function(data, type, full, meta) {
+                            return '<a href="../../Products_img/' + data + '" data-lightbox="product-image" data-title="Product Image">' +
+                    '<img src="../../Products_img/' + data + '" alt="Product Image" width="50" height="50">' +
+                    '</a>';
+                        }
                     },
                     {
                         data: 'created_at',

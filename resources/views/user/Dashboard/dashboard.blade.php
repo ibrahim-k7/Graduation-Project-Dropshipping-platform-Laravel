@@ -1,4 +1,4 @@
-@extends('User.layouts.main')
+@extends('User.Layouts.main')
 
 @section('pageTitle')
     لوحة التحكم
@@ -8,11 +8,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>لوحة التحكم </h1>
             <nav>
                 <ol class="breadcrumb"> 
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
+                    {{-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li> --}}
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -43,7 +43,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Sales <span>| Today</span></h5>
+                                    <h5 class="card-title">الطلبات </h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                                    <h5 class="card-title">المحفظة</h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -120,7 +120,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Customers <span>| This Year</span></h5>
+                                    <h5 class="card-title">منتجاتك</h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -159,7 +159,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Reports <span>/Today</span></h5>
+                                    <h5 class="card-title">Reports</h5>
 
                                     <!-- Line Chart -->
                                     <div id="reportsChart"></div>
@@ -404,7 +404,7 @@
                 <div class="col-lg-4">
 
                     <!-- Recent Activity -->
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                     class="bi bi-three-dots"></i></a>
@@ -477,10 +477,10 @@
                             </div>
 
                         </div>
-                    </div><!-- End Recent Activity -->
+                    </div><!-- End Recent Activity --> --}}
 
                     <!-- Budget Report -->
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                     class="bi bi-three-dots"></i></a>
@@ -552,7 +552,7 @@
                             </script>
 
                         </div>
-                    </div><!-- End Budget Report -->
+                    </div><!-- End Budget Report --> --}}
 
                     <!-- Website Traffic -->
                     <div class="card">
@@ -634,7 +634,7 @@
                     </div><!-- End Website Traffic -->
 
                     <!-- News & Updates Traffic -->
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                     class="bi bi-three-dots"></i></a>
@@ -690,7 +690,7 @@
                             </div><!-- End sidebar recent posts-->
 
                         </div>
-                    </div><!-- End News & Updates -->
+                    </div><!-- End News & Updates --> --}}
 
                 </div><!-- End Right side columns -->
 

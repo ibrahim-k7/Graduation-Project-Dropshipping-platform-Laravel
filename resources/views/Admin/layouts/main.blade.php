@@ -255,7 +255,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="/Dshboard">
+                <a class="nav-link " href="{{ Route('admin.dshboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -537,7 +537,11 @@
 
     </aside><!-- End Sidebar-->
 
+
+
     @yield('Content')
+
+
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
@@ -558,7 +562,7 @@
 
     <!-- Vendor JS Files -->
     <script src={{ asset('Admin/vendor/apexcharts/apexcharts.min.js') }}></script>
-    <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script>
+    {{-- <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script> --}}
     <script src={{ asset('Admin/vendor/chart.js/chart.umd.js') }}></script>
     <script src={{ asset('Admin/vendor/echarts/echarts.min.js') }}></script>
     <script src={{ asset('Admin/vendor/quill/quill.min.js') }}></script>

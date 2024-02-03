@@ -45,8 +45,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/Dshboard', function () {
-    return view('admin/dashboard');
+    return view('User.Dashboard.dashboard');
 });
 
 Auth::routes();
@@ -54,7 +55,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/userinterface', function () {
-    return view('User/dashboard');
+    return view('User.Dashboard.dashboard');
 });
 
 Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');

@@ -29,8 +29,7 @@
                         <div class="card-body mt-5">
 
                             <!-- Multi Columns Form -->
-                            <form id="form" method="post" class="row g-3">
-                                @csrf
+                            <form id="form" method="post" enctype="multipart/form-data" class="row g-3">
 
                                 <div class="col-md-4">
                                     <label for="name" class="form-label">اسم المنتج</label>
@@ -41,14 +40,14 @@
                                 <div class="col-md-4">
                                     <label for="selling_price" class="form-label">سعر البيع</label>
                                     <input type="number" class="form-control" id="selling_price" name="selling_price"
-                                        placeholder="" required>
+                                        placeholder="">
                                     <small id="selling_price_error" class="form-text text-danger"></small>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label for="suggested_selling_price" class="form-label">سعر البيع المقترح</label>
                                     <input type="number" class="form-control" id="suggested_selling_price"
-                                        name="suggested_selling_price" placeholder="" required>
+                                        name="suggested_selling_price" placeholder="">
                                     <small id="suggested_selling_price_error" class="form-text text-danger"></small>
                                 </div>
 
@@ -70,21 +69,18 @@
 
                                 <div class="col-md-4">
                                     <label for="weight" class="form-label">الوزن</label>
-                                    <input type="number" class="form-control" id="weight" name="weight" placeholder=""
-                                        required>
+                                    <input type="number" class="form-control" id="weight" name="weight" placeholder="">
                                     <small id="weight_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="barcode" class="form-label">الباركود</label>
-                                    <input type="number" class="form-control" id="barcode" name="barcode" placeholder=""
-                                        required>
+                                    <input type="number" class="form-control" id="barcode" name="barcode" placeholder="">
                                     <small id="barcode_error" class="form-text text-danger"></small>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label for="image" class="form-label">الصورة</label>
-                                    <input type="text" class="form-control" id="image" name="image" placeholder=""
-                                        required>
+                                    <input type="file" class="form-control" id="image" name="image" placeholder="">
                                     <small id="image_error" class="form-text text-danger"></small>
                                 </div>
 
@@ -126,7 +122,7 @@
                     $.each(data, function(key, categories) {
                         $('#cat_id').append('<option value="' + categories.id + '">' +
                             categories.name +
-                                '</option>');
+                            '</option>');
                     });
                 },
                 error: function(reject) {
@@ -193,7 +189,7 @@
                 loadSubCategories(product.cat_id);
                 $("#weight").val(product.weight);
                 $("#barcode").val(product.barcode);
-                $("#image").val(product.image);
+                //$("#image").val(product.image);
                 $("textarea").val(product.description);
 
                 $(document).on('click', '#submit', function(e) {
@@ -205,27 +201,29 @@
                     $('#cat_id_error').text('');
                     $('#subCat_id_error').text('');
                     $('#image_error').text('');
+                    /* var formData = new FormData($("#form")[0]);
+                     */
 
+                    /* var image_update
+                     if( $("#image").val(product.image) == null){
+                         image_update = product.image;
+                     }else{
+                         image_update = $("#image")[0].files[0];
+                     }*/
+
+                    var formData = new FormData($("#form")[0]);
+                    formData.append('id', product.id);
+                    formData.append('oldImgName', product.image);
                     $.ajax({
                         type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
+                        processData: false,
+                        contentType: false,
+                        //enctype:'multipart/form-data',
                         url: "{{ route('admin.products.update') }}",
-                        data: {
-                            'id': product.id,
-                            'name': $("input[name='name']").val(),
-                            'selling_price': $("input[name='selling_price']").val(),
-                            'suggested_selling_price': $("input[name='suggested_selling_price']")
-                                .val(),
-                            'barcode': $("input[name='barcode']").val(),
-                            'cat_id': $("select[name='cat_id']").val(),
-                            'subCat_id': $("select[name='subCat_id']").val(),
-                            'weight': $("input[name='weight']").val(),
-                            'image': $("input[name='image']").val(),
-                            'description': $("textarea").val(),
-
-                        },
+                        data: formData,
                         success: function(data) {
 
                             $("#form")[0].reset();
@@ -271,24 +269,17 @@
                     $('#subCat_id_error').text('');
                     $('#image_error').text('');
 
+                    var formData = new FormData($("#form")[0]);
                     $.ajax({
                         type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
+                        processData: false,
+                        contentType: false,
+
                         url: "{{ route('admin.products.store') }}",
-                        data: {
-                            'name': $("input[name='name']").val(),
-                            'selling_price': $("input[name='selling_price']").val(),
-                            'suggested_selling_price': $("input[name='suggested_selling_price']")
-                                .val(),
-                            'barcode': $("input[name='barcode']").val(),
-                            'cat_id': $("select[name='cat_id']").val(),
-                            'subCat_id': $("select[name='subCat_id']").val(),
-                            'weight': $("input[name='weight']").val(),
-                            'image': $("input[name='image']").val(),
-                            'description': $("textarea").val(),
-                        },
+                        data: formData,
                         success: function(data) {
 
                             $("#form")[0].reset();

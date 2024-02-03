@@ -35,8 +35,8 @@
                         <div class="card-body mt-5">
 
                             <!-- Multi Columns Form -->
-                            <form id="form" method="post" class="row g-3">
-                                @csrf
+                            <form id="form" method="post" enctype="multipart/form-data" class="row g-3">
+                                
                                 <div class="col-md-4">
                                     <label for="sender_name" class="form-label">اسم المرسل</label>
                                     <input type="text" class="form-control" id="sender_name" name="sender_name" required>
@@ -122,21 +122,18 @@
                 $('#transfer_date_error').text('');
                 $('#transfer_image_error').text('');
 
+                var formData = new FormData($("#form")[0]);
+
                 //حفظ المعلومات
                 $.ajax({
                     type: 'post',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                     },
+                    processData: false,
+                    contentType: false,
                     url: "{{ route('user.transfers.store') }}",
-                    data: {
-                        'sender_name': $("input[name='sender_name']").val(),
-                        'sender_phone': $("input[name='sender_phone']").val(),
-                        'transfer_number': $("input[name='transfer_number']").val(),
-                        'amount_transferred': $("input[name='amount_transferred']").val(),
-                        'transfer_date': $("input[name='transfer_date']").val(),
-                        'transfer_image': $("input[name='transfer_image']").val(),
-                    },
+                    data: formData,
                     success: function(data) {
                         $("#form")[0].reset();
                         Swal.fire({

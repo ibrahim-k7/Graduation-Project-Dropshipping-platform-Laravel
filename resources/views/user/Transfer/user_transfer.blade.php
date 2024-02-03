@@ -179,7 +179,12 @@
                     },
                     {
                         data: 'transfer_image',
-                        name: 'transfer_image'
+                        name: 'transfer_image',
+                        render: function(data, type, full, meta) {
+                            return '<a href="../../Transfers_img/' + data + '" data-lightbox="Transfer-image" data-title="Transfer Image">' +
+                    '<img src="../../Transfers_img/' + data + '" alt="Transfer Image" width="50" height="50">' +
+                    '</a>';
+                        }
                     },
                     {
                         data: 'created_at',
