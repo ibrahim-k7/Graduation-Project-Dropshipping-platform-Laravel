@@ -461,35 +461,6 @@
 
 
 
-            {{-- <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Data Tables</span><i
-                        class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="/wallet">
-                            <i class="bi bi-circle"></i><span>Wallets</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/simple">
-                            <i class="bi bi-circle"></i><span>Simple</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Products</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/Purchases">
-                            <i class="bi bi-circle"></i><span>Purchases</span>
-                        </a>
-                    </li>
-                </ul>
-            <li class="nav-heading">Pages</li> --}}
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/admin/profile">
                     <i class="bi bi-person"></i>
