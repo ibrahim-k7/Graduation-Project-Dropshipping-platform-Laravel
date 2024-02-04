@@ -132,6 +132,7 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
 
+                        <span class=" dropdown-toggle pe-2">K. Anderson </span>
                         <span class=" dropdown-toggle pe-2">{{ Auth::user()->store_name }} </span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -228,6 +229,12 @@
                     </li>
                 </ul>
             </li><!-- End Tables Nav -->
+
+            <a class="nav-link collapsed"  href="{{ Route('user.order') }}">
+                <i class="bi bi-layout-text-window-reverse"></i>
+                <span>الطلبات</span>
+            </a>
+            <!-- End Order Nav -->
 
 
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferInformationController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +51,9 @@ Route::get('/Dshboard', function () {
     return view('User.Dashboard.dashboard');
 });
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/userinterface', function () {
     return view('User.Dashboard.dashboard');
@@ -70,6 +75,22 @@ Route::controller(TransferController::class)->group(
 Route::controller(TransferInformationController::class)->group(
     function () {
         Route::get('/transfer_info/getTransferInfo', 'getTransferInfo')->name('user.transfer.info.getTransferInfo');
+    }
+);
+
+//Order
+Route::controller(OrderController::class)->group(
+    function () {
+        Route::get('/orders','show')->name('user.order');
+        Route::get('/orders/a','getDataTable')->name('user.order.data');
+    }
+);
+
+//Order Details
+Route::controller(OrderDetailsController::class)->group(
+    function () {
+        Route::get('/order_details','show')->name('user.order.details');
+
     }
 );
 
