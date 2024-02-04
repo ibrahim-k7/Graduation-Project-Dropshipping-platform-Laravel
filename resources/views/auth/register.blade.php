@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('content')
 <div class="container">
@@ -77,7 +77,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('ارسال') }}
                                 </button>
                                 <a class="btn btn-link" href="{{ route('login') }}">
                                     {{ __(' تسجيل الدخول') }}

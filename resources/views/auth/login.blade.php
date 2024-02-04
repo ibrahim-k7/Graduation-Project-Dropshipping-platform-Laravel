@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 {{-- @section('js')
     {!! NoCaptcha::renderJs() !!}
@@ -66,7 +66,7 @@
                                             {{ old('remember') ? 'checked' : '' }}>
 
                                         <label class="form-check-label" for="remember">
-                                            {{ __('Remember Me') }}
+                                            {{ __('تذكرني') }}
                                         </label>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
 
                                     @if (Route::has('password.request'))
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
+                                            {{ __('نسيت كلمة السر') }}
                                         </a>
                                         <a class="btn btn-link" href="{{ route('register') }}">
                                             {{ __('انشاء حساب') }}

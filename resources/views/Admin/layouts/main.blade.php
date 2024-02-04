@@ -79,6 +79,7 @@
                         </li>
                         <li>
                             <hr class="dropdown-divider">
+
                         </li>
 
                         <li class="notification-item">
@@ -210,8 +211,8 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <img src={{ asset('Admin/IMG/profile-img.jpg') }} alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle pe-2">K. Anderson </span>
+                        {{-- <img src={{ asset('Admin/IMG/profile-img.jpg') }} alt="Profile" class="rounded-circle"> --}}
+                        <span class="d-none d-md-block dropdown-toggle pe-2">{{ Auth::guard('admin')->user()->name }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -462,6 +463,15 @@
 
 
             <li class="nav-item">
+<li class="nav-heading">Pages</li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/user-information">
+                    <i class="bi bi-person"></i>
+                    <span>معلومات المتاجر </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="/admin/profile">
                     <i class="bi bi-person"></i>
                     <span>الحساب التعريفي</span>
@@ -519,13 +529,13 @@
         <div class="copyright">
             &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
         </div>
-        <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
+        {{-- <div class="credits"> --}}
+            {{-- <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> --}}
+        {{-- </div> --}}
     </footer><!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
