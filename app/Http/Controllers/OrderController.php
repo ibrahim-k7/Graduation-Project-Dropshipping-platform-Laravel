@@ -128,7 +128,7 @@ class OrderController extends Controller
             'orders.total_amount',
             'orders.created_at',
             'orders.updated_at',
-            'wallet.wallet_id'
+            'wallet.wallet_id',
         )
             ->join('store', 'store.store_id', '=', 'orders.store_id')
             ->join('wallet', 'wallet.store_id', '=', 'orders.store_id')
@@ -222,8 +222,6 @@ class OrderController extends Controller
                             <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
                         </svg>
                     </a>
-                    <a href="' . Route('admin.order.details', ['order_id' => $row->order_id]) . '" type="button" class="btn btn-primary">التفاصيل</a>
-
                 <div/>
                 ';
             })

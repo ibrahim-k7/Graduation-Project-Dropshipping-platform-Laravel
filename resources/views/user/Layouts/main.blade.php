@@ -133,7 +133,7 @@
                         data-bs-toggle="dropdown">
 
                         <span class=" dropdown-toggle pe-2">K. Anderson </span>
-                        <span class=" dropdown-toggle pe-2">{{ Auth::user()->store_name }} </span>
+{{--                        <span class=" dropdown-toggle pe-2">{{ Auth::user()->store_name }} </span>--}}
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end  profile">
