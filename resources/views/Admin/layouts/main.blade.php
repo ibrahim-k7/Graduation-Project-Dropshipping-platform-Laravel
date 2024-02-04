@@ -51,7 +51,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src={{ asset('Admin/IMG/logo.png') }} alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block">لوحة تحكم المشرف</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -258,12 +258,12 @@
             <li class="nav-item">
                 <a class="nav-link " href="{{ Route('admin.dshboard') }}">
                     <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
+                    <span>لوحة التحكم</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down me-auto"></i>
                 </a>
@@ -274,7 +274,7 @@
                         </a>
                     </li>
                 </ul>
-            </li><!-- End Forms Nav -->
+            </li><!-- End Forms Nav --> --}}
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Products-nav" data-bs-toggle="collapse"
@@ -463,33 +463,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Data Tables</span><i
-                        class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="/wallet">
-                            <i class="bi bi-circle"></i><span>Wallets</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/simple">
-                            <i class="bi bi-circle"></i><span>Simple</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Products</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/Purchases">
-                            <i class="bi bi-circle"></i><span>Purchases</span>
-                        </a>
-                    </li>
-                </ul>
-            <li class="nav-heading">Pages</li>
+<li class="nav-heading">Pages</li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/admin/user-information">
                     <i class="bi bi-person"></i>

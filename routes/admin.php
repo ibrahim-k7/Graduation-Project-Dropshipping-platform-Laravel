@@ -37,10 +37,8 @@ Route::prefix('/admin')->group(function () {
             Route::post('/products_management/store', 'store')->name('admin.products.store');
             Route::post('/products_management/update', 'update')->name('admin.products.update');
             Route::post('/products_management/destroy','destroy')->name('admin.products.destroy');
-
-
-
-
+            Route::get('/products_management/getProductsCount','getProductsCount')->name('admin.products.getProductsCount');
+            Route::get('/products_management/getLowQuantityProducts','getLowQuantityProducts')->name('admin.products.getLowQuantityProducts');
         }
     );
     // user information
@@ -77,6 +75,10 @@ Route::prefix('/admin')->group(function () {
             Route::post('/order_managment/updatePayment','updatePaymentStatus')->name('admin.order.update.payment.status');
             Route::post('/order_managment/updateOrder','updateOrderStatus')->name('admin.order.update.order.status');
             Route::post('/order_managment/delete','destroy')->name('admin.order.destroy');
+            Route::get('/order_managment/getOrders', 'getOrders')->name('admin.order.getOrders');// اعادة المنتجات لعرضها في واجهة لوحة التحكم
+            Route::get('/order_managment/getOrdersCount', 'getOrdersCount')->name('admin.order.getOrdersCount'); //إرجاع عددالطلبات لواجهة لوحة التحكم
+            Route::get('/order_managment/getTotalPaidOrdersAmount', 'getTotalPaidOrdersAmount')->name('admin.order.getTotalPaidOrdersAmount'); //إرجاع إجمالي المبيعات لواجهة لوحة التحكم
+
         }
     );
 
@@ -120,6 +122,10 @@ Route::prefix('/admin')->group(function () {
             Route::post('/suppliers_management/store', 'store')->name('admin.suppliers.store');
             Route::post('/suppliers_management/destroy', 'destroy')->name('admin.suppliers.destroy');
             Route::post('/suppliers_management/update', 'update')->name('admin.suppliers.update');
+            Route::get('/suppliers_management/getSuppliersCount', 'getSuppliersCount')->name('admin.suppliers.getSuppliersCount');// عدد الموردين
+            Route::get('/suppliers_management/getSuppliersTotalBalance', 'getSuppliersTotalBalance')->name('admin.suppliers.getSuppliersTotalBalance');// حساب المديونية
+
+            
         }
     );
 
