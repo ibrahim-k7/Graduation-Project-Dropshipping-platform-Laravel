@@ -29,8 +29,8 @@ Route::get('/', function () {
 
 Route::middleware('verified')->group(function(){
     Route::get('user/profile', [ProfileController::class,'index'] )->name('user.profile');
-Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
-Route::post('user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('user.profile.updateEmail');
+Route::post('user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.profile.updatePassword');
 
     // Route::get('user/card', [ProfileController::class,'index'] )->name('user.profile');
     // Route::get('user/setting', [ProfileController::class,'index'] )->name('user.profile');
@@ -40,7 +40,7 @@ Route::post('user/profile/update-password', [ProfileController::class, 'updatePa
 
 auth::routes(['verify'=>true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
 
 
 Route::get('/', function () {
@@ -100,3 +100,7 @@ Route::controller(OrderDetailsController::class)->group(
         Route::get('/wallet_management/data', 'getDataTable')->name('admin.wallets.data');
     }
 );*/
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

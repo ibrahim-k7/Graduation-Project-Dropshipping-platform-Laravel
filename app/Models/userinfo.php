@@ -9,10 +9,10 @@ class userinfo extends Model
 {
     use HasFactory;
 
-    protected $table = "users";
+    protected $table = "store";
 
     protected $fillable = [
-        'id', 'name', 'phone', 'email','created_at'
+        'store_id', 'store_name', 'phone_number', 'email','created_at'
     ];
 }
 

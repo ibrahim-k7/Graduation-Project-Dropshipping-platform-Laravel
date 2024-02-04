@@ -771,13 +771,13 @@ h6 {
 /* Filter dropdown */
 .dashboard .filter {
     position: absolute;
-    right: 0px;
+    left: 0px;
     top: 15px;
 }
 
 .dashboard .filter .icon {
     color: #aab7cf;
-    padding-right: 20px;
+    padding-left: 20px;
     padding-bottom: 5px;
     transition: 0.3s;
     font-size: 16px;
@@ -837,6 +837,21 @@ h6 {
     color: #2eca6a;
     background: #e0f8e9;
 }
+.dashboard .products-card .card-icon {
+    color: #007bff; /* أزرق */
+    background: #cfe2ff; /* خلفية */
+}
+
+.dashboard .suppliers-card .card-icon {
+    color: #ffc107; /* لون أصفر يمثل الموردين */
+    background: #fff8e1; /* خلفية بلون مرتبط */
+}
+
+.dashboard .debt-card .card-icon {
+    color: #e74c3c; /* لون أحمر يمثل المديونية */
+    background: #f2dede; /* لون خلفية مناسب */
+}
+
 
 .dashboard .customers-card .card-icon {
     color: #ff771d;
@@ -928,7 +943,11 @@ h6 {
     font-size: 14px;
 }
 
-.dashboard .recent-sales .table thead {
+/* .dashboard .recent-sales .table thead th {
+    text-align: center !important;
+} */
+
+/* .dashboard .recent-sales .table thead {
     background: #f6f6fe;
 }
 
@@ -942,7 +961,7 @@ h6 {
 
 .dashboard .recent-sales .dataTable-bottom {
     padding: 10px 0 0 0;
-}
+} */
 
 /* Top Selling */
 .dashboard .top-selling {

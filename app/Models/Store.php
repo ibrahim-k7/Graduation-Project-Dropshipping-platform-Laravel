@@ -2,21 +2,52 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Store extends Model
+class Store extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory;
-    //الجدول المربوط به
-    protected $table = "store";
-    //العناصر
+    use HasApiTokens, HasFactory, Notifiable;
+
+    // تعيين اسم الجدول
+    protected $table = 'store';
+
+    // تعيين العمود الرئيسي
+    protected $primaryKey = 'store_id';
+
+    // الحقول التي يمكن تعبئتها
     protected $fillable = [
-        'store_id', 'store_name', 'email', 'password', 'phone_number', 'created_at' , 'updated_at',
+        'store_id',
+        'store_name',
+        'email',
+        'password',
+        'phone_number',
     ];
 
-    public function wallet()
+    // الحقول المخفية
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    // تحويل التواريخ إلى نوع محدد
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    // تحديث البريد الإلكتروني
+    public function updateEmail($email)
     {
-        return $this->hasOne(Wallet::class,'store_id','store_id');
+        $this->update(['email' => $email]);
+    }
+
+    // تحديث كلمة المرور
+    public function updatePassword($password)
+    {
+        $this->update(['password' => bcrypt($password)]);
     }
 }

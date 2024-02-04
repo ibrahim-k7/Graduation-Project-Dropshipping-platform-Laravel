@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
-{ 
+{
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +24,23 @@ class ProductController extends Controller
     {
         $products = Product::select('id', 'name')->orderby("id", "ASC")->get();
         return response()->json($products);
+    }
+
+    //إعادة عدد المنتجات المتوفره في قاعدة البيانات
+    public function getProductsCount()
+    {
+        $productsCount = Product::count();
+        return response()->json(['count' => $productsCount]);
+    }
+
+    public function getLowQuantityProducts()
+    {
+
+        $data = Product::select('id', 'name', 'image', 'quantity', 'barcode')
+    ->whereBetween('quantity', [0, 5])
+    ->get();
+
+        return response()->json($data);
     }
 
 
@@ -81,6 +98,7 @@ class ProductController extends Controller
             'subCat_id' =>  $request->subCat_id,
             'weight' =>  $request->weight,
             'image' =>  $file_name,
+            'quantity' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

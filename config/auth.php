@@ -78,11 +78,17 @@ return [
     */
 
     'providers' => [
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
+        //     'table' => 'store', // اسم الجدول الجديد
+        // ],
+
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Store::class, // اسم النموذج الجديد
+            'table' => 'store', // اسم الجدول الجديد
         ],
-
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,

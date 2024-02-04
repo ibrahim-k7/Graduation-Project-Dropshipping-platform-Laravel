@@ -1,7 +1,25 @@
+@extends('user.layouts.app')
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Scripts -->
+    @yield('js')
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- mmmmmmmm --}}
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -115,6 +133,7 @@
                         data-bs-toggle="dropdown">
 
                         <span class=" dropdown-toggle pe-2">K. Anderson </span>
+                        <span class=" dropdown-toggle pe-2">{{ Auth::user()->store_name }} </span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end  profile">
@@ -223,7 +242,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/profile">
+                <a class="nav-link collapsed" href="/user/profile">
                     <i class="bi bi-person"></i>
                     <span>الحساب التعريفي</span>
                 </a>
@@ -274,16 +293,16 @@
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
-        <div class="copyright">
+        {{-- <div class="copyright">
             &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
+        </div> --}}
+        {{-- <div class="credits"> --}}
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
+            {{-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> --}}
+        {{-- </div> --}}
     </footer><!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
