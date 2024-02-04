@@ -4,30 +4,135 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddWalletOperationRequest;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         return view('Admin.Order.order_management');
     }
 
-    // استدعاء البيانات
-    public function getDataTable(){
+    public function getOrders()
+    {
 
-        $data = Order::select('orders.order_id','store.store_name','delivery.name','orders.platform',
-            'orders.payment_status','orders.customer_name','orders.customer_phone','orders.customer_email',
-            'orders.shipping_address','orders.order_status','orders.total_per_shp','orders.total_weight',
-            'orders.total_amount','orders.created_at','orders.updated_at', 'wallet.wallet_id')
-            ->join('store','store.store_id','=','orders.store_id')
-            ->join('wallet','wallet.store_id','=','orders.store_id')
-            ->join('delivery','delivery.delivery_id','=','orders.delivery_id')
+        $data = Order::select(
+            'orders.order_id',
+            'store.store_name',
+            'delivery.name',
+            'orders.platform',
+            'orders.payment_status',
+            'orders.customer_name',
+            'orders.customer_phone',
+            'orders.customer_email',
+            'orders.shipping_address',
+            'orders.order_status',
+            'orders.total_per_shp',
+            'orders.total_weight',
+            'orders.total_amount',
+            'orders.created_at',
+            'orders.updated_at',
+            'wallet.wallet_id'
+        )
+            ->join('store', 'store.store_id', '=', 'orders.store_id')
+            ->join('wallet', 'wallet.store_id', '=', 'orders.store_id')
+            ->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
+            ->get();
+
+        return response()->json($data);
+    }
+
+    //إرجاع عدد الطلبات 
+    public function getOrdersCount(Request $request)
+    {
+        $timeframe = $request->input('timeframe');
+
+        if ($timeframe == 'thisMonth') {
+            $startDate = Carbon::now()->subMonth()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        } elseif ($timeframe == 'thisYear') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($timeframe == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($timeframe == 'all') {
+            $ordersCount = Order::count();
+            return response()->json(['count' => $ordersCount]);
+        } else {
+            // Handle unknown or invalid timeframe
+            return response()->json(['error' => 'Invalid timeframe']);
+        }
+        $ordersCount = Order::whereBetween('created_at', [$startDate, $endDate])->count();
+        return response()->json(['count' => $ordersCount]);
+    }
+
+    // ارجاع إجمالي المبيعات
+    public function getTotalPaidOrdersAmount(Request $request)
+    {
+        $timeframe = $request->input('timeframe');
+
+        if ($timeframe == 'thisMonth') {
+            $startDate = Carbon::now()->subMonth()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth(); // تم تعديلها هنا لتكون قبل شهر من الوقت الحالي
+        } elseif ($timeframe == 'thisYear') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($timeframe == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($timeframe == 'all') {
+            $startDate = null;
+            $endDate = null;
+        } else {
+            // Handle unknown or invalid timeframe
+            return response()->json(['error' => 'Invalid timeframe']);
+        }
+
+        $totalAmount = Order::where('payment_status', 'تم الدفع')
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                return $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->sum('total_per_shp');
+
+        return response()->json(['total_paid_amount' => $totalAmount]);
+        // $totalAmount = Order::where('payment_status', 'تم الدفع')->sum('total_per_shp');
+        // return response()->json(['total_paid_amount' => $totalAmount]);
+    }
+
+
+    // استدعاء البيانات
+    public function getDataTable()
+    {
+
+        $data = Order::select(
+            'orders.order_id',
+            'store.store_name',
+            'delivery.name',
+            'orders.platform',
+            'orders.payment_status',
+            'orders.customer_name',
+            'orders.customer_phone',
+            'orders.customer_email',
+            'orders.shipping_address',
+            'orders.order_status',
+            'orders.total_per_shp',
+            'orders.total_weight',
+            'orders.total_amount',
+            'orders.created_at',
+            'orders.updated_at',
+            'wallet.wallet_id'
+        )
+            ->join('store', 'store.store_id', '=', 'orders.store_id')
+            ->join('wallet', 'wallet.store_id', '=', 'orders.store_id')
+            ->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
             ->get();
 
         return DataTables::of($data)->addIndexColumn()
-            ->addColumn('action',function ($row) {
+            ->addColumn('action', function ($row) {
                 $isDisabled = $row->order_status === 'تم التوصيل' ? 'disabled' : '';
 
                 return $btn = '
@@ -105,7 +210,7 @@ class OrderController extends Controller
                            <span class="badge bg-danger">تم الغاء الطلب</span>
                         </a>
                     </div>
-                    <a href="' . Route('admin.order.details',['order_id' => $row->order_id]) . '" type="button" class="btn btn-primary">التفاصيل</a>
+                    <a href="' . Route('admin.order.details', ['order_id' => $row->order_id]) . '" type="button" class="btn btn-primary">التفاصيل</a>
 
                 <div/>
                 ';
@@ -126,21 +231,20 @@ class OrderController extends Controller
                 'wallet_id' => $request->wallet_id, // القيمة المطلوبة لـ wallet_id
                 'operation_type' => 2, // القيمة المطلوبة لـ operation_type
                 'amount' => $request->total_amount, // القيمة المطلوبة لـ amount
-                'details' => ' خصم مقابل الطلب بمعرف ' . $request->id , // القيمة المطلوبة لـ details
+                'details' => ' خصم مقابل الطلب بمعرف ' . $request->id, // القيمة المطلوبة لـ details
             ]);
 
             // إنشاء كائن WalletOperationController واستدعاء الدالة store
             $walletOperationController = new WalletOperationController();
             $walletOperationController->store($addWalletOperationRequest);
-
-        }elseif ($payment_status == "تم الغاء الدفع"){
+        } elseif ($payment_status == "تم الغاء الدفع") {
             // إنشاء كائن AddWalletOperationRequest وتعيين القيم
             $addWalletOperationRequest = new AddWalletOperationRequest();
             $addWalletOperationRequest->merge([
                 'wallet_id' => $request->wallet_id, // القيمة المطلوبة لـ wallet_id
                 'operation_type' => 1, // القيمة المطلوبة لـ operation_type
                 'amount' => $request->total_amount, // القيمة المطلوبة لـ amount
-                'details' => ' ايداع مقابل الغاء الطلب بمعرف ' . $request->id , // القيمة المطلوبة لـ details
+                'details' => ' ايداع مقابل الغاء الطلب بمعرف ' . $request->id, // القيمة المطلوبة لـ details
             ]);
 
             // إنشاء كائن WalletOperationController واستدعاء الدالة store
@@ -149,7 +253,7 @@ class OrderController extends Controller
         }
 
         // تحديث السجل في قاعدة البيانات
-        Order::where('order_id', $request->input('id'))->update(['payment_status'=>$payment_status]);
+        Order::where('order_id', $request->input('id'))->update(['payment_status' => $payment_status]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث paymnet_status بنجاح']);
@@ -161,7 +265,7 @@ class OrderController extends Controller
         $order_status = $request->input('order_status');
 
         // تحديث السجل في قاعدة البيانات
-        Order::where('order_id', $request->input('id'))->update(['order_status'=>$order_status]);
+        Order::where('order_id', $request->input('id'))->update(['order_status' => $order_status]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث order_status بنجاح']);
@@ -169,7 +273,7 @@ class OrderController extends Controller
 
     public function destroy(Request $request)
     {
-        if($request->order_status == "تم التوصيل"){
+        if ($request->order_status == "تم التوصيل") {
             abort(400, 'لا يمكن حذف طلب تم توصيله');
         }
 
@@ -177,5 +281,4 @@ class OrderController extends Controller
 
         $order->delete();
     }
-
 }

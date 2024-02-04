@@ -10,7 +10,7 @@
         <div class="pagetitle">
             <h1>لوحة التحكم </h1>
             <nav>
-                <ol class="breadcrumb"> 
+                <ol class="breadcrumb">
                     {{-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                     <li class="breadcrumb-item active">Dashboard</li> --}}
                 </ol>
@@ -50,7 +50,7 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="bi bi-cart"></i>
                                         </div>
-                                        <div class="ps-3">
+                                        <div class="pe-3">
                                             <h6>145</h6>
                                             <span class="text-success small pt-1 fw-bold">12%</span> <span
                                                 class="text-muted small pt-2 ps-1">increase</span>
@@ -88,7 +88,7 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="bi bi-currency-dollar"></i>
                                         </div>
-                                        <div class="ps-3">
+                                        <div class="pe-3">
                                             <h6>$3,264</h6>
                                             <span class="text-success small pt-1 fw-bold">8%</span> <span
                                                 class="text-muted small pt-2 ps-1">increase</span>
@@ -127,7 +127,7 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="bi bi-people"></i>
                                         </div>
-                                        <div class="ps-3">
+                                        <div class="pe-3">
                                             <h6>1244</h6>
                                             <span class="text-danger small pt-1 fw-bold">12%</span> <span
                                                 class="text-muted small pt-2 ps-1">decrease</span>
@@ -220,6 +220,38 @@
                                             }).render();
                                         });
                                     </script>
+                                    <!-- End Line Chart -->
+
+                                </div>
+
+                            </div>
+                        </div><!-- End Reports -->
+
+                        <!-- Reports -->
+                        <div class="col-12">
+                            <div class="card">
+
+                                {{-- <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="#">Today</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                </div> --}}
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Reports</h5>
+
+                                    <!-- Line Chart -->
+                                    <div id="ccqq"></div>
+
+
                                     <!-- End Line Chart -->
 
                                 </div>
@@ -698,4 +730,25 @@
         </section>
 
     </main><!-- End #main -->
+@endsection
+
+@section('js')
+    <script>
+       var options = {
+  chart: {
+    type: 'line'
+  },
+  series: [{
+    name: 'sales',
+    data: [30,40,35,50,49,60,70,91,125]
+  }],
+  xaxis: {
+    categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
+  }
+}
+
+var chart = new ApexCharts(document.querySelector("#ccqq"), options);
+
+chart.render();
+    </script>
 @endsection
