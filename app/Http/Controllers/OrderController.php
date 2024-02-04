@@ -243,10 +243,14 @@ class OrderController extends Controller
                 'amount' => $request->total_amount, // القيمة المطلوبة لـ amount
                 'details' => ' خصم مقابل الطلب بمعرف ' . $request->id, // القيمة المطلوبة لـ details
             ]);
-
             // إنشاء كائن WalletOperationController واستدعاء الدالة store
             $walletOperationController = new WalletOperationController();
             $walletOperationController->store($addWalletOperationRequest);
+
+            //انشاء كائن من SalesController واستدعاء دالة store
+            $salesController = new SalesController();
+            $salesController->store($request);
+
         } elseif ($payment_status == "تم الغاء الدفع") {
             // إنشاء كائن AddWalletOperationRequest وتعيين القيم
             $addWalletOperationRequest = new AddWalletOperationRequest();
@@ -263,7 +267,7 @@ class OrderController extends Controller
         }
 
         // تحديث السجل في قاعدة البيانات
-        Order::where('order_id', $request->input('id'))->update(['payment_status' => $payment_status]);
+        Order::where('order_id', $request->input('order_id'))->update(['payment_status' => $payment_status]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث paymnet_status بنجاح']);
@@ -275,7 +279,7 @@ class OrderController extends Controller
         $order_status = $request->input('order_status');
 
         // تحديث السجل في قاعدة البيانات
-        Order::where('order_id', $request->input('id'))->update(['order_status' => $order_status]);
+        Order::where('order_id', $request->input('order_id'))->update(['order_status' => $order_status]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث order_status بنجاح']);

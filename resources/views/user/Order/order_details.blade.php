@@ -84,7 +84,7 @@
                                         <th>الوزن الاجمالي</th>
                                         <th>السعر</th>
                                         <th>المبلغ الفرعي</th>
-                                        <th>Action</th>
+                                        <th>action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
