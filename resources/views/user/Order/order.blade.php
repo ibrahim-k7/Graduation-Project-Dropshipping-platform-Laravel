@@ -67,7 +67,6 @@
 
 @section('js')
     <script type="text/javascript">
-        $(document).ready(function () {
             //دالة تحديث حالة الدفع
             function updatePaymentStatus(order_id, payment_status, total_amount = null, wallet_id = null) {
                 $.ajax({
@@ -354,6 +353,5 @@
                     }
                 });
             });
-        });
     </script>
 @endsection
