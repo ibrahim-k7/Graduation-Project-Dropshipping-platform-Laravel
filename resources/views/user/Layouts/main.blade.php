@@ -32,9 +32,13 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
 
     <!-- Vendor CSS Files -->
     <link href={{ asset('Admin/vendor/bootstrap/css/bootstrap.min.css') }} rel="stylesheet">
@@ -182,13 +186,26 @@
                 </a>
             </li><!-- End Dashboard Nav -->
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ Route('user.products.catalogue') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>كتالوج المنتجات</span>
+                </a>
+            </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ Route('seller.products') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>قائمة منتجاتي</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ Route('user.wallets.operation') }}">
                     <i class="bi bi-grid"></i>
                     <span>المحفظة</span>
                 </a>
             </li><!-- End Register Page Nav -->
+
 
 
 

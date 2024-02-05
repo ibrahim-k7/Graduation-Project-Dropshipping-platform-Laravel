@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferInformationController;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,27 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/userinterface', function () {
     return view('User.Dashboard.dashboard');
 });
+
+//product catalogue
+Route::controller(ProductController::class)->group(
+    function () {
+        Route::get('/catalogue','getAllProducts')->name('user.products.catalogue');
+    }
+);
+
+//product details
+Route::controller(ProductController::class)->group(
+    function () {
+        Route::get('/details','getProductDetails')->name('user.product.details');
+    }
+);
+
+//Seller products
+Route::controller(ProductController::class)->group(
+    function () {
+        Route::get('/user/products','getSellerProducts')->name('seller.products');
+    }
+);
 
 Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
 Route::get('user/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
