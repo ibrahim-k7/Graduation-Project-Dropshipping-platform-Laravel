@@ -33,7 +33,7 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Transfer_Managment" class="table table-striped">
+                                <table id="User_Transfer_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -42,7 +42,6 @@
                                             <th>رقم الحوالة</th>
                                             <th>المبلغ</th>
                                             <th>تاريخ التحويل</th>
-                                            <th>معرف المحفظة</th>
                                             <th>الحالة</th>
                                             <th>صورة</th>
                                             <th>تاريخ الاإنشاء</th>
@@ -69,7 +68,9 @@
 
         $(function() {
 
-            var transfer_data = $('#Transfer_Managment').DataTable({
+            if (!$.fn.DataTable.isDataTable('#User_Transfer_Managment')) {
+            
+            $('#User_Transfer_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 "autoWidth": false,
@@ -79,7 +80,7 @@
                 order: [
                     [0, "desc"]
                 ],
-                ajax: "{{ Route('admin.transfers.data') }}",
+                ajax: "{{ Route('user.transfers.getDataTableUser') }}",
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
                     targets: '_all', //كل الحقول
@@ -155,10 +156,6 @@
                         name: 'transfer_date'
                     },
                     {
-                        data: 'wallet_id',
-                        name: 'wallet_id'
-                    },
-                    {
                         data: 'transfer_status',
                         name: 'transfer_status',
                         render: function(data, type, full, meta) {
@@ -197,6 +194,7 @@
                 ]
 
             });
+        }
 
 
         });
@@ -234,7 +232,7 @@
                             });
 
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                            $('#Transfer_Managment').DataTable().ajax.reload();
+                            $('#User_Transfer_Managment').DataTable().ajax.reload();
                         },
                         error: function(xhr, status, error) {
                             var errorMessage = xhr

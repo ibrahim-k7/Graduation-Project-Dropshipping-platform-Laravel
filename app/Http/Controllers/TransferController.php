@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\WalletOperationController;
 use App\Http\Requests\AddWalletOperationRequest;
-
+use App\Models\Store;
+use App\Models\Wallet;
+use Illuminate\Support\Facades\Auth;
 
 class TransferController extends Controller
 {
@@ -22,6 +24,17 @@ class TransferController extends Controller
         $wallet_id = $request->query('id');
         session(['wallet_id' => $wallet_id]);
         return view('Admin.Transfer.transfer_management');
+    }
+
+    public function getDataTableUser()
+    {
+        // استخراج store_id من المستخدم المسجل الحالي
+        $store_id = Auth::user()->store_id;
+        // استخراج معرف المحفظة 
+        $wallet_id = Wallet::where('store_id', $store_id)->value('wallet_id');
+        $model = Transfer::where('wallet_id', $wallet_id)->select('*')->get();
+        return DataTables::of($model)
+            ->make(true);
     }
 
 
@@ -105,11 +118,16 @@ class TransferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
+       // استخراج store_id من المستخدم المسجل الحالي
+       $store_id = Auth::user()->store_id;
+       // استخراج معرف المحفظة 
+       $wallet_id = Wallet::where('store_id', $store_id)->value('wallet_id');
+
         $file_name = $this->upload("Transfers_img", $request->transfer_image);
         // إنشاء سجل في جدول Transfer
         Transfer::create([
-            'wallet_id' => 3,
+            'wallet_id' => $wallet_id,
             'sender_name' =>  $request->sender_name,
             'sender_phone' =>  $request->sender_phone,
             'amount_transferred' =>  $request->amount_transferred,

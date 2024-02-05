@@ -82,15 +82,16 @@ Route::controller(ProductController::class)->group(
 );
 
 Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
-//Route::get('/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
+Route::get('user/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
 
 Route::get('/wallet_getBalance', [WalletController::class, 'getBalance'])->name('user.wallet.getBalance');
 
 Route::controller(TransferController::class)->group(
     function () {
         Route::get('/transfer', 'show')->name('user.transfers');
-        Route::get('/transfer/create', 'create')->name('user.transfers.create');
-        Route::post('/transfer/store', 'store')->name('user.transfers.store');
+        Route::get('/transfer/getDataTableUser', 'getDataTableUser')->name('user.transfers.getDataTableUser');
+        Route::get('/transfer/createeee', 'create')->name('user.transfers.create');
+        Route::post('/transfer/storeee', 'store')->name('user.transfers.store');
     }
 );
 

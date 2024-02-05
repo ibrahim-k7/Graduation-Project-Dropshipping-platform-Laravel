@@ -51,9 +51,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-//            'name' => ['required', 'string', 'max:255'],
-//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-//            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            //            'name' => ['required', 'string', 'max:255'],
+            //            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            //            'password' => ['required', 'string', 'min:8', 'confirmed'],
             // 'store_name' => ['required', 'string', 'max:255'],
             // "email" => ["required", "regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", "unique:admins"],
             // 'password' => ['required', 'min:8','string','confirmed'],
@@ -71,11 +71,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Store::create([
+        // إنشاء المتجر
+        $store = Store::create([
             'store_name' => $data['name'],
             'phone_number' => $data['phone'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        // إنشاء محفظة (wallet) مرتبطة بالمتجر
+        $store->wallet()->create([
+            'balance' => 0, //  تعيين الرصيد الابتدائي 
+        ]);
+
+        return $store;
     }
 }
