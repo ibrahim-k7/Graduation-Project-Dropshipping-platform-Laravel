@@ -82,7 +82,7 @@ Route::controller(TransferInformationController::class)->group(
 Route::controller(OrderController::class)->group(
     function () {
         Route::get('/orders','show')->name('user.order');
-        Route::get('/orders/a','getDataTable')->name('user.order.data');
+//        Route::get('/orders/a','getDataTable')->name('user.order.data');
     }
 );
 

@@ -128,7 +128,7 @@ class OrderController extends Controller
             'orders.total_amount',
             'orders.created_at',
             'orders.updated_at',
-            'wallet.wallet_id'
+            'wallet.wallet_id',
         )
             ->join('store', 'store.store_id', '=', 'orders.store_id')
             ->join('wallet', 'wallet.store_id', '=', 'orders.store_id')
@@ -222,8 +222,6 @@ class OrderController extends Controller
                             <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
                         </svg>
                     </a>
-                    <a href="' . Route('admin.order.details', ['order_id' => $row->order_id]) . '" type="button" class="btn btn-primary">التفاصيل</a>
-
                 <div/>
                 ';
             })
@@ -245,10 +243,14 @@ class OrderController extends Controller
                 'amount' => $request->total_amount, // القيمة المطلوبة لـ amount
                 'details' => ' خصم مقابل الطلب بمعرف ' . $request->id, // القيمة المطلوبة لـ details
             ]);
-
             // إنشاء كائن WalletOperationController واستدعاء الدالة store
             $walletOperationController = new WalletOperationController();
             $walletOperationController->store($addWalletOperationRequest);
+
+            //انشاء كائن من SalesController واستدعاء دالة store
+            $salesController = new SalesController();
+            $salesController->store($request);
+
         } elseif ($payment_status == "تم الغاء الدفع") {
             // إنشاء كائن AddWalletOperationRequest وتعيين القيم
             $addWalletOperationRequest = new AddWalletOperationRequest();
@@ -265,7 +267,7 @@ class OrderController extends Controller
         }
 
         // تحديث السجل في قاعدة البيانات
-        Order::where('order_id', $request->input('id'))->update(['payment_status' => $payment_status]);
+        Order::where('order_id', $request->input('order_id'))->update(['payment_status' => $payment_status]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث paymnet_status بنجاح']);
@@ -277,7 +279,7 @@ class OrderController extends Controller
         $order_status = $request->input('order_status');
 
         // تحديث السجل في قاعدة البيانات
-        Order::where('order_id', $request->input('id'))->update(['order_status' => $order_status]);
+        Order::where('order_id', $request->input('order_id'))->update(['order_status' => $order_status]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث order_status بنجاح']);

@@ -131,8 +131,6 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-
-                        <span class=" dropdown-toggle pe-2">K. Anderson </span>
                         <span class=" dropdown-toggle pe-2">{{ Auth::user()->store_name }} </span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -247,21 +245,6 @@
                     <span>الحساب التعريفي</span>
                 </a>
             </li><!-- End Profile Page Nav -->
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/dshboard/register">
-                    <i class="bi bi-card-list"></i>
-                    <span>انشاء حساب</span>
-                </a>
-            </li><!-- End Register Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/dshboard/login">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>تسجيل الدخول</span>
-                </a>
-            </li><!-- End Login Page Nav -->
             <li class="nav-item ">
                 {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}

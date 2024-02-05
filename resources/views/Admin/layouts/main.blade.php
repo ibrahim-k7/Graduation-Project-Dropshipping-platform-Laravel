@@ -486,12 +486,6 @@
                 </a>
             </li><!-- End Register Page Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/dshboard/login">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>تسجيل الدخول</span>
-                </a>
-            </li><!-- End Login Page Nav -->
             <li class="nav-item ">
                 {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}

@@ -11,5 +11,5 @@ class Sales extends Model
 
     protected $table = 'sales';
 
-    protected $fillable = ['sales_id','date','order_id','created_at','updated_at'];
+    protected $fillable = ['date','order_id','created_at','updated_at'];
 }

@@ -86,7 +86,7 @@ return [
 
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Store::class, // اسم النموذج الجديد
+            'model' => \App\Models\Store::class,// اسم النموذج الجديد
             'table' => 'store', // اسم الجدول الجديد
         ],
         'admins' => [
