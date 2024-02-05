@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
 
     <!-- MDB -->
-    <link rel="stylesheet" href="css/mdb.min.css" />
+    {{-- <link rel="stylesheet" href="css/mdb.min.css" /> --}}
 
     <!-- Vendor CSS Files -->
     <link href={{ asset('Admin/vendor/bootstrap/css/bootstrap.min.css') }} rel="stylesheet">
