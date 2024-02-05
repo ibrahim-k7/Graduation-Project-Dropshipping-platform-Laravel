@@ -23,11 +23,15 @@ class Store extends  Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    protected $primaryKey = 'store_id';
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
     // تحديث البريد الإلكتروني
+
+
     public function updateEmail($email)
     {
         $this->update(['email' => $email]);
