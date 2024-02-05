@@ -70,7 +70,7 @@ Route::controller(ProductController::class)->group(
 //product details
 Route::controller(ProductController::class)->group(
     function () {
-        Route::get('/details','getProductDetails')->name('user.product.details');
+        Route::get('/details/{id}','getProductDetails')->name('user.product.details');
     }
 );
 
