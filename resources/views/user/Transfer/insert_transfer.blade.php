@@ -92,7 +92,11 @@
 
 @section('js')
     <script>
-        //عرض معلومات التحويل
+        
+
+        // عند تحميل الصفحة
+        $(document).ready(function() {
+            //عرض معلومات التحويل
         $.ajax({
             type: 'get',
             url: "{{ route('user.transfer.info.getTransferInfo') }}",
@@ -107,12 +111,10 @@
                 console.error('Error loading :', reject);
             }
         });
-
-        // عند تحميل الصفحة
-        $(document).ready(function() {
             //عند الضغط على زر إرسال
             $(document).on('click', '#submit', function(e) {
                 e.preventDefault();
+                
 
                 //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
                 $('#sender_name_error').text('');

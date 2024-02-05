@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class WalletController extends Controller
 {
@@ -28,9 +29,17 @@ class WalletController extends Controller
 
     public function getBalance()
     {
-        $wallet = Wallet::select('balance')->first();;
+
+        // استخراج store_id من المستخدم المسجل الحالي
+        $store_id = Auth::user()->store_id;
+
+        // الحصول على الرصيد بناءً على store_id
+        $wallet = Wallet::where('store_id', $store_id)->select('balance')->first();
 
         return response()->json($wallet);
+        // $wallet = Wallet::select('balance')->first();;
+
+        // return response()->json($wallet);
     }
 
 
