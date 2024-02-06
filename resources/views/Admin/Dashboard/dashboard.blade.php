@@ -24,7 +24,7 @@
                 <div class="col-lg-8">
                     <div class="row">
 
-                        <!-- Sales Card -->
+                        <!-- Orders Card -->
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card sales-card">
 
@@ -61,7 +61,7 @@
                                 </div>
 
                             </div>
-                        </div><!-- End Sales Card -->
+                        </div><!-- End Orders Card -->
 
                         <!-- Revenue Card -->
                         <div class="col-xxl-4 col-md-6">
@@ -174,7 +174,7 @@
                                             <i class="bi bi-people"></i>
                                         </div>
                                         <div class="pe-3">
-                                            <h6>0</h6>
+                                            <h6 id="storeCount">0</h6>
                                             <span class="text-danger small pt-1 fw-bold">12%</span> <span
                                                 class="text-muted small pt-2 ps-1">decrease</span>
 
@@ -234,7 +234,7 @@
                                     <!-- Line Chart -->
                                     <div id="reportsChart"></div>
 
-                                    <script>
+                                    {{-- <script>
                                         document.addEventListener("DOMContentLoaded", () => {
                                             new ApexCharts(document.querySelector("#reportsChart"), {
                                                 series: [{
@@ -289,7 +289,7 @@
                                                 }
                                             }).render();
                                         });
-                                    </script>
+                                    </script> --}}
                                     <!-- End Line Chart -->
 
                                 </div>
@@ -316,8 +316,9 @@
                                             dataType: "json",
                                             success: function(response) {
                                                 // Extract the data from the response and update the ECharts configuration
-                                                const salesValue = response.count; // Adjust these based on your actual response structure
-                                               // const debtValue = response.debtValue;
+                                                const salesValue = response
+                                                    .count; // Adjust these based on your actual response structure
+                                                // const debtValue = response.debtValue;
 
                                                 // Initialize ECharts with updated data
                                                 const chart = echarts.init(document.querySelector("#trafficChart"));
@@ -548,6 +549,21 @@
             });
 
 
+            //عدد المتاجر
+            $.ajax({
+                url: "{{ route('admin.dshboard.getstoreCount') }}",
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // تحديث القيمة
+                    $('#storeCount').text(data.count);
+                },
+                error: function(error) {
+                    console.error(' فشل جلب عدد المتاجر :', error);
+                }
+            });
+
+
 
             function initializeBalance() {
                 // افتراضياً، قم بتشغيل الدالة عندما يتم تحميل الصفحة
@@ -668,6 +684,7 @@
                 },
 
                 "autoWidth": false,
+                "lengthMenu": [5, 10], // الخيارات المتاحة للمستخدم
                 //إمكانية تحريك الاعمدة
                 colReorder: true,
                 responsive: true,
@@ -741,6 +758,7 @@
                 },
 
                 "autoWidth": false,
+                "lengthMenu": [5, 10], // الخيارات المتاحة للمستخدم
                 //إمكانية تحريك الاعمدة
                 colReorder: true,
                 responsive: true,
@@ -784,6 +802,88 @@
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // تحميل ملف اللغة العربية
                 }
             });
+
+            var options = {
+                chart: {
+                    type: 'area',
+                    height: 350,
+                    toolbar: {
+                        show: false
+                    },
+                },
+                series: [{
+                        name: '( مبلغ البيع )',
+                        data: []
+                    },
+                    {
+                        name: '( مبلغ الطلب )',
+                        data: []
+                    }
+                ],
+                markers: {
+                    size: 4
+                },
+                colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.3,
+                        opacityTo: 0.4,
+                        stops: [0, 90, 100]
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                xaxis: {
+                    type: 'datetime',
+                    categories: []
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd/MM/yy HH:mm'
+                    },
+                }
+            };
+
+            // إنشاء كائن ApexCharts باستخدام الخيارات الأساسية
+            var chart = new ApexCharts(document.querySelector('#reportsChart'), options);
+
+            // جلب البيانات عبر AJAX
+            $.ajax({
+                url: "{{ route('admin.dshboard.getChartData') }}",
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // تحديث البيانات في الـ chart
+                    chart.updateSeries([{
+                            data: data.salesData,
+                            name: '( مبلغ البيع )'
+                        },
+                        {
+                            data: data.ordersData,
+                            name: '( مبلغ الطلب )'
+                        }
+                    ]);
+                    chart.updateOptions({
+                        xaxis: {
+                            categories: data.categories
+                        }
+                    });
+                },
+                error: function(error) {
+                    console.error('خطأ في جلب البيانات:', error);
+                }
+            });
+
+            // عرض الـ chart
+            chart.render();
+
         });
     </script>
 @endsection

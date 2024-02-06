@@ -29,7 +29,7 @@ body {
 
 a {
     color: #4154f1;
-    text-decoration: none;
+     text-decoration: none !important; 
 }
 
 a:hover {
@@ -374,8 +374,8 @@ h6 {
 
 .logo img {
     max-height: 26px;
-    margin-left: 6px;
-    margin-right: 6px;
+    margin-left: 12px;
+    margin-right: 12px;
 }
 
 .logo span {
@@ -594,7 +594,7 @@ h6 {
 }
 
 .header-nav .profile .dropdown-item i {
-    margin-right: 10px;
+    margin-left: 10px;
     font-size: 18px;
     line-height: 0;
 }

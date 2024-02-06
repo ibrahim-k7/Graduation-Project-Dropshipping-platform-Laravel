@@ -32,7 +32,9 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
@@ -69,7 +71,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a  href="{{ Route('user.dashboard') }}" class="logo d-flex align-items-center">
                 <img src={{ asset('Admin/IMG/logo.png') }} alt="">
                 <span class="d-none d-lg-block">المخازن الالكترونية</span>
             </a>
@@ -87,7 +89,7 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
 
-                        <span class=" dropdown-toggle ps-2"><span id="balance_main"></span>رس </span>
+                        <span class=" dropdown-toggle ps-2" id="balance_main">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end d profile">
@@ -100,7 +102,7 @@
 
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('user.transfers') }}">
-                                <i class="bi bi-person"></i>
+                                <i class="bi bi-arrow-right-circle"></i>
                                 <span>الحوالات</span>
                             </a>
                         </li>
@@ -111,7 +113,7 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center"
                                 href="{{ route('user.transfers.create') }}">
-                                <i class="bi bi-box-arrow-right"></i>
+                                <i class="bi bi-currency-dollar"></i>
                                 <span>ايداع للمحفظة</span>
                             </a>
                         </li>
@@ -123,7 +125,7 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center"
                                 href="{{ Route('user.wallets.operation') }}">
-                                <i class="bi bi-box-arrow-right"></i>
+                                <i class="bi bi-journal-arrow-up"></i>
                                 <span>عمليات المحفظة</span>
                             </a>
                         </li>
@@ -180,7 +182,7 @@
         <ul class="sidebar-nav " id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/Dshboard">
+                <a class="nav-link collapsed" href="{{ Route('user.dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>لوحة التحكم</span>
                 </a>
@@ -206,46 +208,6 @@
                 </a>
             </li><!-- End Register Page Nav -->
 
-
-
-
-
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Products-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text "></i><span>المنتجات</span><i class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="Products-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ Route('admin.products') }}">
-                            <i class="bi bi-circle"></i><span>إدارة المنتجات</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
-
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Transfers-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>الحوالات</span><i
-                        class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="Transfers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ Route('admin.transfers') }}">
-                            <i class="bi bi-circle"></i><span>ادارة الحوالات</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ Route('admin.transfer.info') }}">
-                            <i class="bi bi-circle"></i><span>معلومات التحويل</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
 
             <a class="nav-link collapsed" href="{{ Route('user.order') }}">
                 <i class="bi bi-layout-text-window-reverse"></i>
@@ -312,7 +274,7 @@
 
     <!-- Vendor JS Files -->
     <script src={{ asset('Admin/vendor/apexcharts/apexcharts.min.js') }}></script>
-    <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script>
+    {{-- <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script> --}}
     <script src={{ asset('Admin/vendor/chart.js/chart.umd.js') }}></script>
     <script src={{ asset('Admin/vendor/echarts/echarts.min.js') }}></script>
     <script src={{ asset('Admin/vendor/quill/quill.min.js') }}></script>
@@ -328,6 +290,9 @@
     <!-- تضمين مكتبة moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+
+    <!-- تضمين الكود JavaScript المشترك -->
+    @stack('js')
     <script type="text/javascript">
         $.ajax({
             type: 'get',
@@ -336,14 +301,15 @@
             success: function(data) {
                 // استخدام قيمة $wallet الفعلية التي تم استرجاعها من الخادم
                 var balanceValue = data.balance;
-                $("#balance_main").text(balanceValue);
+                $("#balance_main").html(balanceValue + '<span style="font-size: small;"> رس </span>');
             },
             error: function(reject) {
                 console.error('Error loading :', reject);
             }
         });
-        @yield('js')
     </script>
+
+
 
 
 
