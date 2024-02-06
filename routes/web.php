@@ -28,10 +28,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('verified')->group(function(){
-    Route::get('user/profile', [ProfileController::class,'index'] )->name('user.profile');
-Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('user.profile.updateEmail');
-Route::post('user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.profile.updatePassword');
+Route::middleware('verified')->group(function () {
+    Route::get('user/profile', [ProfileController::class, 'index'])->name('user.profile');
+    Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('user.profile.updateEmail');
+    Route::post('user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.profile.updatePassword');
 
     // Route::get('user/card', [ProfileController::class,'index'] )->name('user.profile');
     // Route::get('user/setting', [ProfileController::class,'index'] )->name('user.profile');
@@ -39,7 +39,7 @@ Route::post('user/profile/update-password', [ProfileController::class, 'updatePa
 
 });
 
-auth::routes(['verify'=>true]);
+auth::routes(['verify' => true]);
 
 Route::get('user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
 
@@ -50,7 +50,7 @@ Route::get('/', function () {
 
 Route::get('/Dshboard', function () {
     return view('User.Dashboard.dashboard');
-});
+})->name('user.dashboard');
 
 Auth::routes();
 
@@ -63,7 +63,7 @@ Route::get('/userinterface', function () {
 //product catalogue
 Route::controller(ProductController::class)->group(
     function () {
-        Route::get('/catalogue','getAllProducts')->name('user.products.catalogue');
+        Route::get('/catalogue', 'getAllProducts')->name('user.products.catalogue');
     }
 );
 
@@ -77,7 +77,7 @@ Route::controller(ProductController::class)->group(
 //Seller products
 Route::controller(ProductController::class)->group(
     function () {
-        Route::get('/user/products','getSellerProducts')->name('seller.products');
+        Route::get('/user/products', 'getSellerProducts')->name('seller.products');
     }
 );
 
@@ -104,16 +104,18 @@ Route::controller(TransferInformationController::class)->group(
 //Order
 Route::controller(OrderController::class)->group(
     function () {
-        Route::get('/orders','show')->name('user.order');
-//        Route::get('/orders/a','getDataTable')->name('user.order.data');
+        Route::get('/orders', 'show')->name('user.order');
+        //        Route::get('/orders/a','getDataTable')->name('user.order.data');
+        Route::get('/orders/getOrdersCount', 'getOrdersCount')->name('user.order.getOrdersCount');
+        Route::get('/orders/getOrders', 'getOrders')->name('user.order.getOrders');
+        Route::get('/get-chart-data', 'getChartData')->name('getChartData');
     }
 );
 
 //Order Details
 Route::controller(OrderDetailsController::class)->group(
     function () {
-        Route::get('/order_details','show')->name('user.order.details');
-
+        Route::get('/order_details', 'show')->name('user.order.details');
     }
 );
 

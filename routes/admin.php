@@ -24,6 +24,9 @@ use App\Http\Controllers\admin\AdminProfileController;
 
 Route::middleware('auth:admin')->group(function(){
     Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
+    Route::get('admin/dshboard/getstoreCount',[AdminDshboardController::class,'getstoreCount'])->name('admin.dshboard.getstoreCount');
+    Route::get('admin/dshboard/getChartData',[AdminDshboardController::class,'getChartData'])->name('admin.dshboard.getChartData');
+
 });
 
 Route::prefix('/admin')->group(function () {
