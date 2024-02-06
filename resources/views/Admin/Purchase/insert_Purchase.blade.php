@@ -307,12 +307,12 @@
 
                 var url = "{{ route('admin.purchase.store') }}";
 
-                // If invoiceId exists, it means it's an update operation
-                var invoiceId = $("input[name='invoice_id']").val();
+                // // If invoiceId exists, it means it's an update operation
+                // var invoiceId = $("input[name='invoice_id']").val();
 
-                if (invoiceId) {
-                    url = "{{ route('admin.purchase.update', ['id' => ':id']) }}".replace(':id', invoiceId);
-                }
+                {{--if (invoiceId) {--}}
+                {{--    url = "{{ route('admin.purchase.update', ['id' => ':id']) }}".replace(':id', invoiceId);--}}
+                {{--}--}}
 
                 $.ajax({
                     type: 'post',
@@ -361,9 +361,6 @@
                 purchaseDetailsCounter = 1;
             });
         });
-
-
-    </script>
 
 
     </script>

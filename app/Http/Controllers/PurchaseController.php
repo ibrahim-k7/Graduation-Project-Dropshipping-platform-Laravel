@@ -57,7 +57,7 @@ class PurchaseController extends Controller
             'updated_at' => now(),
         ]);
 
-        $purchase = Purchase::latest()->first();
+        $purchase = Purchase::orderBy('id', 'desc')->first();
         // استخدام array_map لتطبيق except على كل عنصر في المصفوفة
         $productsDataE = array_map(function ($product) {
             return collect($product)->except('purchasing_price')->toArray();
@@ -86,8 +86,7 @@ class PurchaseController extends Controller
         }
     }
 
-    public
-    function edit(Request $request)
+    public function edit(Request $request)
     {
         $purchase = Purchase::with('supplier')->with('purchaseDetails.product')->find($request->query('id'));
 
