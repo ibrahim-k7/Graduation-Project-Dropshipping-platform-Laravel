@@ -71,7 +71,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a  href="{{ Route('user.dashboard') }}" class="logo d-flex align-items-center">
+            <a href="{{ Route('user.dashboard') }}" class="logo d-flex align-items-center">
                 <img src={{ asset('Admin/IMG/logo.png') }} alt="">
                 <span class="d-none d-lg-block">المخازن الالكترونية</span>
             </a>
@@ -142,18 +142,15 @@
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end  profile">
-                        <li class="dropdown-header">
-                            <h6>Kevin Anderson</h6>
-                            <span>Web Designer</span>
-                        </li>
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" href="/user/profile">
                                 <i class="bi bi-person"></i>
-                                <span>My Profile</span>
+                                <span>الحساب التعريفي</span>
                             </a>
                         </li>
                         <li>
@@ -162,9 +159,11 @@
 
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <span>Sign Out</span>
+                                <span>خروج</span>
                             </a>
                         </li>
 
@@ -220,12 +219,12 @@
 
 
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="/user/profile">
                     <i class="bi bi-person"></i>
                     <span>الحساب التعريفي</span>
                 </a>
-            </li><!-- End Profile Page Nav -->
+            </li><!-- End Profile Page Nav --> --}}
             <li class="nav-item ">
                 {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
@@ -233,13 +232,13 @@
 
 
 
-                <a class="nav-link collapsed" href="{{ route('logout') }}"
+                {{-- <a class="nav-link collapsed" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
                     <i class="bi bi-box-arrow-in-right"></i>
 
                     خروج
-                </a>
+                </a> --}}
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf

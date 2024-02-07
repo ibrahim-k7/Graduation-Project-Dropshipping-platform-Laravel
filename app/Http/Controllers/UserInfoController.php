@@ -21,7 +21,7 @@ class UserInfoController extends Controller
 
     public function getDataTable()
     {
-        $model = userinfo::select('id', 'store_name', 'phone_number', 'email','created_at')->orderby("id", "ASC");
+        $model = userinfo::select('store_id', 'store_name', 'phone_number', 'email','created_at')->orderby("store_id", "ASC");
         return DataTables::of($model)
 
             ->make(true);
