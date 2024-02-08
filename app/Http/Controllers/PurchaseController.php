@@ -151,4 +151,64 @@ class PurchaseController extends Controller
         return redirect()->route('purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
 
+
+
+    public function getPurchaseInvoices()
+    {
+        // Get all purchase invoices with associated details and products
+        $invoices = Purchase::with('purchaseDetails.product')
+            ->orderBy("id", "ASC")
+            ->get();
+
+        return response()->json($invoices);
+    }
+
+
+
+    // الدالة لعرض صفحة استعادة المشتريات
+    public function returnDetails()
+    {
+        // قدم قائمة بجميع الفواتير المتاحة للاسترجاع مع تفاصيلها
+        $purchases = Purchase::with('purchaseDetails.product')->get();
+
+        return view('Admin.Purchase.Returndetails', compact('purchases'));
+    }
+
+
+    // الدالة لمعالجة عملية الاسترجاع
+    public function processReturn(Request $request)
+    {
+        $request->validate([
+            'purchase_id' => 'required|exists:purchases,id',
+            'return_date' => 'required|date',
+            'quantity_returned' => 'required|integer|min:1',
+            'amount_returned' => 'required|numeric|min:0',
+        ]);
+
+        // قد يتعين عليك تحديد مودل Purchase بناءً على هيكل قاعدة البيانات الخاص بك
+        $purchase = Purchase::find($request->purchase_id);
+
+        if (!$purchase) {
+            return redirect()->back()->with('error', 'الفاتورة غير موجودة.');
+        }
+
+        // إنشاء عملية الاسترجاع
+        $returnDetails = ReturnDetails::create([
+            'purchase_details_id' => $request->purchase_id,
+            'return_date' => $request->return_date,
+            'quantity_returned' => $request->quantity_returned,
+            'amount_returned' => $request->amount_returned,
+        ]);
+
+        // تحديث الأرصدة أو أي عمليات إضافية حسب الحاجة
+        $product = Product::find($purchase->product_id);
+
+        if ($product) {
+            $newStockQuantity = $product->quantity - $request->quantity_returned;
+            $product->quantity = max(0, $newStockQuantity);
+            $product->save();
+        }
+
+        return redirect()->route('admin.purchase.returnDetails')->with('success', 'تمت عملية الاسترجاع بنجاح.');
+    }
 }
