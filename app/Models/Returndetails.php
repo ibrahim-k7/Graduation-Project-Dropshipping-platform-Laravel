@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PurchaseReturn extends Model
+class Returndetails extends Model
 {
     protected $table = "return details";
 
@@ -12,8 +12,9 @@ class PurchaseReturn extends Model
         'return_id', 'purchase_details_id', 'return_date', 'quantity_returned', 'amount_returned', 'created_at', 'updated_at',
     ];
 
-    public function purchaseDetail()
+    public function purchaseDetails()
     {
-        return $this->belongsTo(PurchaseDetail::class, 'purchase_details_id');
+        return $this->belongsTo(PurchaseDetails::class, 'purchase_details_id', 'id');
     }
+
 }

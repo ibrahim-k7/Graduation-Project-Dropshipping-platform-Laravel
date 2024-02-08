@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SalesController;
@@ -199,6 +200,7 @@ Route::post('/transfers/destroy', [TransferController::class, 'destroy'])->name(
 Route::prefix('admin')->group(function () {
     Route::get('admin/product/getProducts', [ProductController::class, 'getProducts'])->name('admin.product.getProducts');
     Route::get('admin/supplier/getSuppliers', [SupplierController::class, 'getSuppliers'])->name('admin.supplier.getSuppliers');
+
     // Purchase Routes
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.purchase.index');
     Route::get('/purchase/data', [PurchaseController::class, 'getDataTable'])->name('admin.purchase.data');
@@ -206,16 +208,17 @@ Route::prefix('admin')->group(function () {
     Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('admin.purchase.store');
     Route::get('/Purchase_edit', [PurchaseController::class, 'edit'])->name('admin.Purchase.edit');
     Route::post('/purchase/update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
+    // روت لعرض صفحة استرجاع المشتريات
+    Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])
+        ->name('admin.purchase.returnDetails');
 
-    // Purchase Details Routes
-   // Route::get('/purchase-details/data', [PurchaseDetailsController::class, 'getDataTable'])->name('admin.purchasedetails.data');
+// روت لمعالجة عملية الاسترجاع
+    Route::post('/admin/purchase/processReturn', [PurchaseController::class, 'processReturn'])
+        ->name('admin.purchase.processReturn');
 
-    // Return Purchase Routes
-    Route::get('/purchase/return', [PurchaseController::class, 'return'])->name('admin.purchase.return');
-    Route::post('/purchase/process-return', [PurchaseController::class, 'processReturn'])->name('admin.purchase.processReturn');
+    Route::get('admin/purchase/getPurchaseInvoices', [PurchaseController::class, 'getPurchaseInvoices'])->name('admin.purchase.getPurchaseInvoices');
 
-    // Missing Purchase Data Route
-    // Route::get('/purchase/data', [PurchaseController::class, 'getData'])->name('admin.purchase.data');
+
 });
 
 

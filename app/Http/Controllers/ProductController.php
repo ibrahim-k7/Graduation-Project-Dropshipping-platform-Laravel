@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
-{ 
+{
     /**
      * Display a listing of the resource.
      *
@@ -110,62 +110,62 @@ class ProductController extends Controller
         return view('Admin.Products.insert_product', compact('product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(AddProductRequest $request)
-    {
-        //
-        $dataToUpdate = $request->except('id');
-        $dataToUpdate = $request->except('oldImgName');
-        if ($request->hasFile('image')) {
-            $file_name = $this->upload("Products_img", $request->file('image'));
-            $deleteImg = $this->deleteImage("Products_img", $request->oldImgName);
-            $dataToUpdate['image'] = $file_name;
-        }
-        Product::where(['id' => $request->id])->update($dataToUpdate);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request)
-    {
-        //
-        $product = Product::where('id', $request->id);
-        $quantity = $product->value('quantity');
-
-        if ($quantity !== null) {
-            // إذا كانت قيمة $quantity تساوي null
-            abort(400, 'فشلت العملية بسبب وجود كمية للمنتج: ');
-        } else {
-            $product->delete();
-        }
-    }
-
-    protected function upload($folderStoringPath, $image)
-    {
-        $extension = strtolower($image->extension());
-        $filename = time() . rand(1, 10000) . "." . $extension;
-        $image->move($folderStoringPath, $filename);
-        return $filename;
-    }
-
-    protected function deleteImage($folderStoringPath, $filename)
-    {
-        $filePath = $folderStoringPath . '/' . $filename;
-
-        // التحقق من وجود الملف قبل محاولة حذفه
-        if (file_exists($filePath)) {
-            unlink($filePath);
-            // تم حذف الملف بنجاح
-        }
-    }
+//    /**
+//     * Update the specified resource in storage.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @param  int  $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function update(AddProductRequest $request)
+//    {
+//        //
+//        $dataToUpdate = $request->except('id');
+//        $dataToUpdate = $request->except('oldImgName');
+//        if ($request->hasFile('image')) {
+//            $file_name = $this->upload("Products_img", $request->file('image'));
+//            $deleteImg = $this->deleteImage("Products_img", $request->oldImgName);
+//            $dataToUpdate['image'] = $file_name;
+//        }
+//        Product::where(['id' => $request->id])->update($dataToUpdate);
+//    }
+//
+//    /**
+//     * Remove the specified resource from storage.
+//     *
+//     * @param  int  $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function destroy(Request $request)
+//    {
+//        //
+//        $product = Product::where('id', $request->id);
+//        $quantity = $product->value('quantity');
+//
+//        if ($quantity !== null) {
+//            // إذا كانت قيمة $quantity تساوي null
+//            abort(400, 'فشلت العملية بسبب وجود كمية للمنتج: ');
+//        } else {
+//            $product->delete();
+//        }
+//    }
+//
+//    protected function upload($folderStoringPath, $image)
+//    {
+//        $extension = strtolower($image->extension());
+//        $filename = time() . rand(1, 10000) . "." . $extension;
+//        $image->move($folderStoringPath, $filename);
+//        return $filename;
+//    }
+//
+//    protected function deleteImage($folderStoringPath, $filename)
+//    {
+//        $filePath = $folderStoringPath . '/' . $filename;
+//
+//        // التحقق من وجود الملف قبل محاولة حذفه
+//        if (file_exists($filePath)) {
+//            unlink($filePath);
+//            // تم حذف الملف بنجاح
+//        }
+//    }
 }

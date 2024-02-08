@@ -1,5 +1,5 @@
 <?php
-//app/Models/PurchaseDetails.php
+//app/Models/PurchaseDetailsController.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -22,4 +22,9 @@ class PurchaseDetails extends Model
     {
         return $this->belongsTo(Purchase::class, 'purch_id', 'id');
     }
+    public function returnDetails()
+    {
+        return $this->hasMany(Returndetails::class, 'purchase_details_id', 'id');
+    }
+
 }
