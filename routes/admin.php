@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\UserInfoController;
+use App\Http\Controllers\AdminInfoController;
 use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SubCategorieController;
@@ -52,7 +53,13 @@ Route::prefix('/admin')->group(function () {
             Route::get('/user-information/data','getDataTable')->name('admin.users.data');
 
 
-
+        }
+    );
+      // admin information
+      Route::controller(AdminInfoController::class)->group(
+        function () {
+            Route::get('/admin-information','index')->name('admin.admin');
+            Route::get('/admin-information/data','getDataTable')->name('admin.admins.data');
 
 
         }
@@ -129,7 +136,7 @@ Route::prefix('/admin')->group(function () {
             Route::get('/suppliers_management/getSuppliersCount', 'getSuppliersCount')->name('admin.suppliers.getSuppliersCount');// عدد الموردين
             Route::get('/suppliers_management/getSuppliersTotalBalance', 'getSuppliersTotalBalance')->name('admin.suppliers.getSuppliersTotalBalance');// حساب المديونية
 
-            
+
         }
     );
 

@@ -53,9 +53,9 @@ class RegisterController extends Controller
     return Validator::make($data,
      [
         // 'store_name' => ['required', 'string', 'max:255'],
-        // 'email' => ['required', 'string', 'email', 'max:255', 'unique:store,email'],
+        // 'email' => ['required', 'string', 'email', 'max:255', 'unique:store'],
         // 'password' => ['required', 'string', 'min:8', 'confirmed'],
-        // 'phone_number' => ['required', 'string', 'min:9', 'unique:store,phone_number'],
+        // 'phone_number' => ['required', 'string', 'max:9', 'unique:store'],
     ], [
         // 'store_name.required' => 'يجب إدخال اسم المتجر.',
         // 'store_name.string' => 'يجب أن يكون اسم المتجر نصًا.',
@@ -71,7 +71,7 @@ class RegisterController extends Controller
         // 'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
         // 'phone_number.required' => 'يجب إدخال رقم الهاتف.',
         // 'phone_number.string' => 'يجب أن يكون رقم الهاتف نصًا.',
-        // 'phone_number.min' => 'يجب أن يتكون رقم الهاتف على الأقل من 9 أحرف.',
+        // 'phone_number.min' => 'يجب أن يتكون رقم الهاتف  من 9 ارقام.',
         // 'phone_number.unique' => 'رقم الهاتف مستخدم بالفعل.',
     ]);
 }
