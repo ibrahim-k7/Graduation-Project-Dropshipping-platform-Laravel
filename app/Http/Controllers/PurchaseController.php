@@ -101,11 +101,13 @@ class PurchaseController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AddPurchaseRequest $request, $id)
+    public function update(AddPurchaseRequest $request)
     {
         // تحديث المعلومات الرئيسية للشراء
-        $purchase = Purchase::findOrFail($id);
+        $purchase = Purchase::findOrFail($request->id);
         $purchase->update([
+            'sup_id' => $request->sup_id,
+            'total'=>$request->total,
             'amount_paid' => $request->amount_paid,
             'payment_method' => $request->payment_method,
             'additional_costs' => $request->additional_costs,
@@ -113,41 +115,90 @@ class PurchaseController extends Controller
 
         // الحصول على المنتجات المضافة في الطلب
         $products = $request->products;
-        //dd($purchase->products());
-        // تحديث المنتجات في قاعدة البيانات
+        //تحديث المنتجات في قاعدة البيانات
         foreach ($products as $productId) {
-            // استخدام المعرف للتحقق من وجود المنتج في الشراء
-            $purchaseDetail = PurchaseDetails::where(['purch_id' => $id, 'pro_id' => $productId])->first();
+            // استخدام المعرف للتحقق من وجود المنتج في تفاصيل المشتريات
+            $purchaseDetail = PurchaseDetails::where(['purch_id' => $request->id, 'pro_id' => $productId])->first();
 
             if ($purchaseDetail) {
                 // تحديث المنتج إذا كان موجودًا
                 $purchaseDetail->update([
                     'quantity' => $productId["quantity"],
-                    'purchasing_price' => $productId["purchasing_price"],
+                    'total_cost' => $productId["total_cost"],
                 ]);
             } else {
                 // إذا لم يكن المنتج موجودًا، قم بإضافته
-                $purchase->products()->attach($productId['pro_id'], [
+                $purchase = Purchase::findOrFail($request->id);
+                $purchase->prouduct()->attach($productId['pro_id'], [
                     'quantity' => $productId["quantity"],
-                    'purchasing_price' => $productId["purchasing_price"],
+                    'total_cost' => $productId["total_cost"],
                 ]);
             }
         }
+        
 
-        // إذا كان هناك منتجات تم حذفها، قم بإزالتها
-        $deletedProducts = collect($request->original_products)->pluck('pro_id')->diff(collect($products)->pluck('pro_id'));
-        $purchase->products()->detach($deletedProducts);
+            // الاستعلام عن المنتج في قاعدة البيانات
+//            $product = Product::where('id', $productId)->first();
+//
+//            // التحقق مما إذا كان المنتج موجود
+//            if ($product) {
+//                // تحديث كمية المنتج
+//                $product->update([
+//                    'quantity' => $product->quantity + $productId["quantity"],
+//                    'purchasing_price' => $productId["purchasing_price"],
+//                ]);
+//
+//            }
 
-        // تحديث كمية المنتجات
-        foreach ($products as $productId) {
-            $product = Product::findOrFail($productId["pro_id"]);
-            $product->update([
-                'quantity' => $product->quantity + $productId["quantity"],
-                'purchasing_price' => $productId["purchasing_price"],
-            ]);
-        }
 
-        return redirect()->route('purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
+//        $purchPro = PurchaseDetails::select('pro_id')->where(['purch_id' => $request->id])->get();
+//
+//        // إذا كان هناك منتجات تم حذفها، قم بإزالتها
+//        $deletedProducts = collect($request->products)->pluck('pro_id');
+//        $diff = $deletedProducts->diff($purchPro);
+//        return $diff->all();
+//        $purchase->products()->detach($deletedProducts);
+
+//        // تحديث كمية المنتجات
+//        foreach ($products as $productId) {
+//            $product = Product::findOrFail($productId["pro_id"]);
+//            $product->update([
+//                'quantity' => $product->quantity + $productId["quantity"],
+//                'purchasing_price' => $productId["purchasing_price"],
+//            ]);
+//        }
+//
+        return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+//      public function return()
+//    {
+//        // معالجة طلب الاسترجاع وتحديث الكميات والمبالغ
+//        $PurchaseReturn = PurchaseReturn::make($request->all(), [
+//            'purchase_details_id' => 'required',
+//            'return_date' => 'required',
+//            'quantity_returned' => 'required',
+//            'amount_returned' => 'required',
+//            // أضف باقي الحقول هنا
+//        ]);
+//
+//        if ($PurchaseReturnPurchaseReturn->fails()) {
+//            return redirect()->back()->withErrors($validator)->withInput();
+//        }
+//
+//        // اكمل معالجة الاسترجاع حسب حاجتك
+//
+//        return redirect()->route('admin.purchases.index')->with('success', 'تم استعادة المشتريات بنجاح.');
+//        // صفحة استعادة المشتريات
+//        return view('Admin.purchase.Returndetails');
+//    }
 
 }

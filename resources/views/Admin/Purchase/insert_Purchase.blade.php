@@ -195,43 +195,14 @@
             }
         });
 
-
-
+        // Function to remove a row from the purchase details table
+        function removeRow(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
 
 
         $(document).ready(function () {
-            var purchaseData = @json($purchase ?? null);
-
-            if (purchaseData != null) {
-                $('#sup_id').val(purchaseData.sup_id);
-                $('#payment_method').val(purchaseData.payment_method);
-                $('#additional_costs').val(purchaseData.additional_costs);
-                $('#total').val(purchaseData.total);
-                $('#amount_paid').val(purchaseData.amount_paid);
-
-                // قم بتعبئة تفاصيل المشتريات في الجدول
-                // قم بتعبئة تفاصيل المشتريات في الجدول
-                var purchaseDetails = @json($purchase->purchaseDetails ?? null);
-
-                if (purchaseDetails != null && purchaseDetails.length > 0) {
-                    for (var i = 0; i < purchaseDetails.length; i++) {
-                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
-
-
-                        // قم بتعبئة الحقول في الصف المضاف بالبيانات
-                        var currentRow = $("#purchaseDetailsBody tr").eq(i + 1); // انطلق من 1 لأن الصفوف تبدأ من 1
-                        currentRow.find('td:eq(0)').text(i + 1); // رقم الصف
-                        currentRow.find('td:eq(1)').text(purchaseDetails[i].product.id.name); // اسم المنتج
-                        currentRow.find('td:eq(2)').text(purchaseDetails[i].product.price);
-                        currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
-                        currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
-                        currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
-                        // قد تحتاج إلى تكرار هذا للحقول الأخرى حسب احتياجاتك
-                        console.log('Purchase Details:', purchaseDetails[i]);
-                    };
-                }
-            }
-
             var purchaseDetailsCounter = 1;
 
             // Function to add a new product row to the table
@@ -280,81 +251,156 @@
                 $("#pro_id, #product_price, #quantity, #total_cost").val('');
             });
 
-            // Event handler for the "Submit" button
-            $(document).on('click', '#submit', function(e) {
-                e.preventDefault();
 
-                var productsData = [];
+            var purchaseData = @json($purchase ?? null);
+            if (purchaseData != null) {
+                $('#sup_id').val(purchaseData.sup_id);
+                $('#payment_method').val(purchaseData.payment_method);
+                $('#additional_costs').val(purchaseData.additional_costs);
+                $('#total').val(purchaseData.total);
+                $('#amount_paid').val(purchaseData.amount_paid);
 
-                $('#purchaseDetailsBody tr').each(function(index, row) {
-                    var productID = $(this).find('td:eq(1)').text();
-                    var purchasing_price = $(this).find('td:eq(2)').text();
-                    var quantity = $(this).find('td:eq(3)').text();
-                    var totalCost = $(this).find('td:eq(4)').text();
+                // قم بتعبئة تفاصيل المشتريات في الجدول
+                // قم بتعبئة تفاصيل المشتريات في الجدول
+                var purchaseDetails = @json($purchase->purchaseDetails ?? null);
 
-                    productsData.push({
-                        pro_id: productID,
-                        quantity: quantity,
-                        purchasing_price: purchasing_price,
-                        total_cost: totalCost
+                if (purchaseDetails != null && purchaseDetails.length > 0) {
+                    for (var i = 0; i < purchaseDetails.length; i++) {
+                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
+
+
+                        // قم بتعبئة الحقول في الصف المضاف بالبيانات
+                        var currentRow = $("#purchaseDetailsBody tr").eq(i + 1); // انطلق من 1 لأن الصفوف تبدأ من 1
+                        currentRow.find('td:eq(0)').text(i + 1); // رقم الصف
+                        currentRow.find('td:eq(1)').text(purchaseDetails[i].product.id.name); // اسم المنتج
+                        currentRow.find('td:eq(2)').text(purchaseDetails[i].product.price);
+                        currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
+                        currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
+                        currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
+                        // قد تحتاج إلى تكرار هذا للحقول الأخرى حسب احتياجاتك
+                        console.log('Purchase Details:', purchaseDetails[i]);
+                    };
+                }
+
+                // Event handler for the "Submit" button
+                $(document).on('click', '#submit', function(e) {
+                    e.preventDefault();
+
+                    var productsData = [];
+
+                    $('#purchaseDetailsBody tr').each(function(index, row) {
+                        var productID = $(this).find('td:eq(1)').text();
+                        var purchasing_price = $(this).find('td:eq(2)').text();
+                        var quantity = $(this).find('td:eq(3)').text();
+                        var totalCost = $(this).find('td:eq(4)').text();
+
+                        productsData.push({
+                            pro_id: productID,
+                            quantity: quantity,
+                            purchasing_price: purchasing_price,
+                            total_cost: totalCost
+                        });
+                    });
+
+                    if ($('#purchaseDetailsBody tr').length === 0) {
+                        alert('Please add at least one product before submitting.');
+                        return;
+                    }
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.purchase.update') }}",
+                        data: {
+                            'id' : purchaseData.id,
+                            'products': productsData,
+                            'sup_id': $("select[name='sup_id']").val(),
+                            'payment_method': $("select[name='payment_method']").val(),
+                            'additional_costs': $("input[name='additional_costs']").val(),
+                            'total': $("input[name='total']").val(),
+                            'amount_paid': $("input[name='amount_paid']").val(),
+                        },
+                        success: function(data) {
+                            $("#form")[0].reset();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "تمت التحديث بنجاح",
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                        },
+                        error: function(reject) {
+                            var response = $.parseJSON(reject.responseText);
+                            $.each(response.errors, function(key, val) {
+                                $("#" + key + "_error").text(val[0])
+                            })
+                        }
                     });
                 });
 
-                if ($('#purchaseDetailsBody tr').length === 0) {
-                    alert('Please add at least one product before submitting.');
-                    return;
-                }
+            }else {
+                // Event handler for the "Submit" button
+                $(document).on('click', '#submit', function(e) {
+                    e.preventDefault();
 
-                var url = "{{ route('admin.purchase.store') }}";
+                    var productsData = [];
 
-                // // If invoiceId exists, it means it's an update operation
-                // var invoiceId = $("input[name='invoice_id']").val();
+                    $('#purchaseDetailsBody tr').each(function(index, row) {
+                        var productID = $(this).find('td:eq(1)').text();
+                        var purchasing_price = $(this).find('td:eq(2)').text();
+                        var quantity = $(this).find('td:eq(3)').text();
+                        var totalCost = $(this).find('td:eq(4)').text();
 
-                {{--if (invoiceId) {--}}
-                {{--    url = "{{ route('admin.purchase.update', ['id' => ':id']) }}".replace(':id', invoiceId);--}}
-                {{--}--}}
-
-                $.ajax({
-                    type: 'post',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                    },
-                    url: url,
-                    data: {
-                        'products': productsData,
-                        'sup_id': $("select[name='sup_id']").val(),
-                        'payment_method': $("select[name='payment_method']").val(),
-                        'amount': $("input[name='amount']").val(),
-                        'additional_costs': $("input[name='additional_costs']").val(),
-                        'total': $("input[name='total']").val(),
-                        'amount_paid': $("input[name='amount_paid']").val(),
-                    },
-                    success: function(data) {
-                        $("#form")[0].reset();
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "تمت العملية بنجاح",
-                            showConfirmButton: false,
-                            timer: 2000
+                        productsData.push({
+                            pro_id: productID,
+                            quantity: quantity,
+                            purchasing_price: purchasing_price,
+                            total_cost: totalCost
                         });
-                    },
-                    error: function(reject) {
-                        var response = $.parseJSON(reject.responseText);
-                        $.each(response.errors, function(key, val) {
-                            $("#" + key + "_error").text(val[0])
-                        })
-                    }
-                });
-            });
+                    });
 
-// Function to remove a row from the purchase details table
-            function removeRow(btn) {
-                var row = btn.parentNode.parentNode;
-                row.parentNode.removeChild(row);
+                    if ($('#purchaseDetailsBody tr').length === 0) {
+                        alert('Please add at least one product before submitting.');
+                        return;
+                    }
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.purchase.store') }}",
+                        data: {
+                            'products': productsData,
+                            'sup_id': $("select[name='sup_id']").val(),
+                            'payment_method': $("select[name='payment_method']").val(),
+                            'additional_costs': $("input[name='additional_costs']").val(),
+                            'total': $("input[name='total']").val(),
+                            'amount_paid': $("input[name='amount_paid']").val(),
+                        },
+                        success: function(data) {
+                            $("#form")[0].reset();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "تمت العملية بنجاح",
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                        },
+                        error: function(reject) {
+                            var response = $.parseJSON(reject.responseText);
+                            $.each(response.errors, function(key, val) {
+                                $("#" + key + "_error").text(val[0])
+                            })
+                        }
+                    });
+                });
             }
 
-// Reset fields when the reset button is clicked
+
+            // Reset fields when the reset button is clicked
             $(document).on('click', '#reset', function() {
                 $("#form")[0].reset();
                 $('#purchaseDetailsBody').empty();
