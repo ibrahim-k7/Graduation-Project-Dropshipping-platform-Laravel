@@ -26,10 +26,11 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function getAllProducts(){
+    public function getAllProducts()
+    {
         $products = Product::select('*')->get();
-         return view ('user.products.product_catalogue',compact('products'));   
-     }
+        return view('user.products.product_catalogue', compact('products'));
+    }
 
      public function getProductDetails(int $id){
 //$details = Product::select('*')->get();
@@ -40,6 +41,17 @@ class ProductController extends Controller
 
          return view ('user.products.product_details',compact('details'));   
      }
+    // public function getProductDetails()
+    // {
+    //     $details = Product::select('*')->get();
+    //     return view('user.products.product_details', compact('details'));
+    // }
+
+    public function getSellerProducts()
+    {
+        $sellerProducts = Product::select('*')->get();
+        return view('user.sellerproducts.products', compact('sellerProducts'));
+    }
 
 
 
@@ -54,8 +66,8 @@ class ProductController extends Controller
     {
 
         $data = Product::select('id', 'name', 'image', 'quantity', 'barcode')
-    ->whereBetween('quantity', [0, 5])
-    ->get();
+            ->whereBetween('quantity', [0, 5])
+            ->get();
 
         return response()->json($data);
     }

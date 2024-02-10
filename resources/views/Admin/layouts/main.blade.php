@@ -428,36 +428,29 @@
             </li><!-- End Tables Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Purchases-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Purchases</span><i
+                <a class="nav-link collapsed" data-bs-target="#Purchases-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>المشتريات</span><i
                         class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Purchases-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{ route('admin.purchase.index') }}">
-                            <i class="bi bi-circle"></i><span>Purchases</span>
+                            <i class="bi bi-circle"></i><span>المشتريات</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.purchase.create') }}">
-                            <i class="bi bi-circle"></i><span>Insert New Purchases</span>
+                            <i class="bi bi-circle"></i><span>إدراج مشتريات جديدة</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href=>
-                            <i class="bi bi-circle"></i><span>Purchase Details</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('admin.purchase.return') }}">
-                            <i class="bi bi-circle"></i><span>Return Purchases</span>
+                        <a href="{{ route('admin.purchase.returnDetails') }}">
+                            <i class="bi bi-circle"></i><span>استرجاع المشتريات</span>
                         </a>
                     </li>
                 </ul>
-            </li><!-- End Tables Nav -->
+            </li><!-- نهاية قائمة المشتريات -->
 
 
 

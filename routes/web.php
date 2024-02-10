@@ -34,13 +34,13 @@ Route::middleware('verified')->group(function () {
     Route::get('user/profile', [ProfileController::class, 'index'])->name('user.profile');
     Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('user.profile.updateEmail');
     Route::post('user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.profile.updatePassword');
-
     // Route::get('user/card', [ProfileController::class,'index'] )->name('user.profile');
     // Route::get('user/setting', [ProfileController::class,'index'] )->name('user.profile');
 
-
+    Route::get('/Dshboard', function () {
+        return view('User.Dashboard.dashboard');
+    })->name('user.dashboard');
 });
-
 auth::routes(['verify' => true]);
 
 Route::get('user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
@@ -50,9 +50,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/Dshboard', function () {
-    return view('User.Dashboard.dashboard');
-})->name('user.dashboard');
 
 Auth::routes();
 

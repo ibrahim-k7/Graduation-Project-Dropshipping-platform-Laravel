@@ -10,6 +10,7 @@ class userinfo extends Model
     use HasFactory;
 
     protected $table = "store";
+    protected $primaryKey = 'store_id';
 
     protected $fillable = [
         'store_id', 'store_name', 'phone_number', 'email','created_at'

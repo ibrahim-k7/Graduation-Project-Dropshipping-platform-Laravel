@@ -14,6 +14,7 @@ class Store extends  Authenticatable implements MustVerifyEmail
    use HasFactory;
     //الجدول المربوط به
     protected $table = "store";
+    protected $primaryKey = 'store_id';
     //العناصر
     protected $fillable = [
         'store_id', 'store_name', 'email', 'password', 'phone_number', 'created_at' , 'updated_at',
@@ -23,7 +24,6 @@ class Store extends  Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    protected $primaryKey = 'store_id';
 
     protected $casts = [
         'email_verified_at' => 'datetime',
