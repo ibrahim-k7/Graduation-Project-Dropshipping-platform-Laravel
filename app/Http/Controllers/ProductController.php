@@ -41,11 +41,7 @@ class ProductController extends Controller
          return view ('user.products.product_details',compact('details'));   
      }
 
-     public function getSellerProducts(){
-        $sellerProducts = Product::select('*')->get();
-       
-         return view ('user.sellerproducts.products',compact('sellerProducts'));   
-     }
+
 
     //إعادة عدد المنتجات المتوفره في قاعدة البيانات
     public function getProductsCount()
