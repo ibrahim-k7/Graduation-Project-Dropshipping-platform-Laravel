@@ -32,17 +32,28 @@ class ProductController extends Controller
         return view('user.products.product_catalogue', compact('products'));
     }
 
-    public function getProductDetails()
-    {
-        $details = Product::select('*')->get();
-        return view('user.products.product_details', compact('details'));
-    }
+     public function getProductDetails(int $id){
+//$details = Product::select('*')->get();
+        $details = Product::find($id);
+        if(!$details){
+            abort(404);
+        }
+
+         return view ('user.products.product_details',compact('details'));   
+     }
+    // public function getProductDetails()
+    // {
+    //     $details = Product::select('*')->get();
+    //     return view('user.products.product_details', compact('details'));
+    // }
 
     public function getSellerProducts()
     {
         $sellerProducts = Product::select('*')->get();
         return view('user.sellerproducts.products', compact('sellerProducts'));
     }
+
+
 
     //إعادة عدد المنتجات المتوفره في قاعدة البيانات
     public function getProductsCount()
