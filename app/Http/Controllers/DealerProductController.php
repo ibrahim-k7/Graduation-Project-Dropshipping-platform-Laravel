@@ -38,17 +38,28 @@ class DealerProductController extends Controller
         $store_id = Auth::user()->store_id;
         // استخراج معرف المحفظة 
         //  $wallet_id = Wallet::where('store_id', $store_id)->value('wallet_id');
-        $model = DealerProduct::where('store_id', $store_id)->select('*')->get();
+        $model = DealerProduct::where('store_id', $store_id)->with('product')->select('*')->get();
         return DataTables::of($model)
-            ->addColumn('productName', function (DealerProduct $dealerProduct) {
-                return $result = $dealerProduct->product->name;
+            ->addColumn('quantity', function (DealerProduct $dealerProduct) {
+                return $result = $dealerProduct->product->quantity;
+            })
+            ->addColumn('image', function (DealerProduct $dealerProduct) {
+                return $result = $dealerProduct->product->image;
+            })
+            ->addColumn('barcode', function (DealerProduct $dealerProduct) {
+                return $result = $dealerProduct->product->barcode;
+            })
+            ->addColumn('categorie', function (DealerProduct $dealerProduct) {
+                return $result = $dealerProduct->product->categorie->name;
+            })
+            ->addColumn('subCategorie', function (DealerProduct $dealerProduct) {
+                return $result = $dealerProduct->product->subCategorie->name;
             })
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a   data-product-id="' . $row->id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                <a href="' . route('admin.products.edit', ['id' => $row->id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
-                <a href="' . route('admin.subCategories', ['id' => $row->id]) . '"   type="button" class="btn btn-primary">المبيعات</a>
-                <a href="' . route('admin.subCategories', ['id' => $row->id]) . '"   type="button" class="btn btn-primary">المشتريات</a>
+                <a   data-product-id="' . $row->dealer_pro_id. '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a href="' . route('admin.products.edit', ['id' => $row->dealer_pro_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
+                <a href="' . route('admin.subCategories', ['id' => $row->dealer_pro_id]) . '"   type="button" class="btn btn-primary">إضافة للسله</a>
                 </div>  ';
             })
 
@@ -62,24 +73,30 @@ class DealerProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Request $request)
     {
-        $details = Product::find($id);
+        $details = Product::find($request->id);
         $store_id = Auth::user()->store_id;
-        $dealerProduct = DealerProduct::where('store_id', $store_id)->select('*')->get();
+        $existingProduct = DealerProduct::where('store_id', $store_id)
+            ->where('pro_id', $request->id)
+            ->first();
+        if ($existingProduct) {
+            abort(400, 'فشلت العملية    ');
+        } else {
+            // إذا لم يكن هناك منتج بنفس الـ pro_id، قم بإضافة المنتج
+            DealerProduct::create([
+                'store_id' => $store_id,
+                'pro_id' => $details->id,
+                'dealer_selling_price' => $details->suggested_selling_price,
+                'dealer_product_name' => $details->name,
+                'dealer_product_desc' => $details->description,
+                'platform' => 'سلة',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+        //  return view('user.products.product_details');
 
-        DealerProduct::create([
-            'store_id' => $store_id,
-            'pro_id' => $details->id,
-            'dealer_selling_price' => $details->suggested_selling_price,
-            'dealer_product_name' => $details->name,
-            'dealer_product_desc' => $details->description,
-            'platform' => 'سلة',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-      //  return view('user.products.product_details');
-        
     }
 
     /**
@@ -91,19 +108,19 @@ class DealerProductController extends Controller
     public function store(Request $request)
     {
         // استخراج store_id من المستخدم المسجل الحالي
-       $store_id = Auth::user()->store_id;
-       // استخراج معرف المحفظة 
-       $_id = DealerProduct::where('store_id', $store_id)->value('store_id');
-              // إنشاء سجل في جدول Product
-              DealerProduct::create([
-                'store_id' => $store_id,
-                'pro_id' => $request->pro_id,
-                'dealer_selling_price' => $request->suggested_selling_price,
-                'dealer_product_desc' => $request->description,
-                'quantity' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        $store_id = Auth::user()->store_id;
+        // استخراج معرف المحفظة 
+        $_id = DealerProduct::where('store_id', $store_id)->value('store_id');
+        // إنشاء سجل في جدول Product
+        DealerProduct::create([
+            'store_id' => $store_id,
+            'pro_id' => $request->pro_id,
+            'dealer_selling_price' => $request->suggested_selling_price,
+            'dealer_product_desc' => $request->description,
+            'quantity' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -146,8 +163,10 @@ class DealerProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $dealerProduct = DealerProduct::where('dealer_pro_id', $request->id);
+        $dealerProduct->delete();
+        
     }
 }

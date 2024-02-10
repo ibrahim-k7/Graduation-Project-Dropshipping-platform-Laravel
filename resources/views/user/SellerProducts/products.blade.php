@@ -34,11 +34,14 @@
                                 <table id="Products_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>الرصيد</th>
-                                            <th>إسم المتجر</th>
-                                            <th>معرف المتجر</th>
-                                            <th>تاريخ الإنشاء</th>
+                                            <th>id</th>
+                                            <th>الصورة</th>
+                                            <th>الإسم</th>
+                                            <th>سعر البيع</th>
+                                            <th>الباركود</th>
+                                            <th>الفئة الرئيسية</th>
+                                            <th>الفئة الفرعية</th>
+                                            <th>الكمية المتوفره</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -69,24 +72,6 @@
                 //إمكانية تحريك الاعمدة
                 colReorder: true,
                 responsive: true,
-                /*responsive: {
-                    details: {
-                        type: 'column'
-                    }
-                },*/
-                /*responsive: {
-                    details: {
-                        display: DataTable.Responsive.display.modal({
-                            header: function(row) {
-                                var data = row.data();
-                                return 'Details for ' + data[0] + ' ' + data[1];
-                            }
-                        }),
-                        renderer: DataTable.Responsive.renderer.tableAll({
-                            tableClass: 'table'
-                        })
-                    }
-                },*/
                 order: [
                     [0, "desc"]
                 ],
@@ -131,39 +116,45 @@
                     { //اظاهر الحقول المراد عرضها
                         extend: 'colvis',
                     },
-                    {
-                        text: 'اضافة',
-                        className: 'custom-add-button',
-                        action: function(e, dt, node, config) {
-                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                            window.location.href = "{{ route('admin.products.create') }}";
-                        }
-                    },
 
                 ],
-                columns: [{
+                columns: [
+                    {
                         data: 'dealer_pro_id',
                         name: 'dealer_pro_id'
                     },
                     {
-                        data: 'dealer_selling_price',
-                        name: 'dealer_selling_price'
+                        data: 'image',
+                        name: 'image',
+                        render: function(data, type, full, meta) {
+                            return '<a href="../../Products_img/' + data + '" data-lightbox="product-image" data-title="Product Image">' +
+                    '<img src="../../Products_img/' + data + '" alt="Product Image" width="80" height="80">' +
+                    '</a>';
+                        }
                     },
                     {
                         data: 'dealer_product_name',
                         name: 'dealer_product_name'
                     },
                     {
-                        data: 'dealer_product_desc',
-                        name: 'dealer_product_desc'
+                        data: 'dealer_selling_price',
+                        name: 'dealer_selling_price'
                     },
                     {
-                        data: 'platform',
-                        name: 'platform',
-                        render: function(data, type, full, meta) {
-                            // تنسيق التاريخ باستخدام moment.js
-                            return moment(data).format('YYYY-MM-DD HH:mm:ss');
-                        }
+                        data: 'barcode',
+                        name: 'barcode'
+                    },
+                    {
+                        data: 'categorie',
+                        name: 'categorie'
+                    },
+                    {
+                        data: 'subCategorie',
+                        name: 'subCategorie'
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity'
                     },
                     {
                         data: 'action',
@@ -173,6 +164,44 @@
 
             });
 
+        });
+        $(document).on('click', '.delete_btn', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "هل انت متأكد ؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، احذفه"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var product_id = $(this).attr('data-product-id');
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('user.dealer.product.destroy') }}",
+                        data: {
+                            'id': product_id
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "تم الحذف ",
+                                text: "لقد تم الحذف ينجاح",
+                                icon: "success"
+                            });
+                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
+                            $('#Products_Managment').DataTable().ajax.reload();
+                        },
+                        error: function(reject) {
+                        }
+                    });
+                }
+            });
         });
     </script>
     @endsection

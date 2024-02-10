@@ -28,19 +28,20 @@ class ProductController extends Controller
 
     public function getAllProducts()
     {
-        $products = Product::select('*')->get();
+        $products = Product::with('categorie')->with('subCategorie')->select('*')->get();
         return view('user.products.product_catalogue', compact('products'));
     }
 
-     public function getProductDetails(int $id){
-//$details = Product::select('*')->get();
+    public function getProductDetails(int $id)
+    {
+        //$details = Product::select('*')->get();
         $details = Product::find($id);
-        if(!$details){
+        if (!$details) {
             abort(404);
         }
 
-         return view ('user.products.product_details',compact('details'));   
-     }
+        return view('user.products.product_details', compact('details'));
+    }
     // public function getProductDetails()
     // {
     //     $details = Product::select('*')->get();
