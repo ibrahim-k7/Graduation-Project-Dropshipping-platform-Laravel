@@ -6,6 +6,7 @@ use App\Http\Requests\AddWalletOperationRequest;
 use App\Models\Wallet;
 use App\Models\WalletOperation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class WalletOperationController extends Controller
@@ -22,6 +23,17 @@ class WalletOperationController extends Controller
         session(['wallet_id' => $wallet_id]);
 
         return view('Admin.Wallet.wallet_operation');
+    }
+
+    public function getDataTableUser()
+    {
+        // استخراج store_id من المستخدم المسجل الحالي
+        $store_id = Auth::user()->store_id;
+        // استخراج معرف المحفظة 
+        $wallet_id = Wallet::where('store_id', $store_id)->value('wallet_id');
+        $model = WalletOperation::where('wallet_id',$wallet_id)->select('*')->get();
+        return DataTables::of($model)
+            ->make(true);
     }
 
 

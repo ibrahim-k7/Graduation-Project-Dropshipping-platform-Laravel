@@ -1,7 +1,24 @@
+@extends('user.layouts.app')
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- mmmmmmmm --}}
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -18,6 +35,12 @@
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+
+    <!-- MDB -->
+    {{-- <link rel="stylesheet" href="css/mdb.min.css" /> --}}
 
     <!-- Vendor CSS Files -->
     <link href={{ asset('Admin/vendor/bootstrap/css/bootstrap.min.css') }} rel="stylesheet">
@@ -48,7 +71,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ Route('user.dashboard') }}" class="logo d-flex align-items-center">
                 <img src={{ asset('Admin/IMG/logo.png') }} alt="">
                 <span class="d-none d-lg-block">المخازن الالكترونية</span>
             </a>
@@ -65,8 +88,8 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        
-                        <span class=" dropdown-toggle pe-2" ><span id="balance_main"></span>رس</span>
+
+                        <span class=" dropdown-toggle ps-2" id="balance_main">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end d profile">
@@ -79,7 +102,7 @@
 
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('user.transfers') }}">
-                                <i class="bi bi-person"></i>
+                                <i class="bi bi-arrow-right-circle"></i>
                                 <span>الحوالات</span>
                             </a>
                         </li>
@@ -88,8 +111,9 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('user.transfers.create') }}">
-                                <i class="bi bi-box-arrow-right"></i>
+                            <a class="dropdown-item d-flex align-items-center"
+                                href="{{ route('user.transfers.create') }}">
+                                <i class="bi bi-currency-dollar"></i>
                                 <span>ايداع للمحفظة</span>
                             </a>
                         </li>
@@ -99,8 +123,9 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ Route('user.wallets.operation') }}">
-                                <i class="bi bi-box-arrow-right"></i>
+                            <a class="dropdown-item d-flex align-items-center"
+                                href="{{ Route('user.wallets.operation') }}">
+                                <i class="bi bi-journal-arrow-up"></i>
                                 <span>عمليات المحفظة</span>
                             </a>
                         </li>
@@ -113,23 +138,19 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        
-                        <span class=" dropdown-toggle pe-2">K. Anderson </span>
+                        <span class=" dropdown-toggle ps-2">{{ Auth::user()->store_name }} </span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end  profile">
-                        <li class="dropdown-header">
-                            <h6>Kevin Anderson</h6>
-                            <span>Web Designer</span>
-                        </li>
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" href="/user/profile">
                                 <i class="bi bi-person"></i>
-                                <span>My Profile</span>
+                                <span>الحساب التعريفي</span>
                             </a>
                         </li>
                         <li>
@@ -138,9 +159,11 @@
 
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <span>Sign Out</span>
+                                <span>خروج</span>
                             </a>
                         </li>
 
@@ -158,13 +181,25 @@
         <ul class="sidebar-nav " id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/Dshboard">
+                <a class="nav-link collapsed" href="{{ Route('user.dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>لوحة التحكم</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ Route('user.products.catalogue') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>كتالوج المنتجات</span>
+                </a>
+            </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ Route('seller.products') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>قائمة منتجاتي</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ Route('user.wallets.operation') }}">
                     <i class="bi bi-grid"></i>
@@ -173,70 +208,23 @@
             </li><!-- End Register Page Nav -->
 
 
-
-
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Products-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text "></i><span>المنتجات</span><i class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="Products-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ Route('admin.products') }}">
-                            <i class="bi bi-circle"></i><span>إدارة المنتجات</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
-
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Transfers-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>الحوالات</span><i
-                        class="bi bi-chevron-down me-auto"></i>
-                </a>
-                <ul id="Transfers-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ Route('admin.transfers') }}">
-                            <i class="bi bi-circle"></i><span>ادارة الحوالات</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ Route('admin.transfer.info') }}">
-                            <i class="bi bi-circle"></i><span>معلومات التحويل</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
+            <a class="nav-link collapsed" href="{{ Route('user.order') }}">
+                <i class="bi bi-layout-text-window-reverse"></i>
+                <span>الطلبات</span>
+            </a>
+            <!-- End Order Nav -->
 
 
 
 
 
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/profile">
+            {{-- <li class="nav-item">
+                <a class="nav-link collapsed" href="/user/profile">
                     <i class="bi bi-person"></i>
                     <span>الحساب التعريفي</span>
                 </a>
-            </li><!-- End Profile Page Nav -->
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/dshboard/register">
-                    <i class="bi bi-card-list"></i>
-                    <span>انشاء حساب</span>
-                </a>
-            </li><!-- End Register Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/dshboard/login">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>تسجيل الدخول</span>
-                </a>
-            </li><!-- End Login Page Nav -->
+            </li><!-- End Profile Page Nav --> --}}
             <li class="nav-item ">
                 {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
@@ -244,13 +232,13 @@
 
 
 
-                <a class="nav-link collapsed" href="{{ route('logout') }}"
+                {{-- <a class="nav-link collapsed" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
                     <i class="bi bi-box-arrow-in-right"></i>
 
                     خروج
-                </a>
+                </a> --}}
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
@@ -268,16 +256,16 @@
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
-        <div class="copyright">
+        {{-- <div class="copyright">
             &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
+        </div> --}}
+        {{-- <div class="credits"> --}}
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+        {{-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> --}}
+        {{-- </div> --}}
     </footer><!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -285,7 +273,7 @@
 
     <!-- Vendor JS Files -->
     <script src={{ asset('Admin/vendor/apexcharts/apexcharts.min.js') }}></script>
-    <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script>
+    {{-- <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script> --}}
     <script src={{ asset('Admin/vendor/chart.js/chart.umd.js') }}></script>
     <script src={{ asset('Admin/vendor/echarts/echarts.min.js') }}></script>
     <script src={{ asset('Admin/vendor/quill/quill.min.js') }}></script>
@@ -301,6 +289,9 @@
     <!-- تضمين مكتبة moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+
+    <!-- تضمين الكود JavaScript المشترك -->
+    @stack('js')
     <script type="text/javascript">
         $.ajax({
             type: 'get',
@@ -309,14 +300,16 @@
             success: function(data) {
                 // استخدام قيمة $wallet الفعلية التي تم استرجاعها من الخادم
                 var balanceValue = data.balance;
-                $("#balance_main").text(balanceValue);
+                $("#balance_main").html(balanceValue + '<span style="font-size: small;"> رس </span>');
             },
             error: function(reject) {
                 console.error('Error loading :', reject);
             }
         });
     </script>
-    @yield('js')
+
+
+
 
 
     <!-- Template Main JS File -->

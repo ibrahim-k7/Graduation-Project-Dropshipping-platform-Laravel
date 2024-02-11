@@ -108,16 +108,16 @@
                     },
                 ],
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'store_id',
+                        name: 'store_id'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'store_name',
+                        name: 'store_name'
                     },
                     {
-                        data: 'phone',
-                        name: 'phone'
+                        data: 'phone_number',
+                        name: 'phone_number'
                     },
                     {
                         data: 'email',

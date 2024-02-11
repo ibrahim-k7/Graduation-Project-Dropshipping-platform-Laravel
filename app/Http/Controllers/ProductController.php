@@ -26,6 +26,52 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
+    public function getAllProducts()
+    {
+        $products = Product::select('*')->get();
+        return view('user.products.product_catalogue', compact('products'));
+    }
+
+     public function getProductDetails(int $id){
+//$details = Product::select('*')->get();
+        $details = Product::find($id);
+        if(!$details){
+            abort(404);
+        }
+
+         return view ('user.products.product_details',compact('details'));   
+     }
+    // public function getProductDetails()
+    // {
+    //     $details = Product::select('*')->get();
+    //     return view('user.products.product_details', compact('details'));
+    // }
+
+    public function getSellerProducts()
+    {
+        $sellerProducts = Product::select('*')->get();
+        return view('user.sellerproducts.products', compact('sellerProducts'));
+    }
+
+
+
+    //إعادة عدد المنتجات المتوفره في قاعدة البيانات
+    public function getProductsCount()
+    {
+        $productsCount = Product::count();
+        return response()->json(['count' => $productsCount]);
+    }
+
+    public function getLowQuantityProducts()
+    {
+
+        $data = Product::select('id', 'name', 'image', 'quantity', 'barcode')
+            ->whereBetween('quantity', [0, 5])
+            ->get();
+
+        return response()->json($data);
+    }
+
 
     public function getDataTable()
     {
@@ -81,6 +127,7 @@ class ProductController extends Controller
             'subCat_id' =>  $request->subCat_id,
             'weight' =>  $request->weight,
             'image' =>  $file_name,
+            'quantity' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -110,62 +157,62 @@ class ProductController extends Controller
         return view('Admin.Products.insert_product', compact('product'));
     }
 
-//    /**
-//     * Update the specified resource in storage.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function update(AddProductRequest $request)
-//    {
-//        //
-//        $dataToUpdate = $request->except('id');
-//        $dataToUpdate = $request->except('oldImgName');
-//        if ($request->hasFile('image')) {
-//            $file_name = $this->upload("Products_img", $request->file('image'));
-//            $deleteImg = $this->deleteImage("Products_img", $request->oldImgName);
-//            $dataToUpdate['image'] = $file_name;
-//        }
-//        Product::where(['id' => $request->id])->update($dataToUpdate);
-//    }
-//
-//    /**
-//     * Remove the specified resource from storage.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function destroy(Request $request)
-//    {
-//        //
-//        $product = Product::where('id', $request->id);
-//        $quantity = $product->value('quantity');
-//
-//        if ($quantity !== null) {
-//            // إذا كانت قيمة $quantity تساوي null
-//            abort(400, 'فشلت العملية بسبب وجود كمية للمنتج: ');
-//        } else {
-//            $product->delete();
-//        }
-//    }
-//
-//    protected function upload($folderStoringPath, $image)
-//    {
-//        $extension = strtolower($image->extension());
-//        $filename = time() . rand(1, 10000) . "." . $extension;
-//        $image->move($folderStoringPath, $filename);
-//        return $filename;
-//    }
-//
-//    protected function deleteImage($folderStoringPath, $filename)
-//    {
-//        $filePath = $folderStoringPath . '/' . $filename;
-//
-//        // التحقق من وجود الملف قبل محاولة حذفه
-//        if (file_exists($filePath)) {
-//            unlink($filePath);
-//            // تم حذف الملف بنجاح
-//        }
-//    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(AddProductRequest $request)
+    {
+        //
+        $dataToUpdate = $request->except('id');
+        $dataToUpdate = $request->except('oldImgName');
+        if ($request->hasFile('image')) {
+            $file_name = $this->upload("Products_img", $request->file('image'));
+            $deleteImg = $this->deleteImage("Products_img", $request->oldImgName);
+            $dataToUpdate['image'] = $file_name;
+        }
+        Product::where(['id' => $request->id])->update($dataToUpdate);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        //
+        $product = Product::where('id', $request->id);
+        $quantity = $product->value('quantity');
+
+        if ($quantity !== null) {
+            // إذا كانت قيمة $quantity تساوي null
+            abort(400, 'فشلت العملية بسبب وجود كمية للمنتج: ');
+        } else {
+            $product->delete();
+        }
+    }
+
+    protected function upload($folderStoringPath, $image)
+    {
+        $extension = strtolower($image->extension());
+        $filename = time() . rand(1, 10000) . "." . $extension;
+        $image->move($folderStoringPath, $filename);
+        return $filename;
+    }
+
+    protected function deleteImage($folderStoringPath, $filename)
+    {
+        $filePath = $folderStoringPath . '/' . $filename;
+
+        // التحقق من وجود الملف قبل محاولة حذفه
+        if (file_exists($filePath)) {
+            unlink($filePath);
+            // تم حذف الملف بنجاح
+        }
+    }
 }

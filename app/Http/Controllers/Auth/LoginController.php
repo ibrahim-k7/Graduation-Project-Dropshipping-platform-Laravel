@@ -105,8 +105,8 @@ class LoginController extends Controller
             'password' => 'required|string',
             // 'g-recaptcha-response'=>'required|captcha',
         ],[
-                "userLogin.required"=>"the phone / email/ name is required",
-                // "g-recaptcha-response.required"=>"يجب التاكيد انك ليس روبوت",
+            "userLogin.required"=>"the phone / email/ name is required",
+            // "g-recaptcha-response.required"=>"يجب التاكيد انك ليس روبوت",
         ]);
     }
     // protected function sendFailedLoginResponse(Request $request)

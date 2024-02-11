@@ -28,11 +28,11 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-text  mb-4 mt-3 text-center ">رصيدك هو   <span id="balance"></span> </h5>
+                            <h5 class="card-text  mb-4 mt-3 text-center ">رصيدك هو <span id="balance"></span> </h5>
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Wallet_Operatioon" class="table table-striped">
+                                <table id="User_Wallet_Operatioon" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -59,9 +59,9 @@
 
     </main><!-- End #main -->
 @endsection
-
-@section('js')
-    <script type="text/javascript">
+@push('js')
+<script type="text/javascript">
+    $(document).ready(function() {
         $.ajax({
             type: 'get',
             url: "{{ route('user.wallet.getBalance') }}",
@@ -71,18 +71,16 @@
                 var balanceValue = data.balance;
 
                 // تحديث عنصر الصفحة بقيمة الرصيد الجديدة
-                $("#balance").text(balanceValue);
+                $("#balance").html(balanceValue + '<span style="font-size: small;"> رس </span>');
             },
             error: function(reject) {
                 console.error('Error loading :', reject);
             }
         });
 
-        $(function() {
 
-            var supplier_data = $('#Wallet_Operatioon').DataTable({
-                processing: true,
-                serverSide: true,
+        
+            $('#User_Wallet_Operatioon').DataTable({
                 "autoWidth": false,
                 //إمكانية تحريك الاعمدة
                 colReorder: true,
@@ -90,7 +88,7 @@
                 order: [
                     [0, "desc"]
                 ],
-                ajax: "{{ Route('admin.wallets.operation.data') }}",
+                ajax: "{{ Route('user.wallets.operation.data') }}",
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
                     targets: '_all', //كل الحقول
@@ -132,8 +130,8 @@
                         text: 'إيداع للمحفظة',
                         className: 'custom-add-button',
                         action: function(e, dt, node, config) {
-                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                    window.location.href = "{{ route('user.transfers') }}";
+                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
+                            window.location.href = "{{ route('user.transfers') }}";
                         }
                     },
                 ],
@@ -173,7 +171,12 @@
 
             });
 
-        });
+        
 
-    </script>
-@endsection
+
+
+    });
+
+</script>
+@endpush
+

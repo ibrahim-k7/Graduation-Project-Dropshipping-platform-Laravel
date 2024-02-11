@@ -6,6 +6,7 @@ use App\Http\Requests\AddSupplierRequest;
 use App\Http\Requests\AddSupplierTransactionRequest;
 use App\Models\Supplier;
 use App\Models\SupplierTransaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -29,6 +30,43 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::select('sup_id', 'name')->orderby("sup_id", "ASC")->get();
         return response()->json($suppliers);
+    }
+
+    // حساب عدد الموردين 
+    public function getSuppliersCount()
+    {
+        $SuppliersCount = Supplier::count();
+        return response()->json(['count' => $SuppliersCount]);
+    }
+
+    // احتساب المديونية
+    public function getSuppliersTotalBalance(Request $request)
+    {
+        $timeframe = $request->input('timeframe');
+
+        if ($timeframe == 'thisMonth') {
+            $startDate = Carbon::now()->subMonth()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        } elseif ($timeframe == 'thisYear') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($timeframe == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($timeframe == 'all') {
+            $startDate = null;
+            $endDate = null;
+        } else {
+            // Handle unknown or invalid timeframe
+            return response()->json(['error' => 'Invalid timeframe']);
+        }
+
+        $totalBalance = Supplier::where('balance', '>', 0)
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                return $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->sum('balance');
+        return response()->json(['total_balance' => $totalBalance]);
     }
 
     public function getDataTable()
@@ -166,12 +204,11 @@ class SupplierController extends Controller
     public function destroy(Request $request)
     {
         $supplier = Supplier::where('sup_id', $request->id);
-        $balance =$supplier->value('balance');
+        $balance = $supplier->value('balance');
 
-        if($balance !== 0.0){
+        if ($balance !== 0.0) {
             abort(400, 'فشلت العملية بسبب وجود رصيد للمورد ');
-        }
-        else{
+        } else {
             $supplier->delete();
         }
     }

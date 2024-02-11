@@ -32,7 +32,7 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Order_Managment" class="table table-striped">
+                                <table id="Order_Managment_User" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -80,7 +80,7 @@
                 },
                 url: "{{ route('admin.order.update.payment.status') }}",
                 data: {
-                    'id': order_id,
+                    'order_id': order_id,
                     'payment_status': payment_status,
                     'total_amount': total_amount,
                     'wallet_id': wallet_id,
@@ -93,7 +93,7 @@
                     });
 
                     //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد التحديث
-                    $('#Order_Managment').DataTable().ajax.reload();
+                    $('#Order_Managment_User').DataTable().ajax.reload();
                 },
                 error: function(reject) {
                     // يمكنك إضافة إجراءات إضافية هنا في حالة حدوث خطأ
@@ -164,7 +164,7 @@
                             });
 
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد التحديث
-                            $('#Order_Managment').DataTable().ajax.reload();
+                            $('#Order_Managment_User').DataTable().ajax.reload();
                         },
                         error: function(reject) {
                             // يمكنك إضافة إجراءات إضافية هنا في حالة حدوث خطأ
@@ -176,7 +176,7 @@
 
         $(function() {
 
-            var order_data = $('#Order_Managment').DataTable({
+            var order_data = $('#Order_Managment_User').DataTable({
                 processing: true,
                 serverSide: true,
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
@@ -359,7 +359,7 @@
                             });
 
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                            $('#Order_Managment').DataTable().ajax.reload();
+                            $('#Order_Managment_User').DataTable().ajax.reload();
                         },
                         error: function(xhr, status, error) {
                             var errorMessage = xhr

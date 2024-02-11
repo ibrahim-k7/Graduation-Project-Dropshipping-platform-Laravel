@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferInformationController;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +10,8 @@ use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
+use App\Http\Controllers\DealerProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,45 +30,70 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('verified')->group(function(){
-    Route::get('user/profile', [ProfileController::class,'index'] )->name('user.profile');
-Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
-Route::post('user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
-
+Route::middleware('verified')->group(function () {
+    Route::get('user/profile', [ProfileController::class, 'index'])->name('user.profile');
+    Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('user.profile.updateEmail');
+    Route::post('user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.profile.updatePassword');
     // Route::get('user/card', [ProfileController::class,'index'] )->name('user.profile');
     // Route::get('user/setting', [ProfileController::class,'index'] )->name('user.profile');
 
-
+    Route::get('/Dshboard', function () {
+        return view('User.Dashboard.dashboard');
+    })->name('user.dashboard');
 });
+auth::routes(['verify' => true]);
 
-auth::routes(['verify'=>true]);
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/Dshboard', function () {
-    return view('User.Dashboard.dashboard');
-});
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/userinterface', function () {
     return view('User.Dashboard.dashboard');
 });
 
+//product catalogue
+Route::controller(ProductController::class)->group(
+    function () {
+        Route::get('/catalogue', 'getAllProducts')->name('user.products.catalogue');
+    }
+);
+
+//product details
+Route::controller(ProductController::class)->group(
+    function () {
+        Route::get('/details/{id}','getProductDetails')->name('user.product.details');
+    }
+);
+
+//Seller products
+Route::controller(DealerProductController::class)->group(
+    function () {
+       Route::get('/user/products', 'show')->name('seller.products');
+        Route::get('/user/products/data', 'getDataTable')->name('seller.products.data');
+        Route::get('/user/create{id}','create')->name('user.add.dealer.product');
+
+    }
+);
+
 Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
-//Route::get('/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
+Route::get('user/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
 
 Route::get('/wallet_getBalance', [WalletController::class, 'getBalance'])->name('user.wallet.getBalance');
 
 Route::controller(TransferController::class)->group(
     function () {
         Route::get('/transfer', 'show')->name('user.transfers');
-        Route::get('/transfer/create', 'create')->name('user.transfers.create');
-        Route::post('/transfer/store', 'store')->name('user.transfers.store');
+        Route::get('/transfer/getDataTableUser', 'getDataTableUser')->name('user.transfers.getDataTableUser');
+        Route::get('/transfer/createeee', 'create')->name('user.transfers.create');
+        Route::post('/transfer/storeee', 'store')->name('user.transfers.store');
     }
 );
 
@@ -73,9 +103,31 @@ Route::controller(TransferInformationController::class)->group(
     }
 );
 
+//Order
+Route::controller(OrderController::class)->group(
+    function () {
+        Route::get('/orders', 'show')->name('user.order');
+        //        Route::get('/orders/a','getDataTable')->name('user.order.data');
+        Route::get('/orders/getOrdersCount', 'getOrdersCount')->name('user.order.getOrdersCount');
+        Route::get('/orders/getOrders', 'getOrders')->name('user.order.getOrders');
+        Route::get('/get-chart-data', 'getChartData')->name('getChartData');
+    }
+);
+
+//Order Details
+Route::controller(OrderDetailsController::class)->group(
+    function () {
+        Route::get('/order_details', 'show')->name('user.order.details');
+    }
+);
+
 /*Route::controller(WalletController::class)->group(
     function () {
         Route::get('/wallettt', 'show')->name('user.wallet');
         Route::get('/wallet_management/data', 'getDataTable')->name('admin.wallets.data');
     }
 );*/
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
