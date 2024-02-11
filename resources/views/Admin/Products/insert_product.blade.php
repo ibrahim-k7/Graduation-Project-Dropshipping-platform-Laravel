@@ -85,8 +85,8 @@
                                 </div>
 
                                 <div class="input-group ">
-                                    <span class="input-group-text">الوصف</span>
-                                    <textarea class=" form-control" aria-label="With textarea"></textarea>
+                                    <span for="description" class="input-group-text">الوصف</span>
+                                    <textarea class=" form-control" name="description" id="description" aria-label="With textarea"></textarea>
                                 </div>
 
                                 <div class="text-center">

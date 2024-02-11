@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
+use App\Http\Controllers\DealerProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -67,14 +69,19 @@ Route::controller(ProductController::class)->group(
 //product details
 Route::controller(ProductController::class)->group(
     function () {
-        Route::get('/details', 'getProductDetails')->name('user.product.details');
+        Route::get('/details/{id}','getProductDetails')->name('user.product.details');
     }
 );
 
 //Seller products
-Route::controller(ProductController::class)->group(
+Route::controller(DealerProductController::class)->group(
     function () {
-        Route::get('/user/products', 'getSellerProducts')->name('seller.products');
+        Route::get('/user/products', 'show')->name('seller.products');
+        Route::get('/user/products/data', 'getDataTable')->name('seller.products.data');
+        Route::post('/user/create','create')->name('user.add.dealer.product');
+        Route::post('/user/destroy','destroy')->name('user.dealer.product.destroy');
+
+
     }
 );
 
