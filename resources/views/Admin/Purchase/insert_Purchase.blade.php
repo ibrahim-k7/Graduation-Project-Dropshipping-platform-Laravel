@@ -110,45 +110,40 @@
                                             <!-- Add dynamic rows for purchase details -->
                                             </tbody>
                                         </table>
+
+                                        <div class="col-md-6">
+                                            <label for="additional_costs" class="form-label">Additional Costs</label>
+                                            <input type="number" class="form-control" id="additional_costs" name="additional_costs"
+                                                   placeholder="Enter Additional Costs">
+                                            <small id="additional_costs_error" class="form-text text-danger"></small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="total" class="form-label">Total</label>
+                                            <input type="number" class="form-control" id="total" name="total"
+                                                   placeholder="Enter total">
+                                            <small id="total_error" class="form-text text-danger"></small>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="amount_paid" class="form-label">Amount Paid</label>
+                                            <input type="number" class="form-control" id="amount_paid" name="amount_paid"
+                                                   placeholder="Enter Amount Paid">
+                                            <small id="amount_paid_error" class="form-text text-danger"></small>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="text-center">
+                                            <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ التحديث</button>
+                                            <button type="submit" id="submit_add" class="btn btn-primary" data-action="add">إضافة مشتريات جديدة</button>
+                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                        </div>
+                                    </form>
                                 </div>
-
                             </div>
-
-                            <div class="col-md-6">
-                                <label for="additional_costs" class="form-label">Additional Costs</label>
-                                <input type="number" class="form-control" id="additional_costs" name="additional_costs"
-                                       placeholder="Enter Additional Costs">
-                                <small id="additional_costs_error" class="form-text text-danger"></small>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="total" class="form-label">Total</label>
-                                <input type="number" class="form-control" id="total" name="total"
-                                       placeholder="Enter total">
-                                <small id="total_error" class="form-text text-danger"></small>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="amount_paid" class="form-label">Amount Paid</label>
-                                <input type="number" class="form-control" id="amount_paid" name="amount_paid"
-                                       placeholder="Enter Amount Paid">
-                                <small id="amount_paid_error" class="form-text text-danger"></small>
-                            </div>
-
-                            <br>
-
-                            <div class="text-center">
-                                <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ التحديث</button>
-                                <button type="submit" id="submit_add" class="btn btn-primary" data-action="add">إضافة مشتريات جديدة</button>
-                                <button type="reset" class="btn btn-secondary">Reset</button>
-                            </div>
-                            </form>
-
-
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>
             </div>
         </section>
 
