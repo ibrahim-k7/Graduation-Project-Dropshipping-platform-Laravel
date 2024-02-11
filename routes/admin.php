@@ -208,17 +208,20 @@ Route::prefix('admin')->group(function () {
     Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('admin.purchase.store');
     Route::get('/Purchase_edit', [PurchaseController::class, 'edit'])->name('admin.Purchase.edit');
     Route::post('/purchase/update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
-    // روت لعرض صفحة استرجاع المشتريات
-    Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])
-        ->name('admin.purchase.returnDetails');
+    // روت لعرض صفحة استعادة المشتريات
+    Route::get('/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])->name('admin.purchase.returnDetails');
 
 // روت لمعالجة عملية الاسترجاع
-    Route::post('/admin/purchase/processReturn', [PurchaseController::class, 'processReturn'])
-        ->name('admin.purchase.processReturn');
+    Route::post('/purchase/processReturn', [PurchaseController::class, 'processReturn'])->name('admin.purchase.processReturn');
 
-    Route::get('admin/purchase/getPurchaseInvoices', [PurchaseController::class, 'getPurchaseInvoices'])->name('admin.purchase.getPurchaseInvoices');
+// روت لجلب قائمة الفواتير
+    Route::get('admin/purchase/getPurchaseInvoices', [PurchaseController::class, 'getPurchaseInvoices'])
+        ->name('admin.purchase.getPurchaseInvoices');
 
+// روت لجلب تفاصيل الفاتورة// روت لجلب تفاصيل الفاتورة
 
+    Route::get('admin/purchase/getPurchaseDetails/{id}', [PurchaseController::class, 'getPurchaseDetails'])
+        ->name('admin.purchase.getPurchaseDetails');
 });
 
 

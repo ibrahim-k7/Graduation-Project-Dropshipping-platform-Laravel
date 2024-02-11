@@ -24,7 +24,7 @@ class PurchaseDetails extends Model
     }
     public function returnDetails()
     {
-        return $this->hasMany(Returndetails::class, 'purchase_details_id', 'id');
+        return $this->belongsTo(Returndetails::class, 'purchase_details_id', 'id');
     }
 
 }

@@ -137,8 +137,7 @@
                             <br>
 
                             <div class="text-center">
-                                <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ التحديث</button>
-                                <button type="submit" id="submit_add" class="btn btn-primary" data-action="add">إضافة مشتريات جديدة</button>
+                                <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ </button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                             </form>
