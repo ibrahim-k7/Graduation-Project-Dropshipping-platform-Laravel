@@ -26,5 +26,9 @@ class Purchase extends Model
         return $this->hasMany(PurchaseDetails::class, 'purch_id', 'id');
     }
 
+    public function returnDetails()
+    {
+        return $this->hasManyThrough(Returndetails::class, PurchaseDetails::class, 'purch_id', 'purchase_details_id', 'id', 'id');
+    }
 
 }

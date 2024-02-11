@@ -26,20 +26,35 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function getAllProducts(){
-        $products = Product::select('*')->get();
-         return view ('user.products.product_catalogue',compact('products'));   
-     }
+    public function getAllProducts()
+    {
+        $products = Product::with('categorie')->with('subCategorie')->select('*')->get();
+        return view('user.products.product_catalogue', compact('products'));
+    }
 
-     public function getProductDetails(){
-        $details = Product::select('*')->get();
-         return view ('user.products.product_details',compact('details'));   
-     }
+    public function getProductDetails(int $id)
+    {
+        //$details = Product::select('*')->get();
+        $details = Product::find($id);
+        if (!$details) {
+            abort(404);
+        }
 
-     public function getSellerProducts(){
+        return view('user.products.product_details', compact('details'));
+    }
+    // public function getProductDetails()
+    // {
+    //     $details = Product::select('*')->get();
+    //     return view('user.products.product_details', compact('details'));
+    // }
+
+    public function getSellerProducts()
+    {
         $sellerProducts = Product::select('*')->get();
-         return view ('user.sellerproducts.products',compact('sellerProducts'));   
-     }
+        return view('user.sellerproducts.products', compact('sellerProducts'));
+    }
+
+
 
     //إعادة عدد المنتجات المتوفره في قاعدة البيانات
     public function getProductsCount()
@@ -52,8 +67,8 @@ class ProductController extends Controller
     {
 
         $data = Product::select('id', 'name', 'image', 'quantity', 'barcode')
-    ->whereBetween('quantity', [0, 5])
-    ->get();
+            ->whereBetween('quantity', [0, 5])
+            ->get();
 
         return response()->json($data);
     }

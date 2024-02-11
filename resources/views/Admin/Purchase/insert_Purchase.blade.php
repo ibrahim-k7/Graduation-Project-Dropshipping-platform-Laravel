@@ -137,7 +137,8 @@
                             <br>
 
                             <div class="text-center">
-                                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ التحديث</button>
+                                <button type="submit" id="submit_add" class="btn btn-primary" data-action="add">إضافة مشتريات جديدة</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                             </form>
@@ -216,9 +217,11 @@
                     $("<td>").text(totalCost),
                     $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button>')
                 ];
-
+                // إضافة الخلايا إلى الصف
                 newRow.append(cells);
+                // إضافة الصف إلى الجدول
                 $("#purchaseDetailsBody").append(newRow);
+                // زيادة عداد التفاصيل
                 purchaseDetailsCounter++;
             }
 
@@ -246,8 +249,11 @@
                     return;
                 }
 
+                // إضافة سطر للجدول
                 addProductRow(productid, productName, productPrice, quantity, totalCost);
+                // تحديث إجمالي الفاتورة
                 updateTotal();
+                // إعادة تعيين حقول الإدخال
                 $("#pro_id, #product_price, #quantity, #total_cost").val('');
             });
 
@@ -289,11 +295,13 @@
                     var productsData = [];
 
                     $('#purchaseDetailsBody tr').each(function(index, row) {
+                        // احصل على قيمة العناصر داخل كل صف
                         var productID = $(this).find('td:eq(1)').text();
                         var purchasing_price = $(this).find('td:eq(2)').text();
                         var quantity = $(this).find('td:eq(3)').text();
                         var totalCost = $(this).find('td:eq(4)').text();
 
+                        // أضف البيانات إلى مصفوفة المنتجات
                         productsData.push({
                             pro_id: productID,
                             quantity: quantity,
@@ -397,8 +405,9 @@
                         }
                     });
                 });
-            }
 
+
+        }
 
             // Reset fields when the reset button is clicked
             $(document).on('click', '#reset', function() {
@@ -407,8 +416,5 @@
                 purchaseDetailsCounter = 1;
             });
         });
-
-
     </script>
-
 @endsection
