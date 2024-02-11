@@ -119,55 +119,41 @@ class PurchaseController extends Controller
         foreach ($products as $productId) {
             // استخدام المعرف للتحقق من وجود المنتج في تفاصيل المشتريات
             $purchaseDetail = PurchaseDetails::where(['purch_id' => $request->id, 'pro_id' => $productId])->first();
+            $purchaseDetailQuantity = PurchaseDetails::select('quantity')->where(['purch_id' => $request->id, 'pro_id' => $productId])->first();
+
+            //الاستعلام بالمنتج
+            $product = Product::findOrFail($productId["pro_id"]);
 
             if ($purchaseDetail) {
                 // تحديث المنتج إذا كان موجودًا
+                $newQuantity = $productId["quantity"] - $purchaseDetailQuantity['quantity'];
+                $product->update([
+                    'quantity' => $product->quantity + $newQuantity,
+                    'purchasing_price' => $productId["purchasing_price"],
+                ]);
+
                 $purchaseDetail->update([
                     'quantity' => $productId["quantity"],
                     'total_cost' => $productId["total_cost"],
                 ]);
             } else {
                 // إذا لم يكن المنتج موجودًا، قم بإضافته
+
                 $purchase = Purchase::findOrFail($request->id);
                 $purchase->prouduct()->attach($productId['pro_id'], [
                     'quantity' => $productId["quantity"],
                     'total_cost' => $productId["total_cost"],
                 ]);
+
+                $product->update([
+                    'quantity' => $product->quantity + $productId["quantity"],
+                    'purchasing_price' => $productId["purchasing_price"],
+                ]);
             }
+
+
+
         }
-        
-
-            // الاستعلام عن المنتج في قاعدة البيانات
-//            $product = Product::where('id', $productId)->first();
-//
-//            // التحقق مما إذا كان المنتج موجود
-//            if ($product) {
-//                // تحديث كمية المنتج
-//                $product->update([
-//                    'quantity' => $product->quantity + $productId["quantity"],
-//                    'purchasing_price' => $productId["purchasing_price"],
-//                ]);
-//
-//            }
-
-
-//        $purchPro = PurchaseDetails::select('pro_id')->where(['purch_id' => $request->id])->get();
-//
-//        // إذا كان هناك منتجات تم حذفها، قم بإزالتها
-//        $deletedProducts = collect($request->products)->pluck('pro_id');
-//        $diff = $deletedProducts->diff($purchPro);
-//        return $diff->all();
-//        $purchase->products()->detach($deletedProducts);
-
-//        // تحديث كمية المنتجات
-//        foreach ($products as $productId) {
-//            $product = Product::findOrFail($productId["pro_id"]);
-//            $product->update([
-//                'quantity' => $product->quantity + $productId["quantity"],
-//                'purchasing_price' => $productId["purchasing_price"],
-//            ]);
-//        }
-//
         return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
 
