@@ -157,6 +157,9 @@ class PurchaseController extends Controller
         return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
 
+    public function destroy(){
+        
+    }
 
     public function getPurchaseInvoices()
     {
