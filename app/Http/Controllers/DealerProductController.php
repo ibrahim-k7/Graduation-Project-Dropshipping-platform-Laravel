@@ -58,7 +58,7 @@ class DealerProductController extends Controller
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
                 <a   data-product-id="' . $row->dealer_pro_id. '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                <a href="' . route('admin.products.edit', ['id' => $row->dealer_pro_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
+                <a href="' . route('user.dealer.product.details', ['id' => $row->dealer_pro_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a href="' . route('admin.subCategories', ['id' => $row->dealer_pro_id]) . '"   type="button" class="btn btn-primary">إضافة للسله</a>
                 </div>  ';
             })
@@ -74,6 +74,22 @@ class DealerProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
+    {
+        $id = $request->query('id');
+
+        $details = DealerProduct::with('product')->where('dealer_pro_id', $id)->select('*')->first();
+
+        return view('user.sellerproducts.dealer_product_details', compact('details'));
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         $details = Product::find($request->id);
         $store_id = Auth::user()->store_id;
@@ -95,32 +111,6 @@ class DealerProductController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        //  return view('user.products.product_details');
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // استخراج store_id من المستخدم المسجل الحالي
-        $store_id = Auth::user()->store_id;
-        // استخراج معرف المحفظة 
-        $_id = DealerProduct::where('store_id', $store_id)->value('store_id');
-        // إنشاء سجل في جدول Product
-        DealerProduct::create([
-            'store_id' => $store_id,
-            'pro_id' => $request->pro_id,
-            'dealer_selling_price' => $request->suggested_selling_price,
-            'dealer_product_desc' => $request->description,
-            'quantity' => 0,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
     }
 
     /**
@@ -152,9 +142,12 @@ class DealerProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $dataToUpdate = $request->except('id');
+        $dataToUpdate = $request->except('oldImgName');
+       
+        DealerProduct::where(['dealer_pro_id' => $request->id])->update($dataToUpdate);
     }
 
     /**
