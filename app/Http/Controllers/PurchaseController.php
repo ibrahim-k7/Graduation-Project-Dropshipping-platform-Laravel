@@ -113,8 +113,9 @@ class PurchaseController extends Controller
             'additional_costs' => $request->additional_costs,
         ]);
 
-        // الحصول على المنتجات المضافة في الطلب
+        // الحصول على المنتجات المحدثة في الطلب
         $products = $request->products;
+
         //تحديث المنتجات في قاعدة البيانات
         foreach ($products as $productId) {
             // استخدام المعرف للتحقق من وجود المنتج في تفاصيل المشتريات
@@ -150,15 +151,24 @@ class PurchaseController extends Controller
                     'purchasing_price' => $productId["purchasing_price"],
                 ]);
             }
-
-
-
         }
+
+        // حذف المنتجات من تفاصيل المشتريات عند تعديل الفاتورة
+        $products = $request->products;
+        $proIds = collect($products)->pluck('pro_id')->toArray();
+        $purchaseDetails = PurchaseDetails::where(['purch_id' => $request->id])->get('pro_id');
+        $purchaseDetailsProIds = collect($purchaseDetails)->pluck('pro_id')->toArray();
+        $newPurchaseDetails = collect($purchaseDetailsProIds)->diff($proIds)->toArray();
+
+        foreach ($newPurchaseDetails as $newPurchaseDetail){
+            $purchase->prouduct()->detach($newPurchaseDetail);
+        }
+
         return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
 
     public function destroy(){
-        
+
     }
 
     public function getPurchaseInvoices()

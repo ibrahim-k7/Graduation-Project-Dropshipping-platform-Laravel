@@ -134,8 +134,7 @@
                                         <br>
 
                                         <div class="text-center">
-                                            <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ التحديث</button>
-                                            <button type="submit" id="submit_add" class="btn btn-primary" data-action="add">إضافة مشتريات جديدة</button>
+                                            <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ </button>
                                             <button type="reset" class="btn btn-secondary">Reset</button>
                                         </div>
                                     </form>
@@ -267,7 +266,7 @@
 
                 if (purchaseDetails != null && purchaseDetails.length > 0) {
                     for (var i = 0; i < purchaseDetails.length; i++) {
-                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
+                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.purchasing_price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
 
 
                         // قم بتعبئة الحقول في الصف المضاف بالبيانات
