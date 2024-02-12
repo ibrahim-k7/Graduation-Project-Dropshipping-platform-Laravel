@@ -456,7 +456,13 @@
 
 
             <li class="nav-item">
-<li class="nav-heading">Pages</li>
+          <li class="nav-heading">Pages</li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="/admin/admin-information">
+                 <i class="bi bi-person"></i>
+               <span>معلومات الادمن </span>
+                </a>
+                 </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/admin/user-information">
                     <i class="bi bi-person"></i>

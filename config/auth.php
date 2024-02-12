@@ -29,7 +29,7 @@ return [
 
     'defaults' =>[
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'store',
     ],
 
     /*
@@ -52,7 +52,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'store',
         ],
         'admin' => [
             'driver' => 'session',
@@ -84,7 +84,7 @@ return [
         //     'table' => 'store', // اسم الجدول الجديد
         // ],
 
-        'users' => [
+        'store' => [
             'driver' => 'eloquent',
             'model' => \App\Models\Store::class,// اسم النموذج الجديد
             'table' => 'store', // اسم الجدول الجديد
@@ -117,8 +117,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'store' => [
+            'provider' => 'store',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
