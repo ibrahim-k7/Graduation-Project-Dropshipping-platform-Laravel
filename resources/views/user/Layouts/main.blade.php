@@ -61,7 +61,7 @@
     @yield('css')
 
     <!-- Template Main CSS File -->
-    <link href={{ asset('Admin/CSS/style.css') }} rel="stylesheet">
+    <link href={{ asset('User/CSS/style.css') }} rel="stylesheet">
 
 </head>
 
@@ -72,7 +72,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="{{ Route('user.dashboard') }}" class="logo d-flex align-items-center">
-                <img src={{ asset('Admin/IMG/logo.png') }} alt="">
+                <img src={{ asset('User/IMG/logo.png') }} alt="">
                 <span class="d-none d-lg-block">المخازن الالكترونية</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -257,7 +257,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         {{-- <div class="copyright">
-            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>NiceUser</span></strong>. All Rights Reserved
         </div> --}}
         {{-- <div class="credits"> --}}
         <!-- All the links in the footer should remain intact. -->

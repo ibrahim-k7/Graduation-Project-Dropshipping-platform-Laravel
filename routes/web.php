@@ -81,7 +81,8 @@ Route::controller(DealerProductController::class)->group(
     function () {
         Route::get('/user/products', 'show')->name('seller.products');
         Route::get('/user/products/data', 'getDataTable')->name('seller.products.data');
-        Route::post('/user/create','create')->name('user.add.dealer.product');
+        Route::get('/user/create','create')->name('user.dealer.product.details');
+        Route::post('/user/store','store')->name('user.add.dealer.product');
         Route::post('/user/destroy','destroy')->name('user.dealer.product.destroy');
 
 
