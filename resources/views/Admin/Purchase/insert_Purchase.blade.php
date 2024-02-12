@@ -209,7 +209,7 @@
                     $("<td>").text(productPrice),
                     $("<td>").text(quantity),
                     $("<td>").text(totalCost),
-                    $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button>')
+                    $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>')
                 ];
                 // إضافة الخلايا إلى الصف
                 newRow.append(cells);
@@ -276,7 +276,7 @@
                         currentRow.find('td:eq(2)').text(purchaseDetails[i].product.id.purchasing_price);
                         currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
                         currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
-                        currentRow.find('td:eq(5)').html('<button type="button" class="delete_btn btn btn-danger" onclick="removeRow(this)">حذف</button>');
+                        currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
                         // قد تحتاج إلى تكرار هذا للحقول الأخرى حسب احتياجاتك
                         console.log('Purchase Details:', purchaseDetails[i]);
                     };
