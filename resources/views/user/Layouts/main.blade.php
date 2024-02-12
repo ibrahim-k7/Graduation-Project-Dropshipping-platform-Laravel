@@ -27,8 +27,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href={{ asset('Admin/IMG/favicon.png') }} rel="icon">
-    <link href={{ asset('Admin/IMG/apple-touch-icon.png') }} rel="apple-touch-icon">
+    <link href={{ asset('User/IMG/favicon.png') }} rel="icon">
+    <link href={{ asset('User/IMG/apple-touch-icon.png') }} rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -43,13 +43,13 @@
     {{-- <link rel="stylesheet" href="css/mdb.min.css" /> --}}
 
     <!-- Vendor CSS Files -->
-    <link href={{ asset('Admin/vendor/bootstrap/css/bootstrap.min.css') }} rel="stylesheet">
-    <link href={{ asset('Admin/vendor/bootstrap-icons/bootstrap-icons.css') }} rel="stylesheet">
-    <link href={{ asset('Admin/vendor/boxicons/css/boxicons.min.css') }} rel="stylesheet">
-    <link href={{ asset('Admin/vendor/quill/quill.snow.css') }} rel="stylesheet">
-    <link href={{ asset('Admin/vendor/quill/quill.bubble.css') }} rel="stylesheet">
-    <link href={{ asset('Admin/vendor/remixicon/remixicon.css') }} rel="stylesheet">
-    <link href={{ asset('Admin/vendor/simple-datatables/style.css') }} rel="stylesheet">
+    <link href={{ asset('User/vendor/bootstrap/css/bootstrap.min.css') }} rel="stylesheet">
+    <link href={{ asset('User/vendor/bootstrap-icons/bootstrap-icons.css') }} rel="stylesheet">
+    <link href={{ asset('User/vendor/boxicons/css/boxicons.min.css') }} rel="stylesheet">
+    <link href={{ asset('User/vendor/quill/quill.snow.css') }} rel="stylesheet">
+    <link href={{ asset('User/vendor/quill/quill.bubble.css') }} rel="stylesheet">
+    <link href={{ asset('User/vendor/remixicon/remixicon.css') }} rel="stylesheet">
+    <link href={{ asset('User/vendor/simple-datatables/style.css') }} rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -61,7 +61,7 @@
     @yield('css')
 
     <!-- Template Main CSS File -->
-    <link href={{ asset('Admin/CSS/style.css') }} rel="stylesheet">
+    <link href={{ asset('User/CSS/style.css') }} rel="stylesheet">
 
 </head>
 
@@ -72,7 +72,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="{{ Route('user.dashboard') }}" class="logo d-flex align-items-center">
-                <img src={{ asset('Admin/IMG/logo.png') }} alt="">
+                <img src={{ asset('User/IMG/logo.png') }} alt="">
                 <span class="d-none d-lg-block">المخازن الالكترونية</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -257,7 +257,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         {{-- <div class="copyright">
-            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>NiceUser</span></strong>. All Rights Reserved
         </div> --}}
         {{-- <div class="credits"> --}}
         <!-- All the links in the footer should remain intact. -->
@@ -272,14 +272,14 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src={{ asset('Admin/vendor/apexcharts/apexcharts.min.js') }}></script>
-    {{-- <script src={{ asset('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script> --}}
-    <script src={{ asset('Admin/vendor/chart.js/chart.umd.js') }}></script>
-    <script src={{ asset('Admin/vendor/echarts/echarts.min.js') }}></script>
-    <script src={{ asset('Admin/vendor/quill/quill.min.js') }}></script>
-    <script src={{ asset('Admin/vendor/simple-datatables/simple-datatables.js') }}></script>
-    <script src={{ asset('Admin/vendor/tinymce/tinymce.min.js') }}></script>
-    <script src={{ asset('Admin/vendor/php-email-form/validate.js') }}></script>
+    <script src={{ asset('User/vendor/apexcharts/apexcharts.min.js') }}></script>
+    {{-- <script src={{ asset('User/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script> --}}
+    <script src={{ asset('User/vendor/chart.js/chart.umd.js') }}></script>
+    <script src={{ asset('User/vendor/echarts/echarts.min.js') }}></script>
+    <script src={{ asset('User/vendor/quill/quill.min.js') }}></script>
+    <script src={{ asset('User/vendor/simple-datatables/simple-datatables.js') }}></script>
+    <script src={{ asset('User/vendor/tinymce/tinymce.min.js') }}></script>
+    <script src={{ asset('User/vendor/php-email-form/validate.js') }}></script>
     <!-- DataTables Js Files add by ibrahim -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
@@ -313,7 +313,7 @@
 
 
     <!-- Template Main JS File -->
-    <script src={{ asset('Admin/JS/main.js') }}></script>
+    <script src={{ asset('User/JS/main.js') }}></script>
 
 
 </body>
