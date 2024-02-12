@@ -53,8 +53,6 @@
                                         </div>
                                         <div class="pe-3">
                                             <h6 id="ordersCount">0</h6>
-                                            <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">increase</span>
 
                                         </div>
                                     </div>
@@ -92,8 +90,6 @@
                                         </div>
                                         <div class="pe-3">
                                             <h6 id="totalSales">0</h6>
-                                            <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                                class="text-muted small pt-2 ps-1">increase</span>
 
                                         </div>
                                     </div>
@@ -129,8 +125,6 @@
                                         </div>
                                         <div class="pe-3">
                                             <h6 id="totalBalanceCount">0</h6>
-                                            <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">decrease</span>
 
                                         </div>
                                     </div>
@@ -151,8 +145,6 @@
                                         </div>
                                         <div class="pe-3" id="productsCountContainer">
                                             <h6 id="productsCount">0</h6>
-                                            <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">decrease</span>
 
                                         </div>
                                     </div>
@@ -175,9 +167,6 @@
                                         </div>
                                         <div class="pe-3">
                                             <h6 id="storeCount">0</h6>
-                                            <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">decrease</span>
-
                                         </div>
                                     </div>
 
@@ -198,8 +187,8 @@
                                         </div>
                                         <div class="pe-3">
                                             <h6 id="suppliersCount">0</h6>
-                                            <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">decrease</span>
+                                            {{-- <span class="text-danger small pt-1 fw-bold">12%</span> <span
+                                                class="text-muted small pt-2 ps-1">decrease</span> --}}
 
                                         </div>
                                     </div>
@@ -214,22 +203,10 @@
                         <div class="col-12">
                             <div class="card">
 
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
 
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">التقارير <span>/هذا الشهر</span></h5>
+                                    <h5 class="card-title">مبالغ الطلبات و المبيعات<span> / الكل</span></h5>
 
                                     <!-- Line Chart -->
                                     <div id="reportsChart"></div>
@@ -302,71 +279,10 @@
                         <div class="card">
 
                             <div class="card-body pb-0">
-                                <h5 class="card-title">المبيعات VS المديونية <span>| هذا العام</span></h5>
+                                <h5 class="card-title">المبيعات VS المديونية <span> / الكل </span></h5>
 
                                 <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
-                                <script>
-                                    // المديوينة
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        // Perform your AJAX call to get data
-                                        $.ajax({
-                                            url: "{{ route('admin.suppliers.getSuppliersCount') }}",
-                                            type: "GET",
-                                            dataType: "json",
-                                            success: function(response) {
-                                                // Extract the data from the response and update the ECharts configuration
-                                                const salesValue = response
-                                                    .count; // Adjust these based on your actual response structure
-                                                // const debtValue = response.debtValue;
-
-                                                // Initialize ECharts with updated data
-                                                const chart = echarts.init(document.querySelector("#trafficChart"));
-                                                chart.setOption({
-                                                    tooltip: {
-                                                        trigger: 'item'
-                                                    },
-                                                    legend: {
-                                                        top: '5%',
-                                                        left: 'center'
-                                                    },
-                                                    series: [{
-                                                        name: 'Access From',
-                                                        type: 'pie',
-                                                        radius: ['40%', '70%'],
-                                                        avoidLabelOverlap: false,
-                                                        label: {
-                                                            show: false,
-                                                            position: 'center'
-                                                        },
-                                                        emphasis: {
-                                                            label: {
-                                                                show: true,
-                                                                fontSize: '18',
-                                                                fontWeight: 'bold'
-                                                            }
-                                                        },
-                                                        labelLine: {
-                                                            show: false
-                                                        },
-                                                        data: [{
-                                                                value: salesValue,
-                                                                name: 'المبيعات'
-                                                            },
-                                                            {
-                                                                value: 10,
-                                                                name: 'المديونية'
-                                                            },
-                                                        ]
-                                                    }]
-                                                });
-                                            },
-                                            error: function(error) {
-                                                console.error('Failed to fetch data:', error);
-                                            }
-                                        });
-                                    });
-                                </script>
 
                             </div>
                         </div><!-- End Website Traffic -->
@@ -600,7 +516,10 @@
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {
-                            $('#totalBalanceCount').text('$' + data.total_balance);
+                            var total_balance_value = data.total_balance;
+                            $("#totalBalanceCount").html(total_balance_value +
+                                '<span style="font-size: small ;"> رس</span>');
+                           // $('#totalBalanceCount').text('$' + data.total_balance);
                         },
                         error: function(error) {
                             console.error(' فشل في جلب  المديونية :', error);
@@ -662,7 +581,10 @@
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {
-                            $('#totalSales').text('$' + data.total_paid_amount);
+                            var total_paid_amount = data.total_paid_amount;
+                            $("#totalSales").html(total_paid_amount +
+                                '<span style="font-size: small ;"> رس</span>');
+                          //  $('#totalSales').text('$' + data.total_paid_amount);
                         },
                         error: function(error) {
                             console.error('Failed to fetch data:', error);
@@ -675,6 +597,81 @@
             initializeSales();
 
 
+
+            var chartTrafficOptions = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [{
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '18',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [{
+                            value: 0,
+                            name: 'المبيعات',
+                            itemStyle: {
+                                color: '#3498db' // لون المبيعات
+                            }
+                        },
+                        {
+                            value: 0,
+                            name: 'المديونية',
+                            itemStyle: {
+                                color: '#FF0000' // لون المديونية
+                            }
+                        },
+                    ]
+                }]
+            };
+
+            // إنشاء كائن ECharts باستخدام الخيارات
+            var chartTraffic = echarts.init(document.querySelector('#trafficChart'));
+            chartTraffic.setOption(chartTrafficOptions);
+
+            //شارت المديونية VS المبيعات
+            $.ajax({
+                url: "{{ route('admin.dshboard.calculateChartTrafData') }}",
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // تحديث قيمة واحدة داخل المصفوفة في series
+                    chartTrafficOptions.series[0].data[0].value = data.sales;
+
+                    chartTrafficOptions.series[0].data[1].value = data.debts;
+
+                    // استخدام setOption لتحديث الرسم البياني
+                    chartTraffic.setOption(chartTrafficOptions);
+
+                },
+                error: function(error) {
+                    console.error(' فشل جلب المبيعات :', error);
+                }
+            });
+
+
+
+
+
+
+
             $('#lastOrdersTable').DataTable({
                 ajax: {
                     url: "{{ route('admin.order.getOrders') }}",
@@ -684,7 +681,7 @@
                 },
 
                 "autoWidth": false,
-                "lengthMenu": [5, 10], // الخيارات المتاحة للمستخدم
+                "lengthMenu": [10, 5], // الخيارات المتاحة للمستخدم
                 //إمكانية تحريك الاعمدة
                 colReorder: true,
                 responsive: true,
@@ -758,7 +755,7 @@
                 },
 
                 "autoWidth": false,
-                "lengthMenu": [5, 10], // الخيارات المتاحة للمستخدم
+                "lengthMenu": [10, 5], // الخيارات المتاحة للمستخدم
                 //إمكانية تحريك الاعمدة
                 colReorder: true,
                 responsive: true,
@@ -852,7 +849,7 @@
             };
 
             // إنشاء كائن ApexCharts باستخدام الخيارات الأساسية
-            var chart = new ApexCharts(document.querySelector('#reportsChart'), options);
+            var chartReport = new ApexCharts(document.querySelector('#reportsChart'), options);
 
             // جلب البيانات عبر AJAX
             $.ajax({
@@ -861,7 +858,7 @@
                 dataType: 'json',
                 success: function(data) {
                     // تحديث البيانات في الـ chart
-                    chart.updateSeries([{
+                    chartReport.updateSeries([{
                             data: data.salesData,
                             name: '( مبلغ البيع )'
                         },
@@ -870,7 +867,7 @@
                             name: '( مبلغ الطلب )'
                         }
                     ]);
-                    chart.updateOptions({
+                    chartReport.updateOptions({
                         xaxis: {
                             categories: data.categories
                         }
@@ -882,7 +879,7 @@
             });
 
             // عرض الـ chart
-            chart.render();
+            chartReport.render();
 
         });
     </script>

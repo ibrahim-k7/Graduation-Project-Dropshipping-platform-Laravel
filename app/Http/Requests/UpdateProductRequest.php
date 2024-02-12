@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddProductRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,6 @@ class AddProductRequest extends FormRequest
             'cat_id' => 'required',
             'subCat_id' => 'required',
             'weight' => 'required',
-            'image' => 'required|max:1024|mimes:png,jpg,jpeg',
         ];
     }
 
@@ -39,7 +38,6 @@ class AddProductRequest extends FormRequest
             'cat_id.required' => 'الفئة الرئيسية مطلوبة',
             'subCat_id.required' => 'الفئة الفرعية مطلوبة',
             'weight.required' => 'وزن المنتج مطلوب',
-            'image.required' => 'صورة المنتج مطلوبة',
         ];
     }
 }
