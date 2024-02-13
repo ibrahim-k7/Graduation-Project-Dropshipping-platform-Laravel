@@ -52,27 +52,22 @@ class RegisterController extends Controller
 {
     return Validator::make($data,
      [
-        // 'store_name' => ['required', 'string', 'max:255'],
-        // 'email' => ['required', 'string', 'email', 'max:255', 'unique:store,email'],
-        // 'password' => ['required', 'string', 'min:8', 'confirmed'],
-        // 'phone_number' => ['required', 'string', 'min:9', 'unique:store,phone_number'],
+        'store_name' => ['required', 'string', 'max:255'],
+        'email' => ["required", "regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", "unique:store"],
+        'password' => ['required', 'min:8', 'confirmed', 'regex:/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/'],
+        "password_confirmation" => ["required", "string"],
+        'phone_number' => ['required', 'string', 'max:9','regex:/^(((\+|00)9677|0?7)[01378]\d{7}|((\+|00)967|0)[1-7]\d{6})$/', 'unique:store'],
     ], [
-        // 'store_name.required' => 'يجب إدخال اسم المتجر.',
-        // 'store_name.string' => 'يجب أن يكون اسم المتجر نصًا.',
-        // 'store_name.max' => 'اسم المتجر لا يجب أن يتجاوز 255 حرفًا.',
-        // 'email.required' => 'يجب إدخال البريد الإلكتروني.',
-        // 'email.string' => 'يجب أن يكون البريد الإلكتروني نصًا.',
-        // 'email.email' => 'البريد الإلكتروني يجب أن يكون عنوان بريد إلكتروني صالحًا.',
-        // 'email.max' => 'البريد الإلكتروني لا يجب أن يتجاوز 255 حرفًا.',
-        // 'email.unique' => 'هذا البريد الإلكتروني مستخدم بالفعل.',
-        // 'password.required' => 'يجب إدخال كلمة المرور.',
-        // 'password.string' => 'يجب أن تكون كلمة المرور نصًا.',
-        // 'password.min' => 'يجب أن تتكون كلمة المرور على الأقل من 8 أحرف.',
-        // 'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
-        // 'phone_number.required' => 'يجب إدخال رقم الهاتف.',
-        // 'phone_number.string' => 'يجب أن يكون رقم الهاتف نصًا.',
-        // 'phone_number.min' => 'يجب أن يتكون رقم الهاتف على الأقل من 9 أحرف.',
-        // 'phone_number.unique' => 'رقم الهاتف مستخدم بالفعل.',
+        'store_name.required' => 'يجب إدخال اسم المتجر.',
+        'email.required' => 'يجب إدخال البريد الإلكتروني.',
+        'email.email' => 'البريد الإلكتروني يجب أن يكون عنوان بريد إلكتروني صالحًا.',
+        'email.unique' => 'هذا البريد الإلكتروني مستخدم بالفعل.',
+        'password.required' => 'يجب إدخال كلمة المرور.',
+        'password.min' => 'يجب أن تتكون كلمة المرور على الأقل من 8 أحرف.',
+        'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
+        'phone_number.required' => 'يجب إدخال رقم الهاتف.',
+        'phone_number.max' => 'يجب أن يتكون رقم الهاتف  من 9 ارقام.',
+        'phone_number.unique' => 'رقم الهاتف مستخدم بالفعل.',
     ]);
 }
 
@@ -86,8 +81,8 @@ class RegisterController extends Controller
     {
         // إنشاء المتجر
         $store = Store::create([
-            'store_name' => $data['name'],
-            'phone_number' => $data['phone'],
+            'store_name' => $data['store_name'],
+            'phone_number' => $data['phone_number'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

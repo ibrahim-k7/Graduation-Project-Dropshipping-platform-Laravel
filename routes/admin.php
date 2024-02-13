@@ -251,19 +251,19 @@ Route::get('/forms-validation', function () {
 });
 
 
-    Route::get('/admin-profile', function () {
-        return view('admin/admin-profile');
-    });
-    Route::middleware(['auth:admin'])->group(function () {
-        Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
-        Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
-        Route::post('/admin/profile/update-password',  [AdminProfileController::class,'updatePassword'])->name('profile.updatePassword');
-    });
+Route::get('/admin-profile', function () {
+    return view('admin/admin-profile');
+});
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
+    Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
+    Route::post('/admin/profile/update-password',  [AdminProfileController::class,'updatePassword'])->name('profile.updatePassword');
+});
 
 
 
 
-    Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
+Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
     Route::controller(AdminLoginController::class)->group(function(){
         Route::get('login','login')->name('login');
         Route::post('login','checkLogin')->name('check');
@@ -274,7 +274,7 @@ Route::get('/forms-validation', function () {
         Route::post('register','store')->name('store');
     });
 
-    });
+});
 
 
 /*
