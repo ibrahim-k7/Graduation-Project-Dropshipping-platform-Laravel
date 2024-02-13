@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
@@ -81,7 +82,17 @@ Route::controller(DealerProductController::class)->group(
         Route::get('/user/create','create')->name('user.dealer.product.details');
         Route::post('/user/store','store')->name('user.add.dealer.product');
         Route::post('/user/destroy','destroy')->name('user.dealer.product.destroy');
+        Route::post('/user/update','update')->name('user.dealer.product.update');
 
+
+    }
+);
+
+//User Cart
+Route::controller(CartController::class)->group(
+    function () {
+        Route::get('/user/cart','index')->name('user.cart');
+  
 
     }
 );

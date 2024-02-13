@@ -57,9 +57,9 @@ class DealerProductController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a   data-product-id="' . $row->dealer_pro_id. '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a   data-product-id="' . $row->dealer_pro_id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('user.dealer.product.details', ['id' => $row->dealer_pro_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
-                <a href="' . route('admin.subCategories', ['id' => $row->dealer_pro_id]) . '"   type="button" class="btn btn-primary">إضافة للسله</a>
+                <a href="' . route('user.cart', ['id' => $row->dealer_pro_id]) . '"   type="button" class="btn btn-primary">إضافة للسله</a>
                 </div>  ';
             })
 
@@ -77,10 +77,9 @@ class DealerProductController extends Controller
     {
         $id = $request->query('id');
 
-        $details = DealerProduct::with('product')->where('dealer_pro_id', $id)->select('*')->first();
+        $details = DealerProduct::where('dealer_pro_id', $id)->select('*')->first();
 
         return view('user.sellerproducts.dealer_product_details', compact('details'));
-
     }
 
     /**
@@ -142,13 +141,33 @@ class DealerProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request)
     {
+        // $supplier = Supplier::where('sup_id', $request->id)->get()->first();
         $dataToUpdate = $request->except('id');
-        $dataToUpdate = $request->except('oldImgName');
-       
         DealerProduct::where(['dealer_pro_id' => $request->id])->update($dataToUpdate);
     }
+    // public function update(Request $request)
+    // {     $store_id = Auth::user()->store_id;               
+
+    //     $dataToUpdate = $request->except('id');
+
+    //     DealerProduct::where(['store_id'=>$store_id,'id' => $request->dealer_pro_id])->update($dataToUpdate);
+
+
+    //     // $dataToUpdate = $request;
+    //     //  DealerProduct::where('store_id', $store_id)
+    //     //     ->where('pro_id', $request->id)
+    //     //     ->first()
+    //     //     ->update($dataToUpdate);     
+
+    //    // DealerProduct::update($dataToUpdate);
+    //     // $dataToUpdate = $request->except('oldImgName');
+
+    //     // DealerProduct::where(['id' => $request->id])->update($dataToUpdate);
+
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -160,6 +179,5 @@ class DealerProductController extends Controller
     {
         $dealerProduct = DealerProduct::where('dealer_pro_id', $request->id);
         $dealerProduct->delete();
-        
     }
 }
