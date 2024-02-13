@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddPurchaseRequest;
+use App\Http\Requests\AddReturnDetailsRequest;
 use App\Models\Product;
+
 use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use App\Models\Returndetails;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+
 use Yajra\DataTables\DataTables;
+
 
 class PurchaseController extends Controller
 {
@@ -32,6 +37,8 @@ class PurchaseController extends Controller
             ->addColumn('action', function ($row) {
                 return '<div class="btn-group" role="group">
                     <a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">تفاصيل الفاتورة </a>
+                    <a href="' . route('admin.purchase.returnDetails', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">اضافة مرتجع</a>
+
                     <a id="delete_btn" data-transaction-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>';
             })
@@ -157,63 +164,74 @@ class PurchaseController extends Controller
         return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
 
-
     public function getPurchaseInvoices()
     {
         // Get all purchase invoices with associated details and products
-        $invoices = Purchase::with('purchaseDetails.product')
+        $invoices = Purchase::with(['purchaseDetails.product'])
+            ->select('id') // اختر الحقول التي تحتاجها هنا
             ->orderBy("id", "ASC")
             ->get();
 
         return response()->json($invoices);
     }
 
-
-
-    // الدالة لعرض صفحة استعادة المشتريات
-    public function returnDetails()
+    public function getPurchaseDetails($id)
     {
-        // قدم قائمة بجميع الفواتير المتاحة للاسترجاع مع تفاصيلها
-        $purchases = Purchase::with('purchaseDetails.product')->get();
+        $purchaseDetails = PurchaseDetails::with('product:id,name')->where('purch_id', $id)->get(['id', 'quantity']);
 
-        return view('Admin.Purchase.Returndetails', compact('purchases'));
+        return response()->json($purchaseDetails);
     }
 
 
-    // الدالة لمعالجة عملية الاسترجاع
-    public function processReturn(Request $request)
+// الدالة لعرض صفحة استعادة المشتريات
+    public function returnDetails(Request $request)
     {
-        $request->validate([
-            'purchase_id' => 'required|exists:purchases,id',
-            'return_date' => 'required|date',
-            'quantity_returned' => 'required|integer|min:1',
-            'amount_returned' => 'required|numeric|min:0',
-        ]);
+        $purchase = Purchase::with('supplier')->with('purchaseDetails.product')->find($request->query('id'));
 
-        // قد يتعين عليك تحديد مودل Purchase بناءً على هيكل قاعدة البيانات الخاص بك
-        $purchase = Purchase::find($request->purchase_id);
+        // تحقق مما إذا كان هناك معلومات حول الشراء
+        return view('Admin.Purchase.Returndetails', compact('purchase'));
+    }
 
-        if (!$purchase) {
-            return redirect()->back()->with('error', 'الفاتورة غير موجودة.');
+// الدالة لمعالجة عملية الاسترجاع
+
+
+    public function processReturn(AddReturnDetailsRequest $request)
+    {
+        try {
+            // إنشاء سجل استرجاع
+            $returnDetails = Returndetails::create([
+                'purchase_details_id' => $request->purchase_details_id,
+                'return_date' => $request->return_date,
+                'quantity_returned' => $request->quantity_returned,
+                'amount_returned' => $request->amount_returned,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            // العثور على المنتج المرتبط بسجل الاسترجاع
+            $product = $returnDetails->purchaseDetails->product;
+
+            if (!$product) {
+                return response()->json(['success' => false, 'message' => 'لم يتم العثور على المنتج.']);
+            }
+
+            // التحقق من أن الكمية المرتجعة صحيحة وتحديث كمية المنتج
+            if ($returnDetails->quantity_returned <= $product->quantity) {
+                $product->quantity -= $returnDetails->quantity_returned;
+                $product->save();
+
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'كمية المرتجع أكبر من الكمية المتاحة.']);
+            }
+        } catch (ValidationException $e) {
+            // التعامل مع الأخطاء التي تنتج عن الصحة
+            return response()->json(['success' => false, 'message' => $e->errors()]);
+        } catch (\Exception $e) {
+            // التعامل مع الأخطاء الأخرى
+            Log::error('Error processing return: ' . $e->getMessage());
+
+            return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء معالجة الاسترجاع.']);
         }
-
-        // إنشاء عملية الاسترجاع
-        $returnDetails = ReturnDetails::create([
-            'purchase_details_id' => $request->purchase_id,
-            'return_date' => $request->return_date,
-            'quantity_returned' => $request->quantity_returned,
-            'amount_returned' => $request->amount_returned,
-        ]);
-
-        // تحديث الأرصدة أو أي عمليات إضافية حسب الحاجة
-        $product = Product::find($purchase->product_id);
-
-        if ($product) {
-            $newStockQuantity = $product->quantity - $request->quantity_returned;
-            $product->quantity = max(0, $newStockQuantity);
-            $product->save();
-        }
-
-        return redirect()->route('admin.purchase.returnDetails')->with('success', 'تمت عملية الاسترجاع بنجاح.');
     }
 }
