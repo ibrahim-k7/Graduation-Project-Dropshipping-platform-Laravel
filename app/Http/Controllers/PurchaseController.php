@@ -234,4 +234,5 @@ class PurchaseController extends Controller
             return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء معالجة الاسترجاع.']);
         }
     }
+    
 }

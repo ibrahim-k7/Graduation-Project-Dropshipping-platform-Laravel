@@ -28,7 +28,6 @@ Route::middleware('auth:admin')->group(function(){
     Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
     Route::get('admin/dshboard/getstoreCount',[AdminDshboardController::class,'getstoreCount'])->name('admin.dshboard.getstoreCount');
     Route::get('admin/dshboard/getChartData',[AdminDshboardController::class,'getChartData'])->name('admin.dshboard.getChartData');
-    Route::get('admin/dshboard/calculateChartTrafData',[AdminDshboardController::class,'calculateChartTrafData'])->name('admin.dshboard.calculateChartTrafData');
 
 });
 
@@ -242,6 +241,21 @@ Route::prefix('admin')->group(function () {
 
 
 });
+// routes/web.php
+
+use App\Http\Controllers\ReturnDetailsPurchaseController;
+// routes/web.php
+
+
+Route::get('/admin/purchaseReturn_management', [ReturnDetailsPurchaseController::class, 'index'])->name('admin.purchaseReturn_management.index');
+
+Route::get('/admin/purchase/purchase_management', [ReturnDetailsPurchaseController::class, 'create'])->name('admin.purchase.purchase_management');
+
+// استرجاع بيانات مرتجع الفواتير باستخدام DataTables
+Route::get('/admin/purchaseReturn_management/data', [ReturnDetailsPurchaseController::class, 'getDataTable'])->name('admin.purchaseReturn_management.data');
+
+// حذف مرتجع الفاتورة
+Route::post('/admin/purchaseReturn_management/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.purchaseReturn_management.destroy');
 
 
 Route::get('/simple', function () {
