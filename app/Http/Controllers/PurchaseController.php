@@ -5,16 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddPurchaseRequest;
 use App\Http\Requests\AddReturnDetailsRequest;
 use App\Models\Product;
-
 use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use App\Models\Returndetails;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
-
 use Yajra\DataTables\DataTables;
-
 
 class PurchaseController extends Controller
 {
@@ -37,9 +34,7 @@ class PurchaseController extends Controller
             ->addColumn('action', function ($row) {
                 return '<div class="btn-group" role="group">
                     <a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">تفاصيل الفاتورة </a>
-                    <a href="' . route('admin.purchase.returnDetails', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">اضافة مرتجع</a>
-
-                    <a id="delete_btn" data-transaction-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                    <a id="delete_btn" purch-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>';
             })
             ->rawColumns(['action'])
@@ -120,8 +115,9 @@ class PurchaseController extends Controller
             'additional_costs' => $request->additional_costs,
         ]);
 
-        // الحصول على المنتجات المضافة في الطلب
+        // الحصول على المنتجات المحدثة في الطلب
         $products = $request->products;
+
         //تحديث المنتجات في قاعدة البيانات
         foreach ($products as $productId) {
             // استخدام المعرف للتحقق من وجود المنتج في تفاصيل المشتريات
@@ -157,18 +153,59 @@ class PurchaseController extends Controller
                     'purchasing_price' => $productId["purchasing_price"],
                 ]);
             }
-
-
-
         }
+
+        // حذف المنتجات من تفاصيل المشتريات عند تعديل الفاتورة
+        //لايجاد المنتجات المحذوفة من الفاتورة
+        $proIds = collect($products)->pluck('pro_id')->toArray();
+        $purchaseDetails = PurchaseDetails::where(['purch_id' => $request->id])->get('pro_id');
+        $purchaseDetailsProIds = collect($purchaseDetails)->pluck('pro_id')->toArray();
+
+        //استدعاء معرف المنتج المحذوف
+        $deletedPurchaseDetails = collect($purchaseDetailsProIds)->diff($proIds)->toArray();
+
+        //الوصول الى جميع المنتجات المحذوفة في قاعدة البيانات
+        foreach ($deletedPurchaseDetails as $deletedPurchaseDetail){
+            //الوصول الى كمية المنتج المحذوف في تفاصيل المشتريات
+            $purchaseDetailsQuantity = PurchaseDetails::select('quantity')
+                ->where(['purch_id' => $request->id, 'pro_id' => $deletedPurchaseDetail])->first();
+
+            //نقص كمية المنتج بعد حذفه من تفاصيل المشتريات
+            $product = Product::findOrFail($deletedPurchaseDetail);
+            $product->update([
+                'quantity' => $product->quantity - $purchaseDetailsQuantity->quantity,
+            ]);
+
+            $purchase->prouduct()->detach($deletedPurchaseDetail);
+        }
+
         return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
+    }
+
+    public function destroy(Request $request){
+        //الوصول الى تفاصيل المشتريات حسب معرف الفاتورة
+        $purchaseDetailProIds = PurchaseDetails::select('pro_id')->where('purch_id',$request->id)->get();
+        foreach ($purchaseDetailProIds as $purchaseDetail){
+            $proId = $purchaseDetail->pro_id;
+
+            //استدعاء كمية المنتج في فاتورة تفاصيل المشتريات
+            $purchaseDetailQuantity = PurchaseDetails::select('quantity')
+                ->where(['purch_id' => $request->id, 'pro_id' => $proId])->first();
+
+            $product = Product::findOrFail($proId);
+
+            $product->update([
+                'quantity' =>  $product->quantity - $purchaseDetailQuantity->quantity,
+            ]);
+        }
+
+        Purchase::destroy($request->id);
     }
 
     public function getPurchaseInvoices()
     {
         // Get all purchase invoices with associated details and products
-        $invoices = Purchase::with(['purchaseDetails.product'])
-            ->select('id') // اختر الحقول التي تحتاجها هنا
+        $invoices = Purchase::with('purchaseDetails.product')
             ->orderBy("id", "ASC")
             ->get();
 
@@ -182,8 +219,7 @@ class PurchaseController extends Controller
         return response()->json($purchaseDetails);
     }
 
-
-// الدالة لعرض صفحة استعادة المشتريات
+    // الدالة لعرض صفحة استعادة المشتريات
     public function returnDetails(Request $request)
     {
         $purchase = Purchase::with('supplier')->with('purchaseDetails.product')->find($request->query('id'));
@@ -192,9 +228,8 @@ class PurchaseController extends Controller
         return view('Admin.Purchase.Returndetails', compact('purchase'));
     }
 
-// الدالة لمعالجة عملية الاسترجاع
 
-
+    // الدالة لمعالجة عملية الاسترجاع
     public function processReturn(AddReturnDetailsRequest $request)
     {
         try {

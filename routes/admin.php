@@ -8,7 +8,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\UserInfoController;
-use App\Http\Controllers\AdminInfoController;
 use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SubCategorieController;
@@ -28,7 +27,6 @@ Route::middleware('auth:admin')->group(function(){
     Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
     Route::get('admin/dshboard/getstoreCount',[AdminDshboardController::class,'getstoreCount'])->name('admin.dshboard.getstoreCount');
     Route::get('admin/dshboard/getChartData',[AdminDshboardController::class,'getChartData'])->name('admin.dshboard.getChartData');
-    Route::get('admin/dshboard/calculateChartTrafData',[AdminDshboardController::class,'calculateChartTrafData'])->name('admin.dshboard.calculateChartTrafData');
 
 });
 
@@ -54,13 +52,7 @@ Route::prefix('/admin')->group(function () {
             Route::get('/user-information/data','getDataTable')->name('admin.users.data');
 
 
-        }
-    );
-      // admin information
-      Route::controller(AdminInfoController::class)->group(
-        function () {
-            Route::get('/admin-information','index')->name('admin.admin');
-            Route::get('/admin-information/data','getDataTable')->name('admin.admins.data');
+
 
 
         }
@@ -198,6 +190,19 @@ Route::prefix('/admin')->group(function () {
             Route::post('/SubCategories/destroy', 'destroy')->name('admin.subCategories.destroy');
         }
     );
+
+    // Purchase
+    Route::controller(PurchaseController::class)->group(
+        function (){
+            Route::get('/purchase', 'index')->name('admin.purchase.index');
+            Route::get('/purchase/data', 'getDataTable')->name('admin.purchase.data');
+            Route::get('/purchase/create', 'create')->name('admin.purchase.create');
+            Route::post('/purchase/store', 'store')->name('admin.purchase.store');
+            Route::get('/Purchase_edit', 'edit')->name('admin.Purchase.edit');
+            Route::post('/purchase/update', 'update')->name('admin.purchase.update');
+            Route::post('/purchase/destroy', 'destroy')->name('admin.purchase.destroy');
+        }
+    );
 });
 
 
@@ -218,27 +223,16 @@ Route::prefix('admin')->group(function () {
     Route::get('admin/product/getProducts', [ProductController::class, 'getProducts'])->name('admin.product.getProducts');
     Route::get('admin/supplier/getSuppliers', [SupplierController::class, 'getSuppliers'])->name('admin.supplier.getSuppliers');
 
-    // Purchase Routes
-    Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.purchase.index');
-    Route::get('/purchase/data', [PurchaseController::class, 'getDataTable'])->name('admin.purchase.data');
-    Route::get('/purchase/create', [PurchaseController::class, 'create'])->name('admin.purchase.create');
-    Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('admin.purchase.store');
-    Route::get('/Purchase_edit', [PurchaseController::class, 'edit'])->name('admin.Purchase.edit');
-    Route::post('/purchase/update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
-     // روت لعرض صفحة استعادة المشتريات
-     Route::get('/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])->name('admin.purchase.returnDetails');
 
-     // روت لمعالجة عملية الاسترجاع
-         Route::post('/purchase/processReturn', [PurchaseController::class, 'processReturn'])->name('admin.purchase.processReturn');
+    // روت لعرض صفحة استرجاع المشتريات
+    Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])
+        ->name('admin.purchase.returnDetails');
 
-     // روت لجلب قائمة الفواتير
-         Route::get('admin/purchase/getPurchaseInvoices', [PurchaseController::class, 'getPurchaseInvoices'])
-             ->name('admin.purchase.getPurchaseInvoices');
+// روت لمعالجة عملية الاسترجاع
+    Route::post('/admin/purchase/processReturn', [PurchaseController::class, 'processReturn'])
+        ->name('admin.purchase.processReturn');
 
-     // روت لجلب تفاصيل الفاتورة// روت لجلب تفاصيل الفاتورة
-
-         Route::get('admin/purchase/getPurchaseDetails/{id}', [PurchaseController::class, 'getPurchaseDetails'])
-             ->name('admin.purchase.getPurchaseDetails');
+    Route::get('admin/purchase/getPurchaseInvoices', [PurchaseController::class, 'getPurchaseInvoices'])->name('admin.purchase.getPurchaseInvoices');
 
 
 });
@@ -257,19 +251,19 @@ Route::get('/forms-validation', function () {
 });
 
 
-    Route::get('/admin-profile', function () {
-        return view('admin/admin-profile');
-    });
-    Route::middleware(['auth:admin'])->group(function () {
-        Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
-        Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
-        Route::post('/admin/profile/update-password',  [AdminProfileController::class,'updatePassword'])->name('profile.updatePassword');
-    });
+Route::get('/admin-profile', function () {
+    return view('admin/admin-profile');
+});
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
+    Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
+    Route::post('/admin/profile/update-password',  [AdminProfileController::class,'updatePassword'])->name('profile.updatePassword');
+});
 
 
 
 
-    Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
+Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
     Route::controller(AdminLoginController::class)->group(function(){
         Route::get('login','login')->name('login');
         Route::post('login','checkLogin')->name('check');
@@ -280,7 +274,7 @@ Route::get('/forms-validation', function () {
         Route::post('register','store')->name('store');
     });
 
-    });
+});
 
 
 /*
