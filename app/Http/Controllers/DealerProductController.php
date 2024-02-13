@@ -24,6 +24,14 @@ class DealerProductController extends Controller
         return view('user.sellerproducts.products');
     }
 
+    //إعادة عدد منتجات التاجر المتوفره في قاعدة البيانات
+    public function getDealerProductsCount()
+    {
+        $store_id = Auth::user()->store_id;
+        $dealerProductsCount = DealerProduct::where('store_id', $store_id)->count();
+        return response()->json(['count' => $dealerProductsCount]);
+    }
+
     public function getSellerProducts()
     {
         $sellerProducts = Product::select('*')->get();
@@ -57,7 +65,7 @@ class DealerProductController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
-                <a   data-product-id="' . $row->dealer_pro_id. '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a   data-product-id="' . $row->dealer_pro_id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('user.dealer.product.details', ['id' => $row->dealer_pro_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a href="' . route('admin.subCategories', ['id' => $row->dealer_pro_id]) . '"   type="button" class="btn btn-primary">إضافة للسله</a>
                 </div>  ';
@@ -80,7 +88,6 @@ class DealerProductController extends Controller
         $details = DealerProduct::with('product')->where('dealer_pro_id', $id)->select('*')->first();
 
         return view('user.sellerproducts.dealer_product_details', compact('details'));
-
     }
 
     /**
@@ -146,7 +153,7 @@ class DealerProductController extends Controller
     {
         $dataToUpdate = $request->except('id');
         $dataToUpdate = $request->except('oldImgName');
-       
+
         DealerProduct::where(['dealer_pro_id' => $request->id])->update($dataToUpdate);
     }
 
@@ -160,6 +167,5 @@ class DealerProductController extends Controller
     {
         $dealerProduct = DealerProduct::where('dealer_pro_id', $request->id);
         $dealerProduct->delete();
-        
     }
 }

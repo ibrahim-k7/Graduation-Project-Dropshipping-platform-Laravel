@@ -66,7 +66,7 @@ class SupplierController extends Controller
                 return $query->whereBetween('created_at', [$startDate, $endDate]);
             })
             ->sum('balance');
-        return response()->json(['total_balance' => $totalBalance]);
+        return['total_balance' => $totalBalance];
     }
 
     public function getDataTable()

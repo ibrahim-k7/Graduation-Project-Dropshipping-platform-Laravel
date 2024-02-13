@@ -28,6 +28,7 @@ Route::middleware('auth:admin')->group(function(){
     Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
     Route::get('admin/dshboard/getstoreCount',[AdminDshboardController::class,'getstoreCount'])->name('admin.dshboard.getstoreCount');
     Route::get('admin/dshboard/getChartData',[AdminDshboardController::class,'getChartData'])->name('admin.dshboard.getChartData');
+    Route::get('admin/dshboard/calculateChartTrafData',[AdminDshboardController::class,'calculateChartTrafData'])->name('admin.dshboard.calculateChartTrafData');
 
 });
 
