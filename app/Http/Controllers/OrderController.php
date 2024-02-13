@@ -264,9 +264,6 @@ class OrderController extends Controller
                     <div class="dropdown-menu">
                         <a data-order-id="' . $row->order_id . '"
                            data-order_status="تم التوصيل"
-                           data-wallet_id="' . $row->wallet_id . '"
-                           data-total_amount="' . $row->total_amount . '"
-                           data-payment_status="تم الدفع"
                            class="order-status-change-btn dropdown-item"
                            id="ap2"
                            href="#">
@@ -280,9 +277,6 @@ class OrderController extends Controller
                         </a>
                         <a data-order-id="' . $row->order_id . '"
                            data-order_status="تم الغاء الطلب"
-                           data-wallet_id="' . $row->wallet_id . '"
-                           data-total_amount="' . $row->total_amount . '"
-                           data-payment_status="تم الغاء الدفع"
                            class="order-status-change-btn dropdown-item"
                            href="#">
                            <span class="badge bg-danger">تم الغاء الطلب</span>
@@ -351,7 +345,7 @@ class OrderController extends Controller
         $order_status = $request->input('order_status');
 
         // تحديث السجل في قاعدة البيانات
-        Order::where('order_id', $request->input('order_id'))->update(['order_status' => $order_status]);
+        Order::where('order_id', $request->input('id'))->update(['order_status' => $order_status]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث order_status بنجاح']);

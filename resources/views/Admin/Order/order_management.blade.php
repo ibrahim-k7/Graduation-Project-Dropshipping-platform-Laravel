@@ -145,7 +145,6 @@
                 confirmButtonText: "نعم، قم بتغيير حالة الطلب"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    updatePaymentStatus(order_id,payment_status,total_amount,wallet_id);
                     $.ajax({
                         type: 'post',
                         headers: {
