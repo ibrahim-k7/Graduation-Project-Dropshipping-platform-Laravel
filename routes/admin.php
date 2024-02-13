@@ -58,6 +58,13 @@ Route::prefix('/admin')->group(function () {
         }
     );
 
+    // admin information
+    Route::controller(AdminInfoController::class)->group(
+        function () {
+            Route::get('/admin-information', 'index')->name('admin.admin');
+            Route::get('/admin-information/data', 'getDataTable')->name('admin.admins.data');
+        });
+
     //  Delivery
     Route::controller(DeliveryController::class)->group(
         function () {

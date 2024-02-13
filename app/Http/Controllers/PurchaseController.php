@@ -34,6 +34,7 @@ class PurchaseController extends Controller
             ->addColumn('action', function ($row) {
                 return '<div class="btn-group" role="group">
                     <a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">تفاصيل الفاتورة </a>
+                    <a href="' . route('admin.purchase.returnDetails', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">اضافة مرتجع</a>
                     <a id="delete_btn" purch-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>';
             })
@@ -205,7 +206,8 @@ class PurchaseController extends Controller
     public function getPurchaseInvoices()
     {
         // Get all purchase invoices with associated details and products
-        $invoices = Purchase::with('purchaseDetails.product')
+        $invoices = Purchase::with(['purchaseDetails.product'])
+            ->select('id')// اختر الحقول التي تحتاجها هنا
             ->orderBy("id", "ASC")
             ->get();
 
