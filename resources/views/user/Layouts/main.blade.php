@@ -72,7 +72,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="{{ Route('user.dashboard') }}" class="logo d-flex align-items-center">
-                <img src={{ asset('User/IMG/logo.png') }} alt="">
+                <img src={{ asset('Admin/IMG/logo.png') }} alt="">
                 <span class="d-none d-lg-block">المخازن الالكترونية</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -88,13 +88,16 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-
+                        <i class="bi bi-wallet mx-2"></i> 
                         <span class=" dropdown-toggle ps-2" id="balance_main">
+
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end d profile">
                         <li class="dropdown-header">
-                            <h6>المحفظة</h6>
+
+                            <h6> <i class="bi bi-wallet"></i>
+                                المحفظة</h6>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -102,7 +105,7 @@
 
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('user.transfers') }}">
-                                <i class="bi bi-arrow-right-circle"></i>
+                                <i class="bi bi-cash"></i>
                                 <span>الحوالات</span>
                             </a>
                         </li>
@@ -202,8 +205,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ Route('user.wallets.operation') }}">
-                    <i class="bi bi-grid"></i>
+                    <i class="bi bi-wallet"></i>
                     <span>المحفظة</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('user.transfers') }}">
+                    <i class="bi bi-cash"></i>
+                    <span>الحوالات</span>
                 </a>
             </li><!-- End Register Page Nav -->
 

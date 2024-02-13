@@ -100,7 +100,7 @@
                                             <i class="bi bi-box"></i>
                                         </div>
                                         <div class="pe-3">
-                                            <h6>1244</h6>
+                                            <h6 id="dealerProducts">0</h6>
                                         </div>
                                     </div>
 
@@ -258,6 +258,18 @@
                     var balanceValue = data.balance;
                     $("#balanceDash").html(balanceValue +
                         '<span style="font-size: small ;"> رس</span>');
+                },
+                error: function(reject) {
+                    console.error('Error loading :', reject);
+                }
+            });
+
+            $.ajax({
+                type: 'get',
+                url: "{{ route('user.dealer.product.getDealerProductsCount') }}",
+                async: false,
+                success: function(data) {
+                    $('#dealerProducts').text(data.count);
                 },
                 error: function(reject) {
                     console.error('Error loading :', reject);

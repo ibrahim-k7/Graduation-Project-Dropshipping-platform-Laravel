@@ -24,6 +24,14 @@ class DealerProductController extends Controller
         return view('user.sellerproducts.products');
     }
 
+    //إعادة عدد منتجات التاجر المتوفره في قاعدة البيانات
+    public function getDealerProductsCount()
+    {
+        $store_id = Auth::user()->store_id;
+        $dealerProductsCount = DealerProduct::where('store_id', $store_id)->count();
+        return response()->json(['count' => $dealerProductsCount]);
+    }
+
     public function getSellerProducts()
     {
         $sellerProducts = Product::select('*')->get();
@@ -57,6 +65,7 @@ class DealerProductController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
+                <a   data-product-id="' . $row->dealer_pro_id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a   data-product-id="' . $row->dealer_pro_id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('user.dealer.product.details', ['id' => $row->dealer_pro_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
                 <a href="' . route('user.cart', ['id' => $row->dealer_pro_id]) . '"   type="button" class="btn btn-primary">إضافة للسله</a>

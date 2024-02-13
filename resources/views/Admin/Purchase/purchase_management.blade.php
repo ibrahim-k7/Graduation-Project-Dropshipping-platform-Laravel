@@ -168,15 +168,15 @@
             }).then((result) => {
                 if (result.isConfirmed) {
 
-                    var supplier_id = $(this).attr('data-supplier-id');
+                    var purch_id = $(this).attr('purch-id');
                     $.ajax({
                         type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                         },
-                        url: "{{ route('admin.suppliers.destroy') }}",
+                        url: "{{ route('admin.purchase.destroy') }}",
                         data: {
-                            'id': supplier_id
+                            'id': purch_id
                         },
                         success: function(data) {
                             Swal.fire({
@@ -185,36 +185,15 @@
                                 text: "لقد تم حذف الملف الخاص بك",
                                 icon: "success"
                             });
-
-
-
-                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                            $('#Supplier_Managment').DataTable().ajax.reload();
+                        //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
+                            $('#Purchase_Managment').DataTable().ajax.reload();
                         },
                         error: function(reject) {
 
                         }
                     });
-
                 }
             });
-
-
-
-
-
         });
-
-
-
-
-
-
-        /* $(document).ready(function(){
-             $('#wallet_table_id').DataTable({
-               
-
-             });
-         });*/
     </script>
 @endsection

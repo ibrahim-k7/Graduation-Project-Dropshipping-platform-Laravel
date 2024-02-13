@@ -175,7 +175,7 @@ class OrderController extends Controller
             })
             ->sum('total_per_shp');
 
-        return response()->json(['total_paid_amount' => $totalAmount]);
+        return ['total_paid_amount' => $totalAmount];
         // $totalAmount = Order::where('payment_status', 'تم الدفع')->sum('total_per_shp');
         // return response()->json(['total_paid_amount' => $totalAmount]);
     }

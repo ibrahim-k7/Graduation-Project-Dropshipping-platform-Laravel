@@ -27,9 +27,15 @@ use App\Http\Controllers\DealerProductController;
 
 // this file only for user routes not the admin routes
 // هذ الملف للمسارات المتعلقة ب المستخدم وليس الادمن
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
+
+
 
 Route::middleware('verified')->group(function () {
     Route::get('user/profile', [ProfileController::class, 'index'])->name('user.profile');
@@ -44,17 +50,14 @@ Route::middleware('verified')->group(function () {
 });
 auth::routes(['verify' => true]);
 
-Route::get('user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
+// Route::get('user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/userinterface', function () {
     return view('User.Dashboard.dashboard');
@@ -82,7 +85,7 @@ Route::controller(DealerProductController::class)->group(
         Route::get('/user/create','create')->name('user.dealer.product.details');
         Route::post('/user/store','store')->name('user.add.dealer.product');
         Route::post('/user/destroy','destroy')->name('user.dealer.product.destroy');
-        Route::post('/user/update','update')->name('user.dealer.product.update');
+        Route::get('/user/getDealerProductsCount','getDealerProductsCount')->name('user.dealer.product.getDealerProductsCount');        Route::post('/user/update','update')->name('user.dealer.product.update');
 
 
     }
@@ -142,6 +145,4 @@ Route::controller(OrderDetailsController::class)->group(
     }
 );*/
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

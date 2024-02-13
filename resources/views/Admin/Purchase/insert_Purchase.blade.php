@@ -134,8 +134,7 @@
                                         <br>
 
                                         <div class="text-center">
-                                            <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ التحديث</button>
-                                            <button type="submit" id="submit_add" class="btn btn-primary" data-action="add">إضافة مشتريات جديدة</button>
+                                            <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ </button>
                                             <button type="reset" class="btn btn-secondary">Reset</button>
                                         </div>
                                     </form>
@@ -210,7 +209,7 @@
                     $("<td>").text(productPrice),
                     $("<td>").text(quantity),
                     $("<td>").text(totalCost),
-                    $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button>')
+                    $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>')
                 ];
                 // إضافة الخلايا إلى الصف
                 newRow.append(cells);
@@ -267,7 +266,7 @@
 
                 if (purchaseDetails != null && purchaseDetails.length > 0) {
                     for (var i = 0; i < purchaseDetails.length; i++) {
-                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
+                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.purchasing_price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
 
 
                         // قم بتعبئة الحقول في الصف المضاف بالبيانات
@@ -277,7 +276,7 @@
                         currentRow.find('td:eq(2)').text(purchaseDetails[i].product.id.purchasing_price);
                         currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
                         currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
-                        currentRow.find('td:eq(5)').html('<button type="button" class="delete_btn btn btn-danger" onclick="removeRow(this)">حذف</button>');
+                        currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
                         // قد تحتاج إلى تكرار هذا للحقول الأخرى حسب احتياجاتك
                         console.log('Purchase Details:', purchaseDetails[i]);
                     };
