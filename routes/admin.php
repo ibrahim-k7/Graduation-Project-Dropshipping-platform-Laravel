@@ -129,7 +129,7 @@ Route::prefix('/admin')->group(function () {
             Route::get('/suppliers_management/getSuppliersCount', 'getSuppliersCount')->name('admin.suppliers.getSuppliersCount');// عدد الموردين
             Route::get('/suppliers_management/getSuppliersTotalBalance', 'getSuppliersTotalBalance')->name('admin.suppliers.getSuppliersTotalBalance');// حساب المديونية
 
-            
+
         }
     );
 
@@ -190,6 +190,19 @@ Route::prefix('/admin')->group(function () {
             Route::post('/SubCategories/destroy', 'destroy')->name('admin.subCategories.destroy');
         }
     );
+
+    // Purchase
+    Route::controller(PurchaseController::class)->group(
+        function (){
+            Route::get('/purchase', 'index')->name('admin.purchase.index');
+            Route::get('/purchase/data', 'getDataTable')->name('admin.purchase.data');
+            Route::get('/purchase/create', 'create')->name('admin.purchase.create');
+            Route::post('/purchase/store', 'store')->name('admin.purchase.store');
+            Route::get('/Purchase_edit', 'edit')->name('admin.Purchase.edit');
+            Route::post('/purchase/update', 'update')->name('admin.purchase.update');
+            Route::post('/purchase/destroy', 'destroy')->name('admin.purchase.destroy');
+        }
+    );
 });
 
 
@@ -210,13 +223,7 @@ Route::prefix('admin')->group(function () {
     Route::get('admin/product/getProducts', [ProductController::class, 'getProducts'])->name('admin.product.getProducts');
     Route::get('admin/supplier/getSuppliers', [SupplierController::class, 'getSuppliers'])->name('admin.supplier.getSuppliers');
 
-    // Purchase Routes
-    Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.purchase.index');
-    Route::get('/purchase/data', [PurchaseController::class, 'getDataTable'])->name('admin.purchase.data');
-    Route::get('/purchase/create', [PurchaseController::class, 'create'])->name('admin.purchase.create');
-    Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('admin.purchase.store');
-    Route::get('/Purchase_edit', [PurchaseController::class, 'edit'])->name('admin.Purchase.edit');
-    Route::post('/purchase/update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
+
     // روت لعرض صفحة استرجاع المشتريات
     Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])
         ->name('admin.purchase.returnDetails');

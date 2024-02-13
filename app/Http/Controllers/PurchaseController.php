@@ -32,7 +32,7 @@ class PurchaseController extends Controller
             ->addColumn('action', function ($row) {
                 return '<div class="btn-group" role="group">
                     <a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">تفاصيل الفاتورة </a>
-                    <a id="delete_btn" data-transaction-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                    <a id="delete_btn" purch-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>';
             })
             ->rawColumns(['action'])
@@ -154,21 +154,50 @@ class PurchaseController extends Controller
         }
 
         // حذف المنتجات من تفاصيل المشتريات عند تعديل الفاتورة
-        $products = $request->products;
+        //لايجاد المنتجات المحذوفة من الفاتورة
         $proIds = collect($products)->pluck('pro_id')->toArray();
         $purchaseDetails = PurchaseDetails::where(['purch_id' => $request->id])->get('pro_id');
         $purchaseDetailsProIds = collect($purchaseDetails)->pluck('pro_id')->toArray();
-        $newPurchaseDetails = collect($purchaseDetailsProIds)->diff($proIds)->toArray();
 
-        foreach ($newPurchaseDetails as $newPurchaseDetail){
-            $purchase->prouduct()->detach($newPurchaseDetail);
+        //استدعاء معرف المنتج المحذوف
+        $deletedPurchaseDetails = collect($purchaseDetailsProIds)->diff($proIds)->toArray();
+
+        //الوصول الى جميع المنتجات المحذوفة في قاعدة البيانات
+        foreach ($deletedPurchaseDetails as $deletedPurchaseDetail){
+            //الوصول الى كمية المنتج المحذوف في تفاصيل المشتريات
+            $purchaseDetailsQuantity = PurchaseDetails::select('quantity')
+                ->where(['purch_id' => $request->id, 'pro_id' => $deletedPurchaseDetail])->first();
+
+            //نقص كمية المنتج بعد حذفه من تفاصيل المشتريات
+            $product = Product::findOrFail($deletedPurchaseDetail);
+            $product->update([
+                'quantity' => $product->quantity - $purchaseDetailsQuantity->quantity,
+            ]);
+
+            $purchase->prouduct()->detach($deletedPurchaseDetail);
         }
 
         return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
 
-    public function destroy(){
+    public function destroy(Request $request){
+        //الوصول الى تفاصيل المشتريات حسب معرف الفاتورة
+        $purchaseDetailProIds = PurchaseDetails::select('pro_id')->where('purch_id',$request->id)->get();
+        foreach ($purchaseDetailProIds as $purchaseDetail){
+            $proId = $purchaseDetail->pro_id;
 
+            //استدعاء كمية المنتج في فاتورة تفاصيل المشتريات
+            $purchaseDetailQuantity = PurchaseDetails::select('quantity')
+                ->where(['purch_id' => $request->id, 'pro_id' => $proId])->first();
+
+            $product = Product::findOrFail($proId);
+
+            $product->update([
+                'quantity' =>  $product->quantity - $purchaseDetailQuantity->quantity,
+            ]);
+        }
+        
+        Purchase::destroy($request->id);
     }
 
     public function getPurchaseInvoices()
