@@ -85,7 +85,8 @@ Route::controller(DealerProductController::class)->group(
         Route::get('/user/create','create')->name('user.dealer.product.details');
         Route::post('/user/store','store')->name('user.add.dealer.product');
         Route::post('/user/destroy','destroy')->name('user.dealer.product.destroy');
-        Route::get('/user/getDealerProductsCount','getDealerProductsCount')->name('user.dealer.product.getDealerProductsCount');        Route::post('/user/update','update')->name('user.dealer.product.update');
+        Route::get('/user/getDealerProductsCount','getDealerProductsCount')->name('user.dealer.product.getDealerProductsCount');       
+         Route::post('/user/update','update')->name('user.dealer.product.update');
 
 
     }
