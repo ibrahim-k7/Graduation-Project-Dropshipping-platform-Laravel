@@ -444,11 +444,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="{{ route('admin.purchase.returnDetails') }}">
-                            <i class="bi bi-circle"></i><span>استرجاع المشتريات</span>
-                        </a>
-                    </li>
+                   
                 </ul>
             </li><!-- نهاية قائمة المشتريات -->
 
