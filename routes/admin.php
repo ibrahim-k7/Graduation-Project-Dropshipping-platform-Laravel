@@ -8,7 +8,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDetailsController;
 use App\Http\Controllers\UserInfoController;
-use App\Http\Controllers\AdminInfoController;
 use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SubCategorieController;
@@ -23,70 +22,69 @@ use App\Http\Controllers\admin\auth\AdminLoginController;
 use App\Http\Controllers\admin\auth\AdminRegisterController;
 use App\Http\Controllers\admin\AdminDshboardController;
 use App\Http\Controllers\admin\AdminProfileController;
+use App\Http\Controllers\AdminInfoController;
+use App\Http\Controllers\ReturnDetailsPurchaseController;
 
-Route::middleware('auth:admin')->group(function(){
-    Route::get('admin/dshboard',[AdminDshboardController::class,'index'])->name('admin.dshboard');
-    Route::get('admin/dshboard/getstoreCount',[AdminDshboardController::class,'getstoreCount'])->name('admin.dshboard.getstoreCount');
-    Route::get('admin/dshboard/getChartData',[AdminDshboardController::class,'getChartData'])->name('admin.dshboard.getChartData');
-
+Route::middleware('auth:admin')->group(function () {
+    Route::get('admin/dshboard', [AdminDshboardController::class, 'index'])->name('admin.dshboard');
+    Route::get('admin/dshboard/getstoreCount', [AdminDshboardController::class, 'getstoreCount'])->name('admin.dshboard.getstoreCount');
+    Route::get('admin/dshboard/getChartData', [AdminDshboardController::class, 'getChartData'])->name('admin.dshboard.getChartData');
+    Route::get('admin/dsboard/calculateChartTrafData', [AdminDshboardController::class, 'calculateChartTrafData'])->name('admin.dshboard.calculateChartTrafData');
 });
 
 Route::prefix('/admin')->group(function () {
 
     Route::controller(ProductController::class)->group(
         function () {
-            Route::get('/products_management','index')->name('admin.products');
-            Route::get('/products_management/data','getDataTable')->name('admin.products.data');
+            Route::get('/products_management', 'index')->name('admin.products');
+            Route::get('/products_management/data', 'getDataTable')->name('admin.products.data');
             Route::get('/products_management/create', 'create')->name('admin.products.create');
             Route::get('/products_management/edit', 'edit')->name('admin.products.edit');
             Route::post('/products_management/store', 'store')->name('admin.products.store');
             Route::post('/products_management/update', 'update')->name('admin.products.update');
-            Route::post('/products_management/destroy','destroy')->name('admin.products.destroy');
-            Route::get('/products_management/getProductsCount','getProductsCount')->name('admin.products.getProductsCount');
-            Route::get('/products_management/getLowQuantityProducts','getLowQuantityProducts')->name('admin.products.getLowQuantityProducts');
+            Route::post('/products_management/destroy', 'destroy')->name('admin.products.destroy');
+            Route::get('/products_management/getProductsCount', 'getProductsCount')->name('admin.products.getProductsCount');
+            Route::get('/products_management/getLowQuantityProducts', 'getLowQuantityProducts')->name('admin.products.getLowQuantityProducts');
         }
     );
     // user information
     Route::controller(UserInfoController::class)->group(
         function () {
-            Route::get('/user-information','index')->name('admin.users');
-            Route::get('/user-information/data','getDataTable')->name('admin.users.data');
-
-
+            Route::get('/user-information', 'index')->name('admin.users');
+            Route::get('/user-information/data', 'getDataTable')->name('admin.users.data');
         }
     );
-      // admin information
-      Route::controller(AdminInfoController::class)->group(
+
+    // admin information
+    Route::controller(AdminInfoController::class)->group(
         function () {
-            Route::get('/admin-information','index')->name('admin.admin');
-            Route::get('/admin-information/data','getDataTable')->name('admin.admins.data');
-
-
+            Route::get('/admin-information', 'index')->name('admin.admin');
+            Route::get('/admin-information/data', 'getDataTable')->name('admin.admins.data');
         }
     );
 
     //  Delivery
     Route::controller(DeliveryController::class)->group(
         function () {
-            Route::get('/delivery_management','index')->name('admin.delivery');
-            Route::get('/delivery_management/a','getDataTable')->name('admin.delivery.data');
-            Route::get('/insert_delivery' ,'create')->name('admin.delivery.insert');
-            Route::post('/add_delivery','store')->name('admin.delivery.store');
-            Route::get('/edit_delivery','edit')->name('admin.delivery.edit');
-            Route::post('/update_delivery','update')->name('admin.delivery.update');
-            Route::post('/destroy_delivery','destroy')->name('admin.delivery.delete');
+            Route::get('/delivery_management', 'index')->name('admin.delivery');
+            Route::get('/delivery_management/a', 'getDataTable')->name('admin.delivery.data');
+            Route::get('/insert_delivery', 'create')->name('admin.delivery.insert');
+            Route::post('/add_delivery', 'store')->name('admin.delivery.store');
+            Route::get('/edit_delivery', 'edit')->name('admin.delivery.edit');
+            Route::post('/update_delivery', 'update')->name('admin.delivery.update');
+            Route::post('/destroy_delivery', 'destroy')->name('admin.delivery.delete');
         }
     );
 
     //Order
     Route::controller(OrderController::class)->group(
         function () {
-            Route::get('/order_management','index')->name('admin.order');
-            Route::get('/order_managment/a','getDataTable')->name('admin.order.data');
-            Route::post('/order_managment/updatePayment','updatePaymentStatus')->name('admin.order.update.payment.status');
-            Route::post('/order_managment/updateOrder','updateOrderStatus')->name('admin.order.update.order.status');
-            Route::post('/order_managment/delete','destroy')->name('admin.order.destroy');
-            Route::get('/order_managment/getOrders', 'getOrders')->name('admin.order.getOrders');// اعادة المنتجات لعرضها في واجهة لوحة التحكم
+            Route::get('/order_management', 'index')->name('admin.order');
+            Route::get('/order_managment/a', 'getDataTable')->name('admin.order.data');
+            Route::post('/order_managment/updatePayment', 'updatePaymentStatus')->name('admin.order.update.payment.status');
+            Route::post('/order_managment/updateOrder', 'updateOrderStatus')->name('admin.order.update.order.status');
+            Route::post('/order_managment/delete', 'destroy')->name('admin.order.destroy');
+            Route::get('/order_managment/getOrders', 'getOrders')->name('admin.order.getOrders'); // اعادة المنتجات لعرضها في واجهة لوحة التحكم
             Route::get('/order_managment/getOrdersCount', 'getOrdersCount')->name('admin.order.getOrdersCount'); //إرجاع عددالطلبات لواجهة لوحة التحكم
             Route::get('/order_managment/getTotalPaidOrdersAmount', 'getTotalPaidOrdersAmount')->name('admin.order.getTotalPaidOrdersAmount'); //إرجاع إجمالي المبيعات لواجهة لوحة التحكم
 
@@ -96,30 +94,28 @@ Route::prefix('/admin')->group(function () {
     //Order Details
     Route::controller(OrderDetailsController::class)->group(
         function () {
-            Route::get('/order_details_managment','index')->name('admin.order.details');
-            Route::get('/order_details_managment/a','getDataTable')->name('admin.order.details.data');
-            Route::get('/order_details_managment/return','return')->name('admin.order.details.return');
-
+            Route::get('/order_details_managment', 'index')->name('admin.order.details');
+            Route::get('/order_details_managment/a', 'getDataTable')->name('admin.order.details.data');
+            Route::get('/order_details_managment/return', 'return')->name('admin.order.details.return');
         }
     );
 
     //Returned Order Details
     Route::controller(ReturnDetailsOrderController::class)->group(
         function () {
-            Route::get('/return_order_details_managment','index')->name('admin.returned.order.details');
-            Route::get('/return_order_details_managment/a','getDataTable')->name('admin.returned.order.details.data');
-            Route::post('/return_order_details_managment/store','store')->name('admin.returned.order.details.store');
-            Route::post('/return_order_details_managment/update','update')->name('admin.returned.order.details.update');
-            Route::get('/return_order_details_managment/edit','edit')->name('admin.returned.order.details.edit');
-
+            Route::get('/return_order_details_managment', 'index')->name('admin.returned.order.details');
+            Route::get('/return_order_details_managment/a', 'getDataTable')->name('admin.returned.order.details.data');
+            Route::post('/return_order_details_managment/store', 'store')->name('admin.returned.order.details.store');
+            Route::post('/return_order_details_managment/update', 'update')->name('admin.returned.order.details.update');
+            Route::get('/return_order_details_managment/edit', 'edit')->name('admin.returned.order.details.edit');
         }
     );
 
     //Sales
     Route::controller(SalesController::class)->group(
         function () {
-            Route::get('/sales_managment','index')->name('admin.sales');
-            Route::get('/sales_managment/a','getDataTable')->name('admin.sales.data');
+            Route::get('/sales_managment', 'index')->name('admin.sales');
+            Route::get('/sales_managment/a', 'getDataTable')->name('admin.sales.data');
         }
     );
 
@@ -133,8 +129,8 @@ Route::prefix('/admin')->group(function () {
             Route::post('/suppliers_management/store', 'store')->name('admin.suppliers.store');
             Route::post('/suppliers_management/destroy', 'destroy')->name('admin.suppliers.destroy');
             Route::post('/suppliers_management/update', 'update')->name('admin.suppliers.update');
-            Route::get('/suppliers_management/getSuppliersCount', 'getSuppliersCount')->name('admin.suppliers.getSuppliersCount');// عدد الموردين
-            Route::get('/suppliers_management/getSuppliersTotalBalance', 'getSuppliersTotalBalance')->name('admin.suppliers.getSuppliersTotalBalance');// حساب المديونية
+            Route::get('/suppliers_management/getSuppliersCount', 'getSuppliersCount')->name('admin.suppliers.getSuppliersCount'); // عدد الموردين
+            Route::get('/suppliers_management/getSuppliersTotalBalance', 'getSuppliersTotalBalance')->name('admin.suppliers.getSuppliersTotalBalance'); // حساب المديونية
 
 
         }
@@ -197,6 +193,19 @@ Route::prefix('/admin')->group(function () {
             Route::post('/SubCategories/destroy', 'destroy')->name('admin.subCategories.destroy');
         }
     );
+
+    // Purchase
+    Route::controller(PurchaseController::class)->group(
+        function () {
+            Route::get('/purchase', 'index')->name('admin.purchase.index');
+            Route::get('/purchase/data', 'getDataTable')->name('admin.purchase.data');
+            Route::get('/purchase/create', 'create')->name('admin.purchase.create');
+            Route::post('/purchase/store', 'store')->name('admin.purchase.store');
+            Route::get('/Purchase_edit', 'edit')->name('admin.Purchase.edit');
+            Route::post('/purchase/update', 'update')->name('admin.purchase.update');
+            Route::post('/purchase/destroy', 'destroy')->name('admin.purchase.destroy');
+        }
+    );
 });
 
 
@@ -217,36 +226,17 @@ Route::prefix('admin')->group(function () {
     Route::get('admin/product/getProducts', [ProductController::class, 'getProducts'])->name('admin.product.getProducts');
     Route::get('admin/supplier/getSuppliers', [SupplierController::class, 'getSuppliers'])->name('admin.supplier.getSuppliers');
 
-    // Purchase Routes
-    Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.purchase.index');
-    Route::get('/purchase/data', [PurchaseController::class, 'getDataTable'])->name('admin.purchase.data');
-    Route::get('/purchase/create', [PurchaseController::class, 'create'])->name('admin.purchase.create');
-    Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('admin.purchase.store');
-    Route::get('/Purchase_edit', [PurchaseController::class, 'edit'])->name('admin.Purchase.edit');
-    Route::post('/purchase/update', [PurchaseController::class, 'update'])->name('admin.purchase.update');
-     // روت لعرض صفحة استعادة المشتريات
-     Route::get('/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])->name('admin.purchase.returnDetails');
 
-     // روت لمعالجة عملية الاسترجاع
-         Route::post('/purchase/processReturn', [PurchaseController::class, 'processReturn'])->name('admin.purchase.processReturn');
+    // روت لعرض صفحة استرجاع المشتريات
+    Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'returnDetails'])
+        ->name('admin.purchase.returnDetails');
 
-     // روت لجلب قائمة الفواتير
-         Route::get('admin/purchase/getPurchaseInvoices', [PurchaseController::class, 'getPurchaseInvoices'])
-             ->name('admin.purchase.getPurchaseInvoices');
+    // روت لمعالجة عملية الاسترجاع
+    Route::post('/admin/purchase/processReturn', [PurchaseController::class, 'processReturn'])
+        ->name('admin.purchase.processReturn');
 
-     // روت لجلب تفاصيل الفاتورة// روت لجلب تفاصيل الفاتورة
-
-         Route::get('admin/purchase/getPurchaseDetails/{id}', [PurchaseController::class, 'getPurchaseDetails'])
-             ->name('admin.purchase.getPurchaseDetails');
-
-
+    Route::get('admin/purchase/getPurchaseInvoices', [PurchaseController::class, 'getPurchaseInvoices'])->name('admin.purchase.getPurchaseInvoices');
 });
-// routes/web.php
-
-use App\Http\Controllers\ReturnDetailsPurchaseController;
-// routes/web.php
-
-
 Route::get('/admin/purchaseReturn_management', [ReturnDetailsPurchaseController::class, 'index'])->name('admin.purchaseReturn_management.index');
 
 Route::get('/admin/purchase/purchase_management', [ReturnDetailsPurchaseController::class, 'create'])->name('admin.purchase.purchase_management');
@@ -256,6 +246,7 @@ Route::get('/admin/purchaseReturn_management/data', [ReturnDetailsPurchaseContro
 
 // حذف مرتجع الفاتورة
 Route::post('/admin/purchaseReturn_management/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.purchaseReturn_management.destroy');
+
 
 
 Route::get('/simple', function () {
@@ -271,30 +262,29 @@ Route::get('/forms-validation', function () {
 });
 
 
-    Route::get('/admin-profile', function () {
-        return view('admin/admin-profile');
-    });
-    Route::middleware(['auth:admin'])->group(function () {
-        Route::get('/admin/profile', [AdminProfileController::class,'showProfile'])->name('admin.profile');
-        Route::post('/admin/profile/update-email',  [AdminProfileController::class,'updateEmail'])->name('profile.updateEmail');
-        Route::post('/admin/profile/update-password',  [AdminProfileController::class,'updatePassword'])->name('profile.updatePassword');
-    });
+Route::get('/admin-profile', function () {
+    return view('admin/admin-profile');
+});
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admin/profile', [AdminProfileController::class, 'showProfile'])->name('admin.profile');
+    Route::post('/admin/profile/update-email',  [AdminProfileController::class, 'updateEmail'])->name('profile.updateEmail');
+    Route::post('/admin/profile/update-password',  [AdminProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+});
 
 
 
 
-    Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function(){
-    Route::controller(AdminLoginController::class)->group(function(){
-        Route::get('login','login')->name('login');
-        Route::post('login','checkLogin')->name('check');
-        Route::post('logout','logout')->name('logout');
+Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function () {
+    Route::controller(AdminLoginController::class)->group(function () {
+        Route::get('login', 'login')->name('login');
+        Route::post('login', 'checkLogin')->name('check');
+        Route::post('logout', 'logout')->name('logout');
     });
-    Route::controller(AdminRegisterController::class)->group(function(){
-        Route::get('register','register')->name('register');
-        Route::post('register','store')->name('store');
+    Route::controller(AdminRegisterController::class)->group(function () {
+        Route::get('register', 'register')->name('register');
+        Route::post('register', 'store')->name('store');
     });
-
-    });
+});
 
 
 /*
