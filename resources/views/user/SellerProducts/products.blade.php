@@ -218,7 +218,7 @@
                     contentType: false,
                     url: "{{ route('user.cart.store') }}",
                     data: {
-                            'id':  dealer_product_id,
+                        'id':dealer_product_id,
                         },
                     success: function(data) {
                         Swal.fire({
