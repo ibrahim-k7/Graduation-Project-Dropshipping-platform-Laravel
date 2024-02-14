@@ -205,22 +205,20 @@
         });
         $(document).on('click', '.cart_btn', function(e) {
                 e.preventDefault();
-                var dealer_product_id = $(this).attr('data-product-id');
-
-                console.log(dealer_product_id);
+                var product_id = $(this).attr('data-product-id');
+                console.log(product_id);
                 //حفظ المعلومات
                 $.ajax({
                     type: 'post',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                     },
-                    processData: false,
-                    contentType: false,
                     url: "{{ route('user.cart.store') }}",
                     data: {
-                        'id':dealer_product_id,
+                            'id': product_id,
                         },
                     success: function(data) {
+                        console.log(product_id);
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
