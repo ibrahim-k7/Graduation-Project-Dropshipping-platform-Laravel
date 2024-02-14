@@ -14,6 +14,7 @@ use App\Http\Controllers\WalletOperationController;
 use App\Http\Controllers\DealerProductController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -92,14 +93,15 @@ Route::controller(DealerProductController::class)->group(
     }
 );
 
-//User Cart
+// User Cart
 Route::controller(CartController::class)->group(
     function () {
         Route::get('/user/cart','index')->name('user.cart');
-  
-
+        Route::post('/user/cart/store','store')->name('user.cart.store');
     }
 );
+
+
 
 Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
 Route::get('user/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');

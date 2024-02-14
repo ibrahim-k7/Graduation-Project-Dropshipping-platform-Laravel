@@ -11,7 +11,7 @@ class CartItem extends Model
     use HasFactory;
 
     //الجدول المربوط به
-    protected $table = "cart_item";
+    protected $table = "cart_items";
     //العناصر
     protected $fillable = [
         'cart_item_id','cart_id','pro_id','created_at','updated_at'
@@ -21,12 +21,12 @@ class CartItem extends Model
     //Relations Functhion
     public function product()
     {
-        return $this->belongsTo(Product::class, 'pro_id', 'id');
+        return $this->belongsTo(Product::class, 'pro_id', 'pro_id');
     }
 
     public function cart()
     {
-        return $this->belongsTo(Cart::class, 'cart_id', 'id');
+        return $this->belongsTo(Cart::class, 'cart_id', 'cart_id');
     }
 
 }

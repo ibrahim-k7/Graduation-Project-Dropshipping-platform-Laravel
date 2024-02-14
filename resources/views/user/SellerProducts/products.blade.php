@@ -203,5 +203,37 @@
                 }
             });
         });
+        $(document).on('click', '.cart_btn', function(e) {
+                e.preventDefault();
+                var dealer_product_id = $(this).attr('data-product-id');
+
+                console.log(dealer_product_id);
+                //حفظ المعلومات
+                $.ajax({
+                    type: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                    },
+                    processData: false,
+                    contentType: false,
+                    url: "{{ route('user.cart.store') }}",
+                    data: {
+                            'id':  dealer_product_id,
+                        },
+                    success: function(data) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "تمت الإضافة بنجاح",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        console.log('suc: ' + data);
+                    },
+                    error: function(reject) {
+                   
+                    }
+                });
+            });
     </script>
     @endsection

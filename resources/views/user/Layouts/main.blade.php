@@ -82,7 +82,7 @@
             <ul class="d-flex align-items-center">
 
 
-
+            <a class="bi bi-cart" href="{{ route('user.cart') }}"></a>
 
                 <li class="nav-item dropdown pe-3">
 
@@ -297,7 +297,6 @@
     </script>
     <!-- تضمين مكتبة moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
 
     <!-- تضمين الكود JavaScript المشترك -->
     @stack('js')

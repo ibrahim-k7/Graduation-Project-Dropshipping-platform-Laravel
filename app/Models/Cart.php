@@ -19,7 +19,7 @@ class Cart extends Model
    
     //Relations Functhion
     public function store(){
-        return $this -> belongsTo(Store::class,'store_id','id');
+        return $this -> belongsTo(Store::class,'store_id','store_id');
     }
 
 }
