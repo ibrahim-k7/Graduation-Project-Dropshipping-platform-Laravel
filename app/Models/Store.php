@@ -47,4 +47,8 @@ class Store extends  Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Wallet::class,'store_id','store_id');
     }
+
+    public function cart(){
+        return $this->hasOne(Cart::class,'store_id','store_id');
+    }
 }

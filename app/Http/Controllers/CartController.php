@@ -3,6 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use App\Models\DealerProduct;
+use App\Models\CartItem;
+use App\Models\Cart;
+
+
+
+
 
 class CartController extends Controller
 {
@@ -34,7 +43,19 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        $store_id = Auth::user()->store_id;
+        $cart = Cart::where('store_id', $store_id)->first();
+        $dealerProduct = DealerProduct::where('dealer_pro_id', $request->id)->select('*')->first();
+        
+        CartItem::create([
+            'cart_id' => $cart->cart_id,
+            'pro_id' => $dealerProduct,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]); 
+      
+
     }
 
     /**

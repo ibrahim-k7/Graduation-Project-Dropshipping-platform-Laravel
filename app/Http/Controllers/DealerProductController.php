@@ -66,9 +66,9 @@ class DealerProductController extends Controller
             ->addColumn('action', function ($row) {
                 return $btn = '<div class="btn-group" role="group">
                 <a   data-product-id="' . $row->dealer_pro_id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                <a   data-product-id="' . $row->dealer_pro_id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('user.dealer.product.details', ['id' => $row->dealer_pro_id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
-                <a href="' . route('user.cart', ['id' => $row->dealer_pro_id]) . '"   type="button" class="btn btn-primary">إضافة للسله</a>
+                <a   data-product-id="' . $row->dealer_pro_id . '" type="button" class="cart_btn btn btn-primary" ">إضافة للسله</a>
+               
                 </div>  ';
             })
 

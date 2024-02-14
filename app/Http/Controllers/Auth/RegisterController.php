@@ -91,6 +91,9 @@ class RegisterController extends Controller
         $store->wallet()->create([
             'balance' => 0, //  تعيين الرصيد الابتدائي
         ]);
+        $store->cart()->create([
+            
+        ]);
 
         return $store;
     }
