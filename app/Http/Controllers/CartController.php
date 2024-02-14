@@ -47,10 +47,10 @@ class CartController extends Controller
         $store_id = Auth::user()->store_id;
         $cart = Cart::where('store_id', $store_id)->first();
         $dealerProduct = DealerProduct::where('dealer_pro_id', $request->id)->select('*')->first();
-        
+        // return dd($dealerProduct->pro_id);
         CartItem::create([
             'cart_id' => $cart->cart_id,
-            'pro_id' => $dealerProduct,
+            'pro_id' => $dealerProduct->pro_id,
             'created_at' => now(),
             'updated_at' => now(),
         ]); 
