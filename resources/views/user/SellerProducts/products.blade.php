@@ -229,7 +229,13 @@
                         console.log('suc: ' + data);
                     },
                     error: function(reject) {
-                   
+                        Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "المنتج موجود بالفعل",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                     }
                 });
             });

@@ -22,7 +22,25 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('user.cart.cart');
+        $store_id = Auth::user()->store_id;
+        $cart = Cart::where('store_id', $store_id)->with('product')->first();
+        
+        // Assuming you have a 'product' relationship in your Cart model
+        if ($cart) {
+            $product = $cart->product;
+        
+            // Loop through each product and get its name
+            $productNames = $product->pluck('name')->toArray();
+        
+            return dd($productNames);
+        } else {
+            return "Cart not found.";
+        }
+        
+        
+
+        
+        // return view('user.cart.cart', compact('cartItems'));
     }
 
     /**
@@ -43,19 +61,25 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $store_id = Auth::user()->store_id;
         $cart = Cart::where('store_id', $store_id)->first();
         $dealerProduct = DealerProduct::where('dealer_pro_id', $request->id)->select('*')->first();
-        // return dd($dealerProduct->pro_id);
-        CartItem::create([
-            'cart_id' => $cart->cart_id,
-            'pro_id' => $dealerProduct->pro_id,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]); 
-      
 
+        $existingProduct = CartItem::where('cart_id', $cart->cart_id)
+            ->where('pro_id', $dealerProduct->pro_id)
+            ->first();
+
+        if ($existingProduct) {
+            abort(400, 'فشلت العملية    ');
+        } else {
+            CartItem::create([
+                'cart_id' => $cart->cart_id,
+                'pro_id' => $dealerProduct->pro_id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 
     /**
