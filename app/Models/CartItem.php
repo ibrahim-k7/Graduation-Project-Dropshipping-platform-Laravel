@@ -19,10 +19,10 @@ class CartItem extends Model
 
    
     //Relations Functhion
-    public function product()
-    {
-        return $this->belongsTo(Product::class, 'pro_id', 'pro_id');
-    }
+    // public function product()
+    // {
+    //     return $this->belongsTo(Product::class, 'pro_id', 'id');
+    // }
 
     public function cart()
     {
