@@ -120,55 +120,6 @@
                 });
             });
 
-            //تحديث حالة الطلب
-            $(document).on('click', '.order-status-change-btn', function(e) {
-                e.preventDefault();
-
-                var order_id = $(this).attr('data-order-id');
-                var order_status = $(this).attr('data-order_status');
-                var payment_status = $(this).attr('data-payment_status');
-                var total_amount = $(this).attr('data-total_amount');
-                var wallet_id = $(this).attr('data-wallet_id');
-
-                Swal.fire({
-                    title: "هل أنت متأكد؟",
-                    text: "لن تتمكن من التراجع عن هذا",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    cancelButtonText: "تراجع",
-                    confirmButtonText: "نعم، قم بتغيير حالة الطلب"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        updatePaymentStatus(order_id,payment_status,total_amount,wallet_id);
-                        $.ajax({
-                            type: 'post',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                            },
-                            url: "{{ route('admin.order.update.order.status') }}",
-                            data: {
-                                'id': order_id,
-                                'order_status': order_status,
-                            },
-                            success: function(data) {
-                                Swal.fire({
-                                    title: "تم التحديث",
-                                    text: "لقد تم تحديث حالة الطلب بنجاح",
-                                    icon: "success"
-                                });
-
-                                //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد التحديث
-                                $('#Order_Managment').DataTable().ajax.reload();
-                            },
-                            error: function(reject) {
-                                // يمكنك إضافة إجراءات إضافية هنا في حالة حدوث خطأ
-                            }
-                        });
-                    }
-                });
-            });
 
             $(function() {
 
@@ -180,7 +131,7 @@
                         targets: '_all',//كل الحقول
                         className: 'dt-right'//الاتجاه
                     }],
-                    ajax: "{{ Route('admin.order.data') }}",
+                    ajax: "{{ Route('user.order.data') }}",
                     dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
                         "<'row'<'col-sm-12'tr>>" +
                         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",

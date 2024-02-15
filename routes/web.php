@@ -74,7 +74,7 @@ Route::controller(ProductController::class)->group(
 //product details
 Route::controller(ProductController::class)->group(
     function () {
-        Route::get('/details/{id}','getProductDetails')->name('user.product.details');
+        Route::get('/details/{id}', 'getProductDetails')->name('user.product.details');
     }
 );
 
@@ -83,21 +83,19 @@ Route::controller(DealerProductController::class)->group(
     function () {
         Route::get('/user/products', 'show')->name('seller.products');
         Route::get('/user/products/data', 'getDataTable')->name('seller.products.data');
-        Route::get('/user/create','create')->name('user.dealer.product.details');
-        Route::post('/user/store','store')->name('user.add.dealer.product');
-        Route::post('/user/destroy','destroy')->name('user.dealer.product.destroy');
-        Route::get('/user/getDealerProductsCount','getDealerProductsCount')->name('user.dealer.product.getDealerProductsCount');       
-         Route::post('/user/update','update')->name('user.dealer.product.update');
-
-
+        Route::get('/user/create', 'create')->name('user.dealer.product.details');
+        Route::post('/user/store', 'store')->name('user.add.dealer.product');
+        Route::post('/user/destroy', 'destroy')->name('user.dealer.product.destroy');
+        Route::get('/user/getDealerProductsCount', 'getDealerProductsCount')->name('user.dealer.product.getDealerProductsCount');
+        Route::post('/user/update', 'update')->name('user.dealer.product.update');
     }
 );
 
 // User Cart
 Route::controller(CartController::class)->group(
     function () {
-        Route::get('/user/cart','index')->name('user.cart');
-        Route::post('/user/cart/store','store')->name('user.cart.store');
+        Route::get('/user/cart', 'index')->name('user.cart');
+        Route::post('/user/cart/store', 'store')->name('user.cart.store');
     }
 );
 
@@ -127,7 +125,7 @@ Route::controller(TransferInformationController::class)->group(
 Route::controller(OrderController::class)->group(
     function () {
         Route::get('/orders', 'show')->name('user.order');
-        //        Route::get('/orders/a','getDataTable')->name('user.order.data');
+        Route::get('/orders/data', 'getUserDataTable')->name('user.order.data');
         Route::get('/orders/getOrdersCount', 'getOrdersCount')->name('user.order.getOrdersCount');
         Route::get('/orders/getOrders', 'getOrders')->name('user.order.getOrders');
         Route::get('/get-chart-data', 'getChartData')->name('getChartData');
@@ -138,6 +136,10 @@ Route::controller(OrderController::class)->group(
 Route::controller(OrderDetailsController::class)->group(
     function () {
         Route::get('/order_details', 'show')->name('user.order.details');
+        Route::get('/order_details/orderInfo', 'getOrderInfo')->name('user.order.details.getOrderInfo');
+        Route::get('/order_details/data', 'getUserDataTable')->name('user.order.details.data');
+        Route::post('/order_details/destroy', 'destroy')->name('user.order.details.destroy');
+
     }
 );
 
@@ -147,5 +149,3 @@ Route::controller(OrderDetailsController::class)->group(
         Route::get('/wallet_management/data', 'getDataTable')->name('admin.wallets.data');
     }
 );*/
-
-
