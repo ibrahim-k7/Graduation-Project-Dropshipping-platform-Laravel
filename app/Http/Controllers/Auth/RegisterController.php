@@ -54,7 +54,7 @@ class RegisterController extends Controller
      [
         'store_name' => ['required', 'string', 'max:255'],
         'email' => ["required", "regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", "unique:store"],
-        'password' => ['required', 'min:8', 'confirmed', 'regex:/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/'],
+        'password' => ['required', 'min:8', 'confirmed'],
         "password_confirmation" => ["required", "string"],
         'phone_number' => ['required', 'string', 'max:9','regex:/^(((\+|00)9677|0?7)[01378]\d{7}|((\+|00)967|0)[1-7]\d{6})$/', 'unique:store'],
     ], [
@@ -92,7 +92,7 @@ class RegisterController extends Controller
             'balance' => 0, //  تعيين الرصيد الابتدائي
         ]);
         $store->cart()->create([
-            
+
         ]);
 
         return $store;
