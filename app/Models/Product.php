@@ -28,4 +28,8 @@ class Product extends Model
     public function subCategorie(){
         return $this -> belongsTo(SubCategorie::class,'subCat_id','id');
     }
+
+    public function cart(){
+        return $this-> belongsToMany(Cart::class,'cart_items','pro_id','cart_id','id','cart_id');
+    }
 }
