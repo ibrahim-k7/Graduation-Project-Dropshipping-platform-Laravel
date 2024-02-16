@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 
 class UpdateProductRequest extends FormRequest
 {
@@ -23,10 +25,16 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->get('id'); // Retrieve the 'id' from the request
+
         return [
             'name' => 'required',
             'cat_id' => 'required',
             'subCat_id' => 'required',
+            'barcode' => [
+                'required',
+                Rule::unique('products', 'barcode')->ignore($id, 'id')
+            ],
             'weight' => 'required',
         ];
     }
@@ -37,6 +45,8 @@ class UpdateProductRequest extends FormRequest
             'name.required' => 'اسم المنتج مطلوب',
             'cat_id.required' => 'الفئة الرئيسية مطلوبة',
             'subCat_id.required' => 'الفئة الفرعية مطلوبة',
+            'barcode.required' => 'باركود المنتج مطلوب',    
+            'barcode.unique' => ' الباركود مستخدم !',
             'weight.required' => 'وزن المنتج مطلوب',
         ];
     }

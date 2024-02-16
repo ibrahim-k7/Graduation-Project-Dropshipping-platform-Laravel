@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\DealerProduct;
+use App\Models\OrderDetails;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -19,6 +21,43 @@ class ProductController extends Controller
     {
         //
         return view('Admin.Products.products_management');
+    }
+
+
+    public function getProductByBarcode(Request $request)
+    {
+        $product = Product::where('barcode', $request->barcode)->first();
+
+        if ($product) {
+            // التحقق من وجود $product->id في جدول DealerProduct
+            if (DealerProduct::where('pro_id', $product->id)->exists()) {
+                // التحقق من وجود $product->id في جدول OrderDetails بناءً على order_id المرسل
+                if (!OrderDetails::where('pro_id', $product->id)
+                    ->where('order_id', $request->order_id)
+                    ->exists()
+                ) {
+                    return response()->json([
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'selling_price' => $product->selling_price,
+                        'weight' => $product->weight,
+                        'image' => $product->image,
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => ' المنتج موجود بالفعل.'
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'error' => 'يجب أن يكون المنتج في منتجات التاجر.'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'error' => 'الباركود غير صحيح.'
+            ]);
+        }
     }
 
     public function getProducts()

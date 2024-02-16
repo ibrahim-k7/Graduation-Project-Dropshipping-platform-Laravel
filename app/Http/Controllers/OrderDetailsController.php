@@ -19,17 +19,59 @@ class OrderDetailsController extends Controller
         return view('Admin.Order.order_details_management');
     }
 
-    public function getOrderInfo()
+    public function addProduct(Request $request)
     {
-        $order = Order::where('order_id', 9)->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
+        // return dd($request->order_id);
+
+        // OrderDetails::create([
+        //     'order_id ' => $request->order_id,
+        //     'pro_id ' =>  $request->product['id'] ,
+        //     'quantity' =>  $request->quantity,
+        //     'total_cost' =>  $request->$request->product['selling_price']*$request->quantity,
+        //     'sub_weight' =>  $request->$request->product['weight']*$request->quantity,
+        // ]);
+
+        if (isset($request->product) && !empty($request->product)) {
+            OrderDetails::create([
+                'order_id' => $request->order_id,
+                'pro_id' =>  $request->product['id'],
+                'quantity' =>  $request->quantity,
+                'total_cost' =>  $request->product['selling_price'] * $request->quantity,
+                'sub_weight' =>  $request->product['weight'] * $request->quantity,
+            ]);
+
+            $order = Order::where('order_id', $request->order_id)->first();
+            $total_amount = $order->total_amount;
+            $total_amount = $total_amount + $request->product['selling_price'] * $request->quantity;
+
+            $total_per_shp = $order->total_per_shp +  $request->product['selling_price'] * $request->quantity;
+
+            $total_Weight = $order->total_weight;
+            $total_Weight = $total_Weight + $request->product['weight'] * $request->quantity;
+
+            Order::where('order_id', $request->order_id)->update([
+                'total_weight' => $total_Weight,
+                'total_amount' => $total_amount,
+                'total_per_shp' => $total_per_shp,
+            ]);
+        } else {
+            // يمكنك إضافة رمز خطأ أو رسالة تنبيه هنا إذا لزم الأمر
+        }
+    }
+
+    public function getOrderInfo(Request $request)
+    {
+        // return dd($request->id);
+        $order = Order::where('order_id', $request->id)->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
             ->first();
         return response()->json($order);
     }
 
     // new function
-    public function show()
+    public function show(Request $request)
     {
-
+        $id = $request->query('id');
+        session(['order_id' => $id]);
         // عرض البيانات في العرض
         return view('User.Order.order_details');
     }
@@ -83,6 +125,10 @@ class OrderDetailsController extends Controller
     // استدعاء البيانات لوجهه المستخدم
     public function getUserDataTable()
     {
+
+        // $id = $request->id;
+        $id = session('order_id');
+
         $data = OrderDetails::select(
             'order details.order_details_id',
             'orders.order_id',
@@ -98,18 +144,21 @@ class OrderDetailsController extends Controller
         )
             ->join('products', 'products.id', '=', 'order details.pro_id')
             ->join('orders', 'orders.order_id', '=', 'order details.order_id')
+            ->where('orders.order_id', $id)
             ->get();
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return $btn = '
                 <div class="btn-group" role="group">
                 <a   data-order_details_id="' . $row->order_details_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-                <a href="' . Route('admin.order.details.return', ['id' => $row->order_details_id]) . '" type="button" class="btn btn-secondary">استرجاع المنتج</a>
                 </div>
                 ';
             })
             ->rawColumns(['action'])
             ->make(true);
+
+            session()->forget('order_id');
+
     }
 
 
@@ -135,9 +184,20 @@ class OrderDetailsController extends Controller
         //
         $orderDetails = OrderDetails::where('order_details_id', $request->id)->first();
         $order = Order::where('order_id', $orderDetails->order_id)->first();
+
+        $total_amount = $order->total_amount;
+        $total_amount = $total_amount - $orderDetails->total_cost;
+
+        $total_per_shp = $order->total_per_shp - $orderDetails->total_cost;
+
         $total_Weight = $order->total_weight;
         $total_Weight = $total_Weight - $orderDetails->sub_weight;
-        Order::where('order_id', $orderDetails->order_id)->update(['total_weight' => $total_Weight]);
+
+        Order::where('order_id', $orderDetails->order_id) ->update([
+            'total_weight' => $total_Weight,
+            'total_amount' => $total_amount,
+            'total_per_shp' => $total_per_shp,
+        ]);
         OrderDetails::where('order_details_id', $request->id)->delete();
     }
 }

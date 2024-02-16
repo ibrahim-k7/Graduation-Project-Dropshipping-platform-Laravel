@@ -223,15 +223,5 @@
         });
 
 
-
-
-
-
-        /* $(document).ready(function(){
-             $('#wallet_table_id').DataTable({
-
-
-             });
-         });*/
     </script>
 @endsection
