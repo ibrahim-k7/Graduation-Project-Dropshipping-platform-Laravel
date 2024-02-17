@@ -448,13 +448,23 @@
                                                                 )
                                                                 .then(
                                                                     response => {
-                                                                        location
-                                                                            .reload();
-                                                                        Swal.fire({
-                                                                            title: 'تمت الإضافة بنجاح!',
-                                                                            icon: 'success'
-                                                                        });
 
+                                                                        Swal.fire({
+                                                                                title: 'تمت الإضافة بنجاح!',
+                                                                                icon: 'success'
+                                                                                
+                                                                            })
+                                                                            .then(
+                                                                                (
+                                                                                    result) => {
+                                                                                    if (result
+                                                                                        .isConfirmed
+                                                                                        ) {
+                                                                                        location
+                                                                                            .reload();
+                                                                                    }
+                                                                                }
+                                                                                );
                                                                     }
                                                                 )
                                                                 .catch(
@@ -588,17 +598,18 @@
                             data: {
                                 'id': order_details_id,
                             },
-                            success: function(data) {
+                            success: function(data) { //تحديث الصفحة باكملها
                                 Swal.fire({
                                     title: "تم الحذف ",
                                     text: "لقد تم حذف الطلب بنجاح",
                                     icon: "success"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
                                 });
 
-                                //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                                // $('#products').DataTable().ajax.reload();
-                                //تحديث الصفحة باكملها
-                                location.reload();
+
 
                             },
                             error: function(xhr, status, error) {
