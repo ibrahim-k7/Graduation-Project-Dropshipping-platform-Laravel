@@ -76,6 +76,7 @@
                                     <label for="barcode" class="form-label">الباركود</label>
                                     <input type="number" class="form-control" id="barcode" name="barcode" placeholder="">
                                     <small id="barcode_error" class="form-text text-danger"></small>
+                                    
                                 </div>
 
                                 <div class="col-md-4">
@@ -201,6 +202,8 @@
                     $('#cat_id_error').text('');
                     $('#subCat_id_error').text('');
                     $('#image_error').text('');
+                    $('#barcode_error').text('');
+
                     /* var formData = new FormData($("#form")[0]);
                      */
 
@@ -268,6 +271,8 @@
                     $('#cat_id_error').text('');
                     $('#subCat_id_error').text('');
                     $('#image_error').text('');
+                    $('#barcode_error').text('');
+
 
                     var formData = new FormData($("#form")[0]);
                     $.ajax({

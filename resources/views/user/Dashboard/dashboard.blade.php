@@ -140,6 +140,7 @@
                                     <!-- Table with stripped rows -->
                                     <table id="lastOrdersTableUser" class="table table-striped">
                                         <thead>
+                                            
                                             <tr>
                                                 <th>ID</th>
                                                 <th>المنصة</th>
