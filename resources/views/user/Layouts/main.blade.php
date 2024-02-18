@@ -78,12 +78,14 @@
             <ul class="d-flex align-items-center">
 
                 <!-- ايقونة السلة -->
-                <a class="bi bi-cart" href="{{ route('user.cart') }}"></a>
+                <a class="nav-link nav-icon" href="{{ route('user.cart') }}" >
+                    <i class="bi bi-cart"></i>
+                </a>
 
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-wallet mx-2"></i>
+                        {{-- <i class="bi bi-wallet mx-2"></i> --}}
                         <span class=" dropdown-toggle ps-2" id="balance_main">
 
                     </a><!-- End Profile Iamge Icon -->
@@ -297,7 +299,7 @@
             success: function(data) {
                 // استخدام قيمة $wallet الفعلية التي تم استرجاعها من الخادم
                 var balanceValue = data.balance;
-                $("#balance_main").html(balanceValue + '<span style="font-size: small;"> رس </span>');
+                $("#balance_main").html(balanceValue + '<span style="font-size: small;"> ري </span>');
             },
             error: function(reject) {
                 console.error('Error loading :', reject);

@@ -42,8 +42,8 @@
                             <div class="card h-100">
                                 <!-- Product image-->
 
-                                <img class="card-img-top" src="{{ asset('Products_img/' . $product->image) }}"
-                                    alt="..." />
+                                <img class="card-img-top" src="{{ asset('Products_img/' . $product->image) }}" alt="Product Image" width="150" height="150">
+
                                 <!-- Product details-->
 
                                 <div class="card-body p-3">
@@ -51,7 +51,7 @@
                                     <!-- Product name-->
                                     <p class="card-title p-1">{{ $product->name }}</p>
 
-                                    <p class="card-text p-2">{{ $product->selling_price }}رس
+                                    <p class="card-text p-2">{{ $product->selling_price }}<span class="text-muted">ر.ي</span>
                                         <br>
 
                                         الفئة: {{ $product->categorie->name }}

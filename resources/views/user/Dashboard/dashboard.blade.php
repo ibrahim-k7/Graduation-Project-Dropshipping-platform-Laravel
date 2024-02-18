@@ -258,7 +258,7 @@
                     // استخدام قيمة $wallet الفعلية التي تم استرجاعها من الخادم
                     var balanceValue = data.balance;
                     $("#balanceDash").html(balanceValue +
-                        '<span style="font-size: small ;"> رس</span>');
+                        '<span style="font-size: small ;"> ري</span>');
                 },
                 error: function(reject) {
                     console.error('Error loading :', reject);

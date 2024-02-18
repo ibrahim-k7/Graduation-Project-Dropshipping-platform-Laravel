@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\DealerProduct;
+use App\Models\OrderDetails;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -21,6 +23,55 @@ class ProductController extends Controller
         return view('Admin.Products.products_management');
     }
 
+
+    //[داله لجلب المنتج من خلال الباركود]
+    public function getProductByBarcode(Request $request)
+    {
+        //جلب المنتج
+        $product = Product::where('barcode', $request->barcode)->first();
+        //انشاء كائن من كنترولر الطلبات
+        $orderController = new OrderController();
+        //استدعاء داله جلب حاله الدفع من خلال معرف الطلب
+        $result = $orderController->getPaymentStatusById($request->order_id);
+        //التحقق من حاله الدفع
+        if ($result->payment_status == "تم الدفع") {
+            return response()->json([
+                'error' => ' لا يمكن إضافة منتج الي طلب حالته تم الدفع .'
+            ]);
+        } else {
+            if ($product) {
+                // التحقق من وجود $product->id في جدول DealerProduct
+                if (DealerProduct::where('pro_id', $product->id)->exists()) {
+                    // التحقق من وجود $product->id في جدول OrderDetails بناءً على order_id المرسل
+                    if (!OrderDetails::where('pro_id', $product->id)
+                        ->where('order_id', $request->order_id)
+                        ->exists()) {
+                        return response()->json([
+                            'id' => $product->id,
+                            'name' => $product->name,
+                            'selling_price' => $product->selling_price,
+                            'weight' => $product->weight,
+                            'image' => $product->image,
+                            'quantity' => $product->quantity,
+                        ]);
+                    } else {
+                        return response()->json([
+                            'error' => ' المنتج موجود بالفعل.'
+                        ]);
+                    }
+                } else {
+                    return response()->json([
+                        'error' => 'يجب أن يكون المنتج في منتجات التاجر.'
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'error' => 'الباركود غير صحيح.'
+                ]);
+            }
+        }
+    }
+
     public function getProducts()
     {
         $products = Product::select('id', 'name')->orderby("id", "ASC")->get();
@@ -29,14 +80,19 @@ class ProductController extends Controller
 
     public function getAllProducts()
     {
-        $products = Product::with('categorie')->with('subCategorie')->select('*')->get();
+        $products = Product::with('categorie')
+            ->with('subCategorie')
+            ->where('quantity', '>', 0)
+            ->orderBy("id", "DESC")
+            ->get();
         return view('user.products.product_catalogue', compact('products'));
     }
 
     public function getProductDetails(int $id)
     {
         //$details = Product::select('*')->get();
-        $details = Product::find($id);
+        $details = Product::with('categorie')
+            ->with('subCategorie')->find($id);
         if (!$details) {
             abort(404);
         }
