@@ -19,43 +19,47 @@ class OrderDetailsController extends Controller
         return view('Admin.Order.order_details_management');
     }
 
+    //هذه الداله لاإضافه منتج الى طلب تم إنشاوه مسبقاً
     public function addProduct(Request $request)
     {
-        // return dd($request->order_id);
-
-        // OrderDetails::create([
-        //     'order_id ' => $request->order_id,
-        //     'pro_id ' =>  $request->product['id'] ,
-        //     'quantity' =>  $request->quantity,
-        //     'total_cost' =>  $request->$request->product['selling_price']*$request->quantity,
-        //     'sub_weight' =>  $request->$request->product['weight']*$request->quantity,
-        // ]);
-
+        // return dd($request->product['quantity']);
         if (isset($request->product) && !empty($request->product)) {
-            OrderDetails::create([
-                'order_id' => $request->order_id,
-                'pro_id' =>  $request->product['id'],
-                'quantity' =>  $request->quantity,
-                'total_cost' =>  $request->product['selling_price'] * $request->quantity,
-                'sub_weight' =>  $request->product['weight'] * $request->quantity,
-            ]);
+            $productQuantity = $request->product['quantity'];
 
-            $order = Order::where('order_id', $request->order_id)->first();
-            $total_amount = $order->total_amount;
-            $total_amount = $total_amount + $request->product['selling_price'] * $request->quantity;
+            if ($productQuantity >= $request->quantity) {
+                OrderDetails::create([
+                    'order_id' => $request->order_id,
+                    'pro_id' =>  $request->product['id'],
+                    'quantity' =>  $request->quantity,
+                    'total_cost' =>  $request->product['selling_price'] * $request->quantity,
+                    'sub_weight' =>  $request->product['weight'] * $request->quantity,
+                ]);
 
-            $total_per_shp = $order->total_per_shp +  $request->product['selling_price'] * $request->quantity;
+                $order = Order::where('order_id', $request->order_id)->first();
+                $total_amount = $order->total_amount;
+                $total_amount = $total_amount + $request->product['selling_price'] * $request->quantity;
 
-            $total_Weight = $order->total_weight;
-            $total_Weight = $total_Weight + $request->product['weight'] * $request->quantity;
+                $total_per_shp = $order->total_per_shp +  $request->product['selling_price'] * $request->quantity;
 
-            Order::where('order_id', $request->order_id)->update([
-                'total_weight' => $total_Weight,
-                'total_amount' => $total_amount,
-                'total_per_shp' => $total_per_shp,
-            ]);
+                $total_Weight = $order->total_weight;
+                $total_Weight = $total_Weight + $request->product['weight'] * $request->quantity;
+
+                Order::where('order_id', $request->order_id)->update([
+                    'total_weight' => $total_Weight,
+                    'total_amount' => $total_amount,
+                    'total_per_shp' => $total_per_shp,
+                ]);
+
+                // يمكنك إضافة رسالة نجاح هنا إذا كان الإضافة ناجحة
+            } else {
+                return response()->json([
+                    'error' => 'الكمية المطلوبة غير متاحة'
+                ], 422);
+            }
         } else {
-            // يمكنك إضافة رمز خطأ أو رسالة تنبيه هنا إذا لزم الأمر
+            return response()->json([
+                'error' => 'المنتج غير صالح'
+            ], 422);
         }
     }
 
@@ -132,9 +136,11 @@ class OrderDetailsController extends Controller
         $data = OrderDetails::select(
             'order details.order_details_id',
             'orders.order_id',
+            'orders.payment_status',
             'products.id',
             'products.selling_price',
             'products.weight',
+            'products.barcode',
             'products.name',
             'products.image',
             'products.description',
@@ -150,15 +156,14 @@ class OrderDetailsController extends Controller
             ->addColumn('action', function ($row) {
                 return $btn = '
                 <div class="btn-group" role="group">
-                <a   data-order_details_id="' . $row->order_details_id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+                <a   data-order_details_id="' . $row->order_details_id  . '" data-payment_status="' . $row->payment_status  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 </div>
                 ';
             })
             ->rawColumns(['action'])
             ->make(true);
 
-            session()->forget('order_id');
-
+        session()->forget('order_id');
     }
 
 
@@ -182,22 +187,30 @@ class OrderDetailsController extends Controller
     public function destroy(Request $request)
     {
         //
-        $orderDetails = OrderDetails::where('order_details_id', $request->id)->first();
-        $order = Order::where('order_id', $orderDetails->order_id)->first();
+        // return dd($request->payment_status);
 
-        $total_amount = $order->total_amount;
-        $total_amount = $total_amount - $orderDetails->total_cost;
+        if ($request->payment_status == "تم الدفع") {
+            return response()->json([
+                'error' => 'لا يمكن حذف منتج من طلب حالته تم الدفع'
+            ], 422);
+        } else {
+            $orderDetails = OrderDetails::where('order_details_id', $request->id)->first();
+            $order = Order::where('order_id', $orderDetails->order_id)->first();
 
-        $total_per_shp = $order->total_per_shp - $orderDetails->total_cost;
+            $total_amount = $order->total_amount;
+            $total_amount = $total_amount - $orderDetails->total_cost;
 
-        $total_Weight = $order->total_weight;
-        $total_Weight = $total_Weight - $orderDetails->sub_weight;
+            $total_per_shp = $order->total_per_shp - $orderDetails->total_cost;
 
-        Order::where('order_id', $orderDetails->order_id) ->update([
-            'total_weight' => $total_Weight,
-            'total_amount' => $total_amount,
-            'total_per_shp' => $total_per_shp,
-        ]);
-        OrderDetails::where('order_details_id', $request->id)->delete();
+            $total_Weight = $order->total_weight;
+            $total_Weight = $total_Weight - $orderDetails->sub_weight;
+
+            Order::where('order_id', $orderDetails->order_id)->update([
+                'total_weight' => $total_Weight,
+                'total_amount' => $total_amount,
+                'total_per_shp' => $total_per_shp,
+            ]);
+            OrderDetails::where('order_details_id', $request->id)->delete();
+        }
     }
 }

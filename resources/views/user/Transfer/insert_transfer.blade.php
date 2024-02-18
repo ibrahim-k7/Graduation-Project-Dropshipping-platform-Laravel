@@ -145,7 +145,6 @@
                             showConfirmButton: false,
                             timer: 2000
                         });
-                        console.log('suc: ' + data);
                     },
                     error: function(reject) {
                         //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق

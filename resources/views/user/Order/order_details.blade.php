@@ -23,8 +23,10 @@
         </div><!-- End Page Title -->
 
         <section class="section">
+
             <div class="row">
                 <div class="col-lg-8">
+
 
                     <div class="card">
                         <div class="card-header text-center text-bg-light fs-5 fw-bold">المنتجات</div>
@@ -34,9 +36,10 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>معرف النتج</th>
+                                        {{-- <th>معرف النتج</th> --}}
                                         <th>الصورة</th>
                                         <th>اسم المنتج</th>
+                                        <th>الباركود</th>
                                         <th>الكمية</th>
                                         <th>الوزن</th>
                                         <th>الوزن فرعي</th>
@@ -63,7 +66,7 @@
                                     </p>
                                     <p class="text-dark fs-5">الوزن الإجمالي:
                                         <span class="pe-3 text-dark" id="total_weight"></span>
-                                        kg
+                                        جرام
                                     </p>
                                     <p class="text-dark fs-5">رسوم الشحن:
                                         <span class="pe-3 text-dark" id="shipping_fees"></span>
@@ -78,20 +81,21 @@
                         </div>
                         <div class="col-md-6 xs-12">
                             <div class="card">
-                                <div class="card-header text-center text-bg-light fs-5 fw-bold"> معلومات العميل</div>
-                                <div class="card-body">
-                                    <p class="text-dark fs-5">اسم العميل:
-                                        <span class="p-3 text-dark" id="customer_name">محمد عبدالخالق</span>
+                                <div class="card-header text-center text-bg-light fs-5 fw-bold"> معلومات الطلب</div>
+                                <div class="card-body ">
+                                    <p class="text-dark fs-5">رقم الطلب:
+                                        <span class="p-3 text-dark" id="order_id"></span>
                                     </p>
-                                    <p class="text-dark fs-5">البريد الإلكتروني:
-                                        <span class="p-3 text-dark" id="customer_email">mohammed@gmial.com</span>
+                                    <p class="text-dark fs-5">تاريخ الطلب:
+                                        <span class="p-3 text-dark" id="order_date"></span>
                                     </p>
-                                    <p class="text-dark fs-5">العنوان:
-                                        <span class="p-3 text-dark fs-6" id="shipping_address">صنعاء التحرير</span>
+                                    <p class="text-dark fs-5">طريقة التوصيل:
+                                        <span class="p-3 text-dark" id="delivery_name"></span>
                                     </p>
-                                    <p class="text-dark fs-5">رقم الجوال:
-                                        <span class="p-3 text-dark" id="customer_phone">776273760</span>
+                                    <p class="text-dark fs-6 fw-bold">حالة الطلب:
+                                        <span class="p-3 text-warning" id="order_status"></span>
                                     </p>
+        
                                 </div>
                             </div>
                         </div>
@@ -99,25 +103,54 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-header text-center text-bg-light fs-5 fw-bold"> معلومات الطلب</div>
-                        <div class="card-body ">
-                            <p class="text-dark fs-5">رقم الطلب:
-                                <span class="p-3 text-dark" id="order_id"></span>
-                            </p>
-                            <p class="text-dark fs-5">تاريخ الطلب:
-                                <span class="p-3 text-dark" id="order_date"></span>
-                            </p>
-                            <p class="text-dark fs-5">طريقة التوصيل:
-                                <span class="p-3 text-dark" id="delivery_name"></span>
-                            </p>
-                            <p class="text-dark fs-6 fw-bold">حالة الطلب:
-                                <span class="p-3 text-warning" id="order_status"></span>
-                            </p>
 
+                    <div class="card">
+                        <div class="card-header text-center text-bg-light fs-5 fw-bold"> معلومات العميل</div>
+                        <div class="card-body">
+                            {{-- <p class="text-dark fs-5">اسم العميل:
+                                <span class="p-3 text-dark" id="customer_name">محمد عبدالخالق</span>
+                            </p>
+                            <p class="text-dark fs-5">البريد الإلكتروني:
+                                <span class="p-3 text-dark" id="customer_email">mohammed@gmial.com</span>
+                            </p>
+                            <p class="text-dark fs-5">العنوان:
+                                <span class="p-3 text-dark fs-6" id="shipping_address">صنعاء التحرير</span>
+                            </p>
+                            <p class="text-dark fs-5">رقم الجوال:
+                                <span class="p-3 text-dark" id="customer_phone">776273760</span>
+                            </p> --}}
+                            <!-- Multi Columns Form -->
+                            <form id="form" method="post" class="row g-3">
+
+                                <div class="col-md-12">
+                                    <label for="customer_name" class="form-label">اسم العميل</label>
+                                    <input type="text" class="form-control" id="customer_name"
+                                        name="customer_name" required>
+                                    <small id="customer_name_error" class="form-text text-danger"></small>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="customer_phone" class="form-label">رقم الجوال</label>
+                                    <input type="number" class="form-control" id="customer_phone"
+                                        name="customer_phone" required>
+                                    <small id="customer_phone_error" class="form-text text-danger"></small>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="customer_email" class="form-label">البريد الإلكتروني</label>
+                                    <input type="email" class="form-control" id="customer_email"
+                                        name="customer_email" required>
+                                    <small id="customer_email_error" class="form-text text-danger"></small>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="shipping_address" class="form-label">العنوان</label>
+                                    <textarea type="text" class="form-control" id="shipping_address" name="shipping_address" style=" height: auto"></textarea>
+                                    <small id="shipping_address_error" class="form-text text-danger"></small>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" id="submit" class="btn btn-primary">تحديث</button>
+                                </div>
+                            </form><!-- End Multi Columns Form -->
                         </div>
                     </div>
-
                     <div class="card">
                         <div class="card-header text-center text-bg-light fs-5 fw-bold">حالة الدفع</div>
                         <div class="card-body py-3 text-center">
@@ -321,7 +354,7 @@
                     }
 
                     $('#delivery_name').text(data.name);
-                    $('#customer_name').text(data.customer_name);
+                    $('#customer_name').val(data.customer_name);
                     $('#payment_status').text(data.payment_status);
                     if (data.payment_status === 'تم الدفع') {
                         $('#payment_status').addClass('text-success');
@@ -332,9 +365,9 @@
                         $('#payment_status').addClass('text-warning');
                     }
 
-                    $('#customer_email').text(data.customer_email);
+                    $('#customer_email').val(data.customer_email);
                     $('#shipping_address').text(data.shipping_address);
-                    $('#customer_phone').text(data.customer_phone);
+                    $('#customer_phone').val(data.customer_phone);
                     $('#total_per_shp').text(data.total_per_shp);
                     $('#total_weight').text(data.total_weight);
                     $('#shipping_fees').text(data.shipping_fees);
@@ -363,7 +396,7 @@
                         className: 'dt-right' //الاتجاه
                     }],
                     ajax: "{{ Route('user.order.details.data') }}",
-                    dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'><'col-sm-12 col-md-4'l>>" +
+                    dom: "<'row'<'col-sm-12 col-md-4 p-2'B><'col-sm-12 col-md-4'><'col-sm-12 col-md-4 p-3'l>>" +
                         "<'row'<'col-sm-12'tr>>" +
                         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                     language: {
@@ -375,8 +408,9 @@
                         className: 'custom-add-button',
                         action: function(e, dt, node, config) {
                             Swal.fire({
-                                title: 'أدخل باركود المنتج',
-                                input: 'text',
+                                title: 'إضافة المزيد من المنتجات',
+                                text: "قم بكتابة او لصق باركود المنتج المراد إضافته ( لإضافه المنتج يتطلب وجود المنتج في قائمة منتجاتي )",
+                                input: 'number',
                                 inputAttributes: {
                                     autocapitalize: 'off'
                                 },
@@ -448,23 +482,23 @@
                                                                 )
                                                                 .then(
                                                                     response => {
-
                                                                         Swal.fire({
                                                                                 title: 'تمت الإضافة بنجاح!',
                                                                                 icon: 'success'
-                                                                                
+
                                                                             })
                                                                             .then(
                                                                                 (
-                                                                                    result) => {
+                                                                                    result
+                                                                                ) => {
                                                                                     if (result
                                                                                         .isConfirmed
-                                                                                        ) {
+                                                                                    ) {
                                                                                         location
                                                                                             .reload();
                                                                                     }
                                                                                 }
-                                                                                );
+                                                                            );
                                                                     }
                                                                 )
                                                                 .catch(
@@ -473,9 +507,15 @@
                                                                             .error(
                                                                                 'حدث خطأ أثناء إضافة المنتج إلى التفاصيل',
                                                                                 error
+                                                                                .response
+                                                                                .data
+                                                                                .error,
                                                                             );
                                                                         Swal.fire({
-                                                                            title: 'حدث خطأ أثناء الإضافة',
+                                                                            title: error
+                                                                                .response
+                                                                                .data
+                                                                                .error,
                                                                             icon: 'error'
                                                                         });
                                                                     }
@@ -509,10 +549,10 @@
                             data: 'order_details_id',
                             name: 'order_details_id'
                         },
-                        {
-                            data: 'id',
-                            name: 'id'
-                        },
+                        // {
+                        //     data: 'id',
+                        //     name: 'id'
+                        // },
                         {
                             data: 'image',
                             name: 'image',
@@ -527,6 +567,10 @@
                         {
                             data: 'name',
                             name: 'name'
+                        },
+                        {
+                            data: 'barcode',
+                            name: 'barcode'
                         },
                         {
                             data: 'quantity',
@@ -574,6 +618,68 @@
                 });
             });
 
+            //تحديث معلومات العميل
+            $(document).on('click', '#submit', function(e) {
+                e.preventDefault();
+                //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
+                $('#customer_name_error').text('');
+                $('#customer_phone_error').text('');
+                $('#customer_email_error').text('');
+                $('#shipping_address_error').text('');
+                var formData = new FormData($("#form")[0]);
+                formData.append('id', '{{ request('id') }}');
+                Swal.fire({
+                    title: "هل انت متأكد ؟",
+                    text: "لن تتمكن من التراجع عن هذا",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    cancelButtonText: "تراجع",
+                    confirmButtonText: "نعم، قم بالتحديث"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'post',
+                            url: "{{ route('user.order.updateCustomerInfo') }}",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                            },
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function(data) {
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: "تمت عملية التحديث بنجاح",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                console.log('suc: ' + data);
+                            },
+                            error: function(reject) {
+                                //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
+                                var response = $.parseJSON(reject.responseText);
+                                $.each(response.errors, function(key, val) {
+                                    $("#" + key + "_error").text(val[0]);
+                                });
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "error",
+                                    title: "فشلت عملية التحديث",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        });
+                    }
+                });
+
+
+
+            });
+
             //حذف منتج من تفاصيل المنتجات
             $(document).on('click', '.delete_btn', function(e) {
                 e.preventDefault();
@@ -589,6 +695,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         var order_details_id = $(this).attr('data-order_details_id');
+                        var payment_status = $(this).attr('data-payment_status');
                         $.ajax({
                             type: 'post',
                             headers: {
@@ -597,6 +704,7 @@
                             url: "{{ route('user.order.details.destroy') }}",
                             data: {
                                 'id': order_details_id,
+                                'payment_status': payment_status,
                             },
                             success: function(data) { //تحديث الصفحة باكملها
                                 Swal.fire({
@@ -608,19 +716,13 @@
                                         location.reload();
                                     }
                                 });
-
-
-
                             },
                             error: function(xhr, status, error) {
-                                // var errorMessage = xhr
-                                //     .responseText;
-
-                                // Swal.fire({
-                                //     title: "فشلت عملية الحذف",
-                                //     text: " لا يمكن حذف طلب تم توصيله ",
-                                //     icon: "error"
-                                // });
+                                Swal.fire({
+                                    title: "فشلت عملية الحذف",
+                                    text: xhr.responseJSON.error,
+                                    icon: "error"
+                                });
 
                             }
                         });
