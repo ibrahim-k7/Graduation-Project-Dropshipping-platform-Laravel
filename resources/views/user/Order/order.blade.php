@@ -32,7 +32,7 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="Order_Managment" class="table table-striped">
+                                <table id="User_Order_Managment" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -123,7 +123,7 @@
 
         $(function() {
 
-            var order_data = $('#Order_Managment').DataTable({
+            var order_data = $('#User_Order_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 "autoWidth": false,
@@ -297,7 +297,7 @@
                             });
 
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                            $('#Order_Managment').DataTable().ajax.reload();
+                            $('#User_Order_Managment').DataTable().ajax.reload();
                         },
                         error: function(xhr, status, error) {
                             var errorMessage = xhr

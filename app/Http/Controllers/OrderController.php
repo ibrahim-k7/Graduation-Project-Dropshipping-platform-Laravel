@@ -338,7 +338,7 @@ class OrderController extends Controller
             ->join('store', 'store.store_id', '=', 'orders.store_id')
             ->join('wallet', 'wallet.store_id', '=', 'orders.store_id')
             ->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
-            ->where('orders.store_id',$store_id)
+//            ->where('orders.store_id',$store_id)
             ->get();
 
         return DataTables::of($data)->addIndexColumn()
@@ -362,7 +362,7 @@ class OrderController extends Controller
                         <span class="visually-hidden">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu">
-    
+
                             <a data-order-id="' . $row->order_id . '"
                                data-wallet_id="' . $row->wallet_id . '"
                                data-total_amount="' . $row->total_amount . '"
