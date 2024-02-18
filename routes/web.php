@@ -132,6 +132,8 @@ Route::controller(OrderController::class)->group(
         Route::get('/orders/getOrders', 'getOrders')->name('user.order.getOrders');
         Route::get('/get-chart-data', 'getChartData')->name('getChartData');
         Route::get('/orders/getWalletId', 'getWalletId')->name('user.order.getWalletId');
+        Route::post('/orders/updateCustomerInfo', 'updateCustomerInfo')->name('user.order.updateCustomerInfo');
+
     }
 );
 
