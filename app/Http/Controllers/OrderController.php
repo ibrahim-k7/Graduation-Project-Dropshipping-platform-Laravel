@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddWalletOperationRequest;
+use App\Http\Requests\UpdateCustomerInfoRequest;
 use App\Models\Order;
 use App\Models\Wallet;
 use Carbon\Carbon;
@@ -21,6 +22,12 @@ class OrderController extends Controller
     public function show()
     {
         return view('user.Order.order');
+    }
+
+    //[جلب حاله الدفع من خلال معرف الطلب]
+    public function getPaymentStatusById($id){
+        $data = Order::where('order_id', $id)->select('payment_status')->first();
+        return $data;
     }
 
     public function getWalletId(Request $request)
@@ -444,6 +451,21 @@ class OrderController extends Controller
 
         // تحديث السجل في قاعدة البيانات
         Order::where('order_id', $request->input('id'))->update(['order_status' => $order_status]);
+
+        // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
+        return response()->json(['message' => 'تم تحديث order_status بنجاح']);
+    }
+
+    public function updateCustomerInfo(UpdateCustomerInfoRequest $request)
+    {
+
+        // return dd($request);
+        Order::where('order_id', $request->id)->update([
+            'customer_name' => $request->customer_name,
+            'customer_phone' => $request->customer_phone,
+            'customer_email' => $request->customer_email,
+            'shipping_address' => $request->shipping_address,
+        ]);
 
         // يمكنك إضافة رسالة تأكيد أو أي شيء آخر هنا حسب الحاجة
         return response()->json(['message' => 'تم تحديث order_status بنجاح']);
