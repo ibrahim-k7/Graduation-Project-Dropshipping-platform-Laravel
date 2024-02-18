@@ -193,7 +193,6 @@
         });
 
         // Function to handle the return process
-        // Function to handle the return process
         function processReturn() {
             // Collect data from return fields
             var currentDate = new Date();
@@ -205,20 +204,32 @@
 
             // Get the available quantity for the selected purchase details
             var availableQuantity = parseInt($('#purchaseDetails option:selected').data('available-quantity'));
+            // Get the purchased quantity for the selected purchase details
+            var purchasedQuantity = parseInt($('#purchaseDetails option:selected').data('purchased-quantity'));
 
-            // Check if the returned quantity is greater than the available quantity
+            // Initialize a variable to determine whether to send data to the server
+            var sendData = true;
+
+            // Check for errors
             if (!returnDate) {
                 alert('يرجى ملء حقل تاريخ الاسترجاع');
+                sendData = false;
             } else if (!purchaseDetailsId) {
                 alert('يرجى اختيار تفاصيل المنتج');
+                sendData = false;
             } else if (!quantityReturned) {
                 alert('يرجى ملء حقل الكمية المسترجعة');
-            } else if (parseInt(quantityReturned) > availableQuantity) {
-                alert('كمية الاسترجاع أكبر من الكمية المتاحة في الفاتورة.');
+                sendData = false;
+            } else if (parseInt(quantityReturned) > availableQuantity || parseInt(quantityReturned) > purchasedQuantity) {
+                alert('كمية الاسترجاع أكبر من الكمية المتاحة أو المشتراة في الفاتورة.');
+                sendData = false;
             } else if (!amountReturned) {
                 alert('يرجى ملء حقل المبلغ المسترجع');
-            } else {
-                // Send data to the server using Ajax
+                sendData = false;
+            }
+
+            // Send data to the server using Ajax only if sendData is true
+            if (sendData) {
                 $.ajax({
                     type: 'post',
                     headers: {
@@ -232,19 +243,25 @@
                         amount_returned: amountReturned
                     },
                     success: function (response) {
-                        // Successful operation
-                        alert('تمت عملية الاسترجاع بنجاح');
-                        $('#returnModal').modal('hide');
-                        location.reload();
+                        if (response.success) {
+                            alert('تمت عملية الاسترجاع بنجاح');
+                            $('#returnModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'فشلت عملية الاسترجاع',
+                                text: 'يرجى المحاولة مرة أخرى.',
+                            });
+                        }
                     },
                     error: function (error) {
-                        // An error occurred
                         alert('فشلت عملية الاسترجاع. يرجى المحاولة مرة أخرى.');
                         console.error(error);
                     }
                 });
             }
         }
-
     </script>
 @endsection

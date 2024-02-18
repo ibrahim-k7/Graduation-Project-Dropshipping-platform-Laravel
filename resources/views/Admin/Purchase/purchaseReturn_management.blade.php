@@ -105,6 +105,7 @@
                     }
                 ],
                 columns: [{
+
                         data: 'return_id',
                         name: 'return_id'
                     },
@@ -142,43 +143,51 @@
         });
 
         $(document).on('click', '.delete_btn', function(e) {
-    e.preventDefault();
-    Swal.fire({
-        title: "هل انت متأكد ؟",
-        text: "لن تتمكن من التراجع عن هذا",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "تراجع",
-        confirmButtonText: "نعم، احذفه"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            var return_id = $(this).data('id'); // استخدمت $(this).data() بدلاً من $(this).attr()
-            $.ajax({
-                type: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                url: "{{ route('admin.purchaseReturn_management.destroy') }}", // يجب استبدال هذا بالمسار الصحيح للحذف
-                data: {
-                    'return_id': return_id
-                },
-                success: function(data) {
-                    Swal.fire({
-                        title: "تم الحذف ",
-                        text: "تم حذف الملف بنجاح",
-                        icon: "success"
+            e.preventDefault();
+
+            var return_id = $(this).data('id');
+
+            Swal.fire({
+                title: "هل أنت متأكد؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، احذفه"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.purchaseReturn_management.destroy') }}",
+                        data: {
+                            'return_id': return_id
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "تم الحذف",
+                                text: "تم حذف الملف بنجاح",
+                                icon: "success"
+                            });
+                            $('#Return_Management').DataTable().ajax.reload();
+                        },
+                        error: function(reject) {
+                            var errorMessage = reject.responseJSON && reject.responseJSON.message ? reject.responseJSON.message : 'حدث خطأ أثناء معالجة الاسترجاع.';
+                            Swal.fire({
+                                title: "خطأ",
+                                text: errorMessage,
+                                icon: "error"
+                            });
+                        }
                     });
-                    $('#Return_Management').DataTable().ajax.reload(); // إعادة تحميل البيانات بعد الحذف
-                },
-                error: function(reject) {
-                    // يمكنك إضافة معالجة للأخطاء هنا إذا لزم الأمر
                 }
             });
-        }
-    });
-});
+        });
+
 
     </script>
 @endsection

@@ -110,7 +110,7 @@ class PurchaseController extends Controller
         $purchase = Purchase::findOrFail($request->id);
         $purchase->update([
             'sup_id' => $request->sup_id,
-            'total'=>$request->total,
+            'total' => $request->total,
             'amount_paid' => $request->amount_paid,
             'payment_method' => $request->payment_method,
             'additional_costs' => $request->additional_costs,
@@ -166,7 +166,7 @@ class PurchaseController extends Controller
         $deletedPurchaseDetails = collect($purchaseDetailsProIds)->diff($proIds)->toArray();
 
         //الوصول الى جميع المنتجات المحذوفة في قاعدة البيانات
-        foreach ($deletedPurchaseDetails as $deletedPurchaseDetail){
+        foreach ($deletedPurchaseDetails as $deletedPurchaseDetail) {
             //الوصول الى كمية المنتج المحذوف في تفاصيل المشتريات
             $purchaseDetailsQuantity = PurchaseDetails::select('quantity')
                 ->where(['purch_id' => $request->id, 'pro_id' => $deletedPurchaseDetail])->first();
@@ -183,10 +183,11 @@ class PurchaseController extends Controller
         return redirect()->route('admin.purchase.index')->with('success', 'تم تحديث الشراء بنجاح!');
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request)
+    {
         //الوصول الى تفاصيل المشتريات حسب معرف الفاتورة
-        $purchaseDetailProIds = PurchaseDetails::select('pro_id')->where('purch_id',$request->id)->get();
-        foreach ($purchaseDetailProIds as $purchaseDetail){
+        $purchaseDetailProIds = PurchaseDetails::select('pro_id')->where('purch_id', $request->id)->get();
+        foreach ($purchaseDetailProIds as $purchaseDetail) {
             $proId = $purchaseDetail->pro_id;
 
             //استدعاء كمية المنتج في فاتورة تفاصيل المشتريات
@@ -196,7 +197,7 @@ class PurchaseController extends Controller
             $product = Product::findOrFail($proId);
 
             $product->update([
-                'quantity' =>  $product->quantity - $purchaseDetailQuantity->quantity,
+                'quantity' => $product->quantity - $purchaseDetailQuantity->quantity,
             ]);
         }
 
@@ -246,30 +247,34 @@ class PurchaseController extends Controller
             ]);
 
             // العثور على المنتج المرتبط بسجل الاسترجاع
-            $product = $returnDetails->purchaseDetails->product;
+            $purchaseDetails = $returnDetails->purchaseDetails;
+            $product = $purchaseDetails->product;
 
             if (!$product) {
-                return response()->json(['success' => false, 'message' => 'لم يتم العثور على المنتج.']);
+                throw new \Exception('لم يتم العثور على المنتج.', 404);
             }
 
-            // التحقق من أن الكمية المرتجعة صحيحة وتحديث كمية المنتج
-            if ($returnDetails->quantity_returned <= $product->quantity) {
+            // التحقق من صحة البيانات قبل الحفظ
+            if ($returnDetails->quantity_returned <= $purchaseDetails->quantity &&
+                $returnDetails->quantity_returned <= $product->quantity &&
+                $returnDetails->quantity_returned <= $purchaseDetails->quantity) {
+
+                // الحفظ إذا كانت البيانات صحيحة
                 $product->quantity -= $returnDetails->quantity_returned;
                 $product->save();
 
-                return response()->json(['success' => true]);
             } else {
-                return response()->json(['success' => false, 'message' => 'كمية المرتجع أكبر من الكمية المتاحة.']);
+                // الرفض إذا كانت البيانات غير صحيحة
+                throw new \Exception('بيانات غير صحيحة.', 400);
             }
-        } catch (ValidationException $e) {
-            // التعامل مع الأخطاء التي تنتج عن الصحة
-            return response()->json(['success' => false, 'message' => $e->errors()]);
-        } catch (\Exception $e) {
-            // التعامل مع الأخطاء الأخرى
-            Log::error('Error processing return: ' . $e->getMessage());
 
-            return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء معالجة الاسترجاع.']);
+            // أي عمليات إضافية يمكنك إجراءها بعد الحفظ
+
+            return response(['success' => true, 'message' => 'تمت عملية الاسترجاع بنجاح.'], 200);
+        } catch (\Exception $e) {
+            // التعامل مع الاستثناء هنا
+            return response(['success' => false, 'message' => $e->getMessage()], $e->getCode());
         }
     }
-    
+
 }
