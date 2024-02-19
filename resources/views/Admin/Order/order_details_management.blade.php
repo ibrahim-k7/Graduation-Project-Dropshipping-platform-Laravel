@@ -62,8 +62,7 @@
 @section('js')
     <script type="text/javascript">
         $(function() {
-
-            var order_details_data = $('#Order_Managment_Details').DataTable({
+                var order_details_data = $('#Order_Managment_Details').DataTable({
                 processing: true,
                 serverSide: true,
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
@@ -139,7 +138,9 @@
                     },
                 ]
             });
+
         });
+
 
 
     </script>

@@ -22,7 +22,6 @@ class OrderDetailsController extends Controller
     //هذه الداله لاإضافه منتج الى طلب تم إنشاوه مسبقاً
     public function addProduct(Request $request)
     {
-        // return dd($request->product['quantity']);
         if (isset($request->product) && !empty($request->product)) {
             $productQuantity = $request->product['quantity'];
 
@@ -171,9 +170,9 @@ class OrderDetailsController extends Controller
     public function return(Request $request)
     {
 
-        $product = OrderDetails::where('order_details_id', $request->query('id'))->get()->first();
-
-        return view('Admin.Order.return_order', compact('product'));
+        $order_details = OrderDetails::where('order_details_id', $request->query('id'))->get()->first();
+        $product = Product::where('id',$order_details->pro_id)->get()->first() ;
+        return view('Admin.Order.return_order', compact('order_details','product'));
     }
 
     // Update the specified order in storage.
