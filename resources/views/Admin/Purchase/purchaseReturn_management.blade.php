@@ -6,6 +6,20 @@
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        /* Add your custom CSS styles here */
+        .custom-add-button {
+            /* Add styles for the custom add button if needed */
+        }
+
+        /* Responsive styles */
+        @media (max-width: 767px) {
+            /* Add styles for mobile devices here */
+            .custom-add-button {
+                /* Add styles for the custom add button on mobile devices if needed */
+            }
+        }
+    </style>
 @endsection
 
 @section('Content')
@@ -34,19 +48,18 @@
                                 <!-- جدول بصفوف مخططة -->
                                 <table id="Return_Management" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>الرقم التعريفي</th>
-                                            <th>رقم الفاتورة</th>
-                                            <th>تاريخ الارجاع</th>
-                                            <th>الكمية المرتجعة</th>
-                                            <th>المبلغ المرتجع</th>
-                                            <th>تاريخ الانشاء</th>
-                                            <th>العملية</th>
-                                        </tr>
+                                    <tr>
+                                        <th>الرقم التعريفي</th>
+                                        <th>رقم الفاتورة</th>
+                                        <th>تاريخ الارجاع</th>
+                                        <th>الكمية المرتجعة</th>
+                                        <th>المبلغ المرتجع</th>
+                                        <th>تاريخ الانشاء</th>
+                                        <th>العملية</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
-
                                 </table>
                                 <!-- نهاية الجدول بصفوف مخططة -->
                             </div>
@@ -73,12 +86,12 @@
                 ajax: "{{ route('admin.purchaseReturn_management.data') }}", // يجب استبدال هذا بالمسار الصحيح للبيانات المطلوبة
                 dom: 'Bfrltip',
                 buttons: [{
-                        text: 'إضافة',
-                        className: 'custom-add-button',
-                        action: function(e, dt, node, config) {
-                            window.location.href = "{{ route('admin.purchase.purchase_management') }}"; // تحويل الى صفحة الإضافة
-                        }
-                    },
+                    text: 'إضافة',
+                    className: 'custom-add-button',
+                    action: function(e, dt, node, config) {
+                        window.location.href = "{{ route('admin.purchase.purchase_management') }}"; // تحويل الى صفحة الإضافة
+                    }
+                },
                     {
                         extend: 'pdf',
                         exportOptions: {
@@ -104,27 +117,34 @@
                         }
                     }
                 ],
-                columns: [{
+                columns: [
+                    {
+                        // الرقم التعريفي
                         data: 'return_id',
                         name: 'return_id'
                     },
                     {
+                        // رقم الفاتورة
                         data: 'purchase_details_id',
                         name: 'purchase_details_id'
                     },
                     {
+                        // تاريخ الارجاع
                         data: 'return_date',
                         name: 'return_date'
                     },
                     {
+                        // الكمية المرتجعة
                         data: 'quantity_returned',
                         name: 'quantity_returned'
                     },
                     {
+                        // المبلغ المرتجع
                         data: 'amount_returned',
                         name: 'amount_returned'
                     },
                     {
+                        // تاريخ الإنشاء
                         data: 'created_at',
                         name: 'created_at',
                         render: function(data, type, full, meta) {
@@ -132,6 +152,7 @@
                         }
                     },
                     {
+                        // العملية
                         data: 'action',
                         name: 'action'
                     },
@@ -142,43 +163,75 @@
         });
 
         $(document).on('click', '.delete_btn', function(e) {
-    e.preventDefault();
-    Swal.fire({
-        title: "هل انت متأكد ؟",
-        text: "لن تتمكن من التراجع عن هذا",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "تراجع",
-        confirmButtonText: "نعم، احذفه"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            var return_id = $(this).data('id'); // استخدمت $(this).data() بدلاً من $(this).attr()
-            $.ajax({
-                type: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                },
-                url: "{{ route('admin.purchaseReturn_management.destroy') }}", // يجب استبدال هذا بالمسار الصحيح للحذف
-                data: {
-                    'return_id': return_id
-                },
-                success: function(data) {
-                    Swal.fire({
-                        title: "تم الحذف ",
-                        text: "تم حذف الملف بنجاح",
-                        icon: "success"
+            e.preventDefault();
+
+            var return_id = $(this).data('id');
+
+            Swal.fire({
+                title: "هل أنت متأكد؟",
+                text: "لن تتمكن من التراجع عن هذا",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "تراجع",
+                confirmButtonText: "نعم، احذفه"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.purchaseReturn_management.destroy') }}",
+                        data: {
+                            'return_id': return_id
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "تم الحذف",
+                                text: "تم حذف الملف بنجاح",
+                                icon: "success"
+                            });
+                            $('#Return_Management').DataTable().ajax.reload();
+                        },
+                        error: function(reject) {
+                            var errorMessage = reject.responseJSON && reject.responseJSON.message ? reject.responseJSON.message : 'حدث خطأ أثناء معالجة الاسترجاع.';
+                            Swal.fire({
+                                title: "خطأ",
+                                text: errorMessage,
+                                icon: "error"
+                            });
+                        }
                     });
-                    $('#Return_Management').DataTable().ajax.reload(); // إعادة تحميل البيانات بعد الحذف
-                },
-                error: function(reject) {
-                    // يمكنك إضافة معالجة للأخطاء هنا إذا لزم الأمر
                 }
             });
+        });
+
+        // التحقق من حجم الشاشة وتحديد التصميم المناسب
+        function checkScreenSize() {
+            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+            if (screenWidth < 768) {
+                // تحديد تصميم للهواتف المحمولة
+                // يمكنك إضافة أي تحديدات أو أنماط CSS إضافية هنا
+                document.getElementById('main').classList.add('mobile-design');
+            } else {
+                // تحديد تصميم للأجهزة اللوحية والحواسيب الشخصية
+                // يمكنك إضافة أي تحديدات أو أنماط CSS إضافية هنا
+                document.getElementById('main').classList.add('desktop-design');
+            }
         }
-    });
-});
+
+        // تحقق من حجم الشاشة عند تحميل الصفحة
+        window.onload = function() {
+            checkScreenSize();
+        };
+
+        // تحقق من حجم الشاشة عند تغيير حجم النافذة
+        window.onresize = function() {
+            checkScreenSize();
+        }
 
     </script>
 @endsection
