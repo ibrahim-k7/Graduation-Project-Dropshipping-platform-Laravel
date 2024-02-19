@@ -24,23 +24,8 @@ class CartController extends Controller
     {
         $store_id = Auth::user()->store_id;
         $cart = Cart::where('store_id', $store_id)->with('product')->first();
-        
-        // Assuming you have a 'product' relationship in your Cart model
-        if ($cart) {
-            $product = $cart->product;
-        
-            // Loop through each product and get its name
-            $productNames = $product->pluck('name')->toArray();
-        
-            return dd($productNames);
-        } else {
-            return "Cart not found.";
-        }
-        
-        
-
-        
-        // return view('user.cart.cart', compact('cartItems'));
+        $product= $cart->product;
+         return view('user.cart.cart', compact('product'));
     }
 
     /**

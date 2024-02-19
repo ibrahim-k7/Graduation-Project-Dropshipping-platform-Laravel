@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddOrderDetailsRequest;
 use App\Http\Requests\ReturnOrderRequest;
 use App\Models\OrderDetails;
+use App\Models\Product;
 use App\Models\ReturnDetailsOrder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -80,8 +81,9 @@ class ReturnDetailsOrderController extends Controller
     public function edit(Request $request){
 
         $returned_product = ReturnDetailsOrder::where('return_id',$request->query('return_id'))->get()->first();
-
-        return view('Admin.Order.return_order', compact('returned_product'));
+        $order_details = OrderDetails::where('order_details_id', $returned_product->order_details_id)->get()->first();
+        $product = Product::where('id',$order_details->pro_id)->get()->first() ;
+        return view('Admin.Order.return_order', compact('returned_product','product'));
 
     }
 

@@ -314,7 +314,6 @@ class OrderController extends Controller
     // استدعاء البيانات لوجهه المستخدم
     public function getUserDataTable()
     {
-
         // استخراج store_id من المستخدم المسجل الحالي
         $store_id = Auth::user()->store_id;
         $data = Order::select(
@@ -355,39 +354,7 @@ class OrderController extends Controller
                            class="delete_btn btn btn-danger">
                            حذف
                         </a>
-                        <!--             payment status update             -->
-                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ' . $isDisabled2 . '>
-                        تحديث الدفع
-                        <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-    
-                            <a data-order-id="' . $row->order_id . '"
-                               data-wallet_id="' . $row->wallet_id . '"
-                               data-total_amount="' . $row->total_amount . '"
-                               data-payment_status="تم الدفع"
-                               class="payment-status-change-btn dropdown-item"
-                               id="ap"
-                               href="#">
-                               <span class="badge bg-success">تم الدفع</span>
-                            </a>
-                            <a data-order-id="' . $row->order_id . '"
-                               data-payment_status="لم يتم الدفع"
-                               class="payment-status-change-btn dropdown-item"
-                               href="#">
-                               <span class="badge bg-warning">لم يتم الدفع</span>
-                            </a>
-                            <a data-order-id="' . $row->order_id . '"
-                               data-wallet_id="' . $row->wallet_id . '"
-                               data-total_amount="' . $row->total_amount . '"
-                               data-payment_status="تم الغاء الدفع"
-                               class="payment-status-change-btn dropdown-item"
-                               href="#">
-                               <span class="badge bg-danger">تم الغاء الدفع</span>
-                            </a>
-                        </div>
-                        <!--  تم هنا تعديل -->
+                        <!-- show order details button-->
                         <a href="' . Route('user.order.details', ['id' => $row->order_id]) . '" class="btn btn-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>

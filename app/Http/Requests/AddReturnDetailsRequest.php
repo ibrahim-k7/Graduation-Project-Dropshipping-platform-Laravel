@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,14 +25,20 @@ class AddReturnDetailsRequest extends FormRequest
     public function rules()
     {
         return [
+            'purchase_details_id' => ['required', Rule::exists('purchase details', 'id')],
+            'return_date' => 'required',
+            'quantity_returned' => ['required', 'numeric', function ($attribute, $value, $fail) {
+                // التحقق من أن الكمية المُرسلة لا تتجاوز الكمية المتاحة في فواتير الشراء
+                $purchaseDetails = \App\Models\PurchaseDetails::find($this->input('purchase_details_id'));
 
-            'purchase_details_id'=>'required',
-            'return_date'=>'required',
-            'quantity_returned'=>'required',
-            'amount_returned'=>'required',
-
+                if ($purchaseDetails && $value > $purchaseDetails->quantity) {
+                    $fail('الكمية المسترجعة أكبر من الكمية المتاحة في فواتير الشراء.');
+                }
+            }],
+            'amount_returned' => 'required',
         ];
     }
+
 
     public function messages()
     {
