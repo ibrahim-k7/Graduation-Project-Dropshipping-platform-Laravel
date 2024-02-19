@@ -48,8 +48,8 @@
                                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                     <!-- Data -->
                                     <p><strong>{{ $product->name }}</strong></p>
-                                    <p>Color: blue</p>
-                                    <p>Size: M</p>
+                                    <p>Categorie: <small>{{ $product->categorie->name }}</small></p>
+                                    <p>Sub Categorie: <small>{{ $product->subCategorie->name }}</small></p>
                                     <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item">
                                         <i class="fas fa-trash"></i>
                                     </button>
@@ -68,7 +68,7 @@
 
                                         <div class="form-outline">
                                             <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control" />
-                                            <label class="form-label" for="form1">Quantity</label>
+                                            <label class="form-label" for="form1">Quantity </label>
                                         </div>
 
                                         <button class="btn btn-primary px-3 ms-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
@@ -79,7 +79,7 @@
 
                                     <!-- Price -->
                                     <p class="text-start text-md-center">
-                                        <strong>$17.99</strong>
+                                        <strong>{{ $product->selling_price }} / ري</strong>
                                     </p>
                                     <!-- Price -->
                                 </div>
@@ -91,80 +91,151 @@
                             @endforeach
 
                             <!-- Single item -->
+                        </div>
+                    </div>
+
+                    <!-- Checkout -->
+                    <div class="card shadow-0 border">
+                        <div class="p-4">
+                            <h5 class="card-title mb-3">Guest checkout</h5>
                             <div class="row">
-                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                    <!-- Image -->
-                                    <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp" class="w-100" />
-                                        <a href="#!">
-                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                                        </a>
+                                <div class="col-6 mb-3">
+                                    <p class="mb-0">First name</p>
+                                    <div class="form-outline">
+                                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
                                     </div>
-                                    <!-- Image -->
                                 </div>
 
-                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                    <!-- Data -->
-                                    <p><strong>Red hoodie</strong></p>
-                                    <p>Color: red</p>
-                                    <p>Size: M</p>
-
-                                    <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip" title="Move to the wish list">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-                                    <!-- Data -->
+                                <div class="col-6">
+                                    <p class="mb-0">Last name</p>
+                                    <div class="form-outline">
+                                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
+                                    </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                    <!-- Quantity -->
-                                    <div class="d-flex mb-4" style="max-width: 300px">
-                                        <button class="btn btn-primary px-3 me-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
-                                        <div class="form-outline">
-                                            <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control" />
-                                            <label class="form-label" for="form1">Quantity</label>
-                                        </div>
-
-                                        <button class="btn btn-primary px-3 ms-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
+                                <div class="col-6 mb-3">
+                                    <p class="mb-0">Phone</p>
+                                    <div class="form-outline">
+                                        <input type="tel" id="typePhone" value="+48 " class="form-control" />
                                     </div>
-                                    <!-- Quantity -->
+                                </div>
 
-                                    <!-- Price -->
-                                    <p class="text-start text-md-center">
-                                        <strong>$17.99</strong>
-                                    </p>
-                                    <!-- Price -->
+                                <div class="col-6 mb-3">
+                                    <p class="mb-0">Email</p>
+                                    <div class="form-outline">
+                                        <input type="email" id="typeEmail" placeholder="example@gmail.com" class="form-control" />
+                                    </div>
                                 </div>
                             </div>
-                            <!-- Single item -->
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                <label class="form-check-label" for="flexCheckDefault">Keep me up to date on news</label>
+                            </div>
+
+                            <hr class="my-4" />
+
+                            <h5 class="card-title mb-3">Shipping info</h5>
+
+                            <div class="row mb-3">
+                                <div class="col-lg-4 mb-3">
+                                    <!-- Default checked radio -->
+                                    <div class="form-check h-100 border rounded-3">
+                                        <div class="p-3">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked />
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Express delivery <br />
+                                                <small class="text-muted">3-4 days via Fedex </small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-3">
+                                    <!-- Default radio -->
+                                    <div class="form-check h-100 border rounded-3">
+                                        <div class="p-3">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Post office <br />
+                                                <small class="text-muted">20-30 days via post </small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-3">
+                                    <!-- Default radio -->
+                                    <div class="form-check h-100 border rounded-3">
+                                        <div class="p-3">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
+                                            <label class="form-check-label" for="flexRadioDefault3">
+                                                Self pick-up <br />
+                                                <small class="text-muted">Come to our shop </small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-8 mb-3">
+                                    <p class="mb-0">Address</p>
+                                    <div class="form-outline">
+                                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <p class="mb-0">City</p>
+                                    <select class="form-select">
+                                        <option value="1">New York</option>
+                                        <option value="2">Moscow</option>
+                                        <option value="3">Samarqand</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <p class="mb-0">House</p>
+                                    <div class="form-outline">
+                                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 col-6 mb-3">
+                                    <p class="mb-0">Postal code</p>
+                                    <div class="form-outline">
+                                        <input type="text" id="typeText" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 col-6 mb-3">
+                                    <p class="mb-0">Zip</p>
+                                    <div class="form-outline">
+                                        <input type="text" id="typeText" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
+                                <label class="form-check-label" for="flexCheckDefault1">Save this address</label>
+                            </div>
+
+                            <div class="mb-3">
+                                <p class="mb-0">Message to seller</p>
+                                <div class="form-outline">
+                                    <textarea class="form-control" id="textAreaExample1" rows="2"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="float-end">
+                                <button class="btn btn-light border">Cancel</button>
+                                <button class="btn btn-success shadow-0 border">Continue</button>
+                            </div>
                         </div>
                     </div>
-
-
-
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <p><strong>Expected shipping delivery</strong></p>
-                            <p class="mb-0">12.10.2020 - 14.10.2020</p>
-                        </div>
-                    </div>
-                    <div class="card mb-4 mb-lg-0">
-                        <div class="card-body">
-                            <p><strong>We accept</strong></p>
-                            <img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa" />
-                            <img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express" />
-                            <img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard" />
-                            <img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp" alt="PayPal acceptance mark" />
-                        </div>
-                    </div>
+                    <!-- Checkout -->
                 </div>
+
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-header py-3">
@@ -198,6 +269,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
