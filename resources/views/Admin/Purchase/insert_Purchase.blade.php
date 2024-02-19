@@ -81,11 +81,11 @@
                                                 <label for="total_cost" class="form-label">التكلفة الإجمالية</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">ر.س</span>
-                                                    <input type="number" class="form-control" id="total_cost"
-                                                           name="total_cost" placeholder="التكلفة الإجمالية">
+                                                    <input type="text" class="form-control" id="total_cost" name="total_cost" placeholder="التكلفة الإجمالية" readonly>
                                                 </div>
                                                 <small id="total_cost_error" class="form-text text-danger"></small>
                                             </div>
+
 
                                             <div class="col-md-2">
                                                 <label for="add_product" class="form-label">&nbsp;</label>
@@ -119,8 +119,7 @@
 
                                         <div class="col-md-6">
                                             <label for="total" class="form-label">المجموع</label>
-                                            <input type="number" class="form-control" id="total" name="total"
-                                                   placeholder="أدخل المجموع">
+                                            <input type="number" class="form-control" id="total" name="total" placeholder="أدخل المجموع" readonly>
                                             <small id="total_error" class="form-text text-danger"></small>
                                         </div>
 
@@ -253,7 +252,6 @@
 
                 $('#purchaseDetailsBody tr').each(function (index, row) {
                     total += parseFloat($(this).find('td:eq(4)').text());
-                    amount_paid=ف
                 });
 
                 $('#total').val(total.toFixed(2));
@@ -281,8 +279,10 @@
                 updateTotal();
                 // إعادة تعيين حقول الإدخال
                 $("#pro_id, #product_price, #quantity, #total_cost").val('');
-            });
 
+                // جعل حقل المجموع غير قابل للتحرير وتحديث قيمته
+                $("#total_cost").prop('readonly', true).val(totalCost);
+            });
 
             var purchaseData = @json($purchase ?? null);
             if (purchaseData != null) {
