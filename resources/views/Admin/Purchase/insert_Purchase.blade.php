@@ -1,7 +1,7 @@
 @extends('Admin.layouts.main')
 
 @section('pageTitle')
-    اضافة مشتريات
+    إضافة مشتريات
 @endsection
 
 @section('css')
@@ -12,15 +12,15 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Insert New Purchase</h1>
+            <h1>إدراج مشتريات جديدة</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Forms</li>
-                    <li class="breadcrumb-item active">Validation</li>
+                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+                    <li class="breadcrumb-item">نماذج</li>
+                    <li class="breadcrumb-item active">تحقق</li>
                 </ol>
             </nav>
-        </div><!-- End Page Title -->
+        </div><!-- نهاية عنوان الصفحة -->
 
         <section class="section">
             <div class="row">
@@ -29,34 +29,33 @@
                         <div class="card-body">
                             <div class="card mt-5">
                                 <div class="card-body">
-                                    <h5 class="card-title">Purchase Form</h5>
+                                    <h5 class="card-title">نموذج المشتريات</h5>
 
-                                    <!-- Multi Columns Form -->
+                                    <!-- نموذج عدة أعمدة -->
                                     <form id="form" method="post" class="row g-3">
                                         @csrf
                                         <div class="col-md-6">
-                                            <label class="mb-2" for="form-label">Supplier Info</label>
+                                            <label class="mb-2" for="form-label">معلومات المورد</label>
                                             <select class="form-select" aria-label="State" id="sup_id" name="sup_id">
                                                 <option value="">اختر موردًا</option>
                                             </select>
                                             <small id="sup_id_error" class="form-text text-danger"></small>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="payment_method" class="form-label">Payment Method</label>
+                                            <label for="payment_method" class="form-label">طريقة الدفع</label>
                                             <select class="form-select" id="payment_method" name="payment_method" required>
                                                 <option value="نقد">نقد</option>
-                                                <option value="اجل">آجل</option>
+                                                <option value="آجل">آجل</option>
                                             </select>
                                             <small id="payment_method_error" class="form-text text-danger"></small>
                                         </div>
 
-                                        <!-- Purchase Details Section -->
+                                        <!-- قسم تفاصيل الشراء -->
                                         <div class="row g-3">
                                             <div class="col-md-3">
                                                 <label for="pro_id" class="form-label">رقم المنتج</label>
                                                 <select class="form-select" id="pro_id" name="pro_id">
                                                     <option value="">اختر المنتج</option>
-
                                                 </select>
                                                 <small id="pro_id_error" class="form-text text-danger"></small>
                                             </div>
@@ -98,36 +97,37 @@
                                         <table class="table table-bordered mt-3">
                                             <thead>
                                             <tr>
-                                                <th>SL</th>
-                                                <th>Product Name</th>
-                                                <th>Product Price</th>
-                                                <th>Quantity</th>
-                                                <th>Total Cost</th>
-                                                <th>Action</th>
+                                                <th>رقم</th>
+                                                <th>اسم المنتج</th>
+                                                <th>سعر المنتج</th>
+                                                <th>الكمية</th>
+                                                <th>التكلفة الإجمالية</th>
+                                                <th>الإجراء</th>
                                             </tr>
                                             </thead>
                                             <tbody id="purchaseDetailsBody">
-                                            <!-- Add dynamic rows for purchase details -->
+                                            <!-- إضافة صفوف ديناميكية لتفاصيل الشراء -->
                                             </tbody>
                                         </table>
 
                                         <div class="col-md-6">
-                                            <label for="additional_costs" class="form-label">Additional Costs</label>
-                                            <input type="number" class="form-control" id="additional_costs" name="additional_costs"
-                                                   placeholder="Enter Additional Costs">
+                                            <label for="additional_costs" class="form-label">التكاليف الإضافية</label>
+                                            <input type="number" class="form-control" id="additional_costs" name="additional_costs" value="0"
+                                                   placeholder="أدخل التكاليف الإضافية">
                                             <small id="additional_costs_error" class="form-text text-danger"></small>
                                         </div>
+
                                         <div class="col-md-6">
-                                            <label for="total" class="form-label">Total</label>
+                                            <label for="total" class="form-label">المجموع</label>
                                             <input type="number" class="form-control" id="total" name="total"
-                                                   placeholder="Enter total">
+                                                   placeholder="أدخل المجموع">
                                             <small id="total_error" class="form-text text-danger"></small>
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="amount_paid" class="form-label">Amount Paid</label>
+                                            <label for="amount_paid" class="form-label">المبلغ المدفوع</label>
                                             <input type="number" class="form-control" id="amount_paid" name="amount_paid"
-                                                   placeholder="Enter Amount Paid">
+                                                   placeholder="أدخل المبلغ المدفوع">
                                             <small id="amount_paid_error" class="form-text text-danger"></small>
                                         </div>
 
@@ -135,7 +135,7 @@
 
                                         <div class="text-center">
                                             <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ </button>
-                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                            <button type="reset" class="btn btn-secondary">إعادة تعيين</button>
                                         </div>
                                     </form>
                                 </div>
@@ -146,11 +146,39 @@
             </div>
         </section>
 
-    </main><!-- End #main -->
+    </main><!-- النهاية #main -->
 @endsection
 
 @section('js')
     <script>
+
+        // التحقق من حجم الشاشة وتحديد التصميم المناسب
+        function checkScreenSize() {
+            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+            if (screenWidth < 768) {
+                // تحديد تصميم للهواتف المحمولة
+                // يمكنك إضافة أي تحديدات أو أنماط CSS إضافية هنا
+                document.getElementById('main').classList.add('mobile-design');
+            } else {
+                // تحديد تصميم للأجهزة اللوحية والحواسيب الشخصية
+                // يمكنك إضافة أي تحديدات أو أنماط CSS إضافية هنا
+                document.getElementById('main').classList.add('desktop-design');
+            }
+        }
+
+        // تحقق من حجم الشاشة عند تحميل الصفحة
+        window.onload = function() {
+            checkScreenSize();
+        };
+
+        // تحقق من حجم الشاشة عند تغيير حجم النافذة
+        window.onresize = function() {
+            checkScreenSize();
+
+
+        }
+
 
         // قم بتحميل بيانات الموردين باستخدام AJAX
         $.ajax({
@@ -225,9 +253,13 @@
 
                 $('#purchaseDetailsBody tr').each(function (index, row) {
                     total += parseFloat($(this).find('td:eq(4)').text());
+                    amount_paid=ف
                 });
 
                 $('#total').val(total.toFixed(2));
+                $('#amount_paid').val(total.toFixed(2));
+
+
             }
 
             // Event handler for the "Add Product" button
@@ -254,14 +286,17 @@
 
             var purchaseData = @json($purchase ?? null);
             if (purchaseData != null) {
-                $('#sup_id').val(purchaseData.sup_id);
-                $('#payment_method').val(purchaseData.payment_method);
+                // تحديث قيم حقول الإدخال
+                $('#sup_id').val(purchaseData.sup_id).prop('disabled', true);
+                $('#payment_method').val(purchaseData.payment_method).prop('disabled', true);
                 $('#additional_costs').val(purchaseData.additional_costs);
                 $('#total').val(purchaseData.total);
                 $('#amount_paid').val(purchaseData.amount_paid);
 
-                // قم بتعبئة تفاصيل المشتريات في الجدول
-                // قم بتعبئة تفاصيل المشتريات في الجدول
+                // باقي الكود...
+
+
+            // قم بتعبئة تفاصيل المشتريات في الجدول
                 var purchaseDetails = @json($purchase->purchaseDetails ?? null);
 
                 if (purchaseDetails != null && purchaseDetails.length > 0) {
@@ -410,5 +445,6 @@
                 purchaseDetailsCounter = 1;
             });
         });
+
     </script>
 @endsection

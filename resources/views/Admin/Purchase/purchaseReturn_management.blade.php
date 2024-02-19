@@ -188,6 +188,33 @@
             });
         });
 
+        // التحقق من حجم الشاشة وتحديد التصميم المناسب
+        function checkScreenSize() {
+            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+            if (screenWidth < 768) {
+                // تحديد تصميم للهواتف المحمولة
+                // يمكنك إضافة أي تحديدات أو أنماط CSS إضافية هنا
+                document.getElementById('main').classList.add('mobile-design');
+            } else {
+                // تحديد تصميم للأجهزة اللوحية والحواسيب الشخصية
+                // يمكنك إضافة أي تحديدات أو أنماط CSS إضافية هنا
+                document.getElementById('main').classList.add('desktop-design');
+            }
+        }
+
+        // تحقق من حجم الشاشة عند تحميل الصفحة
+        window.onload = function() {
+            checkScreenSize();
+        };
+
+        // تحقق من حجم الشاشة عند تغيير حجم النافذة
+        window.onresize = function() {
+            checkScreenSize();
+
+
+        }
+
 
     </script>
 @endsection
