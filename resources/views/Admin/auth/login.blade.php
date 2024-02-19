@@ -68,9 +68,8 @@
                                                 type="submit">{{ __('دخول') }}</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0"> نسيت كلمة السر؟
-                                                <a href="{{ route('admin.password.request') }}">نسيت كلمة السر؟</a>
-                                            </p>
+                                            <p class="small mb-0"> نسيت كلمة السر؟ <a href="{{ route('password.request') }}">
+                                                    {{ __('نسيت كلمة السر') }}</a></p>
                                         </div>
                                     </form>
                                 </div>
