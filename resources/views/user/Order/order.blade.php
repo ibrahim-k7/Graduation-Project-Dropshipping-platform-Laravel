@@ -32,22 +32,22 @@
 
                             <div class="table-responsive">
                                 <!-- Table with stripped rows -->
-                                <table id="User_Order_Managment" class="table table-striped">
+                                <table id="Order_Managment" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th> اسم المتجر</th>
-                                            <th>الشحن</th>
-                                            <th>المنصة</th>
-                                            <th>حالة الدفع</th>
-                                            <th>اسم العميل</th>
-                                            <th>رقم الجوال</th>
-                                            <th>البريد الالكتروني</th>
-                                            <th>حالة الطلب</th>
-                                            <th>المجموع الكلي</th>
-                                            <th>تاريخ الطلب</th>
-                                            <th>تفاصيل الطلب</th>
-                                        </tr>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th> اسم المتجر</th>
+                                        <th>الشحن</th>
+                                        <th>المنصة</th>
+                                        <th>حالة الدفع</th>
+                                        <th>اسم العميل</th>
+                                        <th>رقم الجوال</th>
+                                        <th>البريد الالكتروني</th>
+                                        <th>حالة الطلب</th>
+                                        <th>المجموع الكلي</th>
+                                        <th>تاريخ الطلب</th>
+                                        <th>تفاصيل الطلب</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -123,7 +123,7 @@
 
         $(function() {
 
-            var order_data = $('#User_Order_Managment').DataTable({
+            var order_data = $('#Order_Managment').DataTable({
                 processing: true,
                 serverSide: true,
                 "autoWidth": false,
@@ -146,40 +146,36 @@
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
                 },
                 buttons: [{
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                14] // Column index which needs to export
-                        }
-                    },
+                    extend: 'print',
+                    autoPrint: false,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Column index which needs to export
+                    }
+                },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                14] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                14] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                14] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Column index which needs to export
                         }
                     },
 
                 ],
                 columns: [{
-                        data: 'order_id',
-                        name: 'order_id'
-                    },
+                    data: 'order_id',
+                    name: 'order_id'
+                },
                     {
                         data: 'store_name',
                         name: 'store_name'
@@ -297,7 +293,7 @@
                             });
 
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
-                            $('#User_Order_Managment').DataTable().ajax.reload();
+                            $('#Order_Managment').DataTable().ajax.reload();
                         },
                         error: function(xhr, status, error) {
                             var errorMessage = xhr

@@ -36,7 +36,6 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        {{-- <th>معرف النتج</th> --}}
                                         <th>الصورة</th>
                                         <th>اسم المنتج</th>
                                         <th>الباركود</th>
@@ -95,7 +94,7 @@
                                     <p class="text-dark fs-6 fw-bold">حالة الطلب:
                                         <span class="p-3 text-warning" id="order_status"></span>
                                     </p>
-        
+
                                 </div>
                             </div>
                         </div>
@@ -107,19 +106,6 @@
                     <div class="card">
                         <div class="card-header text-center text-bg-light fs-5 fw-bold"> معلومات العميل</div>
                         <div class="card-body">
-                            {{-- <p class="text-dark fs-5">اسم العميل:
-                                <span class="p-3 text-dark" id="customer_name">محمد عبدالخالق</span>
-                            </p>
-                            <p class="text-dark fs-5">البريد الإلكتروني:
-                                <span class="p-3 text-dark" id="customer_email">mohammed@gmial.com</span>
-                            </p>
-                            <p class="text-dark fs-5">العنوان:
-                                <span class="p-3 text-dark fs-6" id="shipping_address">صنعاء التحرير</span>
-                            </p>
-                            <p class="text-dark fs-5">رقم الجوال:
-                                <span class="p-3 text-dark" id="customer_phone">776273760</span>
-                            </p> --}}
-                            <!-- Multi Columns Form -->
                             <form id="form" method="post" class="row g-3">
 
                                 <div class="col-md-12">
@@ -158,81 +144,6 @@
                             <a href="#" id="pay" class="btn btn-outline-success">أدفع</a>
                         </div>
                     </div>
-
-
-
-
-
-                    {{-- <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Custom Styled Validation with Tooltips</h5>
-                            <p>If your form layout allows it, you can swap the <code>.{valid|invalid}-feedback</code>
-                                classes for .<code>{valid|invalid}-tooltip</code> classes to display validation feedback in
-                                a styled tooltip. Be sure to have a parent with <code>position: relative</code> on it for
-                                tooltip positioning. In the example below, our column classes have this already, but your
-                                project may require an alternative setup. </p>
-
-                            <!-- Custom Styled Validation with Tooltips -->
-                            <form class="row g-3 needs-validation" novalidate>
-                                <div class="col-md-4 position-relative">
-                                    <label for="validationTooltip01" class="form-label">First name</label>
-                                    <input type="text" class="form-control" id="validationTooltip01" value="John"
-                                        required>
-                                    <div class="valid-tooltip">
-                                        Looks good!
-                                    </div>
-                                </div>
-                                <div class="col-md-4 position-relative">
-                                    <label for="validationTooltip02" class="form-label">Last name</label>
-                                    <input type="text" class="form-control" id="validationTooltip02" value="Doe"
-                                        required>
-                                    <div class="valid-tooltip">
-                                        Looks good!
-                                    </div>
-                                </div>
-                                <div class="col-md-4 position-relative">
-                                    <label for="validationTooltipUsername" class="form-label">Username</label>
-                                    <div class="input-group has-validation">
-                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
-                                        <input type="text" class="form-control" id="validationTooltipUsername"
-                                            aria-describedby="validationTooltipUsernamePrepend" required>
-                                        <div class="invalid-tooltip">
-                                            Please choose a unique and valid username.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 position-relative">
-                                    <label for="validationTooltip03" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="validationTooltip03" required>
-                                    <div class="invalid-tooltip">
-                                        Please provide a valid city.
-                                    </div>
-                                </div>
-                                <div class="col-md-3 position-relative">
-                                    <label for="validationTooltip04" class="form-label">State</label>
-                                    <select class="form-select" id="validationTooltip04" required>
-                                        <option selected disabled value="">Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                    <div class="invalid-tooltip">
-                                        Please select a valid state.
-                                    </div>
-                                </div>
-                                <div class="col-md-3 position-relative">
-                                    <label for="validationTooltip05" class="form-label">Zip</label>
-                                    <input type="text" class="form-control" id="validationTooltip05" required>
-                                    <div class="invalid-tooltip">
-                                        Please provide a valid zip.
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary" type="submit">Submit form</button>
-                                </div>
-                            </form><!-- End Custom Styled Validation with Tooltips -->
-
-                        </div>
-                    </div> --}}
-
                 </div>
             </div>
         </section>
