@@ -160,7 +160,7 @@ class PurchaseController extends Controller
             } else {
                 // إذا لم يكن المنتج موجودًا، قم بإضافته
 
-                return dd("وصل");
+                // return dd("وصل");
                 $purchase = Purchase::findOrFail($request->id);
                 $purchase->prouduct()->attach($productId['pro_id'], [
                     'quantity' => $productId["quantity"],
