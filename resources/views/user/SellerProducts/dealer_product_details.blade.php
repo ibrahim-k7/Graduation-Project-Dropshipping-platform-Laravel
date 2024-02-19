@@ -23,70 +23,71 @@
     </div><!-- End Page Title -->
 
     <section class="section">
-        <div class="row"> <div class="col-lg-6">
-                
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="{{ asset('Products_img/' . $details->product->image) }}" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title"> {{ $details->product->name }}</h5>
-                                    <p class="card-text"><small class="text-body-secondary">Barcode: {{ $details->product->barcode}}</small></p>
+        <div class="row">
+            <div class="col-lg-6">
 
-                                    <div class="mb-3">
-                                        <span class="h5">تكلفة المنتج:</span>
-                                        <span class="h5">{{ $details->product->selling_price }} ري </span>
-                                        <span class="text-muted"> / للقطعة الواحدة </span>
-                                    </div>
-                                    <div class="mb-3">
-                                        <span class="h5">السعر المقترح للبيع:</span>
-                                        <span class="h5">{{ $details->product->suggested_selling_price }} ري </span>
-                                        <span class="text-muted"> / للقطعة الواحدة </span>
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ asset('Products_img/' . $details->product->image) }}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"> {{ $details->product->name }}</h5>
+                                <p class="card-text"><small class="text-body-secondary">Barcode: {{ $details->product->barcode}}</small></p>
 
-                                    </div>
-                                    <!-- <p class="card-text">{{ $details->dealer_product_desc }}</p> -->
-
-                                    <p class="card-text">الفئة الرئيسية: {{ $details->product->categorie->name }} </p>
-                                    <p class="card-text">الفئة الفرعية: {{ $details->product->subcategorie->name }} </p>
-
-
-                                    <p class="card-text"><small class="text-body-secondary">Last updated at {{ $details->updated_at }}</small></p>
+                                <div class="mb-3">
+                                    <span class="h5">تكلفة المنتج:</span>
+                                    <span class="h5">{{ $details->product->selling_price }} ري </span>
+                                    <span class="text-muted"> / للقطعة الواحدة </span>
                                 </div>
+                                <div class="mb-3">
+                                    <span class="h5">السعر المقترح للبيع:</span>
+                                    <span class="h5">{{ $details->product->suggested_selling_price }} ري </span>
+                                    <span class="text-muted"> / للقطعة الواحدة </span>
+
+                                </div>
+                                <!-- <p class="card-text">{{ $details->dealer_product_desc }}</p> -->
+
+                                <p class="card-text">الفئة الرئيسية: {{ $details->product->categorie->name }} </p>
+                                <p class="card-text">الفئة الفرعية: {{ $details->product->subcategorie->name }} </p>
+
+
+                                <p class="card-text"><small class="text-body-secondary">Last updated at {{ $details->updated_at }}</small></p>
                             </div>
                         </div>
                     </div>
-                
+                </div>
+
 
             </div>
             <div class="col-lg-6">
 
-                    <div class="col col-lg-auto">
-                        <div class="card ">
-                            <div class="card-header text-center text-bg-light fs-5 fw-bold"> معلومات المنتج الخاصة بك</div>
-                            <div class="card-body py-3 justify-content-end">
-                                <form id="form" method="POST" class="row g-3">
+                <div class="col col-lg-auto">
+                    <div class="card ">
+                        <div class="card-header text-center text-bg-light fs-5 fw-bold"> معلومات المنتج الخاصة بك</div>
+                        <div class="card-body py-3 justify-content-end">
+                            <form id="form" method="POST" class="row g-3">
 
-                                    <div class="col-md-12 mt-4">
-                                        <label>اسم المنتج الخاص بك</label>
-                                        <input type="text" class="form-control " id="dealer_product_name" name="dealer_product_name" required="">
-                                    </div>
-                                    <div class="col-md-12 mt-4">
-                                        <label>السعر الخاص بك</label>
-                                        <input type="text" class="form-control " id="dealer_selling_price" name="dealer_selling_price" required="">
-                                    </div>
-                                    <div class="col-md-12 mt-4">
-                                        <label>وصف المنتج الخاص بك</label>
-                                        <textarea type="text" class="form-control" id="dealer_product_desc" name="dealer_product_desc" style=" height: auto"></textarea>
-                                    </div>
-                                    <div class="col-md-12 mt-4">
-                                        <button type="submit" id="submit" class="btn btn-primary">حفظ</button>
-                                    </div>
-                                </form>
-                            </div>
+                                <div class="col-md-12 mt-4">
+                                    <label>اسم المنتج الخاص بك</label>
+                                    <input type="text" class="form-control " id="dealer_product_name" name="dealer_product_name" required="">
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <label>السعر الخاص بك</label>
+                                    <input type="text" class="form-control " id="dealer_selling_price" name="dealer_selling_price" required="">
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <label>وصف المنتج الخاص بك</label>
+                                    <textarea type="text" class="form-control" id="dealer_product_desc" name="dealer_product_desc" style=" height: auto"></textarea>
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <button type="submit" id="submit" class="btn btn-primary">حفظ</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
 
 
                 <div class="card mt-4">
@@ -131,7 +132,7 @@
 
             </div>
 
-           
+
         </div>
     </section>
 
