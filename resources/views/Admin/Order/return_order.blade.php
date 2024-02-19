@@ -33,25 +33,23 @@
                                     <!-- Multi Columns Form -->
                                     <form id="form" method="post" class="row g-3">
                                         @csrf
-                                        <div class="col-md-2">
-                                            <label for="quantity_returned" class="form-label">الكمية المسترجعة</label>
-                                            <input type="text" class="form-control" id="quantity_returned" name="quantity_returned"
-                                                placeholder="10" required>
-                                            <small id="quantity_returned_error" class="form-text text-danger"></small>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="amount_returned" class="form-label">المبلغ المسترجع</label>
-                                            <input type="text" class="form-control" id="amount_returned" name="amount_returned"
-                                                placeholder="30" required>
-                                            <small id="amount_returned_error" class="form-text text-danger"></small>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="submit" id="submit" class="btn btn-primary">ارسال</button>
-                                            <button type="reset" class="btn btn-secondary">اعادة تعيين</button>
-                                        </div>
+                                            <div class="col-md-2">
+                                                <label for="quantity_returned" class="form-label">الكمية المسترجعة</label>
+                                                <input type="text" class="form-control" id="quantity_returned" name="quantity_returned"
+                                                       placeholder="10" required>
+                                                <small id="quantity_returned_error" class="form-text text-danger"></small>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="amount_returned" class="form-label">المبلغ المسترجع</label>
+                                                <input type="text" class="form-control" id="amount_returned" name="amount_returned"
+                                                       placeholder="0"  readonly>
+                                                <small id="amount_returned_error" class="form-text text-danger"></small>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" id="submit" class="btn btn-primary">ارسال</button>
+                                                <button type="reset" class="btn btn-secondary">اعادة تعيين</button>
+                                            </div>
                                     </form><!-- End Multi Columns Form -->
-
-
                                 </div>
                             </div>
                         </div>
@@ -69,12 +67,23 @@
     <script>
         // عند تحميل الصفحة
         $(document).ready(function (){
+            var order_details = @json($order_details ?? null);
             var product = @json($product ?? null);
+            var selling_price = parseInt(product.selling_price);
             var returned_product = @json($returned_product ?? null);
+
+            //لحساب المبلغ المسترجع
+            function updateAmountReturned() {
+                var  quantityReturned = parseInt($('#quantity_returned').val()) || 0;
+                var amountReturned = quantityReturned * selling_price;
+
+                $('#amount_returned').val(amountReturned.toFixed(2));
+            }
 
             if (returned_product != null) {
                 $('#quantity_returned').val(returned_product.quantity_returned);
                 $('#amount_returned').val(returned_product.amount_returned);
+                $('#quantity_returned').on('input', updateAmountReturned);
 
                 $(document).on('click', '#submit', function(e) {
                     e.preventDefault();
@@ -133,6 +142,8 @@
                     });
                 });
             } else {
+                $('#quantity_returned').on('input', updateAmountReturned);
+
                 $(document).on('click', '#submit', function(e) {
                     e.preventDefault();
 
@@ -147,7 +158,7 @@
                         },
                         url: "{{ route('admin.returned.order.details.store') }}",
                         data: {
-                            'order_details_id' : product.order_details_id,
+                            'order_details_id' : order_details.order_details_id,
                             // 'quantity' : product.quantity,
                             // 'total_cost' : product.total_cost,
                             'quantity_returned': $("input[name='quantity_returned']").val(),
@@ -159,7 +170,7 @@
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "",
+                                title: "تم استرجاع المنتج",
                                 showConfirmButton: false,
                                 timer: 2000
                             });

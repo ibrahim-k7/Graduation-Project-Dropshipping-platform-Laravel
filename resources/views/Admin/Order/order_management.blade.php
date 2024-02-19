@@ -178,6 +178,9 @@
             var order_data = $('#Order_Managment_User').DataTable({
                 processing: true,
                 serverSide: true,
+                order: [
+                    [0, "desc"]
+                ],
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
                     targets: '_all',//كل الحقول
