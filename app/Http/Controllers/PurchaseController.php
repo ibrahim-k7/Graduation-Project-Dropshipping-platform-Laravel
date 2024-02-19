@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddPurchaseRequest;
 use App\Http\Requests\AddReturnDetailsRequest;
+use App\Http\Requests\AddSupplierTransactionRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
@@ -38,7 +39,6 @@ class PurchaseController extends Controller
             <a href="' . route('admin.purchase.ViewReturndetails', ['id' => $row->id]) . '" type="button" class="btn btn-warning">عرض الفواتير المرتجعة</a>
             <a id="delete_btn" purch-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
         </div>';
-
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -51,7 +51,6 @@ class PurchaseController extends Controller
 
     public function store(AddPurchaseRequest $request)
     {
-
         Purchase::create([
             'sup_id' => $request->sup_id,
             'payment_method' => $request->payment_method,
@@ -61,6 +60,23 @@ class PurchaseController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        // تسجيل مبلغ الأجل للمورد اذاكانت الفانورة أجل
+        if ($request->payment_method == "آجل" && $request->total - $request->amount_paid - $request->additional_costs != 0) {
+
+            // إنشاء كائن addSupplierTransactionRequest وتعيين القيم
+            $addSupplierTransactionRequest = new AddSupplierTransactionRequest();
+            $addSupplierTransactionRequest->merge([
+                'sup_id' => $request->sup_id, // القيمة المطلوبة لـ sup_id
+                'transaction_type' => 2, // القيمة المطلوبة لـ transaction_type
+                'amount' =>  $request->total - $request->amount_paid - $request->additional_costs,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            // إنشاء كائن SupplierTransactionController واستدعاء الدالة store
+            $supplierTransactionController = new SupplierTransactionController();
+            $supplierTransactionController->store($addSupplierTransactionRequest);
+        }
 
         $purchase = Purchase::orderBy('id', 'desc')->first();
         // استخدام array_map لتطبيق except على كل عنصر في المصفوفة
@@ -86,7 +102,6 @@ class PurchaseController extends Controller
                     'quantity' => $product->quantity + $productId["quantity"],
                     'purchasing_price' => $productId["purchasing_price"],
                 ]);
-
             }
         }
     }
@@ -145,6 +160,7 @@ class PurchaseController extends Controller
             } else {
                 // إذا لم يكن المنتج موجودًا، قم بإضافته
 
+                // return dd("وصل");
                 $purchase = Purchase::findOrFail($request->id);
                 $purchase->prouduct()->attach($productId['pro_id'], [
                     'quantity' => $productId["quantity"],
@@ -209,7 +225,7 @@ class PurchaseController extends Controller
     {
         // Get all purchase invoices with associated details and products
         $invoices = Purchase::with(['purchaseDetails.product'])
-            ->select('id')// اختر الحقول التي تحتاجها هنا
+            ->select('id') // اختر الحقول التي تحتاجها هنا
             ->orderBy("id", "ASC")
             ->get();
 
@@ -256,14 +272,15 @@ class PurchaseController extends Controller
             }
 
             // التحقق من صحة البيانات قبل الحفظ
-            if ($returnDetails->quantity_returned <= $purchaseDetails->quantity &&
+            if (
+                $returnDetails->quantity_returned <= $purchaseDetails->quantity &&
                 $returnDetails->quantity_returned <= $product->quantity &&
-                $returnDetails->quantity_returned <= $purchaseDetails->quantity) {
+                $returnDetails->quantity_returned <= $purchaseDetails->quantity
+            ) {
 
                 // الحفظ إذا كانت البيانات صحيحة
                 $product->quantity -= $returnDetails->quantity_returned;
                 $product->save();
-
             } else {
                 // الرفض إذا كانت البيانات غير صحيحة
                 throw new \Exception('بيانات غير صحيحة.', 400);
@@ -295,6 +312,4 @@ class PurchaseController extends Controller
         // توجيه الصفحة إلى ViewReturndetails مع البيانات اللازمة
         return view('Admin.Purchase.ViewReturnDetails', compact('purchase', 'returnDetails'));
     }
-
-
 }
