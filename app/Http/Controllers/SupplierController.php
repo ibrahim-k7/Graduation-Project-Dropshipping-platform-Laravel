@@ -61,9 +61,9 @@ class SupplierController extends Controller
             return response()->json(['error' => 'Invalid timeframe']);
         }
 
-        $totalBalance = Supplier::where('balance', '>', 0)
+        $totalBalance = Supplier::where('balance', '<', 0)
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                return $query->whereBetween('created_at', [$startDate, $endDate]);
+                return $query->whereBetween('updated_at', [$startDate, $endDate]);
             })
             ->sum('balance');
         return['total_balance' => $totalBalance];
