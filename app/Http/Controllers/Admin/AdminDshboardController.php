@@ -92,7 +92,7 @@ class AdminDshboardController extends Controller
         $sales = $orderController->getTotalPaidOrdersAmount($request);
         $debts =  $supplierController->getSuppliersTotalBalance($request);
         // يتم اسناد قيمة total_balance إلى المتغير debts
-        $debts = $debts['total_balance'];
+        $debts = $debts['total_balance'] * -1;
         $sales = $sales['total_paid_amount'];
 
         return [
