@@ -1,23 +1,30 @@
-
 :root {
     scroll-behavior: smooth;
 }
 
+/* .card .login {
+    margin-top: 80px !important;
+} */
 
 .btn-group {
     direction: ltr;
 }
 
 .custom-add-button {
-    background-color: #4caf50 !important; /* لون  */
-    color: #fff !important; /* لون النص */
-    border: none !important; /* إزالة الحدود إذا كان هناك حدود */
-    padding: 10px 20px !important; /* تعديل التباعد الداخلي حسب الحاجة */
+    background-color: #4caf50 !important;
+    /* لون  */
+    color: #fff !important;
+    /* لون النص */
+    border: none !important;
+    /* إزالة الحدود إذا كان هناك حدود */
+    padding: 10px 20px !important;
+    /* تعديل التباعد الداخلي حسب الحاجة */
     cursor: pointer !important;
 }
 
 .custom-add-button:hover {
-    background-color: #45a049 !important; /* تغيير لون الزر عند التحويم */
+    background-color: #45a049 !important;
+    /* تغيير لون الزر عند التحويم */
 }
 
 body {
@@ -29,7 +36,7 @@ body {
 
 a {
     color: #4154f1;
-     text-decoration: none !important; 
+    text-decoration: none !important;
 }
 
 a:hover {
@@ -837,19 +844,26 @@ h6 {
     color: #2eca6a;
     background: #e0f8e9;
 }
+
 .dashboard .products-card .card-icon {
-    color: #007bff; /* أزرق */
-    background: #cfe2ff; /* خلفية */
+    color: #007bff;
+    /* أزرق */
+    background: #cfe2ff;
+    /* خلفية */
 }
 
 .dashboard .suppliers-card .card-icon {
-    color: #ffc107; /* لون أصفر يمثل الموردين */
-    background: #fff8e1; /* خلفية بلون مرتبط */
+    color: #ffc107;
+    /* لون أصفر يمثل الموردين */
+    background: #fff8e1;
+    /* خلفية بلون مرتبط */
 }
 
 .dashboard .debt-card .card-icon {
-    color: #e74c3c; /* لون أحمر يمثل المديونية */
-    background: #f2dede; /* لون خلفية مناسب */
+    color: #e74c3c;
+    /* لون أحمر يمثل المديونية */
+    background: #f2dede;
+    /* لون خلفية مناسب */
 }
 
 
