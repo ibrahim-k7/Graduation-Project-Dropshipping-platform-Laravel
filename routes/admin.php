@@ -249,8 +249,9 @@ Route::post('/admin/purchaseReturn_management/destroy', [ReturnDetailsPurchaseCo
 
 // اظهار فواتير المرتجع
 
-Route::get('/admin/purchase/ViewReturndetails', [PurchaseController::class, 'ViewReturndetails'])
-    ->name('admin.purchase.ViewReturndetails');
+
+Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'ViewReturndetails'])
+    ->name('admin.purchase.returnDetails');
 
 
 
@@ -284,7 +285,9 @@ Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function () {
         Route::get('login', 'login')->name('login');
         Route::post('login', 'checkLogin')->name('check');
         Route::post('logout', 'logout')->name('logout');
+
     });
+    
     Route::controller(AdminRegisterController::class)->group(function () {
         Route::get('register', 'register')->name('register');
         Route::post('register', 'store')->name('store');

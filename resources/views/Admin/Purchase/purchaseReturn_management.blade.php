@@ -7,19 +7,21 @@
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        /* Add your custom CSS styles here */
-        .custom-add-button {
-            /* Add styles for the custom add button if needed */
+        /* تصميم الهواتف المحمولة */
+        @media (max-width: 767px) {
+            #main.mobile-design {
+                /* إضافة أنماط CSS للهواتف المحمولة هنا */
+            }
         }
 
-        /* Responsive styles */
-        @media (max-width: 767px) {
-            /* Add styles for mobile devices here */
-            .custom-add-button {
-                /* Add styles for the custom add button on mobile devices if needed */
+        /* تصميم الأجهزة اللوحية والحواسيب الشخصية */
+        @media (min-width: 768px) {
+            #main.desktop-design {
+                /* إضافة أنماط CSS للأجهزة اللوحية والحواسيب الشخصية هنا */
             }
         }
     </style>
+
 @endsection
 
 @section('Content')

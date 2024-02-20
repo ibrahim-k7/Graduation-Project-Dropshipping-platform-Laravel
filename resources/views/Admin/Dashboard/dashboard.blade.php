@@ -518,7 +518,7 @@
                         success: function(data) {
                             var total_balance_value = data.total_balance;
                             $("#totalBalanceCount").html(total_balance_value +
-                                '<span style="font-size: small ;"> رس</span>');
+                                '<span style="font-size: small ;"> ري</span>');
                            // $('#totalBalanceCount').text('$' + data.total_balance);
                         },
                         error: function(error) {
@@ -583,7 +583,7 @@
                         success: function(data) {
                             var total_paid_amount = data.total_paid_amount;
                             $("#totalSales").html(total_paid_amount +
-                                '<span style="font-size: small ;"> رس</span>');
+                                '<span style="font-size: small ;"> ري</span>');
                           //  $('#totalSales').text('$' + data.total_paid_amount);
                         },
                         error: function(error) {

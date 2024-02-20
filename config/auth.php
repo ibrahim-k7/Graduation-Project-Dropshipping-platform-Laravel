@@ -1,6 +1,6 @@
 <?php
 
-return [
+return  [
 
     /*
     |--------------------------------------------------------------------------
@@ -12,24 +12,9 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-    // $_SESSION;
-    // [
-    //     "user"=> [
-    //     "id"=> 1 ,
-    //     "name"=> "alarwi"
-    // ],
-    // "admin"=>
-    // [
-    //     "id"=> 1 ,
-    //     "name"=> "mohammed"
-    // ]
-    // ];
-
-
-
-    'defaults' =>[
+    'defaults' => [
         'guard' => 'web',
-        'passwords' => 'store',
+        'passwords' => 'store', // يتم تحديد هنا مزود كلمات المرور الافتراضي للمستخدمين العاديين
     ],
 
     /*
@@ -48,15 +33,14 @@ return [
     | Supported: "session"
     |
     */
-
     'guards' => [
         'web' => [
-            'driver' => 'session',
-            'provider' => 'store',
+            'driver' => 'session', // استخدام الجلسة كوسيط للمصادقة
+            'provider' => 'store', // اسم مزود بيانات المستخدمين العاديين
         ],
         'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
+            'driver' => 'session', // استخدام الجلسة كوسيط للمصادقة
+            'provider' => 'admins', // اسم مزود بيانات المسؤولين
         ],
     ],
 
@@ -76,29 +60,16 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\User::class,
-        //     'table' => 'store', // اسم الجدول الجديد
-        // ],
-
         'store' => [
             'driver' => 'eloquent',
-            'model' => \App\Models\Store::class,// اسم النموذج الجديد
-            'table' => 'store', // اسم الجدول الجديد
+            'model' => \App\Models\Store::class,
+            'table' => 'store', // اسم جدول المستخدمين العاديين
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => \App\Models\Admin::class,
         ],
-
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -115,18 +86,17 @@ return [
     | they have less time to be guessed. You may change this as needed.
     |
     */
-
     'passwords' => [
         'store' => [
-            'provider' => 'store',
-            'table' => 'password_resets',
+            'provider' => 'store', // اسم مزود بيانات المستخدمين العاديين
+            'table' => 'password_resets', // اسم جدول إعادة تعيين كلمة المرور
             'expire' => 60,
             'throttle' => 60,
         ],
 
         'admins' => [
-            'provider' => 'admins',
-            'table' => 'admins_password_resets',
+            'provider' => 'admins', // اسم مزود بيانات المسؤولين
+            'table' => 'admins_password_resets', // اسم جدول إعادة تعيين كلمة مرور المسؤولين
             'expire' => 60,
             'throttle' => 60,
         ],
@@ -142,7 +112,6 @@ return [
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
-
     'password_timeout' => 10800,
 
 ];

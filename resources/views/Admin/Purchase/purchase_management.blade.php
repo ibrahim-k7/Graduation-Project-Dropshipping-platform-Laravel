@@ -15,9 +15,9 @@
             <h1>المشتريات</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Tables</li>
-                    <li class="breadcrumb-item active">Data</li>
+                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+                    <li class="breadcrumb-item">الجداول</li>
+                    <li class="breadcrumb-item active">البيانات</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -31,26 +31,26 @@
                             <p></p>
 
                             <div class="table-responsive">
-                                <!-- Table with stripped rows -->
+                                <!-- جدول بصفوف مخططة -->
                                 <table id="Purchase_Managment" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Supplier ID</th>
-                                            <th>Supplier Name</th>
-                                            <th>Payment Method</th>
-                                            <th>Additional Costs</th>
-                                            <th>Total</th>
-                                            <th>Amount Paid</th>
-                                            <th>Created At</th>
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>sup_id</th>
+                                        <th>اسم المورد</th>
+                                        <th>طريقة الدفع</th>
+                                        <th>تكلفة إضافية</th>
+                                        <th>الإجمالي</th>
+                                        <th>المبلغ المدفوع</th>
+                                        <th>تاريخ الإنشاء</th>
+                                        <th>action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
 
                                 </table>
-                                <!-- End Table with stripped rows -->
+                                <!-- نهاية جدول بصفوف مخططة -->
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
             </div>
         </section>
 
-    </main><!-- End #main -->
+    </main><!-- نهاية #main -->
 @endsection
 
 @section('js')
@@ -69,48 +69,64 @@
             var purchase_data = $('#Purchase_Managment').DataTable({
                 processing: true,
                 serverSide: true,
+                "autoWidth": false,
+                //إمكانية تحريك الاعمدة
+                colReorder: true,
+                responsive: true,
                 order: [
                     [0, "desc"]
                 ],
+                //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
+                columnDefs: [{
+                    targets: '_all',//كل الحقول
+                    className: 'dt-right'//الاتجاه
+                }],
                 ajax: "{{ Route('admin.purchase.data') }}",
-                dom: 'Bfrltip',
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
+                },
                 buttons: [{
-                        text: 'Add',
-                        className: 'custom-add-button',
-                        action: function(e, dt, node, config) {
-                             // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "Add"
-                    window.location.href = "{{ route('admin.purchase.create') }}";
-                        }
-                    },
+                    extend: 'print',
+                    autoPrint: false,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6,7,8]// Column index which needs to export
+                    }
+                },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6,7,8]// Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6,7,8] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6,7,8] // Column index which needs to export
                         }
-                    }, {
-                        extend: 'print',
-                        autoPrint: false,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
-                        }
-                    }
-                ],
-                columns: [{
-                        data: 'id',
-                        name: 'id'
                     },
+                    {
+                        text: 'اضافة',
+                        className: 'custom-add-button',
+                        action: function (e, dt, node, config) {
+                            // تحويل المستخدم إلى الصفحة الجديدة عند النقر على زر "إضافة"
+                            window.location.href = "{{ route('admin.purchase.create') }}";
+                        }
+                    },
+                ],
+
+                columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
                     {
                         data: 'sup_id',
                         name: 'sup_id'
@@ -157,7 +173,7 @@
         $(document).on('click', '.delete_btn', function(e) {
             e.preventDefault();
             Swal.fire({
-                title: "هل انت متأكد ؟",
+                title: "هل أنت متأكد ؟",
                 text: "لن تتمكن من التراجع عن هذا",
                 icon: "warning",
                 showCancelButton: true,
@@ -185,7 +201,7 @@
                                 text: "لقد تم حذف الملف الخاص بك",
                                 icon: "success"
                             });
-                        //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
+                            //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
                             $('#Purchase_Managment').DataTable().ajax.reload();
                         },
                         error: function(reject) {
