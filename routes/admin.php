@@ -251,8 +251,9 @@ Route::post('/admin/purchaseReturn_management/destroy', [ReturnDetailsPurchaseCo
 
 // اظهار فواتير المرتجع
 
-Route::get('/admin/purchase/ViewReturndetails', [PurchaseController::class, 'ViewReturndetails'])
-    ->name('admin.purchase.ViewReturndetails');
+
+Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'ViewReturndetails'])
+    ->name('admin.purchase.returnDetails');
 
 
 
