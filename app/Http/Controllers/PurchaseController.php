@@ -34,11 +34,13 @@ class PurchaseController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return '<div class="btn-group" role="group">
-            <a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-info">تفاصيل الفاتورة</a>
-            <a href="' . route('admin.purchase.returnDetails', ['id' => $row->id]) . '" type="button" class="btn btn-success">اضافة مرتجع</a>
-            <a href="' . route('admin.purchase.ViewReturndetails', ['id' => $row->id]) . '" type="button" class="btn btn-warning">عرض الفواتير المرتجعة</a>
-            <a id="delete_btn" purch-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
-        </div>';
+<a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-info">تفاصيل الفاتورة</a>
+    <a href="' . route('admin.purchase.returnDetails', ['id' => $row->id]) . '" type="button" class="btn btn-success">اضافة مرتجع</a>
+    <a href="' . route('admin.purchase.returnDetails', ['id' => $row->id]) . '" type="button" class="btn btn-secondary">عرض الفواتير المرتجعة</a>
+    <a id="delete_btn" purch-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
+</div>';
+
+
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -298,9 +300,9 @@ class PurchaseController extends Controller
     {
         // الحصول على معلومات الشراء والمرتجع
         $purchase = Purchase::with('supplier')
-            ->with(['purchaseDetails.product:id,name']) // تحديد الحقول التي تحتاجها هنا
+            ->with(['purchaseDetails.product:id,name,purchasing_price']) // تحديد الحقول التي تحتاجها هنا
             ->with(['returnDetails' => function ($query) {
-                $query->with(['purchaseDetails.product:id,name']); // تحديد الحقول التي تحتاجها هنا
+                $query->with(['purchaseDetails.product:id,name,purchasing_price']); // تحديد الحقول التي تحتاجها هنا
             }])
             ->find($request->query('id'));
 
@@ -310,6 +312,7 @@ class PurchaseController extends Controller
         })->get();
 
         // توجيه الصفحة إلى ViewReturndetails مع البيانات اللازمة
-        return view('Admin.Purchase.ViewReturnDetails', compact('purchase', 'returnDetails'));
+        return view('Admin.Purchase.Returndetails', compact('purchase', 'returnDetails'));
     }
+
 }
