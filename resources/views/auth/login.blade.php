@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends('user.Layouts.app')
 
 @section('content')
     <main>
@@ -16,7 +16,7 @@
                                 </a>
                             </div><!-- End Logo -->
 
-                            <div class="card mb-3">
+                            <div class="card login mb-3" style="font-size: 20px !important;">
                                 <div class="card-body">
                                     <div class="pt-4 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">تسجيل الدخول الى حسابك</h5>
@@ -28,14 +28,13 @@
                                         @csrf
 
                                         <div class="col-12">
-                                            <label for="userLogin" class="form-label">>الاسم/الهاتف/الايميل</label>
+                                            <label for="userLogin" class="form-label">الاسم/الهاتف/الايميل</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="text" name="userLogin" class="form-control"
-                                                    id="userLogin" required
-                                                    class="form-control @error('userLogin') is-invalid @enderror"
-                                                    value="{{ old('userLogin') }}" required
-                                                    autocomplete="userLogin" autofocus>
+                                                <input type="text" name="userLogin" class="form-control" id="userLogin"
+                                                    required class="form-control @error('userLogin') is-invalid @enderror"
+                                                    value="{{ old('userLogin') }}" required autocomplete="userLogin"
+                                                    autofocus>
                                                 @error('userLogin')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -48,8 +47,8 @@
                                         <div class="col-12">
                                             <label for="password" class="form-label">{{ __('كلمة السر') }}</label>
                                             <input id="password" type="password"
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                name="password" required autocomplete="current-password">
+                                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                                required autocomplete="current-password">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -60,10 +59,9 @@
 
                                         <div class="col-12">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="remember"
-                                                    value="true" id="rememberMe"
-                                                    {{ old('remember') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="rememberMe">تذكرني</label>
+                                                <input class="form-check-input" type="checkbox" name="remember"
+                                                    value="true" id="rememberMe" {{ old('remember') ? 'checked' : '' }}>
                                             </div>
                                         </div>
                                         <div class="col-12">

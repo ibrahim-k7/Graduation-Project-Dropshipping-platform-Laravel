@@ -17,7 +17,7 @@ class CartItem extends Model
         'cart_item_id','cart_id','pro_id','created_at','updated_at'
     ];
 
-   
+
     //Relations Functhion
     // public function product()
     // {
@@ -28,5 +28,6 @@ class CartItem extends Model
     {
         return $this->belongsTo(Cart::class, 'cart_id', 'cart_id');
     }
+    
 
 }

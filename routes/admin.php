@@ -284,7 +284,9 @@ Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function () {
         Route::get('login', 'login')->name('login');
         Route::post('login', 'checkLogin')->name('check');
         Route::post('logout', 'logout')->name('logout');
+
     });
+    
     Route::controller(AdminRegisterController::class)->group(function () {
         Route::get('register', 'register')->name('register');
         Route::post('register', 'store')->name('store');
