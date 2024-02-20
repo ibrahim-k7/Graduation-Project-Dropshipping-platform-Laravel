@@ -14,7 +14,7 @@ class CartItem extends Model
     protected $table = "cart_items";
     //العناصر
     protected $fillable = [
-        'cart_item_id','cart_id','pro_id','created_at','updated_at'
+        'cart_item_id','cart_id','pro_id','quantity','created_at','updated_at'
     ];
 
    

@@ -8,10 +8,7 @@ use App\Models\Product;
 use App\Models\DealerProduct;
 use App\Models\CartItem;
 use App\Models\Cart;
-
-
-
-
+use App\Models\Delivery;
 
 class CartController extends Controller
 {
@@ -24,8 +21,16 @@ class CartController extends Controller
     {
         $store_id = Auth::user()->store_id;
         $cart = Cart::where('store_id', $store_id)->with('product')->first();
-        $product= $cart->product;
-         return view('user.cart.cart', compact('product'));
+        $product = $cart->product;
+
+        if ($cart) {
+            $delivery = Delivery::select("*")->get();
+
+            return view('user.cart.cart', compact('product', 'delivery'));
+        }
+        else{
+            abort(404, 'لا يوجد منتجات في السلة');
+        }
     }
 
     /**
@@ -61,10 +66,18 @@ class CartController extends Controller
             CartItem::create([
                 'cart_id' => $cart->cart_id,
                 'pro_id' => $dealerProduct->pro_id,
+                'quantity' => '1',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
+    }
+
+    public function storeOrder(Request $request)
+    {
+        // $firstName = $request->input('firstname');
+
+        return dd($request->name);
     }
 
     /**
