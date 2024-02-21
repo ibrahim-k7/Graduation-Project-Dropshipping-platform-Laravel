@@ -246,6 +246,8 @@ Route::get('/admin/purchaseReturn_management/data', [ReturnDetailsPurchaseContro
 
 // حذف مرتجع الفاتورة
 Route::post('/admin/purchaseReturn_management/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.purchaseReturn_management.destroy');
+Route::post('/admin/purchase/returnDetails/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.returnDetails.destroy');
+
 
 // اظهار فواتير المرتجع
 
@@ -287,7 +289,7 @@ Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function () {
         Route::post('logout', 'logout')->name('logout');
 
     });
-    
+
     Route::controller(AdminRegisterController::class)->group(function () {
         Route::get('register', 'register')->name('register');
         Route::post('register', 'store')->name('store');
