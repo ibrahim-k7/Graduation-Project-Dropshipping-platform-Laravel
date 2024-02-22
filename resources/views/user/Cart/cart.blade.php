@@ -39,7 +39,9 @@
                             <div class="card-body">
                                 <!-- Single item -->
                                 @foreach($product as $product)
-                                <div class="row">
+                                <div class="row"  data-product-id="{{ $product->id }}">
+                                    <input type="hidden" class="product_id" name="product_id[]" value="{{ $product->id }}"> <!-- Your Product ID -->
+
                                     <div class="row mb-4 d-flex justify-content-between align-items-center">
                                         <div class="col-md-2 col-lg-2 col-xl-2">
                                             <img src="{{ asset('Products_img/' . $product->image) }}" class="img-fluid rounded-3" alt="{{ $product->name }}">
@@ -48,19 +50,14 @@
                                             <h6 class="text-muted">{{ $product->categorie->name }}</h6>
                                             <h6 class="text-black mb-0">{{ $product->name }}</h6>
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                            <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-
-                                            <input id="quantity"  min="1" name="quantity" value="1" type="number" class="form-control form-control-sm">
-
-                                            <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
+                                        <div class="col-md-2">
+                                            <label for="quantity" class="form-label">الكمية</label>
+                                            <input type="number" min="1" value="1" class="form-control quantity" placeholder="الكمية">
+                                            <small class="form-text text-danger quantity_error"></small>
                                         </div>
+
                                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                            <h6 class="mb-0" > {{ $product->selling_price }}  / ري</h6>
+                                            <input class="mb-0 subAmount" type="number" value="{{ $product->selling_price }}" readonly>
                                         </div>
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                             <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
@@ -68,7 +65,6 @@
                                     </div>
                                 </div>
                                 <hr class="my-4">
-
 
                                 @endforeach
 
@@ -204,7 +200,35 @@
 <script>
     // عند تحميل الصفحة
     $(document).ready(function() {
-        //عرض معلومات التحويل
+        //var product = $('.product_id').val();
+        // var selling_price =  $('#selling_price').val();;
+
+        function updateAmount() {
+            var row = $(this).closest('.row');
+            
+            var productId = row.data('product-id');
+            var quantity = parseInt(row.find('.quantity').val()) || 0;
+            var selling_price = parseInt(row.find('.selling_price').val()) || 0;
+            var subCost = quantity * selling_price;
+console.log(productId)
+            row.find('.subAmount').val(subCost.toFixed(2));
+        }
+        $('.quantity').on('input', updateAmount);
+
+
+        // $(document).on('input', '#quantity', function () {
+        //         // حساب تكلفة المنتج تلقائيًا
+        //         var quantity = $("#quantity").val();
+        //         var subCost = (selling_price * quantity).toFixed(2);
+
+        //         // عرض تكلفة المنتج في حقل التكلفة الإجمالية
+        //         $('#subAmount').val(subCost);
+
+        //         // تحديث إجمالي الفاتورة
+        //         //updateTotal();
+
+        //         // جعل زر التكلفة الإجمالية غير قابل للنقر
+        //     });
 
         //عند الضغط على زر إرسال
         $(document).on('click', '#addOrder', function(e) {
