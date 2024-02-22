@@ -9,6 +9,7 @@ use App\Models\DealerProduct;
 use App\Models\CartItem;
 use App\Models\Cart;
 use App\Models\Delivery;
+use Psy\Readline\Hoa\Console;
 
 class CartController extends Controller
 {
@@ -18,20 +19,20 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $store_id = Auth::user()->store_id;
-        $cart = Cart::where('store_id', $store_id)->with('product')->first();
-        $product = $cart->product;
+{
+    $store_id = Auth::user()->store_id;
+    $cart = Cart::where('store_id', $store_id)->with('product')->first();
+    $product = $cart->product;
 
-        if ($cart) {
-            $delivery = Delivery::select("*")->get();
+    if ($cart) {
+        $delivery = Delivery::select("*")->get();
 
-            return view('user.cart.cart', compact('product', 'delivery'));
-        }
-        else{
-            abort(404, 'لا يوجد منتجات في السلة');
-        }
+        return view('user.cart.cart', compact('product', 'delivery'));
+    } else {
+        abort(404, 'لا يوجد منتجات في السلة');
     }
+}
+
 
     /**
      * Show the form for creating a new resource.
