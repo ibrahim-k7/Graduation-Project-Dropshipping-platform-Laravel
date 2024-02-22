@@ -242,10 +242,10 @@
 
 
         $(document).ready(function () {
-            var purchaseDetailsCounter = 1;
 
-            // Function to add a new product row to the table
-            function addProductRow(productID, productName, productPrice, quantity, totalCost) {
+            var purchaseDetailsCounter = 1;
+// Function to add a new product row to the table
+            function addProductRow(productID, productName, productPrice, quantity, totalCost, isEditMode) {
                 var newRow = $("<tr>");
                 var cells = [
                     $("<td>").text(purchaseDetailsCounter),
@@ -253,8 +253,14 @@
                     $("<td>").text(productPrice),
                     $("<td>").text(quantity),
                     $("<td>").text(totalCost),
-                    $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>')
+                    $("<td>").html('')
                 ];
+
+                // إذا كنت في وضع التحرير، قم بإخفاء زر الحذف
+                if (!isEditMode) {
+                    cells[5] = $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>');
+                }
+
                 // إضافة الخلايا إلى الصف
                 newRow.append(cells);
                 // إضافة الصف إلى الجدول
@@ -398,16 +404,22 @@
                 $('#total').val(purchaseData.total);
                 $('#amount_paid').val(purchaseData.amount_paid);
 
-                // باقي الكود...
 
 
-            // قم بتعبئة تفاصيل المشتريات في الجدول
+                // قم بتعبئة تفاصيل المشتريات في الجدول
                 var purchaseDetails = @json($purchase->purchaseDetails ?? null);
+                var isEditMode = @json(isset($purchase) && $purchase !== null);
 
                 if (purchaseDetails != null && purchaseDetails.length > 0) {
                     for (var i = 0; i < purchaseDetails.length; i++) {
-                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.purchasing_price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
-
+                        addProductRow(
+                            purchaseDetails[i].product.id,
+                            purchaseDetails[i].product.name,
+                            purchaseDetails[i].product.purchasing_price,
+                            purchaseDetails[i].quantity,
+                            purchaseDetails[i].total_cost,
+                            isEditMode
+                        );
 
                         // قم بتعبئة الحقول في الصف المضاف بالبيانات
                         var currentRow = $("#purchaseDetailsBody tr").eq(i + 1); // انطلق من 1 لأن الصفوف تبدأ من 1
@@ -416,10 +428,17 @@
                         currentRow.find('td:eq(2)').text(purchaseDetails[i].product.id.purchasing_price);
                         currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
                         currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
-                        currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
+
+                        // قم بإخفاء زر الحذف إذا كنت في وضع التحرير
+                        if (isEditMode) {
+                            currentRow.find('td:eq(5)').html('');
+                        } else {
+                            currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>');
+                        }
+
                         // قد تحتاج إلى تكرار هذا للحقول الأخرى حسب احتياجاتك
                         console.log('Purchase Details:', purchaseDetails[i]);
-                    };
+                    }
                 }
 
                 // Event handler for the "Submit" button
