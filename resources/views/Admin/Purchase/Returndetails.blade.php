@@ -485,7 +485,8 @@
                                 });
 
                                 // إعادة تحميل الصفحة بعد الحذف
-                                ajax.reload();                            },
+                                location.reload();
+                                },
                             error: function(reject) {
                                 var errorMessage = reject.responseJSON && reject.responseJSON.message ? reject.responseJSON.message : 'حدث خطأ أثناء معالجة الاسترجاع.';
                                 Swal.fire({
