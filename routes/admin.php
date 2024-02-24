@@ -6,7 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\PurchaseDetailsController;
+use App\Http\Controllers\Admin\auth\ِِِِAdminResetPasswordController;
 use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SalesController;
@@ -24,6 +24,8 @@ use App\Http\Controllers\admin\AdminDshboardController;
 use App\Http\Controllers\admin\AdminProfileController;
 use App\Http\Controllers\AdminInfoController;
 use App\Http\Controllers\ReturnDetailsPurchaseController;
+use Illuminate\Support\Facades\auth;
+
 
 Route::middleware('auth:admin')->group(function () {
     Route::get('admin/dshboard', [AdminDshboardController::class, 'index'])->name('admin.dshboard');
@@ -273,6 +275,11 @@ Route::get('/forms-validation', function () {
 Route::get('/admin-profile', function () {
     return view('admin/admin-profile');
 });
+Route::get('/Adminreset', function () {
+    return view('admin/Adminreset');
+});
+auth::routes(['verify' => true]);
+
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/profile', [AdminProfileController::class, 'showProfile'])->name('admin.profile');
     Route::post('/admin/profile/update-email',  [AdminProfileController::class, 'updateEmail'])->name('profile.updateEmail');
@@ -282,12 +289,12 @@ Route::middleware(['auth:admin'])->group(function () {
 
 
 
+
 Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function () {
     Route::controller(AdminLoginController::class)->group(function () {
         Route::get('login', 'login')->name('login');
         Route::post('login', 'checkLogin')->name('check');
         Route::post('logout', 'logout')->name('logout');
-
     });
 
     Route::controller(AdminRegisterController::class)->group(function () {

@@ -42,6 +42,11 @@ class Store extends  Authenticatable implements MustVerifyEmail
     {
         $this->update(['password' => bcrypt($password)]);
     }
+    public function updatePhoneNumber($phoneNumber)
+    {
+        // قم بتحديث قيمة الحقل phone_number بالقيمة الجديدة
+        $this->update(['phone_number' => $phoneNumber]);
+    }
 
     public function wallet()
     {

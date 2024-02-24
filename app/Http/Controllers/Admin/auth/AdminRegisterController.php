@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Validator;
 class AdminRegisterController extends Controller
 {
 
+    protected $redirectTo = RouteServiceProvider::AdminHome;
+
+
     //
     public function register()
     {
