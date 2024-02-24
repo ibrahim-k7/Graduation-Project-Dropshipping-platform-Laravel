@@ -102,6 +102,9 @@ Route::controller(CartController::class)->group(
     function () {
         Route::get('/user/cart', 'index')->name('user.cart');
         Route::post('/user/cart/store', 'store')->name('user.cart.store');
+        Route::post('/user/create/addOrderr','storeOrder')->name('user.cart.addOrder');
+        Route::post('/user/calculate-subamount','calculateSubAmount')->name('user.cart.calculateSubAmount');
+
     }
 );
 

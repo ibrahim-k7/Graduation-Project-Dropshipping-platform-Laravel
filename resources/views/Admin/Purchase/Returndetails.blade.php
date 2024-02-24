@@ -134,6 +134,7 @@
                                     <th>تاريخ الاسترجاع</th>
                                     <th>الكمية المرتجعة</th>
                                     <th>المبلغ المرتجع</th>
+                                    <th>العملية</th>
                                 </tr>
                                 </thead>
                                 <tbody id="returnDetailsBody">
@@ -145,12 +146,15 @@
                                 @foreach($returnDetails as $details)
                                     @if(!in_array($details->purchase_details_id, $displayedReturnDetails))
                                         <tr>
+                                            <td>{{ $details->return_id }}</td>
                                             <td>{{ $details->purchase_details_id }}</td>
-                                            <td>{{ $details->purchaseDetails->product->id }}</td>
                                             <td>{{ $details->purchaseDetails->product->name }}</td>
                                             <td>{{ $details->return_date }}</td>
                                             <td>{{ $details->quantity_returned }}</td>
                                             <td>{{ $details->amount_returned }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm delete-return-btn" data-return-id="{{ $details->return_id }}">حذف</button>
+                                            </td>
                                         </tr>
                                         @php
                                             $displayedReturnDetails[] = $details->purchase_details_id;
@@ -160,6 +164,7 @@
                                 </tbody>
                             </table>
                         </div>
+
 
 
 
@@ -292,7 +297,6 @@
                                 '</tr>');
                         }
                     }
-
                     // عرض تفاصيل الفواتير المرتجعة
                     var returnDetailsBody = $('#returnDetailsBody');
                     var returnDetails = @json($returnDetails ?? null);
@@ -313,19 +317,20 @@
 
                                     returnDetailsBody.append('<tr>' +
                                         '<td>' + returnDetails[j].purchase_details_id + '</td>' +
-                                        '<td>' + returnDetails[j].purchaseDetails.product.id + '</td>' +
                                         '<td>' + returnDetails[j].purchaseDetails.product.name + '</td>' +
+                                        '<td>' + returnDetails[j].return_id + '</td>' +
                                         '<td>' + returnDetails[j].return_date + '</td>' +
                                         '<td>' + returnDetails[j].quantity_returned + '</td>' +
                                         '<td>' + returnDetails[j].amount_returned + '</td>' +
+                                        '<td>' +
+                                        '<button type="button" class="btn btn-danger btn-sm delete-return-btn" data-id="' + returnDetails[j].id + '">حذف</button>' +
+                                        '</td>' +
                                         '</tr>');
                                 }
                             }
                         }
                     }
                 }
-
-            });
         });
 
         // عند تغيير تفاصيل المنتج
@@ -445,7 +450,57 @@
                 });
             }
         });
+            // الدالة الفرعية
+            $(document).on('click', '.delete-return-btn', function(e) {
+                e.preventDefault();
 
+                var return_id = $(this).data('return-id');
+                console.log('return_id:', return_id);
+
+                Swal.fire({
+                    title: "هل أنت متأكد؟",
+                    text: "لن تتمكن من التراجع عن هذا",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    cancelButtonText: "تراجع",
+                    confirmButtonText: "نعم، احذفه"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'post',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                            },
+                            url: "{{ route('admin.returnDetails.destroy') }}",
+                            data: {
+                                'return_id': return_id
+                            },
+                            success: function(data) {
+                                Swal.fire({
+                                    title: "تم الحذف",
+                                    text: "تم حذف الملف بنجاح",
+                                    icon: "success"
+                                });
+
+                                // إعادة تحميل الصفحة بعد الحذف
+                                location.reload();
+                                },
+                            error: function(reject) {
+                                var errorMessage = reject.responseJSON && reject.responseJSON.message ? reject.responseJSON.message : 'حدث خطأ أثناء معالجة الاسترجاع.';
+                                Swal.fire({
+                                    title: "خطأ",
+                                    text: errorMessage,
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+        });
 
     </script>
 @endsection

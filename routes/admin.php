@@ -248,6 +248,8 @@ Route::get('/admin/purchaseReturn_management/data', [ReturnDetailsPurchaseContro
 
 // حذف مرتجع الفاتورة
 Route::post('/admin/purchaseReturn_management/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.purchaseReturn_management.destroy');
+Route::post('/admin/purchase/returnDetails/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.returnDetails.destroy');
+
 
 // اظهار فواتير المرتجع
 
