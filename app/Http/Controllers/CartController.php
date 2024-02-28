@@ -10,6 +10,7 @@ use App\Models\CartItem;
 use App\Models\Cart;
 use App\Models\Delivery;
 use Psy\Readline\Hoa\Console;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 
 class CartController extends Controller
 {
@@ -110,9 +111,19 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    
+    public function update(Request $request)
     {
-        //
+        $store_id = Auth::user()->store_id;
+        $cart = Cart::where('store_id', $store_id)->first();
+        $newquantity = $request->quantity; 
+        $cartItem = CartItem::where(['cart_id' => $cart->cart_id] )
+        -> where( ['pro_id' => $request->pro_id])
+        ->with('product')
+        -> first();
+        // $newquantity = $request->quantity; 
+        $perPrice = $newquantity * $cartItem->product->selling_price;
+    return ($perPrice);
     }
 
     /**

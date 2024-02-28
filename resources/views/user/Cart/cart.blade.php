@@ -39,29 +39,31 @@
                             <div class="card-body">
                                 <!-- Single item -->
                                 @foreach($product as $product)
-                                <div class="row"  data-product-id="{{ $product->id }}">
-                                    <input type="hidden" class="product_id" name="product_id[]" value="{{ $product->id }}"> <!-- Your Product ID -->
 
-                                    <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                        <div class="col-md-2 col-lg-2 col-xl-2">
-                                            <img src="{{ asset('Products_img/' . $product->image) }}" class="img-fluid rounded-3" alt="{{ $product->name }}">
-                                        </div>
-                                        <div class="col-md-3 col-lg-3 col-xl-3">
-                                            <h6 class="text-muted">{{ $product->categorie->name }}</h6>
-                                            <h6 class="text-black mb-0">{{ $product->name }}</h6>
-                                        </div>
-                                        <div class="col-md-2">
+                                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <img src="{{ asset('Products_img/' . $product->image) }}" class="img-fluid rounded-3" alt="{{ $product->name }}">
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                        <h6 class="text-muted">{{ $product->categorie->name }}</h6>
+                                        <h6 class="text-black mb-0">{{ $product->name }}</h6>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <form id="quantityform" method="post">
                                             <label for="quantity" class="form-label">الكمية</label>
-                                            <input type="number" min="1" value="1" class="form-control quantity" placeholder="الكمية">
+                                            <input type="hidden" class="pro_id" name="pro_id" value="{{ $product->id }}">
+                                            <input type="number" min="1" value="1" class="form-control quantity" name="quantity" placeholder="الكمية">
                                             <small class="form-text text-danger quantity_error"></small>
-                                        </div>
+                                        </form>
 
-                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                            <input class="mb-0 subAmount" type="number" value="{{ $product->selling_price }}" readonly>
-                                        </div>
-                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <label for="subAmountPerProduct" class="form-label">اجمالي سعر المنتج</label>
+                                        <label class="subAmountPerProduct">{{ $product->selling_price }} / ري</label>
+                                    </div>
+                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                        <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -163,18 +165,18 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                         المبلغ الفرعي
-                                        <span>$53.98</span>
+                                        <span class="subAmont">$53.98</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                         رسوم الشحن
-                                        <span>Gratis</span>
+                                        <span class="deliveryCost">Gratis</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                         <div>
                                             <strong>المجموع</strong>
 
                                         </div>
-                                        <span><strong>$53.98</strong></span>
+                                        <span><strong class="totalAmount">$53.98</strong></span>
                                     </li>
                                 </ul>
                                 <button type="submit" id="addOrder" class="btn btn-primary shadow-0">إرسال</button>
@@ -203,17 +205,44 @@
         //var product = $('.product_id').val();
         // var selling_price =  $('#selling_price').val();;
 
-        function updateAmount() {
+
+
+        // var selling_price = parseInt(productId.selling_price);
+        // var subCost = quantity * selling_price;
+        // console.log(selling_price);
+        // row.find('.subAmount').val(subCost.toFixed(2));
+
+        // $('.quantity').on('input', updateAmount);
+
+        $(document).on('input', '.quantity', function(e) {
+            e.preventDefault();
             var row = $(this).closest('.row');
-            
-            var productId = row.data('product-id');
+
+            var productId = parseInt(row.find('.pro_id').val()) || 0;
             var quantity = parseInt(row.find('.quantity').val()) || 0;
-            var selling_price = parseInt(row.find('.selling_price').val()) || 0;
-            var subCost = quantity * selling_price;
-console.log(productId)
-            row.find('.subAmount').val(subCost.toFixed(2));
-        }
-        $('.quantity').on('input', updateAmount);
+            $.ajax({
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                },
+                url: "{{ route('user.cart.calculateSubAmount') }}",
+                data: {
+                    'pro_id': productId,
+                    'quantity': quantity
+                },
+                success: function(data) {
+                    row.find('.subAmountPerProduct').text(data + ' / ري'); // assuming data is a number
+                  
+
+                },
+                error: function(reject) {
+                    //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
+
+                }
+            });
+
+            
+        })
 
 
         // $(document).on('input', '#quantity', function () {
