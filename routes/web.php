@@ -12,6 +12,7 @@ use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletOperationController;
 use App\Http\Controllers\DealerProductController;
+use App\Http\Controllers\WCController;
 
 
 
@@ -155,6 +156,7 @@ Route::controller(OrderDetailsController::class)->group(
 
     }
 );
+
 
 /*Route::controller(WalletController::class)->group(
     function () {

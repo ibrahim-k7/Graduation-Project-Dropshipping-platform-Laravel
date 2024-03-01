@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WCController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//WC API
+Route::post('/send_product_to_WC',[WCController::class , 'createProduct'])->name('WC.API.create.product');
