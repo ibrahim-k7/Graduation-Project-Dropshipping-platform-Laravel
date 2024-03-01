@@ -105,7 +105,9 @@ class SupplierTransactionController extends Controller
         ]);
 
         // تحديث قيمة الـ balance في جدول Supplier
-        Supplier::where('sup_id', $request->sup_id)->update(['balance' => $newBalance]);
+        Supplier::where('sup_id', $request->sup_id)->update(['balance' => $newBalance,
+        'updated_at' => date("Y-m-d H:i:s"),
+    ]);
     }
 
 

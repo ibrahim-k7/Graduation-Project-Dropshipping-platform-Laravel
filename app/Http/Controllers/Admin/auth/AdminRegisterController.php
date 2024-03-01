@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Validator;
 class AdminRegisterController extends Controller
 {
 
+    protected $redirectTo = RouteServiceProvider::AdminHome;
+
+
     //
     public function register()
     {
@@ -26,10 +29,11 @@ class AdminRegisterController extends Controller
         $adminkey = "adminkey1";
         if ($request->admin_key == $adminkey) {
             $request->validate([
-                "name" => ['required', 'string', 'max:255'],
-                "email" => ["required", "regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", "unique:store"],
+                "name" => ["required", "string"],
+                "email" => ["required", "regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", "unique:admins"],
                 "admin_key" => ["required", "string"],
-                'password' => ['required', 'min:8', 'confirmed', 'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'],
+                // 'password' => ['required', 'min:8', 'confirmed', 'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'],
+                'password' => ['required', 'min:8', 'confirmed'],
                 "password_confirmation" => ["required", "string"]
             ]);
             $date = $request->except(['password_confirmation','_token','admin_key']);

@@ -6,7 +6,25 @@
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        /* تصميم الهواتف المحمولة */
+        @media (max-width: 767px) {
+            #main.mobile-design {
+                /* إضافة أنماط CSS للهواتف المحمولة هنا */
+            }
+        }
+
+        /* تصميم الأجهزة اللوحية والحواسيب الشخصية */
+        @media (min-width: 768px) {
+            #main.desktop-design {
+                /* إضافة أنماط CSS للأجهزة اللوحية والحواسيب الشخصية هنا */
+            }
+        }
+    </style>
+
 @endsection
+
 
 @section('Content')
     <main id="main" class="main">
@@ -89,12 +107,13 @@
 
                                             <div class="col-md-2">
                                                 <label for="add_product" class="form-label">&nbsp;</label>
-                                                <button type="button" class="btn btn-success form-control"
-                                                        id="add_product">إضافة المنتج</button>
+                                                <button type="button" class="btn btn-success form-control" id="add_product">إضافة المنتج</button>
+                                                <!-- عنصر لعرض رسالة الخطأ -->
+                                                <small id="product_exists_error" class="form-text text-danger"></small>
                                             </div>
-                                        </div>
 
-                                        <table class="table table-bordered mt-3">
+
+                                            <table class="table table-bordered mt-3">
                                             <thead>
                                             <tr>
                                                 <th>رقم</th>
@@ -174,8 +193,6 @@
         // تحقق من حجم الشاشة عند تغيير حجم النافذة
         window.onresize = function() {
             checkScreenSize();
-
-
         }
 
 
@@ -225,10 +242,10 @@
 
 
         $(document).ready(function () {
-            var purchaseDetailsCounter = 1;
 
-            // Function to add a new product row to the table
-            function addProductRow(productID, productName, productPrice, quantity, totalCost) {
+            var purchaseDetailsCounter = 1;
+// Function to add a new product row to the table
+            function addProductRow(productID, productName, productPrice, quantity, totalCost, isEditMode) {
                 var newRow = $("<tr>");
                 var cells = [
                     $("<td>").text(purchaseDetailsCounter),
@@ -236,8 +253,14 @@
                     $("<td>").text(productPrice),
                     $("<td>").text(quantity),
                     $("<td>").text(totalCost),
-                    $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>')
+                    $("<td>").html('')
                 ];
+
+                // إذا كنت في وضع التحرير، قم بإخفاء زر الحذف
+                if (!isEditMode) {
+                    cells[5] = $("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>');
+                }
+
                 // إضافة الخلايا إلى الصف
                 newRow.append(cells);
                 // إضافة الصف إلى الجدول
@@ -251,14 +274,66 @@
                 var total = 0;
 
                 $('#purchaseDetailsBody tr').each(function (index, row) {
-                    total += parseFloat($(this).find('td:eq(4)').text());
+                    var totalCost = parseFloat($(this).find('td:eq(4)').text());
+                    total += isNaN(totalCost) ? 0 : totalCost;
                 });
 
+                // إضافة التكاليف الإضافية إلى المجموع
+                var additionalCosts = parseFloat($('#additional_costs').val()) || 0;
+                total += additionalCosts;
+
                 $('#total').val(total.toFixed(2));
-                $('#amount_paid').val(total.toFixed(2));
 
-
+                var paymentMethod = $('#payment_method').val();
+                if (paymentMethod === 'نقد') {
+                    $('#amount_paid').val(total.toFixed(2));
+                } else {
+                    $('#amount_paid').val(0);
+                }
             }
+
+// Event handler for changes in additional costs field
+            $(document).on('input', '#additional_costs', function () {
+                // حساب وتحديث الإجمالي عند تغيير التكاليف الإضافية
+                updateTotal();
+            });
+
+// Event handler for payment method change
+            $(document).on('change', '#payment_method', function () {
+                var selectedPaymentMethod = $(this).val();
+
+                // إذا كانت طريقة الدفع "آجل"
+                if (selectedPaymentMethod === 'آجل') {
+                    // جعل حقل المبلغ المدفوع صفرًا وغير قابل للتحرير
+                    $('#amount_paid').val(0).prop('readonly', true);
+                } else {
+                    // إذا كانت طريقة الدفع "نقد"، قم بجعل المبلغ المدفوع قابل للتحرير
+                    $('#amount_paid').prop('readonly', false);
+                }
+
+                // حساب وتحديث الإجمالي
+                updateTotal();
+            });
+
+            // Event handler for input changes in the fields related to product price and quantity
+            $(document).on('input', '#product_price, #quantity', function () {
+                // حساب تكلفة المنتج تلقائيًا
+                var productPrice = $("#product_price").val();
+                var quantity = $("#quantity").val();
+                var totalCost = (productPrice * quantity).toFixed(2);
+
+                // عرض تكلفة المنتج في حقل التكلفة الإجمالية
+                $('#total_cost').val(totalCost);
+
+                // تحديث إجمالي الفاتورة
+                updateTotal();
+
+                // جعل زر التكلفة الإجمالية غير قابل للنقر
+                $('#total_cost_button').prop('disabled', true);
+            });
+
+
+
 
             // Event handler for the "Add Product" button
             $(document).on('click', '#add_product', function () {
@@ -266,10 +341,38 @@
                 var productName = $("select[name='pro_id'] option:selected").text();
                 var productPrice = $("#product_price").val();
                 var quantity = $("#quantity").val();
+
+
+
                 var totalCost = (productPrice * quantity).toFixed(2);
 
                 if (!productid || !productName || !productPrice || !quantity || !totalCost) {
                     alert('Please fill in all product details before adding.');
+                    return;
+                }
+
+                // التحقق مما إذا كان المنتج موجودًا بالفعل في القائمة
+                var productExists = false;
+                $('#purchaseDetailsBody tr').each(function () {
+                    var existingProductId = $(this).find('td:eq(1)').text().trim();
+                    var existingProductName = $(this).find('td:eq(2)').text().trim();
+
+                    if (existingProductId == productid || existingProductName == productName) {
+                        productExists = true;
+
+                        // إذا كان المنتج موجود، عرض رسالة الخطأ والخروج من الحلقة
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطأ',
+                            text: 'المنتج بنفس الرقم أو الاسم موجود بالفعل في القائمة.',
+                        });
+
+                        return false;
+                    }
+                });
+
+// إذا كان المنتج موجود، لا تقم بإضافته إلى القائمة
+                if (productExists) {
                     return;
                 }
 
@@ -281,8 +384,16 @@
                 $("#pro_id, #product_price, #quantity, #total_cost").val('');
 
                 // جعل حقل المجموع غير قابل للتحرير وتحديث قيمته
-                $("#total_cost").prop('readonly', true).val(totalCost);
+                $('#total_cost_button').prop('disabled', true);
             });
+
+
+// Event handler for input changes in the fields related to product price and quantity
+            $(document).on('input', '#product_price, #quantity', function () {
+                // تحديث إجمالي الفاتورة
+                updateTotal();
+            });
+
 
             var purchaseData = @json($purchase ?? null);
             if (purchaseData != null) {
@@ -293,16 +404,22 @@
                 $('#total').val(purchaseData.total);
                 $('#amount_paid').val(purchaseData.amount_paid);
 
-                // باقي الكود...
 
 
-            // قم بتعبئة تفاصيل المشتريات في الجدول
+                // قم بتعبئة تفاصيل المشتريات في الجدول
                 var purchaseDetails = @json($purchase->purchaseDetails ?? null);
+                var isEditMode = @json(isset($purchase) && $purchase !== null);
 
                 if (purchaseDetails != null && purchaseDetails.length > 0) {
                     for (var i = 0; i < purchaseDetails.length; i++) {
-                        addProductRow(purchaseDetails[i].product.id, purchaseDetails[i].product.name, purchaseDetails[i].product.purchasing_price, purchaseDetails[i].quantity, purchaseDetails[i].total_cost);
-
+                        addProductRow(
+                            purchaseDetails[i].product.id,
+                            purchaseDetails[i].product.name,
+                            purchaseDetails[i].product.purchasing_price,
+                            purchaseDetails[i].quantity,
+                            purchaseDetails[i].total_cost,
+                            isEditMode
+                        );
 
                         // قم بتعبئة الحقول في الصف المضاف بالبيانات
                         var currentRow = $("#purchaseDetailsBody tr").eq(i + 1); // انطلق من 1 لأن الصفوف تبدأ من 1
@@ -311,10 +428,17 @@
                         currentRow.find('td:eq(2)').text(purchaseDetails[i].product.id.purchasing_price);
                         currentRow.find('td:eq(3)').text(purchaseDetails[i].quantity);
                         currentRow.find('td:eq(4)').text(purchaseDetails[i].total_cost);
-                        currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>');
+
+                        // قم بإخفاء زر الحذف إذا كنت في وضع التحرير
+                        if (isEditMode) {
+                            currentRow.find('td:eq(5)').html('');
+                        } else {
+                            currentRow.find('td:eq(5)').html('<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">حذف</button>');
+                        }
+
                         // قد تحتاج إلى تكرار هذا للحقول الأخرى حسب احتياجاتك
                         console.log('Purchase Details:', purchaseDetails[i]);
-                    };
+                    }
                 }
 
                 // Event handler for the "Submit" button

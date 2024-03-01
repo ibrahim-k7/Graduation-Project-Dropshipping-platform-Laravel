@@ -14,10 +14,10 @@ class CartItem extends Model
     protected $table = "cart_items";
     //العناصر
     protected $fillable = [
-        'cart_item_id','cart_id','pro_id','created_at','updated_at'
+        'cart_item_id','cart_id','pro_id','quantity','created_at','updated_at'
     ];
 
-   
+
     //Relations Functhion
     // public function product()
     // {
@@ -28,5 +28,11 @@ class CartItem extends Model
     {
         return $this->belongsTo(Cart::class, 'cart_id', 'cart_id');
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'pro_id', 'id');
+    }
+    
 
 }

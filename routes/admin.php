@@ -6,7 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\PurchaseDetailsController;
+use App\Http\Controllers\Admin\auth\ِِِِAdminResetPasswordController;
 use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\ReturnDetailsOrderController;
 use App\Http\Controllers\SalesController;
@@ -24,6 +24,8 @@ use App\Http\Controllers\admin\AdminDshboardController;
 use App\Http\Controllers\admin\AdminProfileController;
 use App\Http\Controllers\AdminInfoController;
 use App\Http\Controllers\ReturnDetailsPurchaseController;
+use Illuminate\Support\Facades\auth;
+
 
 Route::middleware('auth:admin')->group(function () {
     Route::get('admin/dshboard', [AdminDshboardController::class, 'index'])->name('admin.dshboard');
@@ -246,11 +248,14 @@ Route::get('/admin/purchaseReturn_management/data', [ReturnDetailsPurchaseContro
 
 // حذف مرتجع الفاتورة
 Route::post('/admin/purchaseReturn_management/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.purchaseReturn_management.destroy');
+Route::post('/admin/purchase/returnDetails/destroy', [ReturnDetailsPurchaseController::class, 'destroy'])->name('admin.returnDetails.destroy');
+
 
 // اظهار فواتير المرتجع
 
-Route::get('/admin/purchase/ViewReturndetails', [PurchaseController::class, 'ViewReturndetails'])
-    ->name('admin.purchase.ViewReturndetails');
+
+Route::get('/admin/purchase/returnDetails', [PurchaseController::class, 'ViewReturndetails'])
+    ->name('admin.purchase.returnDetails');
 
 
 
@@ -270,11 +275,17 @@ Route::get('/forms-validation', function () {
 Route::get('/admin-profile', function () {
     return view('admin/admin-profile');
 });
+Route::get('/Adminreset', function () {
+    return view('admin/Adminreset');
+});
+auth::routes(['verify' => true]);
+
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/profile', [AdminProfileController::class, 'showProfile'])->name('admin.profile');
     Route::post('/admin/profile/update-email',  [AdminProfileController::class, 'updateEmail'])->name('profile.updateEmail');
     Route::post('/admin/profile/update-password',  [AdminProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
+
 
 
 
@@ -285,6 +296,7 @@ Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function () {
         Route::post('login', 'checkLogin')->name('check');
         Route::post('logout', 'logout')->name('logout');
     });
+
     Route::controller(AdminRegisterController::class)->group(function () {
         Route::get('register', 'register')->name('register');
         Route::post('register', 'store')->name('store');
