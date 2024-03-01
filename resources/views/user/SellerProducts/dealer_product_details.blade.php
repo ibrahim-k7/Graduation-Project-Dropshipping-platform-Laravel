@@ -116,7 +116,7 @@
                                                     Not Configured
                                                 </td>
                                                 <td>
-                                                    <a href="https://m5azn.com/ar/services/integration/woocommerce/products/38602436" class="text-success mr-2">
+                                                    <a href="" id="api_link">
                                                         <i class="fa fa-link"></i>
                                                     </a>
                                                 </td>
@@ -149,6 +149,42 @@
         $("#dealer_product_name").val(details.dealer_product_name);
         $("#dealer_selling_price").val(details.dealer_selling_price);
 
+        $(document).on('click','#api_link', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type:'post',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                },
+                url: "{{ route('WC.API.create.product') }}",
+                success: function () {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "تم ربط المنتج بنجاح",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                },
+                error: function(reject) {
+                    //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
+                    var response = $.parseJSON(reject.responseText);
+                    $.each(response.errors, function(key, val) {
+                        $("#" + key + "_error").text(val[0]);
+
+
+                    });
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "فشل ربط المنتج",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+        })
         $(document).on('click', '#submit', function(e) {
             e.preventDefault();
 
@@ -181,9 +217,6 @@
                     console.log('suc: ' + data);
                 },
                 error: function(reject) {
-                    // var error = data.responseJSON;
-                    //console.log(error);
-
                     //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
                     var response = $.parseJSON(reject.responseText);
                     $.each(response.errors, function(key, val) {
@@ -191,8 +224,6 @@
 
 
                     });
-
-
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
