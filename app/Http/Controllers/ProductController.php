@@ -99,11 +99,6 @@ class ProductController extends Controller
 
         return view('user.products.product_details', compact('details'));
     }
-    // public function getProductDetails()
-    // {
-    //     $details = Product::select('*')->get();
-    //     return view('user.products.product_details', compact('details'));
-    // }
 
     public function getSellerProducts()
     {

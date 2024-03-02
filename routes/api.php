@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //WC API
-Route::post('/send_product_to_WC',[WCController::class , 'createProduct'])->name('WC.API.create.product');
+Route::post('/send_product_to_WC',[WCController::class , 'linkProduct'])->name('WC.API.link.product');
+Route::delete('/unlink_product_from_WC',[WCController::class,'unlinkProduct'])->name('WC.API.unlink.products');

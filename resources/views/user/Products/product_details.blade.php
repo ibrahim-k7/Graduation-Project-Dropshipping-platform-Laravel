@@ -43,31 +43,6 @@
                                 {{ $details->name }} <br />
                                 <h6>الفئة : {{ $details->subCategorie->name }} / {{ $details->categorie->name }} </h6>
                             </h4>
-                            {{-- <div class="d-flex flex-row my-3">
-                                <div class="text-warning mb-1 me-2">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span class="ms-1">
-                                        4.5
-                                    </span>
-                                </div>
-                                <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>
-                                    {{ $details->quantity }} </span>
-                                <span class="text-success me-2">الكيمة المتوفره</span>
-                            </div> --}}
-                            {{-- 
-                            <div class="mb-3">
-                                <span class="h5">{{ $details->selling_price }}</span>
-                                <span class="text-muted">ر.ي </span>
-                            </div> --}}
-                            {{-- 
-                        <p>
-                            {{ $details->description }}
-                        </p> --}}
-
                             <div class="row">
                                 <dt class="col-4">الوصف :</dt>
                                 <dd class="col-8"> {{ $details->description }}</dd>
@@ -94,40 +69,9 @@
                             </div>
 
                             <hr />
-{{-- 
-                            <div class="row mb-4">
-                                <div class="col-md-4 col-6">
-                                    <label class="mb-2">Size</label>
-                                    <select class="form-select border border-secondary" style="height: 35px;">
-                                        <option>Small</option>
-                                        <option>Medium</option>
-                                        <option>Large</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 col-6 mb-3">
-                                    <label class="mb-2 d-block">Quantity</label>
-                                    <div class="input-group mb-3" style="width: 170px;">
-                                        <button class="btn btn-white border border-secondary px-3" type="button"
-                                            id="button-addon1" data-mdb-ripple-color="dark">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control text-center border border-secondary"
-                                            placeholder="14" aria-label="Example text with button addon"
-                                            aria-describedby="button-addon1" />
-                                        <button class="btn btn-white border border-secondary px-3" type="button"
-                                            id="button-addon2" data-mdb-ripple-color="dark">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div> --}}
-
                             <a data-product-id="{{ $details->id }}" id="buyNowBtn" class="btn btn-primary shadow-0"> <i
                                     class="ms-1 fa fa-shopping-basket"></i>
                                 إضافة الى منتجاتي </a>
-                            {{-- <a href="#" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i>
-                                Add to cart </a> --}}
-
                         </div>
                     </main>
                 </div>

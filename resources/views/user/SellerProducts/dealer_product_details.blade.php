@@ -29,7 +29,7 @@
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="{{ asset('Products_img/' . $details->product->image) }}" class="img-fluid rounded-start" alt="...">
+                            <img id="dealer_product_image" src="{{ asset('Products_img/' . $details->product->image) }}" class="img-fluid rounded-start" alt="...">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -115,9 +115,13 @@
                                                 <td>
                                                     Not Configured
                                                 </td>
-                                                <td>
+                                                <td class="text-center">
                                                     <a href="" id="api_link">
-                                                        <i class="fa fa-link"></i>
+                                                        <i class="fa fa-link fs-4"></i>
+                                                    </a>
+                                                    <span class="p-2"></span>
+                                                    <a href="" id="api_unlink">
+                                                        <i class="bi bi-trash link-danger fs-4"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -157,7 +161,13 @@
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
                 },
-                url: "{{ route('WC.API.create.product') }}",
+                url: "{{ route('WC.API.link.product') }}",
+                data:{
+                    'desc' : $("textarea[name='dealer_product_desc']").val() ,
+                    'price' : $("input[name='dealer_selling_price']").val(),
+                    'name' : $("input[name='dealer_product_name']").val(),
+                    'image' : $("#dealer_product_image").attr('src'),
+                },
                 success: function () {
                     Swal.fire({
                         position: "top-end",
@@ -179,21 +189,15 @@
                         position: "top-end",
                         icon: "error",
                         title: "فشل ربط المنتج",
-                        showConfirmButton: false,
-                        timer: 1500
+                        text:'المنتج مربوط بالمتجر مسبقاً',
+                        showCloseButton: true,
+                        showConfirmButton:false,
                     });
                 }
             })
-        })
+        });
         $(document).on('click', '#submit', function(e) {
             e.preventDefault();
-
-            //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
-            // $('#name_error').text('');
-            // $('#email_error').text('');
-            // $('#phone_error').text('');
-            // $('#address_error').text('');
-
             $.ajax({
                 type: 'post',
                 headers: {
@@ -233,6 +237,46 @@
                     });
                 }
             });
+        });
+        $(document).on('click','#api_unlink', function (e){
+            e.preventDefault();
+
+            $.ajax({
+                type:'delete',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                },
+                url: "{{ route('WC.API.unlink.products') }}",
+                data:{
+                    'name' : $("input[name='dealer_product_name']").val(),
+                },
+                success:function (){
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "تم الغاء ربط المنتج",
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                },
+                error : function (reject) {
+                    //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
+                    var response = $.parseJSON(reject.responseText);
+                    $.each(response.errors, function(key, val) {
+                        $("#" + key + "_error").text(val[0]);
+
+
+                    });
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "فشل الغاء ربط المنتج",
+                        text:'المنتج غير مربوط بالمتجر مسيقاً',
+                        showCloseButton: true,
+                        showConfirmButton:false,
+                    });
+                }
+            })
         });
     });
 </script>
