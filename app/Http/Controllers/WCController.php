@@ -8,7 +8,7 @@ use Automattic\WooCommerce\Client;
 use Illuminate\Http\Request;
 class WCController extends Controller
 {
-    public function createProduct(){
+    public function linkProduct(Request $request){
         $woocommerce = new Client(
             'https://m5zndrop.online/',
             'ck_5fac83320f432d1efc44e8a16f4d30eaa916f4c0',
@@ -18,61 +18,69 @@ class WCController extends Controller
             ]
         );
 
-        $data = [
-            'name' => 'Premium Quality',
-            'type' => 'simple',
-            'regular_price' => '21.99',
-            'description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.',
-            'short_description' => 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-            'categories' => [
-                [
-                    'id' => 9
-                ],
-                [
-                    'id' => 14
-                ]
-            ],
-            'images' => [
-                [
-                    'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg'
-                ],
-                [
-                    'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg'
-                ]
-            ]
-        ];
+        //شرط تأكد اذا كان المنتج موجود في المتجر
+        if ($this->retrieveProductID($request->name)){
+            abort(400, 'المنتج موجود في المتجر');
+        }else{
+            $data = [
+                'name' => $request->name,
+                'regular_price' => $request->price,
+                'description' => $request->desc,
+//            'images' => [
+//                [
+//                    'src' => $request->image
+//                ]
+//            ],
+            ];
 
-//        // Convert data array to JSON
-//        $jsonData = json_encode($data);
-//
-//        // Set cURL options for WooCommerce request
-//        $options = [
-//            CURLOPT_URL => 'https://m5zndrop.online/wp-json/wc/v3/products',
-//            CURLOPT_RETURNTRANSFER => true,
-//            CURLOPT_CUSTOMREQUEST => 'POST',
-//            CURLOPT_POSTFIELDS => $jsonData,
-//            CURLOPT_HTTPHEADER => [
-//                'Content-Type: application/json',
-//                'Content-Length: ' . strlen($jsonData)
-//            ]
-//        ];
-//
-//        // Initialize cURL session
-//        $curl = curl_init();
-//        // Set cURL options
-//        curl_setopt_array($curl, $options);
-//        // Execute cURL request
-//        $response = curl_exec($curl);
-//        // Close cURL session
-//        curl_close($curl);
-//
-//
-////        // Output response
-////        print_r($response);
-
-        print_r($woocommerce->post('products', $data));
-
-
+            print_r($woocommerce->post('products', $data));
+        }
     }
 
+    public function retrieveProductID($name){
+        $woocommerce = new Client(
+            'https://m5zndrop.online/',
+            'ck_5fac83320f432d1efc44e8a16f4d30eaa916f4c0',
+            'cs_e60d57a56819c9170c50d90ba54234d67344381a',
+            [
+                'version' => 'wc/v3',
+            ]
+        );
+
+        //استدعاء المنتجات من المتجر
+        $response  = $woocommerce->get('products');
+        $products = collect($response);
+
+        // للبحث عن المنتج بالاسم
+        $product = $products->firstWhere('name', $name);
+
+        //التاكد من وجود المنتج
+        if ($product){
+            //ارجاع id المنتج
+            return $product->id;
+        }else{
+            return false;
+        }
+    }
+
+    public function unlinkProduct(Request $request){
+        $woocommerce = new Client(
+            'https://m5zndrop.online/',
+            'ck_5fac83320f432d1efc44e8a16f4d30eaa916f4c0',
+            'cs_e60d57a56819c9170c50d90ba54234d67344381a',
+            [
+                'version' => 'wc/v3',
+            ]
+        );
+
+        //اسناد id المنتج الى متغير
+        $pro_id = $this->retrieveProductID($request->name);
+
+        //شرط تأكد اذا كان المنتج موجود في المتجر
+        if ($pro_id){
+            $woocommerce->delete('products/'.$pro_id,['force' => true]);
+        }else{
+            abort(400,'المنتج غير موجود في المتجر');
+        }
+    }
 }
