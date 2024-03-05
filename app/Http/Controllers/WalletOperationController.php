@@ -96,6 +96,12 @@ class WalletOperationController extends Controller
             $request->merge(['operation_type' => "ايداع"]);
         } elseif ($request->operation_type == 2) {
             // إذا كان نوع المعاملة هو خصم
+            if ($balance < $request->amount){
+                // abort(400, 'فشلت العملية بسبب وجود رصيد للمورد ');
+                return response()->json([
+                    'error' => 'رصيد المحفظة لايكفي لاجراء العملية'
+                ], 422);
+            }
             $newBalance = $balance - $request->amount;
             $request->merge(['operation_type' => "سحب"]);
         }

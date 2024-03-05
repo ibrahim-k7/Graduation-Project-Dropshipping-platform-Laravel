@@ -25,7 +25,8 @@ class OrderController extends Controller
     }
 
     //[جلب حاله الدفع من خلال معرف الطلب]
-    public function getPaymentStatusById($id){
+    public function getPaymentStatusById($id)
+    {
         $data = Order::where('order_id', $id)->select('payment_status')->first();
         return $data;
     }
@@ -337,7 +338,7 @@ class OrderController extends Controller
             ->join('store', 'store.store_id', '=', 'orders.store_id')
             ->join('wallet', 'wallet.store_id', '=', 'orders.store_id')
             ->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
-            ->where('orders.store_id',$store_id)
+            ->where('orders.store_id', $store_id)
             ->get();
 
         return DataTables::of($data)->addIndexColumn()
@@ -384,8 +385,11 @@ class OrderController extends Controller
             ]);
             // إنشاء كائن WalletOperationController واستدعاء الدالة store
             $walletOperationController = new WalletOperationController();
-            $walletOperationController->store($addWalletOperationRequest);
-
+            $check_wallet_balance = $walletOperationController->store($addWalletOperationRequest);
+            // الخطاء الخاص ب التحقق من الرصيد
+            if ($check_wallet_balance) {
+                return $check_wallet_balance;
+            }
             //انشاء كائن من SalesController واستدعاء دالة store
             $salesController = new SalesController();
             $salesController->store($request);
