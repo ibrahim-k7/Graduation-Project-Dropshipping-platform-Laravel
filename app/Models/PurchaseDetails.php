@@ -9,7 +9,7 @@ class PurchaseDetails extends Model
     protected $table = "purchase details";
 
     protected $fillable = [
-        'purch_id', 'pro_id', 'quantity', 'total_cost', 'created_at', 'updated_at',
+        'id',  'purch_id', 'pro_id', 'quantity', 'total_cost', 'created_at', 'updated_at',
     ];
 
 
