@@ -16,9 +16,6 @@ class Product extends Model
         'id','cat_id','subCat_id','name','description','purchasing_price','selling_price','suggested_selling_price','weight','quantity','barcode','image','created_at','updated_at'
     ];
 
-    public function purchase(){
-        return $this-> belongsToMany(Purchase::class,'purchase details','pro_id','purch_id','id','id');
-    }
 
     //Relations Functhion
     public function categorie(){
@@ -31,5 +28,10 @@ class Product extends Model
 
     public function cart(){
         return $this-> belongsToMany(Cart::class,'cart_items','pro_id','cart_id','id','cart_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class, 'order details', 'pro_id', 'order_id', 'id', 'order_id');
     }
 }
