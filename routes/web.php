@@ -34,7 +34,7 @@ use App\Http\Controllers\WCController;
 // });
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('user/home');
 });
 
 
