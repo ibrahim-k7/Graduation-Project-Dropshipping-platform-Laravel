@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Product;
 use App\Models\DealerProduct;
 use App\Models\CartItem;
@@ -77,46 +79,70 @@ class CartController extends Controller
         }
     }
 
+
     public function storeOrder(Request $request)
     {
         $store_id = Auth::user()->store_id;
         $cartItems = Cart::where('store_id', $store_id)->with('product')->select("*")->get();
 
+        // Initialize total weight and total amount
+        $totalWeight = 0;
+        $totalAmount = 0;
+
+        // Create the order
+        $order = Order::create([
+            'store_id' => $store_id,
+            'delivery_id' => '1',
+            'platform' => 'سلة',
+            'payment_status' => 'لم يتم الدفع',
+            'customer_phone' => $request->customer_phone,
+            'customer_name' => $request->customer_name,
+            'customer_email' => $request->customer_email,
+            'shipping_address' => $request->shipping_address,
+            'order_status' => 'يتم توصيل الطلب',
+            'total_per_shp' => '55', // You may need to calculate this based on your logic
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Iterate through cart items and products
         foreach ($cartItems as $cartItem) {
             foreach ($cartItem->product as $product) {
-                Order::create([
-                    'store_id' => $store_id,
-                    'delivery_id' => '1',
-                    'platform' => 'سلة',
-                    'payment_status' => 'لم يتم الدفع',
-                    'customer_phone' => $request->customer_phone,
-                    'customer_name' => $request->customer_name,
-                    'customer_email' => $request->customer_email,
-                    'shipping_address' => $request->shipping_address,
-                    'order_status' => 'يتم توصيل الطلب',
-                    'total_per_shp' => '55',
-                    'total_weight' => $product->weight,
-                    'total_amount' => $product->selling_price,
+                // Get the quantity from the pivot table
+                $quantity = $product->pivot->quantity;
+        
+                // Calculate total weight and total amount for each product
+                $productWeight = $product->weight * $quantity;
+                $productAmount = $product->selling_price * $quantity;
+        
+                $totalWeight += $productWeight;
+                $totalAmount += $productAmount;
+        
+                // Attach the product to the order
+                $orderDetail = OrderDetails::create([
+                    'order_id' => $order->order_id, // Use the order_id from the created order
+                    'pro_id' => $product->id,
+                    'quantity' => $quantity,
+                    'total_cost' => $productAmount,
+                    'sub_weight' => $productWeight,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-                // $productQuantity = $product->quantity;
-
-                // if ($productQuantity >= $request->quantity) {
-                OrderDetails::create([
-                    'pro_id' =>  $product->id,
-                    'order_id'=> 13,
-                    'quantity' =>  2,
-                    'total_cost' =>   $product->selling_price * 2,
-                    'sub_weight' =>  $product->weight * 2,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-                // }
             }
         }
+        
+
+        // Update the total weight and total amount in the order table
+        $order->update([
+            'total_weight' => $totalWeight,
+            'total_amount' => $totalAmount,
+        ]);
+
+        // Clear the cart or perform any other necessary actions
+
     }
-    //
+    
+    // 
 
     /**
      * Display the specified resource.
@@ -152,16 +178,18 @@ class CartController extends Controller
     {
         $store_id = Auth::user()->store_id;
         $cart = Cart::where('store_id', $store_id)->first();
-        $newquantity = $request->quantity;
-        $cartItem = CartItem::where(['cart_id' => $cart->cart_id])
-            ->where(['pro_id' => $request->pro_id])
-            ->with('product')
-            ->first();
-        // $newquantity = $request->quantity;
-        $perPrice = $newquantity * $cartItem->product->selling_price;
-        return ($perPrice);
-    }
+        $newQuantity = $request->quantity;
+        $cartItem = CartItem::where(['cart_id' => $cart->cart_id, 'pro_id' => $request->pro_id])->first();
 
+        $cartItem->update(['quantity' => $newQuantity]);
+
+        // Calculate the new subtotal amount for the product
+        $newSubtotal = $newQuantity * $cartItem->product->selling_price;
+        return ($newSubtotal);
+
+
+    }
+   
     /**
      * Remove the specified resource from storage.
      *
