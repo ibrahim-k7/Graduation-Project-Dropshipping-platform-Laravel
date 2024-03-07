@@ -110,20 +110,20 @@
 
                                 <div class="col-md-12">
                                     <label for="customer_name" class="form-label">اسم العميل</label>
-                                    <input type="text" class="form-control" id="customer_name"
-                                        name="customer_name" required>
+                                    <input type="text" class="form-control" id="customer_name" name="customer_name"
+                                        required>
                                     <small id="customer_name_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="customer_phone" class="form-label">رقم الجوال</label>
-                                    <input type="number" class="form-control" id="customer_phone"
-                                        name="customer_phone" required>
+                                    <input type="number"  min="1" class="form-control" id="customer_phone" name="customer_phone"
+                                        required>
                                     <small id="customer_phone_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="customer_email" class="form-label">البريد الإلكتروني</label>
-                                    <input type="email" class="form-control" id="customer_email"
-                                        name="customer_email" required>
+                                    <input type="email" class="form-control" id="customer_email" name="customer_email"
+                                        required>
                                     <small id="customer_email_error" class="form-text text-danger"></small>
                                 </div>
                                 <div class="col-md-12">
@@ -179,7 +179,13 @@
                         location.reload();
                     },
                     error: function(reject) {
-                        // يمكنك إضافة إجراءات إضافية هنا في حالة حدوث خطأ
+                        if (reject.responseJSON.error) {
+                            // إذا كان هناك خطأ في الباركود
+                            Swal.fire({
+                                title: reject.responseJSON.error,
+                                icon: 'error'
+                            });
+                        }
                     }
                 });
             }
@@ -272,6 +278,7 @@
                         $('#pay').hide();
                     } else if (data.payment_status === 'تم الغاء الدفع') {
                         $('#payment_status').addClass('text-danger');
+                        $('#pay').hide();
                     } else {
                         $('#payment_status').addClass('text-warning');
                     }

@@ -56,7 +56,7 @@
 
                                         <div class="col-md-6">
                                             <label for="phone" class="form-label">المبلغ</label>
-                                            <input type="number" class="form-control" id="amount" name="amount"
+                                            <input type="number"   min="1"  class="form-control" id="amount" name="amount"
                                                 required>
                                             <small id="amount_error" class="form-text text-danger"></small>
                                         </div>

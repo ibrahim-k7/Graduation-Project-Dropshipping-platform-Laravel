@@ -91,12 +91,19 @@
                         text: "لقد تم تحديث حالة الدفع بنجاح",
                         icon: "success"
                     });
-
                     //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد التحديث
                     $('#Order_Managment_User').DataTable().ajax.reload();
                 },
                 error: function(reject) {
                     // يمكنك إضافة إجراءات إضافية هنا في حالة حدوث خطأ
+                    // console.log(reject.responseJSON.error);
+                    if (reject.responseJSON.error) {
+                        // إذا كان هناك خطأ في الباركود
+                        Swal.fire({
+                            title: reject.responseJSON.error,
+                            icon: 'error'
+                        });
+                    }
                 }
             });
         }
@@ -119,7 +126,7 @@
                 confirmButtonText: "نعم، قم بتغيير حالة الدفع"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    updatePaymentStatus(order_id,payment_status,total_amount,wallet_id);
+                    updatePaymentStatus(order_id, payment_status, total_amount, wallet_id);
                 }
             });
         });
@@ -183,8 +190,8 @@
                 ],
                 //عرض اسم الحقل و محتويات الحقول من اليمين لليسار
                 columnDefs: [{
-                    targets: '_all',//كل الحقول
-                    className: 'dt-right'//الاتجاه
+                    targets: '_all', //كل الحقول
+                    className: 'dt-right' //الاتجاه
                 }],
                 ajax: "{{ Route('admin.order.data') }}",
                 dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" +
@@ -194,28 +201,32 @@
                     url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Arabic.json" // توفير ملف ترجمة للعربية
                 },
                 buttons: [{
-                    extend: 'print',
-                    autoPrint: false,
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14] // Column index which needs to export
-                    }
-                },
+                        extend: 'print',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14] // Column index which needs to export
+                        }
+                    },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14]  // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14]  // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14]  // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14] // Column index which needs to export
                         }
                     },
 
@@ -379,6 +390,5 @@
                 }
             });
         });
-
     </script>
 @endsection
