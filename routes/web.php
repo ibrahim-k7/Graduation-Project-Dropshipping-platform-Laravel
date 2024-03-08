@@ -38,6 +38,9 @@ Route::get('/', function () {
     return view('user/home');
 });
 
+Route::get('/home', function () {
+    return view('User.Landing_Page.home');
+})->name('user.home');
 
 
 Route::middleware('verified')->group(function () {
