@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
@@ -81,7 +82,6 @@ Route::controller(ProductController::class)->group(
     function () {
         Route::get('/details/{id}', 'getProductDetails')->name('user.product.details');
         Route::post('/product/getProductByBarcode/{barcode?}', 'getProductByBarcode')->name('user.product.getProductByBarcode');
-
     }
 );
 
@@ -103,9 +103,8 @@ Route::controller(CartController::class)->group(
     function () {
         Route::get('/user/cart', 'index')->name('user.cart');
         Route::post('/user/cart/store', 'store')->name('user.cart.store');
-        Route::post('/user/create/addOrderr','storeOrder')->name('user.cart.addOrder');
-        Route::post('/user/calculate-subamount','update')->name('user.cart.calculateSubAmount');
-
+        Route::post('/user/create/addOrderr', 'storeOrder')->name('user.cart.addOrder');
+        Route::post('/user/calculate-subamount', 'update')->name('user.cart.calculateSubAmount');
     }
 );
 
@@ -141,7 +140,6 @@ Route::controller(OrderController::class)->group(
         Route::get('/get-chart-data', 'getChartData')->name('getChartData');
         Route::get('/orders/getWalletId', 'getWalletId')->name('user.order.getWalletId');
         Route::post('/orders/updateCustomerInfo', 'updateCustomerInfo')->name('user.order.updateCustomerInfo');
-
     }
 );
 
@@ -153,6 +151,23 @@ Route::controller(OrderDetailsController::class)->group(
         Route::get('/order_details/data', 'getUserDataTable')->name('user.order.details.data');
         Route::post('/order_details/destroy', 'destroy')->name('user.order.details.destroy');
         Route::post('/order_details/addProduct', 'addProduct')->name('user.order.details.addProduct');
+    }
+);
+
+//API connect
+Route::controller(APIController::class)->group(
+    function () {
+        Route::get('/API_connect', 'show')->name('user.API.show');
+        Route::get('/API_connect/datatable', 'getDataTable')->name('user.API.getDataTable');
+        Route::get('/API_connect/getById', 'getById')->name('user.API.getById');
+        Route::post('/API_connect/store', 'store')->name('user.API.store');
+        Route::post('/API_connect/update', 'update')->name('user.API.update');
+        Route::post('/API_connect/destroy', 'destroy')->name('user.API.destroy');
+
+        // Route::get('/order_details/orderInfo', 'getOrderInfo')->name('user.order.details.getOrderInfo');
+        // Route::get('/order_details/data', 'getUserDataTable')->name('user.order.details.data');
+        // Route::post('/order_details/destroy', 'destroy')->name('user.order.details.destroy');
+        // Route::post('/order_details/addProduct', 'addProduct')->name('user.order.details.addProduct');
 
     }
 );

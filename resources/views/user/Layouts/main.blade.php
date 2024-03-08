@@ -196,6 +196,14 @@
                     <span>قائمة منتجاتي</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ Route('user.API.show') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>ربط ال API</span>
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ Route('user.wallets.operation') }}">
                     <i class="bi bi-wallet"></i>
