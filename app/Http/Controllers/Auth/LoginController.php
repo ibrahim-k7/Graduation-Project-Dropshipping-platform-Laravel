@@ -87,11 +87,11 @@ class LoginController extends Controller
             request()->merge(['email'=> $value]);
             return 'email';
         }elseif(preg_match("/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/ ", $value )){
-            request()->merge(['name'=> $value]);
-            return 'name';
+            request()->merge(['store_name'=> $value]);
+            return 'store_name';
         }elseif(preg_match("/^(((\+|00)9677|0?7)[01378]\d{7}|((\+|00)967|0)[1-7]\d{6})$/", $value )){
-            request()->merge(['phone'=> $value]);
-            return 'phone';
+            request()->merge(['phone_number'=> $value]);
+            return 'phone_number';
         }else{
             request()->merge(['email'=> $value]);
             return 'email';
