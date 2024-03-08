@@ -83,53 +83,6 @@
                     </div>
 
 
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <h3 class="w-50 float-left card-title m-0" style="text-transform: capitalize"> Product
-                                Integrations </h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="pay-invoice">
-                                <div class="card-body p-0 white_color">
-                                    <div class="col-sm-12 mt-2">
-                                        <table class="display table table-striped table-bordered dataTable"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th>Platform </th>
-                                                    <th>Last Configuration </th>
-                                                    <th>Action </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td style="width:40px; text-align:center">
-                                                        <img src="https://m5azn.com/assets/images/third_party/woo.png"
-                                                            style="max-width:70px;">
-                                                    </td>
-                                                    <td>
-                                                        Not Configured
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a href="" id="api_link">
-                                                            <i class="fa fa-link fs-4"></i>
-                                                        </a>
-                                                        <span class="p-2"></span>
-                                                        <a href="" id="api_unlink">
-                                                            <i class="bi bi-trash link-danger fs-4"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
 
