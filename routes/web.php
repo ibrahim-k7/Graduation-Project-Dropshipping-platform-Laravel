@@ -34,11 +34,8 @@ use App\Http\Controllers\WCController;
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('user/home');
-});
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('User.Landing_Page.home');
 })->name('user.home');
 

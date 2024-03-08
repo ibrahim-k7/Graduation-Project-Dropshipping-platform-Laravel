@@ -31,7 +31,7 @@
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="{{ route('user.home') }}" class="nav__link active-link">الرئيسيه</a>
+                        <a href="{{ route('user.home') }}" class="nav__link active-link">الرئيسية</a>
                     </li>
                     <li class="nav__item">
                         <a href="#about" class="nav__link">معلومات عنا</a>
@@ -40,7 +40,7 @@
                         <a href="#services" class="nav__link">الخدمات</a>
                     </li>
                     <li class="nav__item">
-                        <a href="#contact" class="nav__link">تواصل معانا</a>
+                        <a href="#contact" class="nav__link">تواصل معنا</a>
                     </li>
 
                     {{-- <i class='bx bx-toggle-left change-theme' id="theme-button"></i> --}}
@@ -63,35 +63,35 @@
     <footer class="footer section">
         <div class="footer__container container grid">
             <div class="footer__content">
-                <a href="#" class="footer__logo">Delivery</a>
-                <p class="footer__description">Order Products Faster <br> Easier</p>
+                <a href="#" class="footer__logo">التوصيل</a>
+                <p class="footer__description">طلب المنتجات بسرعة <br> وسهولة</p>
             </div>
 
             <div class="footer__content">
-                <h3 class="footer__title">Our Services</h3>
+                <h3 class="footer__title">خدماتنا</h3>
                 <ul class="footer__links">
-                    <li><a href="#" class="footer__link">Pricing </a></li>
-                    <li><a href="#" class="footer__link">Discounts</a></li>
-                    <li><a href="#" class="footer__link">Report a bug</a></li>
-                    <li><a href="#" class="footer__link">Terms of Service</a></li>
+                    <li><a href="#" class="footer__link">التسعير </a></li>
+                    <li><a href="#" class="footer__link">التخفيضات</a></li>
+                    <li><a href="#" class="footer__link">الإبلاغ عن خطأ</a></li>
+                    <li><a href="#" class="footer__link">شروط الخدمة</a></li>
                 </ul>
             </div>
 
             <div class="footer__content">
-                <h3 class="footer__title">Our Company</h3>
+                <h3 class="footer__title">شركتنا</h3>
                 <ul class="footer__links">
-                    <li><a href="#" class="footer__link">Blog</a></li>
-                    <li><a href="#" class="footer__link">Our mision</a></li>
-                    <li><a href="#" class="footer__link">Get in touch</a></li>
+                    <li><a href="#" class="footer__link">المدونة</a></li>
+                    <li><a href="#" class="footer__link">مهمتنا</a></li>
+                    <li><a href="#" class="footer__link">تواصل معنا</a></li>
                 </ul>
             </div>
 
             <div class="footer__content">
-                <h3 class="footer__title">Community</h3>
+                <h3 class="footer__title">المجتمع</h3>
                 <ul class="footer__links">
-                    <li><a href="#" class="footer__link">Support</a></li>
-                    <li><a href="#" class="footer__link">Questions</a></li>
-                    <li><a href="#" class="footer__link">Customer help</a></li>
+                    <li><a href="#" class="footer__link">الدعم</a></li>
+                    <li><a href="#" class="footer__link">الأسئلة</a></li>
+                    <li><a href="#" class="footer__link">مساعدة العملاء</a></li>
                 </ul>
             </div>
 
