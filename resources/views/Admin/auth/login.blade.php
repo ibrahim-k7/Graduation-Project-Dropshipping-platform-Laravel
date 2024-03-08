@@ -69,7 +69,7 @@
                                         </div>
                                         <div class="col-12">
                                             <p class="small mb-0"> نسيت كلمة السر <a href="{{ route('password.request') }}">
-                                                    {{ __('نسيت كلمة السر') }}</a></p>
+                                                    {{ __('استعادة كلمة السر كلمة السر') }}</a></p>
                                         </div>
                                     </form>
                                 </div>

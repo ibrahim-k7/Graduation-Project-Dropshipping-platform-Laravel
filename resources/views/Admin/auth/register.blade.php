@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <div class="pt-4 pb-2">
                         <h5 class="card-title text-center pb-0 fs-4">انشاء حساب</h5>
-                        <p class="text-center small">ادخل معلوماتك الشخصية لانشاء حساب</p>
+                        <p class="text-center small">ادخل البيانات التالية لانشاء حساب</p>
                     </div>
                     <form method="POST" action="{{ route('admin.dshboard.store') }}" class="row g-3 needs-validation">
                         @csrf
