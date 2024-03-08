@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 
-@section('content')
-    <div class="container">
+@section('Content')
+    <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
@@ -67,10 +67,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
-
-                <div class="credits">
-                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
                 </div>
 
             </div>
