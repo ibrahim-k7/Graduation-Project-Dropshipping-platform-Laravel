@@ -14,15 +14,12 @@ class CartItem extends Model
     protected $table = "cart_items";
     //العناصر
     protected $fillable = [
-        'cart_item_id','cart_id','pro_id','quantity','created_at','updated_at'
+        'cart_item_id','cart_id','pro_id','quantity','created_at','updated_at',
     ];
 
+    protected $primaryKey = 'cart_item_id';
 
-    //Relations Functhion
-    // public function product()
-    // {
-    //     return $this->belongsTo(Product::class, 'pro_id', 'id');
-    // }
+
 
     public function cart()
     {
