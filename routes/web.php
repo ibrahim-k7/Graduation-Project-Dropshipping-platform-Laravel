@@ -34,6 +34,18 @@ use App\Http\Controllers\WCController;
 //     return view('welcome');
 // });
 
+<<<<<<< HEAD
+=======
+Route::get('/', function () {
+    return view('user/home');
+});
+
+Route::get('/home', function () {
+    return view('User.Landing_Page.home');
+})->name('user.home');
+
+
+>>>>>>> 725608fe04a0ab6e9b69700a4227c32deea9a427
 Route::middleware('verified')->group(function () {
     Route::get('user/profile', [ProfileController::class, 'index'])->name('user.profile');
     Route::post('user/profile/update-email', [ProfileController::class, 'updateEmail'])->name('user.profile.updateEmail');
