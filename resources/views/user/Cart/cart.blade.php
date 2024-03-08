@@ -111,11 +111,11 @@
                                         <!-- Default checked radio for the first element -->
                                         <div class="form-check h-100 border rounded-3">
                                             <div class="p-3">
-                                                <input class="form-check-input" type="radio" name="delivery_type{{$key}}" id="delivery_type{{$key}}" data-delivery-id="{{$deliveryItem->delivery_id}}" {{$key == 0 ? 'checked' : ''}} />
+                                                <input class="form-check-input" type="radio" name="delivery_type" id="delivery_type{{$key}}" data-delivery-id="{{$deliveryItem->delivery_id}}" {{$key == 0? 'checked' : ''}} />
                                                 <label class="form-check-label" for="delivery_type{{$key}}">
                                                     {{$deliveryItem->name}} <br />
                                                     <small class="text-muted"> {{$deliveryItem->shipping_fees}} / ري </small>
-                                                </label>
+                                                </label>                                                
                                             </div>
                                         </div>
                                     </div>
