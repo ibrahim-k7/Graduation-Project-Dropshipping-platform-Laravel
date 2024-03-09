@@ -87,11 +87,11 @@ class LoginController extends Controller
             request()->merge(['email'=> $value]);
             return 'email';
         }elseif(preg_match("/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/ ", $value )){
-            request()->merge(['name'=> $value]);
-            return 'name';
+            request()->merge(['store_name'=> $value]);
+            return 'store_name';
         }elseif(preg_match("/^(((\+|00)9677|0?7)[01378]\d{7}|((\+|00)967|0)[1-7]\d{6})$/", $value )){
-            request()->merge(['phone'=> $value]);
-            return 'phone';
+            request()->merge(['phone_number'=> $value]);
+            return 'phone_number';
         }else{
             request()->merge(['email'=> $value]);
             return 'email';
@@ -103,17 +103,24 @@ class LoginController extends Controller
         $request->validate([
             'userLogin' => 'required|string',
             'password' => 'required|string',
-            // 'g-recaptcha-response'=>'required|captcha',
         ],[
-            "userLogin.required"=>"the phone / email/ name is required",
-            // "g-recaptcha-response.required"=>"يجب التاكيد انك ليس روبوت",
+                "userLogin.required"=>"the phone / email/ name is required",
         ]);
     }
-    // protected function sendFailedLoginResponse(Request $request)
-    // {
-    //     throw ValidationException::withMessages([
-    //         'userLogin' => [trans('auth.failed')],
-    //     ]);
-    // }
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $userLoginField = $this->username();
 
+        if ($userLoginField === 'email') {
+            throw ValidationException::withMessages([
+                'userLogin' => [trans('كلمة السر او الايميل او اسم المستخدم غير صحيح')],
+            ]);
+        } else {
+            throw ValidationException::withMessages([
+                'userLogin' => [trans('auth.failed')],
+            ]);
+        }
+    }
 }
+
+

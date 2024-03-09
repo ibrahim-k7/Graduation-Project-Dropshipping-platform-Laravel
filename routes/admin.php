@@ -279,6 +279,8 @@ Route::get('/Adminreset', function () {
     return view('admin/Adminreset');
 });
 auth::routes(['verify' => true]);
+Auth::routes();
+
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/profile', [AdminProfileController::class, 'showProfile'])->name('admin.profile');

@@ -139,31 +139,23 @@
                                 </thead>
                                 <tbody id="returnDetailsBody">
                                 <!-- سيتم ملء هذا الجدول بتفاصيل الفواتير المرتجعة -->
-                                @php
-                                    $displayedReturnDetails = [];
-                                @endphp
-
                                 @foreach($returnDetails as $details)
-                                    @if(!in_array($details->purchase_details_id, $displayedReturnDetails))
-                                        <tr>
-                                            <td>{{ $details->return_id }}</td>
-                                            <td>{{ $details->purchase_details_id }}</td>
-                                            <td>{{ $details->purchaseDetails->product->name }}</td>
-                                            <td>{{ $details->return_date }}</td>
-                                            <td>{{ $details->quantity_returned }}</td>
-                                            <td>{{ $details->amount_returned }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-sm delete-return-btn" data-return-id="{{ $details->return_id }}">حذف</button>
-                                            </td>
-                                        </tr>
-                                        @php
-                                            $displayedReturnDetails[] = $details->purchase_details_id;
-                                        @endphp
-                                    @endif
+                                    <tr>
+                                        <td>{{ $details->return_id }}</td>
+                                        <td>{{ $details->purchase_details_id }}</td>
+                                        <td>{{ $details->purchaseDetails->product->name }}</td>
+                                        <td>{{ $details->return_date }}</td>
+                                        <td>{{ $details->quantity_returned }}</td>
+                                        <td>{{ $details->amount_returned }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm delete-return-btn" data-return-id="{{ $details->return_id }}">حذف</button>
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
+
 
 
 
@@ -209,7 +201,7 @@
 
                                         <div class="mb-3">
                                             <label for="quantity_returned">الكمية المسترجعة:</label>
-                                            <input type="number" class="form-control" id="quantity_returned" name="quantity_returned" placeholder="ادخل الكمية المسترجعة" required>
+                                            <input type="number" class="form-control" id="quantity_returned" name="quantity_returned" placeholder="ادخل الكمية المسترجعة" min="1" required>
                                         </div>
 
                                         <div class="mb-3">
@@ -268,6 +260,7 @@
 
         $(document).ready(function () {
             $(document).ready(function () {
+
                 var purchaseData = @json($purchase ?? null);
 
                 if (purchaseData != null) {
@@ -331,125 +324,130 @@
                         }
                     }
                 }
-        });
+            });
+            var returnedQuantityForProduct = 0;
 
-        // عند تغيير تفاصيل المنتج
-        $('#purchaseDetails').on('change', function() {
-            // تحديث سعر المنتج (unitPrice)
-            var unitPrice = parseFloat($(this).find(':selected').data('unit-price'));
-            $('#amount_returned').val('');  // إعادة تعيين قيمة المبلغ المسترجع
+            // عند تغيير تفاصيل المنتج
+            $('#purchaseDetails').on('change', function() {
+                // تحديث سعر المنتج (unitPrice)
+                var unitPrice = parseFloat($(this).find(':selected').data('unit-price'));
+                $('#amount_returned').val('');  // إعادة تعيين قيمة المبلغ المسترجع
 
-            // تحديث قيم الحقول
-            $('#quantity_returned').trigger('change');
-        });
+                // تحديث قيم الحقول
+                $('#quantity_returned').trigger('change');
+            });
 
-        // عند تغيير قيمة الكمية المسترجعة
-        $('#quantity_returned').on('change', function() {
-            // حساب المبلغ المسترجع باستخدام سعر المنتج والكمية المسترجعة
-            var unitPrice = parseFloat($('#purchaseDetails').find(':selected').data('unit-price'));
-            var quantityReturned = parseFloat($(this).val());
-            var amountReturned = quantityReturned * unitPrice;
+            // عند تغيير قيمة الكمية المسترجعة
+            $('#quantity_returned').on('change', function() {
+                // حساب المبلغ المسترجع باستخدام سعر المنتج والكمية المسترجعة
+                var unitPrice = parseFloat($('#purchaseDetails').find(':selected').data('unit-price'));
+                var quantityReturned = parseFloat($(this).val());
+                var amountReturned = quantityReturned * unitPrice;
 
-            // إضافة السعر المسترجع إلى الصفحة
-            $('#amount_returned').val(amountReturned.toFixed(2)); // تحديد عدد الأرقام بعد الفاصلة العشرية
-        });
+                // إضافة السعر المسترجع إلى الصفحة
+                $('#amount_returned').val(amountReturned.toFixed(2)); // تحديد عدد الأرقام بعد الفاصلة العشرية
+            });
 
-        $(document).on('click', '#returnSubmit', function(e) {
-            // Function to handle the return process
+            $(document).on('click', '#returnSubmit', function(e) {
+                // Function to handle the return process
 
-            // Collect data from return fields
-            var currentDate = new Date();
-            var returnDate = currentDate.toISOString().slice(0, 19).replace("T", " ");
+                // Collect data from return fields
+                var currentDate = new Date();
+                var returnDate = currentDate.toISOString().slice(0, 19).replace("T", " ");
 
-            var purchaseDetailsId = $('#purchaseDetails').val();
-            var quantityReturned = $('#quantity_returned').val();
-            var amountReturned = $('#amount_returned').val();
+                var purchaseDetailsId = $('#purchaseDetails').val();
+                var quantityReturned = $('#quantity_returned').val();
+                var amountReturned = $('#amount_returned').val();
 
-            // Get the available quantity for the selected purchase details
-            var availableQuantity = parseInt($('#purchaseDetails option:selected').data('available-quantity'));
-            // Get the purchased quantity for the selected purchase details
-            var purchasedQuantity = parseInt($('#purchaseDetails option:selected').data('purchased-quantity'));
+                // Get the available quantity for the selected purchase details
+                var availableQuantity = parseInt($('#purchaseDetails option:selected').data('available-quantity'));
+                // Get the purchased quantity for the selected purchase details
+                var purchasedQuantity = parseInt($('#purchaseDetails option:selected').data('purchased-quantity'));
 
-            // Initialize a variable to determine whether to send data to the server
-            var sendData = true;
+                // Get the returned quantity for the selected purchase details
+                var returnedQuantityForProduct = parseInt($('#purchaseDetails option:selected').data('returned-quantity')) || 0;
 
-            // Check for errors
-            if (!returnDate) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'يرجى ملء حقل تاريخ الاسترجاع',
-                });
-                sendData = false;
-            } else if (!purchaseDetailsId) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'يرجى اختيار تفاصيل المنتج',
-                });
-                sendData = false;
-            } else if (!quantityReturned) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'يرجى ملء حقل الكمية المسترجعة',
-                });
-                sendData = false;
-            } else if (parseInt(quantityReturned) > availableQuantity || parseInt(quantityReturned) > purchasedQuantity) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'كمية الاسترجاع أكبر من الكمية المتاحة أو المشتراة في الفاتورة.',
-                });
-                sendData = false;
-            } else if (!amountReturned) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'يرجى ملء حقل المبلغ المسترجع',
-                });
-                sendData = false;
-            }
+                // Initialize a variable to determine whether to send data to the server
+                var sendData = true;
 
-            // Send data to the server using Ajax only if sendData is true
-            if (sendData) {
-                $.ajax({
-                    type: 'post',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                    },
-                    url: "{{ route('admin.purchase.processReturn') }}",
-                    data: {
-                        purchase_details_id: purchaseDetailsId,
-                        return_date: returnDate,
-                        quantity_returned: quantityReturned,
-                        amount_returned: amountReturned
-                    },
-                    success: function(response) {
-                        console.log(response); // طباعة الرد في وحدة التحكم
+                // Check for errors
+                if (!returnDate) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'يرجى ملء حقل تاريخ الاسترجاع',
+                    });
+                    sendData = false;
+                } else if (!purchaseDetailsId) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'يرجى اختيار تفاصيل المنتج',
+                    });
+                    sendData = false;
+                } else if (!quantityReturned) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'يرجى ملء حقل الكمية المسترجعة',
+                    });
+                    sendData = false;
+                } else if (parseInt(quantityReturned) > availableQuantity || parseInt(quantityReturned) + returnedQuantityForProduct > purchasedQuantity) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطأ في الكمية المسترجعة',
+                        text: 'الكمية المسترجعة تتجاوز الكمية المتاحة أو المشتراة في الفاتورة.',
+                    });
+                    sendData = false;
+                } else if (!amountReturned) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'يرجى ملء حقل المبلغ المسترجع',
+                    });
+                    sendData = false;
+                } else {
+                    // Continue with the Ajax request
+                    $.ajax({
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                        },
+                        url: "{{ route('admin.purchase.processReturn') }}",
+                        data: {
+                            purchase_details_id: purchaseDetailsId,
+                            return_date: returnDate,
+                            quantity_returned: quantityReturned,
+                            amount_returned: amountReturned
+                        },
+                        success: function(response) {
+                            console.log(response); // طباعة الرد في وحدة التحكم
 
-                        if (response.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'تمت عملية الاسترجاع بنجاح',
-                            }).then(() => {
-                                $('#returnModal').modal('hide');
-                                location.reload();
-                            });
-                        } else {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'تمت عملية الاسترجاع بنجاح',
+                                }).then(() => {
+                                    $('#returnModal').modal('hide');
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'فشلت عملية الاسترجاع',
+                                    text: 'يرجى المحاولة مرة أخرى.',
+                                });
+                            }
+                        },
+                        error: function(error) {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'فشلت عملية الاسترجاع',
-                                text: 'يرجى المحاولة مرة أخرى.',
+                                title: 'خطأ في الكمية المسترجعة',
+                                text: 'الكمية المسترجعة تتجاوز الكمية المتاحة أو المشتراة في الفاتورة.',
                             });
+                            console.error(error);
                         }
-                    },
-                    error: function(error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'فشلت عملية الاسترجاع',
-                            text: 'يرجى المحاولة مرة أخرى.',
-                        });
-                        console.error(error);
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+
+
             // الدالة الفرعية
             $(document).on('click', '.delete-return-btn', function(e) {
                 e.preventDefault();
@@ -486,7 +484,7 @@
 
                                 // إعادة تحميل الصفحة بعد الحذف
                                 location.reload();
-                                },
+                            },
                             error: function(reject) {
                                 var errorMessage = reject.responseJSON && reject.responseJSON.message ? reject.responseJSON.message : 'حدث خطأ أثناء معالجة الاسترجاع.';
                                 Swal.fire({

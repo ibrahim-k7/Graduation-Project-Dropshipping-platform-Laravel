@@ -31,19 +31,12 @@
 
         <div class="pagetitle">
             <h1>إدراج مشتريات جديدة</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
-                    <li class="breadcrumb-item">نماذج</li>
-                    <li class="breadcrumb-item active">تحقق</li>
-                </ol>
-            </nav>
+
         </div><!-- نهاية عنوان الصفحة -->
 
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
                         <div class="card-body">
                             <div class="card mt-5">
                                 <div class="card-body">
@@ -82,8 +75,9 @@
                                                 <label for="product_price" class="form-label">سعر المنتج</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">ر.س</span>
-                                                    <input type="number" class="form-control" id="product_price"
-                                                           name="product_price" placeholder="سعر المنتج">
+                                                    <input type="number" class="form-control" id="product_price" name="product_price"
+                                                           placeholder="سعر المنتج" min="1">
+
                                                 </div>
                                                 <small id="product_price_error" class="form-text text-danger"></small>
                                             </div>
@@ -91,7 +85,8 @@
                                             <div class="col-md-2">
                                                 <label for="quantity" class="form-label">الكمية</label>
                                                 <input type="number" class="form-control" id="quantity" name="quantity"
-                                                       placeholder="الكمية">
+                                                       placeholder="الكمية" min="1">
+
                                                 <small id="quantity_error" class="form-text text-danger"></small>
                                             </div>
 
@@ -99,7 +94,7 @@
                                                 <label for="total_cost" class="form-label">التكلفة الإجمالية</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">ر.س</span>
-                                                    <input type="text" class="form-control" id="total_cost" name="total_cost" placeholder="التكلفة الإجمالية" readonly>
+                                                    <input type="text" class="form-control" id="total_cost" name="total_cost" placeholder="التكلفة الإجمالية" readonly >
                                                 </div>
                                                 <small id="total_cost_error" class="form-text text-danger"></small>
                                             </div>
@@ -132,7 +127,7 @@
                                         <div class="col-md-6">
                                             <label for="additional_costs" class="form-label">التكاليف الإضافية</label>
                                             <input type="number" class="form-control" id="additional_costs" name="additional_costs" value="0"
-                                                   placeholder="أدخل التكاليف الإضافية">
+                                                   placeholder="أدخل التكاليف الإضافية"min="1">
                                             <small id="additional_costs_error" class="form-text text-danger"></small>
                                         </div>
 
@@ -145,7 +140,7 @@
                                         <div class="col-md-6">
                                             <label for="amount_paid" class="form-label">المبلغ المدفوع</label>
                                             <input type="number" class="form-control" id="amount_paid" name="amount_paid"
-                                                   placeholder="أدخل المبلغ المدفوع">
+                                                   placeholder="أدخل المبلغ المدفوع" min="1">
                                             <small id="amount_paid_error" class="form-text text-danger"></small>
                                         </div>
 
@@ -155,7 +150,6 @@
                                             <button type="submit" id="submit" class="btn btn-primary" data-action="update">حفظ </button>
                                             <button type="reset" class="btn btn-secondary">إعادة تعيين</button>
                                         </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -347,6 +341,7 @@
                 var totalCost = (productPrice * quantity).toFixed(2);
 
                 if (!productid || !productName || !productPrice || !quantity || !totalCost) {
+
                     alert('Please fill in all product details before adding.');
                     return;
                 }

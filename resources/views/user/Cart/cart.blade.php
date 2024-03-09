@@ -86,13 +86,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- <div class="col-6">
-                                        <p class="mb-0">اسم العائلة</p>
-                                        <div class="form-outline">
-                                            <input type="text" id="lastname" name="lastname" placeholder="اكتب هنا" class="form-control" />
-                                        </div>
-                                    </div> -->
-
                                     <div class="col-6 mb-3">
                                         <p class="mb-0">رقم الهاتف</p>
                                         <div class="form-outline">
@@ -118,11 +111,11 @@
                                         <!-- Default checked radio for the first element -->
                                         <div class="form-check h-100 border rounded-3">
                                             <div class="p-3">
-                                                <input class="form-check-input" type="radio" name="delivery_type{{$key}}" id="delivery_type{{$key}}" data-delivery-id="{{$deliveryItem->delivery_id}}" {{$key == 0 ? 'checked' : ''}} />
+                                                <input class="form-check-input" type="radio" name="delivery_type" id="delivery_type{{$key}}" data-delivery-id="{{$deliveryItem->delivery_id}}" {{$key == 0? 'checked' : ''}} />
                                                 <label class="form-check-label" for="delivery_type{{$key}}">
                                                     {{$deliveryItem->name}} <br />
                                                     <small class="text-muted"> {{$deliveryItem->shipping_fees}} / ري </small>
-                                                </label>
+                                                </label>                                                
                                             </div>
                                         </div>
                                     </div>
@@ -245,37 +238,19 @@
         })
 
 
-        // $(document).on('input', '#quantity', function () {
-        //         // حساب تكلفة المنتج تلقائيًا
-        //         var quantity = $("#quantity").val();
-        //         var subCost = (selling_price * quantity).toFixed(2);
 
-        //         // عرض تكلفة المنتج في حقل التكلفة الإجمالية
-        //         $('#subAmount').val(subCost);
-
-        //         // تحديث إجمالي الفاتورة
-        //         //updateTotal();
-
-        //         // جعل زر التكلفة الإجمالية غير قابل للنقر
-        //     });
-
+      
         //عند الضغط على زر إرسال
         $(document).on('click', '#addOrder', function(e) {
             e.preventDefault();
 
 
-            //اخفاء رسالة الخطاء عند الصغط على زر الارسال مره اخرى
-            // $('#sender_name_error').text('');
-            // $('#sender_customer_phone_error').text('');
-            // $('#transfer_number_error').text('');
-            // $('#amount_transferred_error').text('');
-            // $('#transfer_date_error').text('');
-            // $('#transfer_image_error').text('');
+        //    var quantity = parseInt(row.find('.quantity').val()) || 1;
 
-            // var formData = new FormData($("#form")[0]);
 
             //حفظ المعلومات
             $.ajax({
+
                 type: 'post',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
@@ -288,6 +263,8 @@
                     'lastname': $("input[name='lastname']").val(),
                     'delvery_id': $("input[name='delivery_type']:checked").data('delivery-id'),
                     'shipping_address': $("input[name='shipping_address']").val(),
+                    'quantity': $("input[name='quantity']").val(),
+
 
 
                 },
