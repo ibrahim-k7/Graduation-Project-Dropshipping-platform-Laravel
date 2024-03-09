@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 
-@section('content')
-    <div class="container">
+@section('Content')
+    <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <div class="pt-4 pb-2">
                             <h5 class="card-title text-center pb-0 fs-4">انشاء حساب</h5>
-                            <p class="text-center small">ادخل معلوماتك الشخصيه لانشاء حساب</p>
+                            <p class="text-center small">ادخل البيانات التاليه لانشاء حساب</p>
                         </div>
 
                         <form method="POST" action="{{ route('register') }}" class="row g-3 needs-validation">
@@ -62,15 +62,11 @@
                                     {{ __('ارسال') }}</button>
                             </div>
                             <div class="col-12">
-                                <p class="small mb-0">لدي حساب <a href="{{ route('login') }}">
+                                <p class="small mb-0">لديك حساب <a href="{{ route('login') }}">
                                         {{ __(' تسجيل الدخول') }}</a></p>
                             </div>
                         </form>
                     </div>
-                </div>
-
-                <div class="credits">
-                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
                 </div>
 
             </div>

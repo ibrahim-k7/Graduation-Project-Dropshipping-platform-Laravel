@@ -1,7 +1,7 @@
 @extends('user.Layouts.app')
 
-@section('content')
-    <div class="container">
+@section('Content')
+    <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
@@ -53,10 +53,10 @@
                                 <button class="btn btn-primary w-100" type="submit">{{ __('دخول') }}</button>
                             </div>
                             <div class="col-12">
-                                <p class="small mb-0">انشاء حساب؟ <a href="{{ route('register') }}">{{ __('انشاء حساب') }}</a></p>
+                                <p class="small mb-0">ليس لديك حساب؟ <a href="{{ route('register') }}">{{ __('انشاء حساب') }}</a></p>
                             </div>
                             <div class="col-12">
-                                <p class="small mb-0">نسيت كلمة السر؟ <a href="{{ route('password.request') }}">{{ __('نسيت كلمة السر') }}</a></p>
+                                <p class="small mb-0">نسيت كلمة السر؟ <a href="{{ route('password.request') }}">{{ __('استعادة كلمة السر') }}</a></p>
                             </div>
                         </form>
                     </div>

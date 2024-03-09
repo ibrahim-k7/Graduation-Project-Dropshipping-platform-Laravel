@@ -53,6 +53,12 @@ class Store extends  Authenticatable implements MustVerifyEmail
         return $this->hasOne(Wallet::class,'store_id','store_id');
     }
 
+    //RELA STORE TABLE TO API TABLE (ONE TO ONE)
+    public function API()
+    {
+        return $this->hasOne(API::class,'id','store_id');
+    }
+
     public function cart(){
         return $this->hasOne(Cart::class,'store_id','store_id');
     }
