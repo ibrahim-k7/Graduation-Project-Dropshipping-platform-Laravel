@@ -147,7 +147,6 @@
                     <ul class="dropdown-menu dropdown-menu-end  profile">
 
                         <li>
-                            <hr class="dropdown-divider">
                         </li>
 
                         <li>
