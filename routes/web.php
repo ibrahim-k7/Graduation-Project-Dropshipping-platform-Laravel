@@ -164,11 +164,6 @@ Route::controller(APIController::class)->group(
         Route::post('/API_connect/update', 'update')->name('user.API.update');
         Route::post('/API_connect/destroy', 'destroy')->name('user.API.destroy');
 
-        // Route::get('/order_details/orderInfo', 'getOrderInfo')->name('user.order.details.getOrderInfo');
-        // Route::get('/order_details/data', 'getUserDataTable')->name('user.order.details.data');
-        // Route::post('/order_details/destroy', 'destroy')->name('user.order.details.destroy');
-        // Route::post('/order_details/addProduct', 'addProduct')->name('user.order.details.addProduct');
-
     }
 );
 
