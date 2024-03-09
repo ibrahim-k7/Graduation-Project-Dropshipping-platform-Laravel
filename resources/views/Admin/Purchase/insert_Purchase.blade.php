@@ -31,13 +31,7 @@
 
         <div class="pagetitle">
             <h1>إدراج مشتريات جديدة</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
-                    <li class="breadcrumb-item">نماذج</li>
-                    <li class="breadcrumb-item active">تحقق</li>
-                </ol>
-            </nav>
+
         </div><!-- نهاية عنوان الصفحة -->
 
         <section class="section">
@@ -347,7 +341,7 @@
                 var totalCost = (productPrice * quantity).toFixed(2);
 
                 if (!productid || !productName || !productPrice || !quantity || !totalCost) {
-                    
+
                     alert('Please fill in all product details before adding.');
                     return;
                 }
