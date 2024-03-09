@@ -9,6 +9,7 @@ use Automattic\WooCommerce\Client;
 use Illuminate\Http\Request;
 class WCController extends Controller
 {
+    //دالة لربط المنتج مع woocommerce
     public function linkProduct(Request $request){
         $woocommerce = new Client(
             'https://m5zndrop.online/',
@@ -64,6 +65,7 @@ class WCController extends Controller
         }
     }
 
+    //دالة لالغاء ربط المنتج مع woocommerce
     public function unlinkProduct(Request $request){
         $woocommerce = new Client(
             'https://m5zndrop.online/',
@@ -86,7 +88,7 @@ class WCController extends Controller
     }
 
     //دالة تقوم بتضمين الموصل في الwoocommerce
-    public function inlcudeShippingMethod($name,$shipping_fees){
+    public function includeShippingMethod($name, $shipping_fees){
         $woocommerce = new Client(
             'https://m5zndrop.online/',
             'ck_5fac83320f432d1efc44e8a16f4d30eaa916f4c0',
@@ -113,10 +115,10 @@ class WCController extends Controller
         $deliveries = Delivery::select('*')->get();
 
         foreach ($deliveries as $delivery){
-            $this->inlcudeShippingMethod($delivery->name,$delivery->shipping_fees);
+            $this->includeShippingMethod($delivery->name,$delivery->shipping_fees);
         }
 
     }
 
-
+    
 }
