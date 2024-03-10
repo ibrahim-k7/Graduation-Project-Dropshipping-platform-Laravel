@@ -55,27 +55,23 @@
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
-{{--
+
         <nav class="header-nav me-auto">
             <ul class="d-flex align-items-center">
 
-                <li class="nav-item d-block d-lg-none">
+                {{-- <li class="nav-item d-block d-lg-none">
                     <a class="nav-link nav-icon search-bar-toggle " href="#">
                         <i class="bi bi-search"></i>
                     </a>
                 </li><!-- End Search Icon--> --}}
                 <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
-                        data-bs-toggle="dropdown">
-                        <span class=" dropdown-toggle ps-2">{{ Auth::user()->name }} </span>
-                    </a><!-- End Profile Iamge Icon -->
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            <span class=" dropdown-toggle ps-2">{{ Auth::guard('admin')->user()->name }}</span>
+                        </a><!-- End Profile Iamge Icon -->
+                                        {{-- </a><!-- End Profile Iamge Icon --> --}}
 
                     <ul class="dropdown-menu dropdown-menu-end  profile">
-
-                        <li>
-                        </li>
-
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="/admin/profile">
                                 <i class="bi bi-person"></i>
@@ -94,6 +90,7 @@
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>خروج</span>
                             </a>
+
                         </li>
 
                     </ul><!-- End Profile Dropdown Items -->
@@ -168,8 +165,7 @@
             </li><!-- End Forms Nav --> --}}
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Products-nav" data-bs-toggle="collapse"
-                    href="#">
+                <a class="nav-link collapsed" data-bs-target="#Products-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-journal-text "></i><span>المنتجات</span><i class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Products-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -182,8 +178,7 @@
             </li><!-- End Tables Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Categories-nav" data-bs-toggle="collapse"
-                    href="#">
+                <a class="nav-link collapsed" data-bs-target="#Categories-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-journal-text "></i><span>الفئات</span><i class="bi bi-chevron-down me-auto"></i>
                 </a>
                 <ul id="Categories-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -319,7 +314,8 @@
             </li><!-- End Tables Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Purchases-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" data-bs-target="#Purchases-nav" data-bs-toggle="collapse"
+                    href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>المشتريات</span><i
                         class="bi bi-chevron-down me-auto"></i>
                 </a>
@@ -351,13 +347,13 @@
 
 
             <li class="nav-item">
-          <li class="nav-heading">Pages</li>
+            <li class="nav-heading">Pages</li>
             <li class="nav-item">
-              <a class="nav-link collapsed" href="/admin/admin-information">
-                 <i class="bi bi-person"></i>
-               <span>معلومات الادمن </span>
+                <a class="nav-link collapsed" href="/admin/admin-information">
+                    <i class="bi bi-person"></i>
+                    <span>معلومات الادمن </span>
                 </a>
-                 </li>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/admin/user-information">
                     <i class="bi bi-person"></i>
@@ -418,7 +414,7 @@
             &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
         </div>
         {{-- <div class="credits"> --}}
-            {{-- <!-- All the links in the footer should remain intact. -->
+        {{-- <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
