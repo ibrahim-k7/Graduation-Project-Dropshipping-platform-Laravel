@@ -28,6 +28,7 @@ class AdminRegisterController extends Controller
                 "name" => ["required", "string"],
                 "email" => ["required", "regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", "unique:admins"],
                 "admin_key" => ["required", "string"],
+                'phone_number' => ['required', 'string', 'max:9','min:9','regex:/^(((\+|00)9677|0?7)[01378]\d{7}|((\+|00)967|0)[1-7]\d{6})$/', 'unique:store'],
                 'password' => ['required', 'min:8', 'confirmed'],
                 "password_confirmation" => ["required", "string"]
             ], [
@@ -38,7 +39,11 @@ class AdminRegisterController extends Controller
                 'password.required' => 'يرجى إدخال كلمة المرور.',
                 'password.min' => 'يجب أن تتكون كلمة المرور من :min أحرف على الأقل.',
                 'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
-                "password_confirmation.required" => "يرجى تأكيد كلمة المرور."
+                "password_confirmation.required" => "يرجى تأكيد كلمة المرور.",
+                'phone_number.required' => 'يجب إدخال رقم الهاتف.',
+                'phone_number.max' => 'يجب أن يتكون رقم الهاتف  من 9 ارقام.',
+                'phone_number.min' => 'يجب أن يتكون رقم الهاتف  من 9 ارقام.',
+                'phone_number.unique' => 'رقم الهاتف مستخدم بالفعل.',
             ]);
 
             $data = $request->except(['password_confirmation','_token','admin_key']);
