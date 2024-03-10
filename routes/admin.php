@@ -286,6 +286,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/profile', [AdminProfileController::class, 'showProfile'])->name('admin.profile');
     Route::post('/admin/profile/update-email',  [AdminProfileController::class, 'updateEmail'])->name('profile.updateEmail');
     Route::post('/admin/profile/update-password',  [AdminProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+    Route::post('/admin/profile/update-phoneNumber', [AdminProfileController::class, 'updatePhoneNumber'])->name('profile.updatePhoneNumber');
+
 });
 
 
