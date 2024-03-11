@@ -142,6 +142,7 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
                         <span class=" dropdown-toggle ps-2">{{ Auth::user()->store_name }} </span>
+
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end  profile">
