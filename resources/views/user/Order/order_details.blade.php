@@ -257,7 +257,6 @@
                 success: function(data) {
                     $('#order_id').text(data.order_id);
                     $('#order_date').text(moment(data.created_at).format('YYYY-MM-DD HH:mm:ss'));
-
                     $('#order_status').text(data.order_status);
                     // إزالة جميع الفئات الحالية لـ #order_status
                     $('#order_status').removeClass('text-success text-danger text-warning');
@@ -270,8 +269,9 @@
                         $('#order_status').addClass('text-warning');
                     }
 
-                    $('#delivery_name').text(data.name);
+                    $('#delivery_name').text(data.delivery_name);
                     $('#customer_name').val(data.customer_name);
+                    // $('#customer_phone').val(data.customer_phone);
                     $('#payment_status').text(data.payment_status);
                     if (data.payment_status === 'تم الدفع') {
                         $('#payment_status').addClass('text-success');
@@ -284,7 +284,7 @@
                     }
 
                     $('#customer_email').val(data.customer_email);
-                    $('#shipping_address').text(data.shipping_address);
+                    $('#shipping_address').text(data.delivery_shipping_fees);
                     $('#customer_phone').val(data.customer_phone);
                     $('#total_per_shp').text(data.total_per_shp);
                     $('#total_weight').text(data.total_weight);
