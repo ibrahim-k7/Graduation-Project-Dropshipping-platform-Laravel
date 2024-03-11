@@ -41,6 +41,13 @@
                             @enderror
                         </div>
                         <div class="col-12">
+                            <label for="phone_number" class="form-label">رقم الهاتف</label>
+                            <input type="tel" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" id="phone_number" required>
+                            @error('phone_number')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-12">
                             <label for="password" class="form-label">كلمة السر</label>
                             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" required>
                             @error('password')
