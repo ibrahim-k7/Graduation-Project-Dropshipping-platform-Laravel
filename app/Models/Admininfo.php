@@ -13,7 +13,7 @@ class Admininfo extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'name', 'email','created_at'
+        'id', 'name', 'email','phone_number','created_at'
     ];
 }
 
