@@ -158,8 +158,7 @@ class WCController extends Controller
             ]);
 
             //تحديث كمية المنتج في المخزن
-            $new_quantity = $product->quantity - $item['quantity'];
-            Product::where('id' , $product->id)->update(['quantity' => $new_quantity]);
+            Product::where('id' , $product->id)->update(['quantity' =>  $product->quantity - $item['quantity']]);
         }
 
     }
