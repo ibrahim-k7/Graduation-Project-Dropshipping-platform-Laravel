@@ -154,6 +154,15 @@ Route::middleware('verified')->group(function () {
 
         }
     );
+    Route::controller(WCController::class)->group(
+        function (){
+            Route::post('/create_webhook','createWebhook')->name('WC.API.create.webhook');
+            Route::post('/send_product_to_WC','linkProduct')->name('WC.API.link.product');
+            Route::delete('/unlink_product_from_WC','unlinkProduct')->name('WC.API.unlink.products');
+            Route::get('/get_delivery','getDelivery')->name('WC.API.get.delivery');
+//            Route::post('/webhook/woocommerce/order-created','orderCreated');
+        }
+    );
 });
 
 auth::routes(['verify' => true]);
