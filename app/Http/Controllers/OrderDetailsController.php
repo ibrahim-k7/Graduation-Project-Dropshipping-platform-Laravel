@@ -65,9 +65,12 @@ class OrderDetailsController extends Controller
     public function getOrderInfo(Request $request)
     {
         // return dd($request->id);
-        $order = Order::where('order_id', $request->id)->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
-            ->first();
-        return response()->json($order);
+        $order = Order::select('orders.*', 'delivery.name as delivery_name' ,'delivery.shipping_fees as delivery_shipping_fees')
+        ->where('order_id', $request->id)
+        ->join('delivery', 'delivery.delivery_id', '=', 'orders.delivery_id')
+        ->first();
+    
+    return response()->json($order);
     }
 
     // new function

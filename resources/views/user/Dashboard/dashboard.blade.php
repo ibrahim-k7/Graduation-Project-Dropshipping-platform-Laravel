@@ -9,7 +9,7 @@
 
         <div class="pagetitle">
             <h1>لوحة التحكم </h1>
-            
+
             <nav>
                 <ol class="breadcrumb">
                     {{-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -140,7 +140,7 @@
                                     <!-- Table with stripped rows -->
                                     <table id="lastOrdersTableUser" class="table table-striped">
                                         <thead>
-                                            
+
                                             <tr>
                                                 <th>ID</th>
                                                 <th>المنصة</th>

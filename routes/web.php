@@ -53,6 +53,107 @@ Route::middleware('verified')->group(function () {
     Route::get('/Dshboard', function () {
         return view('User.Dashboard.dashboard');
     })->name('user.dashboard');
+
+    Route::get('/userinterface', function () {
+        return view('User.Dashboard.dashboard');
+    });
+
+    //product catalogue
+    Route::controller(ProductController::class)->group(
+        function () {
+            Route::get('/catalogue', 'getAllProducts')->name('user.products.catalogue');
+        }
+    );
+
+    //product details
+    Route::controller(ProductController::class)->group(
+        function () {
+            Route::get('/details/{id}', 'getProductDetails')->name('user.product.details');
+            Route::post('/product/getProductByBarcode/{barcode?}', 'getProductByBarcode')->name('user.product.getProductByBarcode');
+        }
+    );
+
+    //Seller products
+    Route::controller(DealerProductController::class)->group(
+        function () {
+            Route::get('/user/products', 'show')->name('seller.products');
+            Route::get('/user/products/data', 'getDataTable')->name('seller.products.data');
+            Route::get('/user/create', 'create')->name('user.dealer.product.details');
+            Route::post('/user/store', 'store')->name('user.add.dealer.product');
+            Route::post('/user/destroy', 'destroy')->name('user.dealer.product.destroy');
+            Route::get('/user/getDealerProductsCount', 'getDealerProductsCount')->name('user.dealer.product.getDealerProductsCount');
+            Route::post('/user/update', 'update')->name('user.dealer.product.update');
+        }
+    );
+
+    // User Cart
+    Route::controller(CartController::class)->group(
+        function () {
+            Route::get('/user/cart', 'index')->name('user.cart');
+            Route::post('/user/cart/store', 'store')->name('user.cart.store');
+            Route::post('/user/create/addOrderr', 'storeOrder')->name('user.cart.addOrder');
+            Route::post('/user/calculate-subamount', 'update')->name('user.cart.calculateSubAmount');
+        }
+    );
+
+
+
+    Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
+    Route::get('user/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
+
+    Route::get('/wallet_getBalance', [WalletController::class, 'getBalance'])->name('user.wallet.getBalance');
+
+    Route::controller(TransferController::class)->group(
+        function () {
+            Route::get('/transfer', 'show')->name('user.transfers');
+            Route::get('/transfer/getDataTableUser', 'getDataTableUser')->name('user.transfers.getDataTableUser');
+            Route::get('/transfer/createeee', 'create')->name('user.transfers.create');
+            Route::post('/transfer/storeee', 'store')->name('user.transfers.store');
+        }
+    );
+
+    Route::controller(TransferInformationController::class)->group(
+        function () {
+            Route::get('/transfer_info/getTransferInfo', 'getTransferInfo')->name('user.transfer.info.getTransferInfo');
+        }
+    );
+
+    //Order
+    Route::controller(OrderController::class)->group(
+        function () {
+            Route::get('/orders', 'show')->name('user.order');
+            Route::get('/orders/data', 'getUserDataTable')->name('user.order.data');
+            Route::get('/orders/getOrdersCount', 'getOrdersCount')->name('user.order.getOrdersCount');
+            Route::get('/orders/getOrders', 'getOrders')->name('user.order.getOrders');
+            Route::get('/get-chart-data', 'getChartData')->name('getChartData');
+            Route::get('/orders/getWalletId', 'getWalletId')->name('user.order.getWalletId');
+            Route::post('/orders/updateCustomerInfo', 'updateCustomerInfo')->name('user.order.updateCustomerInfo');
+        }
+    );
+
+    //Order Details
+    Route::controller(OrderDetailsController::class)->group(
+        function () {
+            Route::get('/order_details', 'show')->name('user.order.details');
+            Route::get('/order_details/orderInfo', 'getOrderInfo')->name('user.order.details.getOrderInfo');
+            Route::get('/order_details/data', 'getUserDataTable')->name('user.order.details.data');
+            Route::post('/order_details/destroy', 'destroy')->name('user.order.details.destroy');
+            Route::post('/order_details/addProduct', 'addProduct')->name('user.order.details.addProduct');
+        }
+    );
+
+    //API connect
+    Route::controller(APIController::class)->group(
+        function () {
+            Route::get('/API_connect', 'show')->name('user.API.show');
+            Route::get('/API_connect/datatable', 'getDataTable')->name('user.API.getDataTable');
+            Route::get('/API_connect/getById', 'getById')->name('user.API.getById');
+            Route::post('/API_connect/store', 'store')->name('user.API.store');
+            Route::post('/API_connect/update', 'update')->name('user.API.update');
+            Route::post('/API_connect/destroy', 'destroy')->name('user.API.destroy');
+
+        }
+    );
 });
 
 auth::routes(['verify' => true]);
@@ -66,106 +167,7 @@ Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/userinterface', function () {
-    return view('User.Dashboard.dashboard');
-});
 
-//product catalogue
-Route::controller(ProductController::class)->group(
-    function () {
-        Route::get('/catalogue', 'getAllProducts')->name('user.products.catalogue');
-    }
-);
-
-//product details
-Route::controller(ProductController::class)->group(
-    function () {
-        Route::get('/details/{id}', 'getProductDetails')->name('user.product.details');
-        Route::post('/product/getProductByBarcode/{barcode?}', 'getProductByBarcode')->name('user.product.getProductByBarcode');
-    }
-);
-
-//Seller products
-Route::controller(DealerProductController::class)->group(
-    function () {
-        Route::get('/user/products', 'show')->name('seller.products');
-        Route::get('/user/products/data', 'getDataTable')->name('seller.products.data');
-        Route::get('/user/create', 'create')->name('user.dealer.product.details');
-        Route::post('/user/store', 'store')->name('user.add.dealer.product');
-        Route::post('/user/destroy', 'destroy')->name('user.dealer.product.destroy');
-        Route::get('/user/getDealerProductsCount', 'getDealerProductsCount')->name('user.dealer.product.getDealerProductsCount');
-        Route::post('/user/update', 'update')->name('user.dealer.product.update');
-    }
-);
-
-// User Cart
-Route::controller(CartController::class)->group(
-    function () {
-        Route::get('/user/cart', 'index')->name('user.cart');
-        Route::post('/user/cart/store', 'store')->name('user.cart.store');
-        Route::post('/user/create/addOrderr', 'storeOrder')->name('user.cart.addOrder');
-        Route::post('/user/calculate-subamount', 'update')->name('user.cart.calculateSubAmount');
-    }
-);
-
-
-
-Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
-Route::get('user/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
-
-Route::get('/wallet_getBalance', [WalletController::class, 'getBalance'])->name('user.wallet.getBalance');
-
-Route::controller(TransferController::class)->group(
-    function () {
-        Route::get('/transfer', 'show')->name('user.transfers');
-        Route::get('/transfer/getDataTableUser', 'getDataTableUser')->name('user.transfers.getDataTableUser');
-        Route::get('/transfer/createeee', 'create')->name('user.transfers.create');
-        Route::post('/transfer/storeee', 'store')->name('user.transfers.store');
-    }
-);
-
-Route::controller(TransferInformationController::class)->group(
-    function () {
-        Route::get('/transfer_info/getTransferInfo', 'getTransferInfo')->name('user.transfer.info.getTransferInfo');
-    }
-);
-
-//Order
-Route::controller(OrderController::class)->group(
-    function () {
-        Route::get('/orders', 'show')->name('user.order');
-        Route::get('/orders/data', 'getUserDataTable')->name('user.order.data');
-        Route::get('/orders/getOrdersCount', 'getOrdersCount')->name('user.order.getOrdersCount');
-        Route::get('/orders/getOrders', 'getOrders')->name('user.order.getOrders');
-        Route::get('/get-chart-data', 'getChartData')->name('getChartData');
-        Route::get('/orders/getWalletId', 'getWalletId')->name('user.order.getWalletId');
-        Route::post('/orders/updateCustomerInfo', 'updateCustomerInfo')->name('user.order.updateCustomerInfo');
-    }
-);
-
-//Order Details
-Route::controller(OrderDetailsController::class)->group(
-    function () {
-        Route::get('/order_details', 'show')->name('user.order.details');
-        Route::get('/order_details/orderInfo', 'getOrderInfo')->name('user.order.details.getOrderInfo');
-        Route::get('/order_details/data', 'getUserDataTable')->name('user.order.details.data');
-        Route::post('/order_details/destroy', 'destroy')->name('user.order.details.destroy');
-        Route::post('/order_details/addProduct', 'addProduct')->name('user.order.details.addProduct');
-    }
-);
-
-//API connect
-Route::controller(APIController::class)->group(
-    function () {
-        Route::get('/API_connect', 'show')->name('user.API.show');
-        Route::get('/API_connect/datatable', 'getDataTable')->name('user.API.getDataTable');
-        Route::get('/API_connect/getById', 'getById')->name('user.API.getById');
-        Route::post('/API_connect/store', 'store')->name('user.API.store');
-        Route::post('/API_connect/update', 'update')->name('user.API.update');
-        Route::post('/API_connect/destroy', 'destroy')->name('user.API.destroy');
-
-    }
-);
 
 
 /*Route::controller(WalletController::class)->group(
