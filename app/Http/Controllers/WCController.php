@@ -4,29 +4,36 @@ namespace App\Http\Controllers;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
+use App\Models\API;
 use App\Models\Delivery;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
 use Automattic\WooCommerce\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class WCController extends Controller
 {
     private $woocommerce;
-
+    private $store_id;
     //دالة تقوم بربط المنصة بمتجر المستخدم
     public function __construct()
     {
-        $this->woocommerce = new Client(
-            'https://m5zndrop.online/',
-            'ck_5fac83320f432d1efc44e8a16f4d30eaa916f4c0',
-            'cs_e60d57a56819c9170c50d90ba54234d67344381a',
-            [
-                'version' => 'wc/v3',
-            ]
-        );
+        $this->middleware(function ($request, $next) {
+            $this->store_id = Auth::user()->store_id;
+            $api = API::where('store_id', $this->store_id)->first();
+            $this->woocommerce = new Client(
+                $api->domain,
+                $api->key,
+                $api->secret,
+                [
+                    'version' => 'wc/v3',
+                ]
+            );
+            return $next($request);
+        });
     }
 
     public function createWebhook(){
@@ -72,11 +79,11 @@ class WCController extends Controller
                 'name' => $request->name,
                 'regular_price' => $request->price,
                 'description' => $request->desc,
-                'images' => [
-                    [
-                        'src' => $request->image
-                    ]
-                ],
+//                'images' => [
+//                    [
+//                        'src' => $request->image
+//                    ]
+//                ],
             ];
 
             $this->woocommerce->post('products', $data);
@@ -110,57 +117,4 @@ class WCController extends Controller
         }
     }
 
-    //دالة تقوم بإستدعاء الطلبات من متجر المستخدم
-    public function orderCreated(Request $request)
-    {
-        // استخراج بيانات الطلب من الطلب
-        $orderData = $request->all();
-
-        // معالجة بيانات الطلب وإدراجها في قاعدة البيانات
-        $this->processOrderData($orderData);
-
-        // الرد بحالة النجاح
-        return response()->json(['message' => 'Order data received and processed successfully'], 200);
-//        Log::info('Webhook Request Received:', $request->all());
-    }
-
-    //دالة تقوم بإدخال الطلب الى قاعدة البيانات
-    private function processOrderData($orderData)
-    {
-        // ادخال البيانات الى جدول الطلبات
-        $order = Order::create([
-            'store_id' => 18,
-            'delivery_id' => 3,
-            'platform' => 'moahmmed wadei',
-            'payment_status' => 'لم يتم الدفع',
-            'customer_phone' => $orderData['billing']['phone'],
-            'customer_name' => $orderData['billing']['first_name'] . ' ' . $orderData['billing']['last_name'],
-            'customer_email' => $orderData['billing']['email'],
-            'shipping_address' => $orderData['shipping']['address_1'] . ' ' . $orderData['shipping']['address_2'] . ' ' . $orderData['shipping']['city'],
-            'order_status' => 'قيد التنفيذ',
-            'total_per_shp' => $orderData['shipping_total'],
-            'total_amount' => $orderData['total'],
-            'created_at' => now(),
-        ]);
-
-        //ادخال البيانات الى جدول تفاصيل الطلبات
-        $lineItems = $orderData['line_items'];
-        foreach ($lineItems as $item){
-            $product = Product::where('name',$item['name'])->first();
-
-            OrderDetails::create([
-                'order_id' => $order->order_id,
-                'pro_id' => $product->id ,
-                'quantity' =>  $item['quantity'],
-                'total_cost' =>  $item['total'],
-                'sub_weight' =>  '0',
-                'created_at' => now(),
-            ]);
-
-            //تحديث كمية المنتج في المخزن
-            $new_quantity = $product->quantity - $item['quantity'];
-            Product::where('id' , $product->id)->update(['quantity' => $new_quantity]);
-        }
-
-    }
 }
