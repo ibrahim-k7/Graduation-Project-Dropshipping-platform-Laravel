@@ -36,7 +36,6 @@ class PurchaseController extends Controller
                 return '<div class="btn-group" role="group">
 <a href="' . route('admin.Purchase.edit', ['id' => $row->id]) . '" type="button" class="btn btn-info">التفاصيل </a>
     <a href="' . route('admin.purchase.returnDetails', ['id' => $row->id]) . '" type="button" class="btn btn-success"> مرتجع</a>
-    <a id="delete_btn" purch-id="' . $row->id . '" type="button" class="delete_btn btn btn-danger">حذف</a>
 </div>';
 
 

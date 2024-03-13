@@ -86,25 +86,25 @@
                     extend: 'print',
                     autoPrint: false,
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6,7,8]// Column index which needs to export
+                        columns: [0, 1, 2, 3, 4, 5, 6]// Column index which needs to export
                     }
                 },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6,7,8]// Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6,]// Column index which needs to export
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6,7,8] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6       ] // Column index which needs to export
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6,7,8] // Column index which needs to export
+                            columns: [0, 1, 2, 3, 4, 5, 6] // Column index which needs to export
                         }
                     },
                     {
