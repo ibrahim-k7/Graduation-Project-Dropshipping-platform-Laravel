@@ -31,7 +31,7 @@ class APIController extends Controller
     {
         // استخراج store_id من المستخدم المسجل الحالي
         $store_id = Auth::user()->store_id;
-        // استخراج معرف المحفظة 
+        // استخراج معرف المحفظة
         //  $wallet_id = Wallet::where('store_id', $store_id)->value('wallet_id');
         $model = API::where('store_id', $store_id)->select('*');
         return DataTables::of($model)
