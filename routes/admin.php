@@ -157,6 +157,27 @@ Route::middleware('auth:admin')->group(function () {
             }
         );
 
+        Route::controller(WalletOperationController::class)->group(
+            function () {
+                Route::get('/wallet_operation', 'index')->name('admin.wallets.operation');
+                Route::get('/wallet_operation/data', 'getDataTable')->name('admin.wallets.operation.data');
+                Route::get('/wallet_operation/create', 'create')->name('admin.wallets.operation.create');
+                Route::post('/wallet_operation/store', 'store')->name('admin.wallets.operation.store');
+                Route::get('/wallet_operation/edit', 'edit')->name('admin.wallets.operation.edit');
+                Route::post('/wallet_operation/update', 'update')->name('admin.wallets.operation.update');
+                Route::post('/wallet_operation/destroy', 'destroy')->name('admin.wallets.operation.destroy');
+            }
+        );
+
+        Route::controller(TransferController::class)->group(
+            function () {
+                Route::get('/transfers', 'index')->name('admin.transfers');
+                Route::get('/transfers_management/data',  'getDataTable')->name('admin.transfers.data');
+                Route::post('/transfers/update', 'update')->name('admin.transfers.update');
+                Route::post('/transfers/destroy', 'destroy')->name('admin.transfers.destroy');
+            }
+        );
+
         Route::controller(TransferInformationController::class)->group(
             function () {
                 Route::get('/transfer_info', 'index')->name('admin.transfer.info');
@@ -207,21 +228,10 @@ Route::middleware('auth:admin')->group(function () {
                 Route::post('/purchase/destroy', 'destroy')->name('admin.purchase.destroy');
             }
         );
+
     });
 
 
-    Route::get('/wallet_operation', [WalletOperationController::class, 'index'])->name('admin.wallets.operation');
-    Route::get('/wallet_operation/data', [WalletOperationController::class, 'getDataTable'])->name('admin.wallets.operation.data');
-    Route::get('/wallet_operation/create', [WalletOperationController::class, 'create'])->name('admin.wallets.operation.create');
-    Route::post('/wallet_operation/store', [WalletOperationController::class, 'store'])->name('admin.wallets.operation.store');
-    Route::get('/wallet_operation/edit', [WalletOperationController::class, 'edit'])->name('admin.wallets.operation.edit');
-    Route::post('/wallet_operation/update', [WalletOperationController::class, 'update'])->name('admin.wallets.operation.update');
-    Route::post('/wallet_operation/destroy', [WalletOperationController::class, 'destroy'])->name('admin.wallets.operation.destroy');
-
-    Route::get('/transfers', [TransferController::class, 'index'])->name('admin.transfers');
-    Route::get('/transfers_management/data', [TransferController::class, 'getDataTable'])->name('admin.transfers.data');
-    Route::post('/transfers/update', [TransferController::class, 'update'])->name('admin.transfers.update');
-    Route::post('/transfers/destroy', [TransferController::class, 'destroy'])->name('admin.transfers.destroy');
 
     Route::prefix('admin')->group(function () {
         Route::get('admin/product/getProducts', [ProductController::class, 'getProducts'])->name('admin.product.getProducts');
@@ -257,26 +267,6 @@ Route::middleware('auth:admin')->group(function () {
         ->name('admin.purchase.returnDetails');
 
 
-
-    Route::get('/simple', function () {
-        return view('admin/tables_data');
-    });
-
-    Route::get('/wallet', function () {
-        return view('admin/wallet');
-    });
-
-    Route::get('/forms-validation', function () {
-        return view('admin/forms-validation');
-    });
-
-
-    Route::get('/admin-profile', function () {
-        return view('admin/admin-profile');
-    });
-    Route::get('/Adminreset', function () {
-        return view('admin/Adminreset');
-    });
 });
 
 auth::routes(['verify' => true]);
@@ -307,32 +297,3 @@ Route::prefix('admin/dshboard')->name('admin.dshboard.')->group(function () {
         Route::post('register', 'store')->name('store');
     });
 });
-
-
-/*
-Route::prefix('/admin')->group(function () {
-
-   هذا مثال كيف تضيف
-            Routes
-    ب استخدام الكونترولار
-    التزمو فيها لما بكون الكونترولار اللي سويته جاهز
-
-   Route::controller(SupplierController::class)->group(
-        function () {
-
-            Route::get('/suppliers_management', 'index')->name('admin.suppliers');
-
-            Route::post('/suppliers_management', 'getDataTable')->name('admin.suppliers.data');
-
-            Route::get('/consulting/edit/{id}', 'edit')->name('edit.Consulting');
-
-            Route::post('/consulting/update/{id}', 'update')->name('update.Consulting');
-
-            Route::get('/consulting/delete/{id}', 'destroy')->name('destroy.Consulting');
-        }
-    );
-
-
-
-
-});*/

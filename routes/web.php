@@ -97,18 +97,23 @@ Route::middleware('verified')->group(function () {
     );
 
 
+        // User Cart
+        Route::controller(WalletOperationController::class)->group(
+            function () {
+                Route::get('/user/wallet_operation', 'show')->name('user.wallets.operation');
+                Route::get('user/wallet_operation/data', 'getDataTableUser')->name('user.wallets.operation.data');
+            }
+        );
 
-    Route::get('/wallett', [WalletOperationController::class, 'show'])->name('user.wallets.operation');
-    Route::get('user/wallet_operation/data', [WalletOperationController::class, 'getDataTableUser'])->name('user.wallets.operation.data');
 
     Route::get('/wallet_getBalance', [WalletController::class, 'getBalance'])->name('user.wallet.getBalance');
 
     Route::controller(TransferController::class)->group(
         function () {
-            Route::get('/transfer', 'show')->name('user.transfers');
-            Route::get('/transfer/getDataTableUser', 'getDataTableUser')->name('user.transfers.getDataTableUser');
-            Route::get('/transfer/createeee', 'create')->name('user.transfers.create');
-            Route::post('/transfer/storeee', 'store')->name('user.transfers.store');
+            Route::get('/user/transfer', 'show')->name('user.transfers');
+            Route::get('/user/transfer/getDataTableUser', 'getDataTableUser')->name('user.transfers.getDataTableUser');
+            Route::get('/user/transfer/create', 'create')->name('user.transfers.create');
+            Route::post('/user/transfer/store', 'store')->name('user.transfers.store');
         }
     );
 

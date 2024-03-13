@@ -63,17 +63,16 @@
     <footer class="footer section">
         <div class="footer__container container grid">
             <div class="footer__content">
-                <a href="#" class="footer__logo">التوصيل</a>
-                <p class="footer__description">طلب المنتجات بسرعة <br> وسهولة</p>
+                <a href="#" class="footer__logo">المتاجر الالكترونية</a>
+                <p class="footer__description">دروبشوبينغ بسرعة <br> وسهولة</p>
             </div>
 
             <div class="footer__content">
                 <h3 class="footer__title">خدماتنا</h3>
                 <ul class="footer__links">
-                    <li><a href="#" class="footer__link">التسعير </a></li>
-                    <li><a href="#" class="footer__link">التخفيضات</a></li>
-                    <li><a href="#" class="footer__link">الإبلاغ عن خطأ</a></li>
-                    <li><a href="#" class="footer__link">شروط الخدمة</a></li>
+                    <li><a href="#" class="footer__link">توفير منتجات لمتجرك </a></li>
+                    <li><a href="#" class="footer__link">توصيل الطلبتات</a></li>
+                    <li><a href="#" class="footer__link"> الربط عبر ال API</a></li>
                 </ul>
             </div>
 

@@ -49,7 +49,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ Route('admin.dshboard') }}" class="logo d-flex align-items-center">
                 <img src={{ asset('Admin/IMG/logo.png') }} alt="">
                 <span class="d-none d-lg-block">لوحة تحكم المشرف</span>
             </a>
@@ -66,7 +66,7 @@
                 </li><!-- End Search Icon--> --}}
                 <li class="nav-item dropdown pe-3">
 
-                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <a class="nav-link nav-profile d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                             <span class=" dropdown-toggle ps-2">{{ Auth::guard('admin')->user()->name }}</span>
                         </a><!-- End Profile Iamge Icon -->
                                         {{-- </a><!-- End Profile Iamge Icon --> --}}
@@ -410,9 +410,9 @@
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
-        <div class="copyright">
+        {{-- <div class="copyright">
             &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-        </div>
+        </div> --}}
         {{-- <div class="credits"> --}}
         {{-- <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->

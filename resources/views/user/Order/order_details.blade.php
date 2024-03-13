@@ -284,11 +284,11 @@
                     }
 
                     $('#customer_email').val(data.customer_email);
-                    $('#shipping_address').text(data.delivery_shipping_fees);
+                    $('#shipping_address').text(data.shipping_address);
                     $('#customer_phone').val(data.customer_phone);
                     $('#total_per_shp').text(data.total_per_shp);
                     $('#total_weight').text(data.total_weight);
-                    $('#shipping_fees').text(data.shipping_fees);
+                    $('#shipping_fees').text(data.delivery_shipping_fees);
                     $('#total_amount').text(data.total_amount);
                 },
                 error: function(error) {

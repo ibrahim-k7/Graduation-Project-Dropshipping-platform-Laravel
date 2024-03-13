@@ -140,8 +140,6 @@ class ProductController extends Controller
                 return $btn = '<div class="btn-group" role="group">
                 <a   data-product-id="' . $row->id  . '" type="button" class="delete_btn btn btn-danger">حذف</a>
                 <a href="' . route('admin.products.edit', ['id' => $row->id]) . '"  type="button" class="btn btn-secondary">تحديث</a>
-                <a href="' . route('admin.subCategories', ['id' => $row->id]) . '"   type="button" class="btn btn-primary">المبيعات</a>
-                <a href="' . route('admin.subCategories', ['id' => $row->id]) . '"   type="button" class="btn btn-primary">المشتريات</a>
                 </div>  ';
             })
             ->rawColumns(['action'])

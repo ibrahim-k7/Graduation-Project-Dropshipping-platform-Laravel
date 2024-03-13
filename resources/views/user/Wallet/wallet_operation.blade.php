@@ -71,7 +71,7 @@
                 var balanceValue = data.balance;
 
                 // تحديث عنصر الصفحة بقيمة الرصيد الجديدة
-                $("#balance").html(balanceValue + '<span style="font-size: small;"> رس </span>');
+                $("#balance").html(balanceValue + '<span style="font-size: small;"> ري </span>');
             },
             error: function(reject) {
                 console.error('Error loading :', reject);
