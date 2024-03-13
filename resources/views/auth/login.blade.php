@@ -36,7 +36,7 @@
 
                             <div class="col-12">
                                 <label for="password" class="form-label">{{ __('كلمة السر') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
