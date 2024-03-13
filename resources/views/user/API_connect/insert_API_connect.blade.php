@@ -23,7 +23,7 @@
                 <div class="col-lg-12">
 
                     <div class="card">
-                        <div class="card-header text-center text-bg-light fs-5 fw-bold">المنتجات</div>
+                        <div class="card-header text-center text-bg-light fs-5 fw-bold">ال API الخاص بك</div>
                         <div class="table-responsive">
                             <!-- Table with stripped rows -->
                             <table id="API_table" class="table table-striped table-bordered">
