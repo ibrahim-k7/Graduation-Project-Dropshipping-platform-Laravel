@@ -31,23 +31,19 @@
                                             <label for="email" class="form-label">الايميل</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="email" id="email" class="form-control"
-                                                    @error('email') is-invalid @enderror name="email"
-                                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                                 @error('email')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
-                                                <div class="invalid-feedback">ادخل اسم المستخدم او الايميل</div>
+                                                <div class="invalid-feedback">ادخل الايميل</div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <label for="password" class="form-label">{{ __('كلمة السر') }}</label>
-                                            <input id="password" type="password"
-                                                class="form-control @error('password') is-invalid @enderror" name="password"
-                                                required autocomplete="current-password">
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -67,10 +63,10 @@
                                             <button class="btn btn-primary w-100"
                                                 type="submit">{{ __('دخول') }}</button>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <p class="small mb-0"> نسيت كلمة السر <a href="{{ route('password.request') }}">
                                                     {{ __('استعادة كلمة السر كلمة السر') }}</a></p>
-                                        </div>
+                                        </div> --}}
                                     </form>
                                 </div>
                             </div>
