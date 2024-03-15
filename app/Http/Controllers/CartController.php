@@ -29,10 +29,11 @@ class CartController extends Controller
         $cart = Cart::where('store_id', $store_id)->with('product')->first();
         $product = $cart->product;
 
+
         if ($cart) {
             $delivery = Delivery::select("*")->get();
 
-            return view('user.cart.cart', compact('product', 'delivery'));
+            return view('user.cart.cart', compact('product', 'delivery' ));
         } else {
             abort(404, 'لا يوجد منتجات في السلة');
         }
@@ -88,11 +89,11 @@ class CartController extends Controller
         // Initialize total weight and total amount
         $totalWeight = 0;
         $totalAmount = 0;
-
+        $subAmount =0;
         // Create the order
         $order = Order::create([
             'store_id' => $store_id,
-            'delivery_id' => '1',
+            'delivery_id' => $request->delivery_id,
             'platform' => 'سلة',
             'payment_status' => 'لم يتم الدفع',
             'customer_phone' => $request->customer_phone,
@@ -100,11 +101,11 @@ class CartController extends Controller
             'customer_email' => $request->customer_email,
             'shipping_address' => $request->shipping_address,
             'order_status' => 'يتم توصيل الطلب',
-            'total_per_shp' => '55', // You may need to calculate this based on your logic
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+        $delivery= Delivery::where('delivery_id' , $order->delivery_id)->select('*')->first();
         // Iterate through cart items and products
         foreach ($cartItems as $cartItem) {
             foreach ($cartItem->product as $product) {
@@ -116,7 +117,8 @@ class CartController extends Controller
                 $productAmount = $product->selling_price * $quantity;
         
                 $totalWeight += $productWeight;
-                $totalAmount += $productAmount;
+                $subAmount += $productAmount;
+             
         
                 // Attach the product to the order
                 $orderDetail = OrderDetails::create([
@@ -132,14 +134,16 @@ class CartController extends Controller
         }
         
 
+        $totalAmount =  $delivery->shipping_fees + $subAmount;
         // Update the total weight and total amount in the order table
         $order->update([
             'total_weight' => $totalWeight,
+            'total_per_shp' => $subAmount,
             'total_amount' => $totalAmount,
         ]);
 
-        // Clear the cart or perform any other necessary actions
-
+        // Clear the cart 
+    
     }
     
     // 
@@ -186,8 +190,6 @@ class CartController extends Controller
         // Calculate the new subtotal amount for the product
         $newSubtotal = $newQuantity * $cartItem->product->selling_price;
         return ($newSubtotal);
-
-
     }
    
     /**
@@ -196,8 +198,11 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
-    }
+        $store_id = Auth::user()->store_id;
+        $cart = Cart::where('store_id', $store_id)->first();
+        CartItem::where('cart_id', $cart->cart_id)
+        ->where('pro_id', $request->pro_id)
+        ->delete();    }
 }

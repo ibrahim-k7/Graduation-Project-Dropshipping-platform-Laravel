@@ -93,11 +93,11 @@ Route::middleware('verified')->group(function () {
             Route::post('/user/cart/store', 'store')->name('user.cart.store');
             Route::post('/user/create/addOrderr', 'storeOrder')->name('user.cart.addOrder');
             Route::post('/user/calculate-subamount', 'update')->name('user.cart.calculateSubAmount');
+            Route::post('/user/delete-product' , 'destroy') -> name('user.cart.deleteProduct');
         }
     );
 
 
-        // User Cart
         Route::controller(WalletOperationController::class)->group(
             function () {
                 Route::get('/user/wallet_operation', 'show')->name('user.wallets.operation');

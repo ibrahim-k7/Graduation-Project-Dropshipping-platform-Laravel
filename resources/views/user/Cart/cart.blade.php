@@ -13,13 +13,7 @@
 
     <div class="pagetitle">
         <h1>السلة</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Data</li>
-            </ol>
-        </nav>
+        
     </div><!-- End Page Title -->
     <!-- Checkout -->
 
@@ -34,7 +28,7 @@
                     <div class="col-md-8">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <h5 class="mb-0">Cart - 2 items</h5>
+                                <h5 class="mb-0">عناصر السلة</h5>
                             </div>
                             <div class="card-body">
                                 <!-- Single item -->
@@ -52,7 +46,7 @@
                                         <form id="quantityform" method="post">
                                             <label for="quantity" class="form-label">الكمية</label>
                                             <input type="hidden" class="pro_id" name="pro_id" value="{{ $product->id }}">
-                                            <input type="number" min="1" value="1" class="form-control quantity" name="quantity" placeholder="الكمية">
+                                            <input type="number" min="1" value="{{$product->pivot->quantity}}" class="form-control quantity" name="quantity" placeholder="الكمية">
                                             <small class="form-text text-danger quantity_error"></small>
                                         </form>
 
@@ -60,10 +54,10 @@
 
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                         <label for="subAmountPerProduct" class="form-label">اجمالي سعر المنتج</label>
-                                        <label class="subAmountPerProduct">{{ $product->selling_price }} / ري</label>
+                                        <label class="subAmountPerProduct">{{ $product->selling_price * $product->pivot->quantity}} / ري</label>
                                     </div>
                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                        <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+                                        <a href="#" class="text-muted delete-product" data-product-id="{{ $product->id }}"><i class="fas fa-times"></i></a>
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -77,7 +71,7 @@
                         <!-- Checkout -->
                         <div class="card shadow-0 border">
                             <div class="p-4">
-                                <h5 class="card-title mb-3">معلومات الزبون</h5>
+                                <h5 class="card-title mb-3">معلومات العميل</h5>
                                 <div class="row">
                                     <div class="col-6 mb-3">
                                         <p class="mb-0">الأسم كامل</p>
@@ -89,7 +83,7 @@
                                     <div class="col-6 mb-3">
                                         <p class="mb-0">رقم الهاتف</p>
                                         <div class="form-outline">
-                                            <input type="tel" id="customer_phone" name="customer_phone" value="+967 " class="form-control" />
+                                            <input type="number" id="customer_phone" name="customer_phone" value="00967 " class="form-control" />
                                         </div>
                                     </div>
 
@@ -114,8 +108,9 @@
                                                 <input class="form-check-input" type="radio" name="delivery_type" id="delivery_type{{$key}}" data-delivery-id="{{$deliveryItem->delivery_id}}" {{$key == 0? 'checked' : ''}} />
                                                 <label class="form-check-label" for="delivery_type{{$key}}">
                                                     {{$deliveryItem->name}} <br />
-                                                    <small class="text-muted"> {{$deliveryItem->shipping_fees}} / ري </small>
-                                                </label>                                                
+                                                    <small class="text-muted "> {{$deliveryItem->shipping_fees}} / ري </small>
+                                                </label>
+                                                <input type="hidden" class="shipping_fees" name="shipping_fees" value="{{$deliveryItem->shipping_fees}}">
                                             </div>
                                         </div>
                                     </div>
@@ -158,21 +153,21 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                         المبلغ الفرعي
-                                        <span class="subAmont">$53.98</span>
+                                        <span class="subAmont"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                         رسوم الشحن
-                                        <span class="deliveryCost">Gratis</span>
+                                        <span class="deliveryCost"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                         <div>
                                             <strong>المجموع</strong>
 
                                         </div>
-                                        <span><strong class="totalAmount">$53.98</strong></span>
+                                        <span><strong class="totalAmount"></strong></span>
                                     </li>
                                 </ul>
-                                <button type="submit" id="addOrder" class="btn btn-primary shadow-0">إرسال</button>
+                                <button type="submit" id="addOrder" class="btn btn-primary shadow-0">إتمام الطلب</button>
 
                             </div>
                         </div>
@@ -195,17 +190,19 @@
 <script>
     // عند تحميل الصفحة
     $(document).ready(function() {
-        //var product = $('.product_id').val();
-        // var selling_price =  $('#selling_price').val();;
 
+        calculateAndDisplayTotal();
 
+        $(document).on('change', 'input[name="delivery_type"]', function() {
+            // var shipping_fees = parseInt($(this).closest('.form-check').find('.shipping_fees').val()) || 0;
+            // $('.deliveryCost').text(shipping_fees + ' / ري');
+            // var subTotal = parseFloat($('.subAmont').text().replace(' ري', '')) || 0;
+            // var totalAmount = subTotal + shipping_fees;
+            // $('.totalAmount').text(totalAmount.toFixed(2) + ' / ري');
+            // console.log(shipping_fees)
+            calculateAndDisplayTotal();
 
-        // var selling_price = parseInt(productId.selling_price);
-        // var subCost = quantity * selling_price;
-        // console.log(selling_price);
-        // row.find('.subAmount').val(subCost.toFixed(2));
-
-        // $('.quantity').on('input', updateAmount);
+        })
 
         $(document).on('input', '.quantity', function(e) {
             e.preventDefault();
@@ -224,29 +221,37 @@
                     'quantity': quantity
                 },
                 success: function(data) {
-                    row.find('.subAmountPerProduct').text(data + ' / ري'); // assuming data is a number
-                  
+                    row.find('.subAmountPerProduct').text(data + ' / ري');
 
+                    calculateAndDisplayTotal();
                 },
-                error: function(reject) {
-                    //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
-
-                }
+                error: function(reject) {}
             });
 
-            
+
         })
 
+        function calculateAndDisplayTotal() {
 
 
-      
+
+            var newSubtotal = 0;
+            $('.subAmountPerProduct').each(function() {
+                newSubtotal += parseFloat($(this).text().replace(' ري', ''));
+            });
+            $('.subAmont').text(newSubtotal.toFixed(2) + ' / ري');
+
+            var shipping_fees = $('input[name="delivery_type"]:checked').closest('.form-check').find('.shipping_fees').val() || 0;
+            $('.deliveryCost').text(shipping_fees + ' / ري');
+
+            var totalAmount = newSubtotal + parseFloat(shipping_fees);
+            $('.totalAmount').text(totalAmount.toFixed(2) + ' / ري');
+        }
+
+
         //عند الضغط على زر إرسال
         $(document).on('click', '#addOrder', function(e) {
             e.preventDefault();
-
-
-        //    var quantity = parseInt(row.find('.quantity').val()) || 1;
-
 
             //حفظ المعلومات
             $.ajax({
@@ -261,7 +266,7 @@
                     'customer_email': $("input[name='customer_email']").val(),
                     'customer_phone': $("input[name='customer_phone']").val(),
                     'lastname': $("input[name='lastname']").val(),
-                    'delvery_id': $("input[name='delivery_type']:checked").data('delivery-id'),
+                    'delivery_id': $("input[name='delivery_type']:checked").data('delivery-id'),
                     'shipping_address': $("input[name='shipping_address']").val(),
                     'quantity': $("input[name='quantity']").val(),
 
@@ -272,9 +277,9 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "تمت الإضافة بنجاح",
+                        title: "تم إضافة طلب ",
                         showConfirmButton: false,
-                        timer: 2000
+                        timer:1500
                     });
                 },
                 error: function(reject) {
@@ -286,13 +291,51 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
-                        title: "فشلت عملية الإضافة",
+                        title: "فشلت عملية إضافة طلب",
                         showConfirmButton: false,
                         timer: 1500
                     });
                 }
             });
         });
+
+        // Attach a click event handler to the delete button
+        $(document).on('click', '.delete-product', function(e) {
+            e.preventDefault();
+
+            // Extract the product ID from the data attribute
+            var productId = $(this).data('product-id');
+
+            // Send an AJAX request to delete the product
+            $.ajax({
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                },
+                url: "{{ route('user.cart.deleteProduct') }}",
+                data: {
+                    'pro_id': productId
+                },
+                success: function(data) {
+                    Swal.fire({
+                        title: "تم الحذف ",
+                        text: "لقد تم الحذف بنجاح",
+                        icon: "success",
+                        // Add the 'then' function to reload the page after clicking 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Reload the page
+                            location.reload();
+                        }
+                    });
+
+                    // Recalculate and display the total after deleting the product
+                    calculateAndDisplayTotal();
+                },
+                error: function(reject) {}
+            });
+        });
+
     });
 </script>
 @endsection

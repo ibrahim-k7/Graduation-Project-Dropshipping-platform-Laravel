@@ -12,13 +12,7 @@
 
         <div class="pagetitle">
             <h1>قائمة منتجاتي</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Tables</li>
-                    <li class="breadcrumb-item active">Data</li>
-                </ol>
-            </nav>
+          
         </div><!-- End Page Title -->
 
         <section class="section">
@@ -191,7 +185,7 @@
                         success: function(data) {
                             Swal.fire({
                                 title: "تم الحذف ",
-                                text: "لقد تم الحذف ينجاح",
+                                text: "لقد تم الحذف بنجاح",
                                 icon: "success"
                             });
                             //تحديث جدول البيانات لكي يظهر التعديل في الجدول بعد الحذف
@@ -224,7 +218,7 @@
                             icon: "success",
                             title: "تمت الإضافة بنجاح",
                             showConfirmButton: false,
-                            timer: 2000
+                            timer: 1000
                         });
                         console.log('suc: ' + data);
                     },
@@ -234,7 +228,7 @@
                         icon: "error",
                         title: "المنتج موجود بالفعل",
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 1000
                     });
                     }
                 });

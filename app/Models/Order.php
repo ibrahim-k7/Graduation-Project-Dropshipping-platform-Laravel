@@ -21,6 +21,7 @@ class Order extends Model
 
     protected $attributes = [
         'total_weight' => 0, // Set the default value for total_weight
+        'total_per_shp' => 0, // Set the default value for total_per_shp
         'total_amount' => 0, // Set the default value for total_amount
     ];
 
