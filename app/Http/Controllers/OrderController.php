@@ -350,7 +350,7 @@ class OrderController extends Controller
                     <div class="btn-group" role="group">
                         <!--             delete order button             -->
                         <a data-order-id="' . $row->order_id . '"
-                           data-order_status="' . $row->order_status . '"
+                           data-payment_status="' . $row->payment_status . '"
                            type="button"
                            class="delete_btn btn btn-danger">
                            حذف
@@ -444,8 +444,8 @@ class OrderController extends Controller
 
     public function destroy(Request $request)
     {
-        if ($request->order_status == "تم التوصيل") {
-            abort(400, 'لا يمكن حذف طلب تم توصيله');
+        if ($request->payment_status == "تم الدفع") {
+            abort(400, 'لا يمكن حذف طلب تم دفعه');
         }
 
         $order = Order::where('order_id', $request->id);

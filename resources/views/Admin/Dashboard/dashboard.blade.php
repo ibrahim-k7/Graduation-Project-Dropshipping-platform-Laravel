@@ -517,8 +517,8 @@
                         dataType: 'json',
                         success: function(data) {
                             var total_balance_value = data.total_balance;
-                            $("#totalBalanceCount").html(total_balance_value +
-                                '<span style="font-size: small ;"> ري</span>');
+                            $("#totalBalanceCount").html(Math.abs(total_balance_value) +
+                            '<span style="font-size: small;"> ري</span>');
                            // $('#totalBalanceCount').text('$' + data.total_balance);
                         },
                         error: function(error) {

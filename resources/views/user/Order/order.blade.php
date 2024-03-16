@@ -273,7 +273,7 @@
                 confirmButtonText: "نعم، احذفه"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var order_status = $(this).attr('data-order_status');
+                    var payment_status = $(this).attr('data-payment_status');
                     var order_id = $(this).attr('data-order-id');
                     $.ajax({
                         type: 'post',
@@ -283,7 +283,7 @@
                         url: "{{ route('admin.order.destroy') }}",
                         data: {
                             'id': order_id,
-                            'order_status': order_status,
+                            'payment_status': payment_status,
                         },
                         success: function(data) {
                             Swal.fire({

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\API;
+use App\Models\DealerProduct;
 use App\Models\Delivery;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -65,14 +66,14 @@ class Webhook extends Controller
     private function processOrderData($orderData)
     {
         $store_id = $this->getStoreId($orderData['meta_data']);
-        $store_name = $this->getStoreName($store_id);
+        //$store_name = $this->getStoreName($store_id);
         $delivery_id = $this->getDeliveryId($orderData['shipping_lines']);
 
         // ادخال البيانات الى جدول الطلبات
         $order = Order::create([
             'store_id' => $store_id,
             'delivery_id' => $delivery_id,
-            'platform' => $store_name,
+            'platform' => 'Woocommerce',
             'payment_status' => 'لم يتم الدفع',
             'customer_phone' => $orderData['billing']['phone'],
             'customer_name' => $orderData['billing']['first_name'] . ' ' . $orderData['billing']['last_name'],
@@ -87,11 +88,11 @@ class Webhook extends Controller
         //ادخال البيانات الى جدول تفاصيل الطلبات
         $lineItems = $orderData['line_items'];
         foreach ($lineItems as $item){
-            $product = Product::where('name',$item['name'])->first();
+            $product = DealerProduct::where('dealer_product_name',$item['name'])->first();
 
             OrderDetails::create([
                 'order_id' => $order->order_id,
-                'pro_id' => $product->id ,
+                'pro_id' => $product->pro_id ,
                 'quantity' =>  $item['quantity'],
                 'total_cost' =>  $item['total'],
                 'sub_weight' =>  '0',
