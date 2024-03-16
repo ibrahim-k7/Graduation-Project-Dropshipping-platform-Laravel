@@ -12,14 +12,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Insert New Delivery</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Forms</li>
-                    <li class="breadcrumb-item active">Add Delivery</li>
-                </ol>
-            </nav>
+            <h1>إدخال موصل جديد</h1>
         </div><!-- End Page Title -->
 
         <section class="section">
@@ -99,7 +92,7 @@
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "the Delivery has been updated",
+                                title: "تم تحديث الموصل بنجاح",
                                 showConfirmButton: false,
                                 timer: 2000
                             });
@@ -150,16 +143,13 @@
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "the new Delivery has been updated",
+                                title: "تم إضافة موصل جديد بنجاح",
                                 showConfirmButton: false,
                                 timer: 2000
                             });
                             console.log('suc: ' + data);
                         },
                         error: function(reject) {
-                            // var error = data.responseJSON;
-                            //console.log(error);
-
                             //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
                             var response = $.parseJSON(reject.responseText);
                             $.each(response.errors, function(key,val){
