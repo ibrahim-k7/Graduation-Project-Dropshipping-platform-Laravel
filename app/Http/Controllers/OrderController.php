@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddWalletOperationRequest;
 use App\Http\Requests\UpdateCustomerInfoRequest;
 use App\Models\Order;
+use App\Models\OrderDetails;
+use App\Models\Product;
 use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -390,6 +392,23 @@ class OrderController extends Controller
             if ($check_wallet_balance) {
                 return $check_wallet_balance;
             }
+
+            $order_details = OrderDetails::where('order_id' , $request->order_id)->get();
+
+            // تحديث كمية المنتجات
+            foreach ($order_details as $order_detail) {
+
+                $product = Product::where('id', $order_detail->pro_id)->first();
+
+                // التحقق مما إذا كان المنتج موجود
+                if ($product) {
+                    // تحديث كمية المنتج
+                    $product->update([
+                        'quantity' => $product->quantity - $order_detail->quantity,
+                    ]);
+                }
+            }
+
             //انشاء كائن من SalesController واستدعاء دالة store
             $salesController = new SalesController();
             $salesController->store($request);

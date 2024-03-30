@@ -95,12 +95,9 @@ class Webhook extends Controller
                 'pro_id' => $product->pro_id ,
                 'quantity' =>  $item['quantity'],
                 'total_cost' =>  $item['total'],
-                'sub_weight' =>  '0',
+                'sub_weight' =>  '270',
                 'created_at' => now(),
             ]);
-
-            //تحديث كمية المنتج في المخزن
-            Product::where('id' , $product->id)->update(['quantity' =>  $product->quantity - $item['quantity']]);
         }
 
     }

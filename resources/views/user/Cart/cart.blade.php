@@ -281,6 +281,8 @@
                         showConfirmButton: false,
                         timer:1500
                     });
+                    location.reload();
+
                 },
                 error: function(reject) {
                     //لوب لعرض الاخطاء في الحقول في حال كان هناك خطاء ب سبب التحقق
