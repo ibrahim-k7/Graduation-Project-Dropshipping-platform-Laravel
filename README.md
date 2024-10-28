@@ -1,66 +1,185 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+---
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# منصة المخازن الإلكترونية
 
-## About Laravel
+### ملخص المشروع
+ منصة إحالة الشحن (Drop Shipping) هي مخازن الإلكترونية شاملة لأصحاب المتاجر الإلكترونية، يمكنهم اختيار المنتجات التي يريدون بيعها في متاجرهم عبر الإنترنت وعرض قوائم المنتجات بالصور والمعلومات ويتم استقبال الطلبات من خلال خدمة الربط الآلي وتوفير خدمة التغليف والشحن.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+ إحالة الشحن، وهو جزء من التجارة الإلكترونية، هو استراتيجية يقوم فيها البائع عبر الإنترنت بعرض المنتجات وعرضها دون الحاجة إلى الاحتفاظ بها في المخزون، بحيث عندما يقوم المشتري بالشراء، يتم إرسال الطلبات وتسليمها مباشرة من مرافق إحالة الشحن.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ بمعنى آخر، إنها استراتيجية إدارة حيث لا يحتفظ بائع التجزئة بالسلع في المخزون، بل ينقل الطلبات وتفاصيل التسليم التي يتلقاها من العملاء إلى الشركة المصنعة، أو بائع تجزئة آخر، أو تاجر الجملة الذي يقوم بعد ذلك بتسليم البضائع مباشرة إلى العميل.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## المتطلبات
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### المتطلبات الأساسية
+- **اللغة البرمجية**: PHP (Laravel).
+- **قاعدة البيانات**: MySQL.
+- **العمليات التقنية**:
+  - RestAPI
+  - AJAX
+- **البيئة المطلوبة**:
+  - PHP 7.4 أو أعلى.
+  - Composer لإدارة الحزم.
+  - خادم محلي مثل XAMPP أو LAMP.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### المتطلبات الوظيفية للنظام
 
-## Laravel Sponsors
+#### 1. واجهة الهبوط (الرئيسية)  
+يوفر الموقع واجهة رائيسية تتكون من الرئيسية ومعلومات عنا والخدمات وتواصل معانا وتسجيل الدخول و انشاء حساب 
+* **عرض الصورة**:
+![Home Page](./screenshots/home.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* **عرض الصورة**:
+![Home Page 2](./screenshots/home2.png)
 
-### Premium Partners
+* **عرض الصورة**:
+![Home Page Phone](./screenshots/home_Phone.png)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+* **عرض الصورة**:
+![Home Page Phone 2](./screenshots/home_Phone2.png)
 
-## Contributing
+#### 2. إنشاء حساب 
+يتيح للمستخدمين إنشاء حسابات جديدة. 
+* **المدخلات**: ID، اسم المستخدم، البريد الإلكتروني، الهاتف، كلمة المرور، الصلاحية (مثل مدير النظام أو تاجر).
+* **عرض الصورة**:
+![Add Account](./screenshots/register.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### 3. تسجيل الدخول
+يجب أن يوفر النظام واجهة لتسجيل الدخول للمستخدمين باستخدام البريد الإلكتروني وكلمة المرور.
+* **عرض الصورة**:
+![Login](./screenshots/login.png)
 
-## Code of Conduct
+#### 4. تحديث بيانات الحساب 
+يتيح النظام للمستخدمين تحديث البيانات مثل اسم المستخدم، البريد الإلكتروني، الهاتف، وكلمة المرور.
+* **عرض الصورة**:
+![Update Account](./screenshots/vendor_info_update.png)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### 5. لوحة التحكم
+يتيح النظام عرض لوحة تحكم يوجد فيها ملخص واحصائيات تختلف بحسب الصلاحية.
+* **عرض الصورة**:
+![Dshboard Vedor](./screenshots/dshboard_vendor.png)
 
-## Security Vulnerabilities
+* **عرض الصورة**:
+![Dshboard Admin](./screenshots/dshboard_admin.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* **عرض الصورة**:
+![Dshboard Admin 2](./screenshots/dshboard_admin2.png)
 
-## License
+#### 6. إدارة الموردين
+يمكن للمشرفين إضافة وتحديث وإدارة الموردين ورصيدهم.
+* **عرض الصورة**:
+![Supplier Management](./screenshots/supplier_management.png)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 7. إدارة الفئات
+يتيح النظام إضافة فئات رئيسية وفرعية وإدارتها.
+* **عرض الصورة**:
+![Category Management](./screenshots/category_management.png)
+
+#### 8. إضافة وإدارة المنتجات
+يتيح النظام إضافة منتجات جديدة وتعديلها وحذفها.
+* **عرض الصورة**:
+![Product Management](./screenshots/product_management.png)
+
+* **عرض الصورة**:
+![Add Product](./screenshots/add_product.png)
+
+#### 9.  عرض المنتجات
+يتيح النظام عرض منتجات واضافتها لسلة التاجر.
+* **عرض الصورة**:
+![Product View](./screenshots/proudct_view.png)
+
+#### 10.   منتجاتي
+يتيح النظام عرض منتجات اللتي تم قام بإضافتها التاجر وادارتها.
+* **عرض الصورة**:
+![My Product View](./screenshots/my_proudct.png)
+
+#### 11.  المحفظة
+يتيح النظام اضافة محفظة لكل حساب وادارة عملياتها.
+* **عرض الصورة**:
+![Wallet View](./screenshots/wallet.png)
+
+#### 12.  الحولات
+يتيح النظام اضافة حواله للمستخدمين و يسمح للمشرف مراجعتهاوادارتها .
+* **عرض الصورة**:
+![trans View](./screenshots/trans.png)
+
+* **عرض الصورة**:
+![Add Trans View](./screenshots/add_trans.png)
+
+#### 13.  ريط API
+يتيح النظام للمتاجر ربط المنصة مع متاجرهم الالكترونية لعرض المنتجات في متاجرهم و استقبال الطلبات.
+* **عرض الصورة**:
+![api](./screenshots/api.png)
+
+#### 14. إضافة فاتورة مشتريات وإدارتها
+يسمح النظام بإضافة فاتورة مشتريات وتحديث معلوماتها.
+* **عرض الصورة**:
+![Purchase Receipt Management](./screenshots/purchase_receipt.png)
+
+* **عرض الصورة**:
+![Add Purchase Receipt](./screenshots/add_purchase_receipt.png)
+
+#### 15. إدارة المرتجعات للمشتريات
+يتيح إضافة مرتجع لفاتورة مشتريات، مع تسجيل كل منتج وكمية المرتجع.
+* **عرض الصورة**:
+![Purchase Return Management](./screenshots/purchase_return.png)
+
+#### 16. التوصيل
+يتيح النظام اضافة وعرض بيانات طرق التوصيل الموجودةوعرض شامل وتحديث طرق التوصيل.
+* **عرض الصورة**:
+![Inventory Overview](./screenshots/delevery.png)
+
+#### 17. إدارة الطلبات
+يعرض الطلبات ويتيح للمشرف التحكم بها وتحديث تفاصيل المنتجات والعميل.
+* **عرض الصورة**:
+![Order Management](./screenshots/order_management.png)
+
+* **عرض الصورة**:
+![Order View](./screenshots/order.png)
+
+* **عرض الصورة**:
+![Order Details](./screenshots/order_det.png)
+
+---
+
+## كيفية التثبيت والاستخدام
+
+1. **نسخ المستودع**
+   ```bash
+   git clone https://github.com/ibrahim-k7/Graduation-Project-Dropshipping-platform-Laravel9.git
+   cd Graduation-Project-Dropshipping-platform-Laravel9
+   ```
+
+2. **تثبيت الحزم باستخدام Composer**
+   ```bash
+   composer install
+   ```
+
+3. **إعداد قاعدة البيانات**
+   - قم بإنشاء قاعدة بيانات جديدة في MySQL.
+   - قم بستيراد قاعدة البيانات التي داخل ملق المشروع
+   - قم بتحديث ملف `.env` بمعلومات قاعدة البيانات الخاصة بك.
+   ```plaintext
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=m5azen
+   DB_USERNAME=root
+   DB_PASSWORD=password
+   ```
+
+
+4. **تشغيل الخادم المحلي**
+   ```bash
+   php artisan serve
+   ```
+
+---
+
+## المساهمة
+لتقديم مساهمات، قم بفتح فرع جديد وتقديم طلب سحب. 
+
